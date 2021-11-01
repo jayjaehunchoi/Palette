@@ -21,13 +21,13 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-    private String tile;
+    private String title;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_ID", foreignKey = @ForeignKey(name = "fk_board_member"))
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_board_member"))
     private Member member;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
