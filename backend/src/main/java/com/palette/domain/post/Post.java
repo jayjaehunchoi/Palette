@@ -1,11 +1,11 @@
 package com.palette.domain.post;
 
 import com.palette.domain.BaseTimeEntity;
+import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,12 +39,13 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes = new ArrayList<>();
 
-    private LocalDateTime startDate;
+    @Embedded
+    private Period period;
 
-    private LocalDateTime endDate;
-
+    // 지역
     private String region;
 
+    // 조회수
     private int hit;
 
 
