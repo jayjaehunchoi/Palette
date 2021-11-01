@@ -1,71 +1,37 @@
 package com.palette;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.palette.domain.member.Member;
-import com.palette.domain.member.Profile;
-import com.palette.persistence.MemberRepository;
-import com.palette.persistence.ProfileRepository;
+import com.palette.repository.MemberRepository;
 
-import lombok.extern.java.Log;
+import javax.transaction.Transactional;
 
+import static org.assertj.core.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Log
-@Commit
-
+@Transactional
 public class ProfileTests {
     @Autowired
     MemberRepository memberRepo;
-
-    @Autowired
-    ProfileRepository profileRepo;
 
     @Test
     public void testInsertMembers() { //더미 회원 생성
 
         IntStream.range(1, 101).forEach(i -> {
-            Member member = new Member();
-            member.setUid("user" + i);
-            member.setUpw("pw" + i);
-            member.setUname("사용자" + i);
-
+            Member member = new Member("pw" + i, "uname" + i, "profileFileName" + i + ".png");
             memberRepo.save(member);
-
         });
 
+        List<Member> all = memberRepo.findAll();
+        assertThat(all.size()).isEqualTo(100);
+        assertThat(all.get(0).getProfileFileName()).isEqualTo("profileFileName" + 1 + ".png");
     }// end method
-
-    @Test
-    public void testInsertProfile() {
-
-        Member member = new Member();
-        member.setUid("user1");
-
-        for (int i = 1; i < 5; i++) {
-
-            Profile profile1 = new Profile();
-            profile1.setFname("face" + i + ".jpg");
-
-            if (i == 1) {
-                profile1.setCurrent(true);
-            }
-
-            profile1.setMember(member);
-
-            profileRepo.save(profile1);
-
-        }
-    }// end method
-    // 수정, 삭제, 조회 작업
-
 }

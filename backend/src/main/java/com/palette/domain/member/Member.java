@@ -2,19 +2,27 @@ package com.palette.domain.member;
 
 import javax.persistence.*;
 
+import com.palette.domain.BaseTimeEntity;
 import lombok.*;
 
 @Getter
-@Setter
 @ToString
 @Entity
-@Table(name="tbl_members")
-@EqualsAndHashCode(of="uid")
-public class Member {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name="members")
+public class Member extends BaseTimeEntity {
 
     @Id
-    private String uid;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    private Long id;
     private String upw;
     private String uname;
+    private String profileFileName;
 
+    public Member(String upw, String uname, String profileFileName) {
+        this.upw = upw;
+        this.uname = uname;
+        this.profileFileName = profileFileName;
+    }
 }
