@@ -26,6 +26,9 @@ public class Photo extends BaseTimeEntity {
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_photo_post"))
     private Post post;
 
-
-
+    public Photo(String uploadFileName, String storeFileName, Post post) {
+        this.uploadFileName = uploadFileName;
+        this.storeFileName = storeFileName;
+        this.post = post;
+    }
 }

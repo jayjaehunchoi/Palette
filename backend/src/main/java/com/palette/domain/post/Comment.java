@@ -30,5 +30,10 @@ public class Comment extends BaseTimeEntity {
 
     private Long parent_comment_id;
 
-
+    public Comment(Post post, Member member, String comment_content, Long parent_comment_id) {
+        this.post = post;
+        this.member = member;
+        this.comment_content = comment_content;
+        this.parent_comment_id = parent_comment_id;
+    }
 }
