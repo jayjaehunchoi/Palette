@@ -17,7 +17,7 @@ public class UploadFile {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "photo_id")
+    @JoinColumn(name = "photo_id", foreignKey = @ForeignKey(name = "fk_upload_file_photo"))
     private Photo photo;
 
     private String uploadFileName; // 실제 업로드 이름
