@@ -1,39 +1,25 @@
 package com.palette.repository.impl;
 
-import com.palette.domain.member.QMember;
-import com.palette.domain.post.QLike;
-import com.palette.domain.post.QPhoto;
-import com.palette.domain.post.QPost;
 import com.palette.dto.*;
+import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.PostRepositoryCustom;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.expression.spel.ast.Projection;
-import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static com.palette.domain.member.QMember.*;
 import static com.palette.domain.post.QLike.*;
 import static com.palette.domain.post.QPhoto.*;
 import static com.palette.domain.post.QPost.*;
 import static org.springframework.util.StringUtils.*;
 
-@Repository
 public class PostRepositoryImpl implements PostRepositoryCustom {
 
     private JPAQueryFactory queryFactory;
@@ -60,9 +46,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return queryFactory.select(new QStoryListResponseDto(post.member.id.as("memberId"),
                 post.member.uname,
                 post.id.as("postId"),
-                post.title,
-                post.period.startDate,
-                post.period.endDate))
+                post.title))
                         .from(post)
                         .where(post.id.in(postIds))
                         .orderBy(post.id.desc())
@@ -74,7 +58,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     public Map<Long, String> findThumbnailByPostId(List<Long> postIds){
         Map<Long, String> baseMap = createBaseMap(postIds); // 이미지를 저장하지 않는 게시글에 대한 기본 썸네일 적용
 
-        List<Tuple> result = queryFactory.select(photo.post.id, photo.storeFileName)
+        List<Tuple> result = queryFactory.select(photo.post.id, photo.file.storeFileName)
                 .from(photo)
                 .where(photo.post.id.in(postIds))
                 .limit(1)

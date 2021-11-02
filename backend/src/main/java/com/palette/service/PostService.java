@@ -1,21 +1,17 @@
 package com.palette.service;
 
 import com.palette.domain.post.Post;
-import com.palette.dto.PostUpdateDto;
+import com.palette.dto.request.PostUpdateDto;
 import com.palette.dto.SearchCondition;
-import com.palette.dto.StoryListResponseDto;
+import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,15 +23,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
-
-    @Value("${file.dir}")
-    private String fileDir;
-
-    // todo : aws s3 연동 필요
-    // 파일 저장 디렉터리 full path
-    private String getThumbnailFullPath(String fileName){
-        return fileDir+fileName;
-    }
+    private final FileStorageService fileStorageService;
 
     @Transactional
     public void write(Post post){
@@ -70,7 +58,7 @@ public class PostService {
         results.forEach(result -> {
             UrlResource path = null;
             try {
-                path = new UrlResource("file:" +getThumbnailFullPath(thumbnailMap.get(result.getPostId())));
+                path = new UrlResource("file:" +fileStorageService.getFullPath(thumbnailMap.get(result.getPostId())));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
