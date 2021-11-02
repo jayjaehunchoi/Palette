@@ -18,17 +18,15 @@ public class Photo extends BaseTimeEntity {
     @Column(name = "photo_id")
     private Long id;
 
-    private String uploadFileName; // 실제 업로드 이름
-
-    private String storeFileName; // 저장될 파일 이름
+    @Embedded
+    private MyFile file;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_photo_post"))
     private Post post;
 
-    public Photo(String uploadFileName, String storeFileName, Post post) {
-        this.uploadFileName = uploadFileName;
-        this.storeFileName = storeFileName;
+    public Photo(MyFile file, Post post) {
+        this.file = file;
         this.post = post;
     }
 }

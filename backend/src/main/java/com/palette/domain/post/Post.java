@@ -3,13 +3,12 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
-import com.palette.dto.PostUpdateDto;
+import com.palette.dto.request.PostUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +28,12 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_board_member"))
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_post_member"))
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_group_id", foreignKey = @ForeignKey(name = "fk_post_post_group"))
+    private PostGroup postGroup;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
