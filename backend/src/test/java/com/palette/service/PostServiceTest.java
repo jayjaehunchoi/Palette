@@ -3,13 +3,13 @@ package com.palette.service;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Like;
+import com.palette.domain.post.MyFile;
 import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
-import com.palette.dto.StoryListResponseDto;
+import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.LikeRepository;
 import com.palette.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +85,7 @@ public class PostServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        post.getPhotos().add(new Photo("ab.jpg","ab.jpg",post));
+        post.getPhotos().add(new Photo(new MyFile("ab.jpg","ab.jpg"),post));
         postService.write(post);
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);

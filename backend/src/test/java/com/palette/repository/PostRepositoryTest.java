@@ -4,10 +4,7 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
-import com.palette.dto.StoryListResponseDto;
-import com.palette.dto.StoryListResponseDto;
-import com.palette.dto.StoryListResponseDto;
-import org.assertj.core.api.Assertions;
+import com.palette.dto.response.StoryListResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
