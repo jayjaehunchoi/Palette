@@ -1,6 +1,7 @@
 package com.palette.service;
 
 import com.palette.domain.post.Post;
+import com.palette.dto.PostUpdateDto;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.StoryListResponseDto;
 import com.palette.repository.PostRepository;
@@ -30,6 +31,8 @@ public class PostService {
     @Value("${file.dir}")
     private String fileDir;
 
+    // todo : aws s3 연동 필요
+    // 파일 저장 디렉터리 full path
     private String getThumbnailFullPath(String fileName){
         return fileDir+fileName;
     }
@@ -37,6 +40,20 @@ public class PostService {
     @Transactional
     public void write(Post post){
         postRepository.save(post);
+    }
+
+    // todo : null check
+    @Transactional
+    public void delete(Long postId){
+        postRepository.deleteById(postId);
+    }
+
+    // todo : null check , update 가능 목록 이야기 필요
+    @Transactional
+    public Post update(Long postId, PostUpdateDto dto){
+        Post findPost = postRepository.findById(postId).orElse(null);
+        findPost.update(dto);
+        return findPost;
     }
 
     // storyList 페이징 출력

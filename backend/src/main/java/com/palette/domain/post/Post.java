@@ -3,6 +3,7 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
+import com.palette.dto.PostUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,5 +58,10 @@ public class Post extends BaseTimeEntity {
         this.period = period;
         this.region = region;
         this.hit = 0;
+    }
+
+    public void update(PostUpdateDto dto){
+        title = dto.getTitle();
+        content = dto.getContent();
     }
 }

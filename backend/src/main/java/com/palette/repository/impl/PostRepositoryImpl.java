@@ -43,6 +43,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
     @Override
     public List<StoryListResponseDto> findStoryListWithPage(SearchCondition condition, int pageNo, int pageSize) {
+        // 페이징 성능 개선을 위한 index 기반 조회
         List<Long> postIds = queryFactory.select(post.id)
                 .from(post)// 1:n 조회는 페이징 불가, 따라서 페치 조인은 단건까지
                 .where(memberNameEq(condition.getName()),
@@ -68,10 +69,10 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                         .fetch();
     }
 
+    // 일대다 연관관계 조회, 1+N 문제 해결
     @Override
     public Map<Long, String> findThumbnailByPostId(List<Long> postIds){
-
-        Map<Long, String> baseMap = createBaseMap(postIds);
+        Map<Long, String> baseMap = createBaseMap(postIds); // 이미지를 저장하지 않는 게시글에 대한 기본 썸네일 적용
 
         List<Tuple> result = queryFactory.select(photo.post.id, photo.storeFileName)
                 .from(photo)
@@ -85,6 +86,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return baseMap;
     }
 
+    // todo : 기본 썸네일 파일 지정 후 파일 명 update 필요
     private Map<Long, String> createBaseMap(List<Long> postIds) {
         Map<Long, String> baseThumbnailMap = new HashMap<>();
         for (Long postId : postIds) {
@@ -93,7 +95,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return baseThumbnailMap;
     }
 
-    // 한번에 조회하여 1+N 이슈 1+1로 해결
+    // 일대다 연관관계 조회, 1+N 문제 해결
     @Override
     public Map<Long, Long> findLikesCountByPostId(List<Long> postIds){
         List<Tuple> tuple = queryFactory.select(like.post.id, like.post.id.count())
@@ -109,6 +111,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return likeCounts;
     }
 
+    // 동적 쿼리 작성용
     private BooleanExpression memberNameEq(String uname){
         return hasText(uname) ? post.member.uname.eq(uname):null;
     }
