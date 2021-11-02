@@ -3,7 +3,11 @@ package com.palette.domain.member;
 import javax.persistence.*;
 
 import com.palette.domain.BaseTimeEntity;
+import com.palette.domain.group.MemberGroup;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -21,6 +25,8 @@ public class Member extends BaseTimeEntity {
     private String profileFileName;
     private String email;
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberGroup> memberGroups = new ArrayList<>();
     @Builder
     public Member(String upw, String uname, String profileFileName, String email) {
         this.upw = upw;

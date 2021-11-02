@@ -3,7 +3,9 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
+import com.palette.dto.PostUpdateDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -21,13 +23,13 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-    private String tile;
+    private String title;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_ID", foreignKey = @ForeignKey(name = "fk_board_member"))
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_board_member"))
     private Member member;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,6 +50,18 @@ public class Post extends BaseTimeEntity {
     // 조회수
     private int hit;
 
+    @Builder
+    public Post(String title, String content, Member member, Period period, String region) {
+        this.title = title;
+        this.content = content;
+        this.member = member;
+        this.period = period;
+        this.region = region;
+        this.hit = 0;
+    }
 
-
+    public void update(PostUpdateDto dto){
+        title = dto.getTitle();
+        content = dto.getContent();
+    }
 }
