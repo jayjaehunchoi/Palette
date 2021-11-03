@@ -3,13 +3,10 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
-import com.palette.dto.PostUpdateDto;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.palette.dto.request.PostUpdateDto;
+import lombok.*;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +26,14 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_board_member"))
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_post_member"))
     private Member member;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_group_id", foreignKey = @ForeignKey(name = "fk_post_post_group"))
+    private PostGroup postGroup;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -47,6 +48,8 @@ public class Post extends BaseTimeEntity {
     // 지역
     private String region;
 
+    private int likeCount;
+
     // 조회수
     private int hit;
 
@@ -57,11 +60,20 @@ public class Post extends BaseTimeEntity {
         this.member = member;
         this.period = period;
         this.region = region;
+        this.likeCount = 0;
         this.hit = 0;
     }
 
     public void update(PostUpdateDto dto){
         title = dto.getTitle();
         content = dto.getContent();
+    }
+
+    public void visitPost(){
+        hit++;
+    }
+
+    public void pushLike(int num){
+        likeCount += num;
     }
 }
