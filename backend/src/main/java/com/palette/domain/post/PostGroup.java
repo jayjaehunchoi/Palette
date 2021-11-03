@@ -3,10 +3,7 @@ package com.palette.domain.post;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.PostGroupDto;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 

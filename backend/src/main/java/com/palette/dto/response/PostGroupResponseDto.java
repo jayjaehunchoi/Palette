@@ -15,7 +15,6 @@ public class PostGroupResponseDto {
     private String thumbNailUrl;
     private PeriodDto periodDto;
     private String region;
-    private long totalLikes;
 
     public PostGroupResponseDto(Long postGroupId, Long memberId, String memberName, String title, String thumbNailUrl, LocalDateTime startDate, LocalDateTime endDate, String region) {
         this.postGroupId = postGroupId;
@@ -27,7 +26,4 @@ public class PostGroupResponseDto {
         this.region = region;
     }
 
-    public void setTotalLikes(long likes){
-        totalLikes =  likes;
-    }
 }
