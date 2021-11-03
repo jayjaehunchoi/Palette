@@ -26,13 +26,12 @@ import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 public class PostServiceTest {
 
     @Autowired PostService postService;
-    @Autowired LikeRepository likeRepository;
+    @Autowired LikeService likeService;
     @Autowired MemberRepository memberRepository;
-    @Autowired PhotoRepository photoRepository;
 
     @Test
     void 좋아요_개수_조회(){
@@ -49,11 +48,31 @@ public class PostServiceTest {
                 .build();
         postService.write(post);
 
-        Like like = new Like(findMember);
-        like.pushLike(post);
-        like.pushLike(post);
+        likeService.pushLike(findMember,post.getId());
+
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(1);
+    }
+
+    @Test
+    void 좋아요_더블클릭_취소(){
+        Member member = new Member("1234", "wogns", "wogns");
+        memberRepository.save(member);
+        Member findMember = memberRepository.findAll().get(0);
+
+        Post post = Post.builder().title("제목입니다")
+                .member(findMember)
+                .content("내용")
+                .region("서울")
+                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .build();
+        postService.write(post);
+        likeService.pushLike(findMember,post.getId());
+        likeService.pushLike(findMember,post.getId());
+        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
+        assertThat(storyList.get(0).getLikesCount()).isEqualTo(0);
+
     }
 
     @Test

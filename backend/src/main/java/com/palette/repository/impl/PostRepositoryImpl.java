@@ -49,7 +49,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return queryFactory.select(new QStoryListResponseDto(post.member.id.as("memberId"),
                 post.member.uname,
                 post.id.as("postId"),
-                post.title))
+                post.title,
+                post.likeCount))
                         .from(post)
                         .where(post.id.in(postIds))
                         .orderBy(post.id.desc())

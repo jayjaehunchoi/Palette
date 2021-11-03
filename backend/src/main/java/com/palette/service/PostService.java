@@ -20,24 +20,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
-    private final LikeRepository likeRepository;
     private final FileStorageService fileStorageService;
 
     // 넘어온 사진이 없는 경우
-    @Transactional
     public void write(Post post){
         postRepository.save(post);
     }
 
     // 넘어온 사진이 있는경우
-    @Transactional
     public void write(Post post, List<MyFile> myFiles){
         for (MyFile myFile : myFiles) {
             Photo photo = new Photo(myFile);
@@ -47,30 +44,30 @@ public class PostService {
     }
 
     // todo : null check
-    @Transactional
     public void delete(Long postId){
         postRepository.deleteById(postId);
     }
 
     // todo : null check , update 가능 목록 이야기 필요
-    @Transactional
     public Post update(Long postId, PostUpdateDto dto){
         Post findPost = postRepository.findById(postId).orElse(null);
         findPost.update(dto);
         return findPost;
     }
 
+    //todo : 단건조회 - commentRepository 페이징 조회 만들고 추가방문 ++
+
     // storyList 페이징 출력
+    @Transactional(readOnly = true)
     public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo, int pageSize) {
         List<StoryListResponseDto> results = postRepository.findStoryListWithPage(condition, pageNo, pageSize);
         List<Long> postIds = results.stream().map(result -> result.getPostId()).collect(Collectors.toList());
-        Map<Long, Long> likes = likeRepository.findLikesCountByPostId(postIds);
         Map<Long, String> thumbnailMap = postRepository.findThumbnailByPostId(postIds);
-        updateStoryListResponseDto(results, likes, thumbnailMap);
+        updateStoryListResponseDto(results, thumbnailMap);
         return results;
     }
 
-    private void updateStoryListResponseDto(List<StoryListResponseDto> results, Map<Long, Long> likes, Map<Long, String> thumbnailMap) {
+    private void updateStoryListResponseDto(List<StoryListResponseDto> results,  Map<Long, String> thumbnailMap) {
         results.forEach(result -> {
             UrlResource path = null;
             try {
@@ -78,9 +75,7 @@ public class PostService {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            long likesCount = likes.getOrDefault(result.getPostId(),0L);
             result.setThumbNailFilePath(path);
-            result.setLikesCount(likesCount);
         });
     }
 

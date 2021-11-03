@@ -21,23 +21,21 @@ public class StoryListResponseDto {
     private Long postId;
     private Resource thumbNailFullPath;
     private String title;
-    private long likesCount;
+    private int likesCount;
 
     @QueryProjection
     @Builder
-    public StoryListResponseDto(Long memberId, String memberName, Long postId ,String title) {
+    public StoryListResponseDto(Long memberId, String memberName, Long postId ,String title, int likesCount) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.postId = postId;
         this.title = title;
-
+        this.likesCount = likesCount;
     }
 
     public void setThumbNailFilePath(Resource path){
         this.thumbNailFullPath = path;
     }
-    public void setLikesCount(long likes){
-        this.likesCount = likes;
-    }
+
 
 }
