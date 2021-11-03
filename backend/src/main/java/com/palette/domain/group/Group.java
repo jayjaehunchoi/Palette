@@ -28,9 +28,13 @@ public class Group {
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
     @Builder
-    public Group(String groupName,String groupIntroduction, Long membersNumber){
+    public Group(String groupName,String groupIntroduction){
         this.groupName = groupName;
         this.groupIntroduction = groupIntroduction;
-        this.membersNumber = membersNumber;
+    }
+
+    public void updateGroupName(String name){
+        this.groupName = name;
+        System.out.println(groupName);
     }
 }

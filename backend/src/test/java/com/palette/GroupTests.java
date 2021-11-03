@@ -49,14 +49,14 @@ public class GroupTests {
         // 그룹생성
         Group group = Group.builder().
                 groupName("그룹1").
-                groupIntroduction("테스트 그룹 1입니다.").
-                membersNumber(0L).build();
+                groupIntroduction("테스트 그룹 1입니다.")
+                .build();
         groupRepository.save(group);
 
         Group group2 = Group.builder()
                 .groupName("그룹2")
                 .groupIntroduction("테스트 그룹 2입니다")
-                .membersNumber(0L).build();
+                .build();
         groupRepository.save(group2);
 
         // 멤버 그룹 생성 후 member에 추가해주기
