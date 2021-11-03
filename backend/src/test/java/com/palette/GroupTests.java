@@ -32,7 +32,7 @@ public class GroupTests {
     MemberGroupRepository memberGroupRepository;
 
     @BeforeEach
-    public void setting() {
+    public void setUp() {
 
         // 회원생성
         Member member1 = new Member("1234", "wltn", "wltnfile");
@@ -112,11 +112,10 @@ public class GroupTests {
         Group group1 = groupRepository.findAll().get(0);
         Group group2 = groupRepository.findAll().get(1);
 
-        //간단한 테스트라 print 해봄..
-        System.out.println(findMember.getMemberGroups().get(0).getGroup().getGroupName());
-        System.out.println(findMember2.getMemberGroups().get(0).getGroup().getGroupName());
-        System.out.println(findMember3.getMemberGroups().get(0).getGroup().getGroupName());
-        System.out.println(findMember4.getMemberGroups().get(0).getGroup().getGroupName());
+        assertThat(findMember.getMemberGroups().get(0).getGroup()).isEqualTo(group1);
+        assertThat(findMember2.getMemberGroups().get(0).getGroup()).isEqualTo(group1);
+        assertThat(findMember3.getMemberGroups().get(0).getGroup()).isEqualTo(group2);
+        assertThat(findMember4.getMemberGroups().get(0).getGroup()).isEqualTo(group2);
     }
 
 }

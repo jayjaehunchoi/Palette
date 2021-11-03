@@ -1,5 +1,6 @@
 package com.palette.repository.impl;
 
+
 import com.palette.domain.member.QMember;
 import com.palette.domain.post.QLike;
 import com.palette.domain.post.QPhoto;
