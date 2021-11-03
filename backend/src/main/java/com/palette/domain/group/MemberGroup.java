@@ -1,13 +1,14 @@
 package com.palette.domain.group;
 
 import com.palette.domain.member.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class MemberGroup {
 
