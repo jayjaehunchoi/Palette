@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity
 public class MemberGroup {
 
@@ -24,8 +24,10 @@ public class MemberGroup {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public MemberGroup(Group group, Member member){
+    public void addMemberGroup(Group group, Member member){
         this.group = group;
         this.member = member;
+        group.getMemberGroups().add(this);
+        member.getMemberGroups().add(this);
     }
 }

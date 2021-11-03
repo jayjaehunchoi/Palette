@@ -33,8 +33,4 @@ public class Group {
         this.groupIntroduction = groupIntroduction;
         this.membersNumber = membersNumber;
     }
-
-    public void setMemberGroups(List<MemberGroup> memberGroups) {
-        this.memberGroups = memberGroups;
-    }
 }

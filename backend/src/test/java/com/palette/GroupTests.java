@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,43 +59,22 @@ public class GroupTests {
                 .membersNumber(0L).build();
         groupRepository.save(group2);
 
-        // 멤버 그룹1 생성
-        List<MemberGroup> memberGroups1 = new ArrayList<>();
-
-        MemberGroup memberGroup = new MemberGroup(group,member1);
+        // 멤버 그룹 생성 후 member에 추가해주기
+        MemberGroup memberGroup = new MemberGroup();
         memberGroupRepository.save(memberGroup);
+        memberGroup.addMemberGroup(group,member1);
 
-        MemberGroup memberGroup2 = new MemberGroup(group,member2);
+        MemberGroup memberGroup2 = new MemberGroup();
         memberGroupRepository.save(memberGroup2);
+        memberGroup2.addMemberGroup(group,member2);
 
-        memberGroups1.add(memberGroup);
-        memberGroups1.add(memberGroup2);
-
-
-        // 멤버 그룹2 생성
-        List<MemberGroup> memberGroups2 = new ArrayList<>();
-
-        MemberGroup memberGroup3 = new MemberGroup(group2,member3);
+        MemberGroup memberGroup3 = new MemberGroup();
         memberGroupRepository.save(memberGroup3);
+        memberGroup3.addMemberGroup(group2,member3);
 
-        MemberGroup memberGroup4 = new MemberGroup(group2,member4);
+        MemberGroup memberGroup4 = new MemberGroup();
         memberGroupRepository.save(memberGroup4);
-
-        memberGroups2.add(memberGroup3);
-        memberGroups2.add(memberGroup4);
-
-        //memberGroups 설정
-        member1.setMemberGroups(memberGroups1);
-        member2.setMemberGroups(memberGroups1);
-
-        member3.setMemberGroups(memberGroups2);
-        member4.setMemberGroups(memberGroups2);
-
-        group.setMemberGroups(memberGroups1);
-        group.setMemberGroups(memberGroups1);
-
-        group2.setMemberGroups(memberGroups2);
-        group2.setMemberGroups(memberGroups2);
+        memberGroup4.addMemberGroup(group2,member4);
 
     }// end method
 
