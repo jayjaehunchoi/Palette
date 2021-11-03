@@ -10,6 +10,7 @@ import com.palette.dto.SearchCondition;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.LikeRepository;
 import com.palette.repository.MemberRepository;
+import com.palette.repository.PhotoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -28,9 +30,9 @@ import static org.assertj.core.api.Assertions.*;
 public class PostServiceTest {
 
     @Autowired PostService postService;
-    @Autowired
-    LikeRepository likeRepository;
+    @Autowired LikeRepository likeRepository;
     @Autowired MemberRepository memberRepository;
+    @Autowired PhotoRepository photoRepository;
 
     @Test
     void 좋아요_개수_조회(){
@@ -47,8 +49,9 @@ public class PostServiceTest {
                 .build();
         postService.write(post);
 
-        likeRepository.save(new Like(findMember,post));
-
+        Like like = new Like(findMember);
+        like.pushLike(post);
+        like.pushLike(post);
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(1);
     }
@@ -85,12 +88,28 @@ public class PostServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        post.getPhotos().add(new Photo(new MyFile("ab.jpg","ab.jpg"),post));
-        postService.write(post);
+
+        List<MyFile> myFiles = new ArrayList<>();
+        myFiles.add(new MyFile("ab.jpg","ab.jpg"));
+        postService.write(post,myFiles);
+
+
+        Post post2 = Post.builder().title("제목입니다")
+                .member(findMember)
+                .content("내용")
+                .region("서울")
+                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .build();
+        List<MyFile> myFiles2 = new ArrayList<>();
+        myFiles2.add(new MyFile("abc.jpg","abc.jpg"));
+        myFiles2.add(new MyFile("abcd.jpg","abcd.jpg"));
+        postService.write(post2,myFiles2);
+
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(0).getThumbNailFullPath().getFilename()).isEqualTo("ab.jpg");
-
+        assertThat(storyList.get(1).getThumbNailFullPath().getFilename()).isEqualTo("ab.jpg");
+        assertThat(storyList.get(0).getThumbNailFullPath().getFilename()).isEqualTo("abc.jpg");
     }
 
     @Test

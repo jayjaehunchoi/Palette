@@ -1,9 +1,13 @@
 package com.palette.service;
 
+import com.palette.domain.post.MyFile;
+import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.request.PostUpdateDto;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.StoryListResponseDto;
+import com.palette.repository.LikeRepository;
+import com.palette.repository.PhotoRepository;
 import com.palette.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +27,22 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
     private final FileStorageService fileStorageService;
 
+    // 넘어온 사진이 없는 경우
     @Transactional
     public void write(Post post){
+        postRepository.save(post);
+    }
+
+    // 넘어온 사진이 있는경우
+    @Transactional
+    public void write(Post post, List<MyFile> myFiles){
+        for (MyFile myFile : myFiles) {
+            Photo photo = new Photo(myFile);
+            photo.setPicturesOnPost(post);
+        }
         postRepository.save(post);
     }
 
@@ -48,7 +64,7 @@ public class PostService {
     public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo, int pageSize) {
         List<StoryListResponseDto> results = postRepository.findStoryListWithPage(condition, pageNo, pageSize);
         List<Long> postIds = results.stream().map(result -> result.getPostId()).collect(Collectors.toList());
-        Map<Long, Long> likes = postRepository.findLikesCountByPostId(postIds);
+        Map<Long, Long> likes = likeRepository.findLikesCountByPostId(postIds);
         Map<Long, String> thumbnailMap = postRepository.findThumbnailByPostId(postIds);
         updateStoryListResponseDto(results, likes, thumbnailMap);
         return results;

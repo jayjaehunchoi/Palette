@@ -1,5 +1,7 @@
 package com.palette.repository.impl;
 
+import com.palette.domain.post.Post;
+import com.palette.domain.post.QPhoto;
 import com.palette.dto.*;
 import com.palette.dto.response.QStoryListResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
@@ -62,13 +64,27 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         List<Tuple> result = queryFactory.select(photo.post.id, photo.file.storeFileName)
                 .from(photo)
                 .where(photo.post.id.in(postIds))
-                .limit(1)
+                .orderBy(photo.id.asc())
                 .fetch();
 
         for (Tuple tuple : result) {
-            baseMap.replace(tuple.get(0,Long.class), tuple.get(1,String.class));
+            if(baseMap.get(tuple.get(0,Long.class)) == "기본썸네일"){
+                baseMap.replace(tuple.get(0,Long.class), tuple.get(1,String.class));
+            }
         }
         return baseMap;
+    }
+
+    // Comment는 페이징을 위해 따로 조회해서 사용할 것.
+    // Like 개수도 따로 조회해서 사용할 것.
+    public Post findSinglePost(Long postId){
+        List<Post> posts = queryFactory.select(post).distinct()
+                .from(post)
+                .join(post.photos,photo).fetchJoin()
+                .where(post.id.eq(postId))
+                .fetch();
+
+        return posts.get(0);
     }
 
     // todo : 기본 썸네일 파일 지정 후 파일 명 update 필요
@@ -78,22 +94,6 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
             baseThumbnailMap.put(postId,"기본썸네일");
         }
         return baseThumbnailMap;
-    }
-
-    // 일대다 연관관계 조회, 1+N 문제 해결
-    @Override
-    public Map<Long, Long> findLikesCountByPostId(List<Long> postIds){
-        List<Tuple> tuple = queryFactory.select(like.post.id, like.post.id.count())
-                .from(like)
-                .groupBy(like.post.id)
-                .where(like.post.id.in(postIds))
-                .fetch();
-
-        Map<Long, Long> likeCounts = new HashMap<>();
-        for (Tuple tup : tuple) {
-            likeCounts.put(tup.get(0,Long.class), tup.get(1,Long.class));
-        }
-        return likeCounts;
     }
 
     // 동적 쿼리 작성용

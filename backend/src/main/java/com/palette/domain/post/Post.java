@@ -4,10 +4,8 @@ import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.PostUpdateDto;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,5 +64,9 @@ public class Post extends BaseTimeEntity {
     public void update(PostUpdateDto dto){
         title = dto.getTitle();
         content = dto.getContent();
+    }
+
+    public void visitPost(){
+        hit++;
     }
 }
