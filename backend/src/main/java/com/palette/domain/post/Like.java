@@ -27,4 +27,9 @@ public class Like extends BaseTimeEntity {
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_likes_post"))
     private Post post;
 
+    public Like(Member member, Post post) {
+        this.member = member;
+        this.post = post;
+    }
+
 }
