@@ -2,7 +2,9 @@ package com.palette.service;
 
 import com.palette.domain.member.Member;
 import com.palette.domain.post.PostGroup;
+import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
+import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.exception.PaletteException;
 import com.palette.exception.PostGroupException;
 import com.palette.repository.PostGroupRepository;
@@ -19,12 +21,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class PostGroupService {
-
+    private final int PAGE_SIZE = 10;
     private final PostGroupRepository postGroupRepository;
 
     public void createPostGroup(PostGroup postGroup){
         postGroupRepository.save(postGroup);
     }
+
 
     public PostGroup updatePostGroup(Long id, PostGroupDto dto){
         PostGroup findPostGroup = findById(id);
@@ -37,8 +40,18 @@ public class PostGroupService {
         postGroupRepository.deleteById(id);
     }
 
-    public List<PostGroup> findPostGroupByMember(Member member){
-        return postGroupRepository.findByMember(member).orElse(Collections.emptyList());
+    // 멤버 아이디 조건으로 그룹 조회 (마이 블로그에서 활용 가능)
+    @Transactional(readOnly = true)
+    public List<PostGroupResponseDto> findPostGroupByMember(Member member, int pageNo){
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setName(member.getUname());
+        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
+    }
+
+    // 조건 없이 그룹 조회
+    @Transactional(readOnly = true)
+    public List<PostGroupResponseDto> findPostGroup(int pageNo){
+        return postGroupRepository.findStoryListWithPage(new SearchCondition(), pageNo, PAGE_SIZE);
     }
 
     @Transactional(readOnly = true)

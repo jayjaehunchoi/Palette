@@ -1,6 +1,7 @@
 package com.palette.repository.impl;
 
 import com.palette.dto.*;
+import com.palette.dto.response.QStoryListResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.PostRepositoryCustom;
 import com.querydsl.core.Tuple;
