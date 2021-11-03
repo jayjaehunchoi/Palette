@@ -36,24 +36,29 @@ public class GroupTests {
 
         // 회원생성
         Member member1 = new Member("1234", "wltn", "wltnfile");
+        memberRepo.save(member1);
 
         Member member2 = new Member("1234", "skfk", "skfkfile");
+        memberRepo.save(member2);
 
         Member member3 = new Member("1234", "wogns", "wognsfile");
+        memberRepo.save(member3);
 
         Member member4 = new Member("1234", "ruddls", "ruddlsfile");
+        memberRepo.save(member4);
 
         // 그룹생성
         Group group = Group.builder().
                 groupName("그룹1").
                 groupIntroduction("테스트 그룹 1입니다.").
                 membersNumber(0L).build();
+        groupRepository.save(group);
 
         Group group2 = Group.builder()
                 .groupName("그룹2")
                 .groupIntroduction("테스트 그룹 2입니다")
                 .membersNumber(0L).build();
-
+        groupRepository.save(group2);
 
         // 멤버 그룹1 생성
         List<MemberGroup> memberGroups1 = new ArrayList<>();
@@ -93,13 +98,6 @@ public class GroupTests {
         group2.setMemberGroups(memberGroups2);
         group2.setMemberGroups(memberGroups2);
 
-        memberRepo.save(member1);
-        memberRepo.save(member2);
-        memberRepo.save(member3);
-        memberRepo.save(member4);
-
-        groupRepository.save(group);
-        groupRepository.save(group2);
     }// end method
 
     @Test
