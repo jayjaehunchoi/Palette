@@ -32,4 +32,15 @@ public class Member extends BaseTimeEntity {
         this.uname = uname;
         this.profileFileName = profileFileName;
     }
+
+    public Member(String upw, String uname, String profileFileName,List<MemberGroup> memberGroups) {
+        this.upw = upw;
+        this.uname = uname;
+        this.profileFileName = profileFileName;
+        this.memberGroups = memberGroups;
+    }
+
+    public void setMemberGroups(List<MemberGroup> memberGroups){
+        this.memberGroups = memberGroups;
+    }
 }

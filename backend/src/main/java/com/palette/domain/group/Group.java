@@ -1,5 +1,6 @@
 package com.palette.domain.group;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,15 @@ public class Group {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
+
+    @Builder
+    public Group(String groupName,String groupIntroduction, Long membersNumber){
+        this.groupName = groupName;
+        this.groupIntroduction = groupIntroduction;
+        this.membersNumber = membersNumber;
+    }
+
+    public void setMemberGroups(List<MemberGroup> memberGroups) {
+        this.memberGroups = memberGroups;
+    }
 }

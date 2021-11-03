@@ -1,5 +1,6 @@
 package com.palette.domain.group;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,11 @@ public class Budget {
     //지출 기록
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expense> expenses = new ArrayList<>();
+
+    @Builder
+    public Budget(Group group, Long preparedBudget, List<Expense> expenses){
+        this.group = group;
+        this.preparedBudget = preparedBudget;
+        this.expenses = expenses;
+    }
 }

@@ -1,6 +1,7 @@
 package com.palette.domain.group;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,5 +27,13 @@ public class Expense {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "budget_id")
     private Budget budget;
+
+    @Builder
+    public Expense(String category, String detail, Long price, Budget budget){
+        this.category = category;
+        this.detail = detail;
+        this.price = price;
+        this.budget = budget;
+    }
 
 }
