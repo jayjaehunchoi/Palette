@@ -33,7 +33,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "post_group_id", foreignKey = @ForeignKey(name = "fk_post_post_group"))
     private PostGroup postGroup;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,6 +48,8 @@ public class Post extends BaseTimeEntity {
     // 지역
     private String region;
 
+    private int likeCount;
+
     // 조회수
     private int hit;
 
@@ -58,6 +60,7 @@ public class Post extends BaseTimeEntity {
         this.member = member;
         this.period = period;
         this.region = region;
+        this.likeCount = 0;
         this.hit = 0;
     }
 
@@ -68,5 +71,9 @@ public class Post extends BaseTimeEntity {
 
     public void visitPost(){
         hit++;
+    }
+
+    public void pushLike(int num){
+        likeCount += num;
     }
 }
