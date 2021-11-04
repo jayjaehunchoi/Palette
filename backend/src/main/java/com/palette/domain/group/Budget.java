@@ -22,16 +22,15 @@ public class Budget {
     private Group group;
 
     @Column
-    private Long preparedBudget;
+    private Long totalBudget;
 
     //지출 기록
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expense> expenses = new ArrayList<>();
 
     @Builder
-    public Budget(Group group, Long preparedBudget, List<Expense> expenses){
+    public Budget(Group group, Long totalBudget){
         this.group = group;
-        this.preparedBudget = preparedBudget;
-        this.expenses = expenses;
+        this.totalBudget = totalBudget;
     }
 }
