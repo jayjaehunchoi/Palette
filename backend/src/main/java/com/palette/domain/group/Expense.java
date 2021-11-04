@@ -15,8 +15,10 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //종류 : 어떤 종류의 지출인지(교통,식비,숙박,기타)
-    private String category;
+    //종류 : 어떤 종류의 지출인지(교통,식비,숙박,기타) EnumType으로 설정
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     //자세한 내용 : 지출의 자세한 내용
     private String detail;
@@ -29,11 +31,23 @@ public class Expense {
     private Budget budget;
 
     @Builder
-    public Expense(String category, String detail, Long price, Budget budget){
+    public Expense(Category category, String detail, Long price, Budget budget){
         this.category = category;
         this.detail = detail;
         this.price = price;
         this.budget = budget;
     }
 
+    public enum Category{
+        TRANSPORTATION("교통"),
+        FOOD("식비"),
+        LODGING("숙박"),
+        ETC("기타");
+
+        private String categoryName;
+
+        Category(String categoryName) {
+            this.categoryName = categoryName;
+        }
+    }
 }
