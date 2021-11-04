@@ -19,7 +19,7 @@ public class StoryListResponseDto {
     private Long memberId;
     private String memberName;
     private Long postId;
-    private Resource thumbNailFullPath;
+    private String thumbNailFullPath;
     private String title;
     private int likesCount;
 
@@ -33,7 +33,7 @@ public class StoryListResponseDto {
         this.likesCount = likesCount;
     }
 
-    public void setThumbNailFilePath(Resource path){
+    public void setThumbNailFilePath(String path){
         this.thumbNailFullPath = path;
     }
 

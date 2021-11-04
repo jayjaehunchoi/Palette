@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long>, PostRepositoryCustom {
+    // bulk delete
     @Transactional
     @Modifying
     @Query("delete from Post p where p.id in :ids")
