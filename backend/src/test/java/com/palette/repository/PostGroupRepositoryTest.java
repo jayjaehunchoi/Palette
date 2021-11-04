@@ -29,8 +29,8 @@ public class PostGroupRepositoryTest {
 
     @Test
     void 마이블로그_조회(){
-        Member member = new Member("1234","wogns","wogns0108");
-        Member member2 = new Member("1234","wogns11","wogns0108");
+        Member member = new Member("1234","wogns","wogns0108", "123");
+        Member member2 = new Member("1234","wogns11","wogns0108", "123");
         memberRepository.save(member);
         memberRepository.save(member2);
 
@@ -62,7 +62,7 @@ public class PostGroupRepositoryTest {
     @Test
     void 페이징_성능_확인(){
 
-        Member member = new Member("1234","wogns","wogns0108");
+        Member member = new Member("1234","wogns","wogns0108", "123");
         memberRepository.save(member);
 
         for(int i = 0 ; i < 10000; i++){

@@ -11,6 +11,8 @@ import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.LikeRepository;
 import com.palette.repository.MemberRepository;
 import com.palette.repository.PhotoRepository;
+import com.palette.repository.PostRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,11 @@ public class PostServiceTest {
     @Autowired PostService postService;
     @Autowired LikeService likeService;
     @Autowired MemberRepository memberRepository;
+    @Autowired PostRepository postRepository;
 
     @Test
     void 좋아요_개수_조회(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -56,7 +59,7 @@ public class PostServiceTest {
 
     @Test
     void 좋아요_더블클릭_취소(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -77,7 +80,7 @@ public class PostServiceTest {
 
     @Test
     void 기본_썸네일_조회(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -96,7 +99,7 @@ public class PostServiceTest {
 
     @Test
     void 지정_썸네일_조회(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -133,7 +136,7 @@ public class PostServiceTest {
 
     @Test
     void 복수_쿼리_확인(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -153,5 +156,9 @@ public class PostServiceTest {
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
         assertThat(storyList.size()).isEqualTo(10);
     }
-
+    @AfterEach
+    void tearDown(){
+        postRepository.deleteAll();
+        memberRepository.deleteAll();
+    }
 }
