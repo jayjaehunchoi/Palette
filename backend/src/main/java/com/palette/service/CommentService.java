@@ -2,6 +2,7 @@ package com.palette.service;
 
 import com.palette.domain.post.Comment;
 import com.palette.domain.post.Post;
+import com.palette.dto.response.CommentResponseDto;
 import com.palette.exception.CommentException;
 import com.palette.exception.PostException;
 import com.palette.repository.CommentRepository;
@@ -9,6 +10,8 @@ import com.palette.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -34,6 +37,24 @@ public class CommentService {
         Comment findComment = commentRepository.findById(commentId).orElse(null);
         isMemberHaveAuthToUpdate(findComment, memberId);
         findComment.removeComment(findComment);
+    }
+
+    /**
+     * @param commentId - 현재 답글이 보고 싶은 comment의 id
+     * @param curCommentId - 현재 답글의 commentId
+     * @return 댓글 dto return
+     */
+    public List<CommentResponseDto> findChildComment(Long commentId, Long curCommentId){
+        return commentRepository.findChildCommentByCommentIdWithCursor(commentId, curCommentId);
+    }
+
+    /**
+     * @param postId - 현재 댓글이 있는 게시물의 id
+     * @param commentId - 가장 마지막으로 출력된 commentId
+     * @return 현재 게시물에서 마지막 출력 commentId 보다 큰 Id를 가진 comment 10개
+     */
+    public List<CommentResponseDto> findCommentByClickViewMore(Long postId, Long commentId){
+        return commentRepository.findCommentByPostIdWithCursor(postId, commentId);
     }
 
     public Comment findById(Long id){

@@ -89,7 +89,7 @@ public class PostServiceTest {
         postService.write(post);
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(0).getThumbNailFullPath().getFilename()).isEqualTo("기본썸네일");
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/기본썸네일");
     }
 
     @Test
@@ -125,8 +125,8 @@ public class PostServiceTest {
 
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(1).getThumbNailFullPath().getFilename()).isEqualTo("ab.jpg");
-        assertThat(storyList.get(0).getThumbNailFullPath().getFilename()).isEqualTo("abc.jpg");
+        assertThat(storyList.get(1).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/ab.jpg");
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/abc.jpg");
     }
 
     @Test

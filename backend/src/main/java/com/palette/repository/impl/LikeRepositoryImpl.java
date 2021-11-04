@@ -36,6 +36,6 @@ public class LikeRepositoryImpl implements LikeRepositoryCustom {
     }
 
     private BooleanExpression ltLikeId(Long likeId) {
-        return likeId != null ? like.id.goe(likeId) : null;
+        return likeId != null ? like.id.lt(likeId) : null;
     }
 }
