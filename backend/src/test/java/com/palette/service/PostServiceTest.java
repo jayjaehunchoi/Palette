@@ -2,21 +2,18 @@ package com.palette.service;
 
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
-import com.palette.domain.post.Like;
 import com.palette.domain.post.MyFile;
-import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.LikeRepository;
 import com.palette.repository.MemberRepository;
-import com.palette.repository.PhotoRepository;
+import com.palette.repository.PostRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,12 +23,12 @@ import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-//@Transactional
 public class PostServiceTest {
 
     @Autowired PostService postService;
     @Autowired LikeService likeService;
     @Autowired MemberRepository memberRepository;
+    @Autowired PostRepository postRepository;
 
     @Test
     void 좋아요_개수_조회(){
@@ -152,6 +149,12 @@ public class PostServiceTest {
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
         assertThat(storyList.size()).isEqualTo(10);
+    }
+
+    @AfterEach
+    void tearDown(){
+        postRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 
 }
