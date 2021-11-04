@@ -9,6 +9,7 @@ import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.CommentRepository;
 import com.palette.repository.PostRepository;
+import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final FileStorageService fileStorageService;
     private final CommentRepository commentRepository;
 
     // 넘어온 사진이 없는 경우
@@ -54,7 +54,7 @@ public class PostService {
         return findPost;
     }
 
-    // 단건 조회, todo : need test
+    // 단건 조회
     public PostResponseDto findSinglePost(Long postId, Long commentId){
         Post findPost = postRepository.findSinglePost(postId);
 
@@ -80,13 +80,13 @@ public class PostService {
     private void updateStoryListResponseDto(List<StoryListResponseDto> results,  Map<Long, String> thumbnailMap) {
         results.forEach(result -> {
             String path = null;
-            path = fileStorageService.getFullPath(thumbnailMap.get(result.getPostId()));
+            path = thumbnailMap.get(result.getPostId());
             result.setThumbNailFilePath(path);
         });
     }
     private List<String> creatFullPathImageList(Post findPost) {
         return findPost.getPhotos().stream()
-                .map(photo -> fileStorageService.getFullPath(photo.getFile().getStoreFileName()))
+                .map(photo -> photo.getFile().getStoreFileName())
                 .collect(Collectors.toList());
     }
 
