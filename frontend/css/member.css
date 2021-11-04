@@ -1,0 +1,296 @@
+/*common*/
+body {
+	color: #333;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.4;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #333;
+}
+
+.container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 120px;
+}
+
+.container .inner {
+	width: 700px;
+	min-height: 700px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.container .inner .title {
+	margin-top: 50px;
+	font-size: 40px;
+	font-weight: 100;
+	color: #333;
+}
+
+/*Login*/
+.container .inner .loginInfo {
+	margin-top: 40px;
+}
+
+.container .inner .loginInfo input {
+	width: 350px;
+	padding: 13px;
+	border: 1px solid #a7a7a7;
+	color: #333;
+	font-size: 16px;
+	margin-top: 20px;	
+}
+
+.container .inner .loginInfo input::placeholder{
+	font-size: 15px;
+}
+
+
+.container .inner .rememberId {
+	width: 370px;
+	margin-top: 2px;
+	color: #a8a8a8;
+	font-size: 15px;
+	display: block;
+	text-align: left;
+}
+/*
+.login.chkMsg {
+	font-size: 12px;
+	padding: 0;
+	border: none;
+	color: red;
+	top: 280px;
+}
+*/
+
+.container .inner .loginBt button{
+	display: block;
+	background: #333;
+	color: white;
+	width: 380px;
+	height: 45px;
+	cursor: pointer;
+	font-size: 15px;
+	font-family: Arial, sans-serif;
+	font-weight: 700;
+	transition: .4s;
+	margin-top: 50px;
+}
+
+.container .inner .loginBt button:hover {
+	font-weight: 900;
+	font-size: 17px;
+}
+
+.container .inner .toJoin {
+	display: flex;
+	border: 1px solid #d2c5c9;
+	width: 380px;
+	height: 45px;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	border-radius: 20px;
+	color: #d2c5c9;
+}
+
+.container .inner .toJoin a{
+	text-decoration: none;
+	color: #686868;
+}
+
+.container .inner .findInfo {
+	margin-top: 40px;
+}
+.container .inner .findInfo span{
+	margin-right: 15px;
+	margin-left: 15px;
+}
+.container .inner .findInfo a{
+  font-size: 14px;
+  color : #656565;
+}
+
+/* JOIN */
+
+.container .inner .userInfo{
+ width: 500px;
+ margin-top: 20px;
+}
+
+.container .inner :nth-child(2){
+	margin-top: 70px;
+ }
+.container .inner .userInfo input{
+	width: 100%;
+	height: 42px;
+	font-size: 16px;
+}
+
+.container .inner .userInfo .instruction {
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.container .inner .userInfo .userId {
+	width: 380px;
+}
+
+
+.container .inner .userInfo .idDuplication {
+	margin-left: 7px;
+	height: 45px;
+	width: 98px;
+	border: 2px solid #333;
+	background-color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.container .inner .userInfo .userPwChk {
+	margin-top: 6px;
+}
+
+.container .inner .userInfo .selectBt {
+	height: 45px;
+	width: 100px;
+	border: 2px solid #333;
+	background-color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.container .inner .userInfo .userProfile {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center
+}
+
+.container .inner .uesrInfo .userProfile .preview {
+	width: 200px;
+	height: 200px;
+	border-radius: 70%;
+	overflow: hidden;
+}
+
+.container .inner .uesrInfo .userProfile .preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.container .inner .joinBt button{
+	display: block;
+	background: #333;
+	color: white;
+	width: 510px;
+	height: 54px;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: 700;
+	transition: .4s;
+	margin-top: 50px;
+}
+
+/* MODIFYINFO */
+
+
+.myInner {
+	width: 800px;
+	min-height: 500px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.myInner .title {
+	margin-top: 40px;
+	font-size: 40px;
+	font-weight: 100;
+	color: #333;
+}
+
+.myInner table {
+	margin-top: 40px;
+	margin-bottom: 20px;
+}
+.myInner .col1 {
+	width: 150px;
+	background-color: #dfdfdf;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.myInner .col2 {
+	border: 1px solid #dfdfdf;
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.myInner .col2 input {
+	width: 470px;
+	height: 40px;
+	border: none;
+	font-size: 15px;
+}
+
+.myInner .col2 .userProfile{
+	display: table-cell;
+	vertical-align:middle; 
+	height: 275px;	
+	position: relative;
+}
+
+.myInner .col2 .selectBt {
+	margin: auto;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	background-color: #fff;
+	border: #333 2px solid;
+	color: #333;
+	font-weight: 700;
+	height: 45px;
+	width: 100px;
+}
+
+.myInner .bts {
+	display: flex;
+	width: 650px;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.myInner .bts button {
+	height: 45px;
+	width: 100px;	
+	background-color: #333;
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+
+.myInner .bts .bts-left .cancelBt{
+	margin-right: 10px;
+}
+
+.myInner .bts .bts-right {
+	position: absolute;
+	right: 0;
+}
