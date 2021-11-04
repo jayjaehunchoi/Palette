@@ -44,6 +44,7 @@ public class CommentService {
      * @param curCommentId - 현재 답글의 commentId
      * @return 댓글 dto return
      */
+    @Transactional(readOnly = true)
     public List<CommentResponseDto> findChildComment(Long commentId, Long curCommentId){
         return commentRepository.findChildCommentByCommentIdWithCursor(commentId, curCommentId);
     }
@@ -53,10 +54,12 @@ public class CommentService {
      * @param commentId - 가장 마지막으로 출력된 commentId
      * @return 현재 게시물에서 마지막 출력 commentId 보다 큰 Id를 가진 comment 10개
      */
+    @Transactional(readOnly = true)
     public List<CommentResponseDto> findCommentByClickViewMore(Long postId, Long commentId){
         return commentRepository.findCommentByPostIdWithCursor(postId, commentId);
     }
 
+    @Transactional(readOnly = true)
     public Comment findById(Long id){
         return commentRepository.findById(id).orElse(null);
     }
