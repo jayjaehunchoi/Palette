@@ -2,11 +2,11 @@ package com.palette.repository;
 
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
+import com.palette.domain.post.MyFile;
+import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
-import com.palette.dto.StoryListResponseDto;
-import com.palette.dto.StoryListResponseDto;
-import com.palette.dto.StoryListResponseDto;
+import com.palette.dto.response.StoryListResponseDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -32,11 +31,11 @@ class PostRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
 
         Member findMember = memberRepository.findAll().get(0);
-        System.out.println(findMember);
+
         for(int i = 0 ; i < 100 ; i++){
             String region = "서울";
             if(i > 50 )region = "부산";
@@ -47,6 +46,10 @@ class PostRepositoryTest {
                     .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                             , LocalDateTime.of(2021, 11, 5, 20, 20)))
                     .build();
+            for(int j = 0 ; j < 3; j++){
+                Photo photo = new Photo(new MyFile("abc"+i, "abc"+i));
+                photo.setPicturesOnPost(post);
+            }
 
             postRepository.save(post);
         }
@@ -110,6 +113,14 @@ class PostRepositoryTest {
 
         assertThat(stories.size()).isEqualTo(1);
         assertThat(stories.get(0).getTitle()).isEqualTo("제목입니다22");
+    }
+
+    @Test
+    void 단건조회(){
+        Post post = postRepository.findAll().get(0);
+        Post singlePost = postRepository.findSinglePost(post.getId());
+
+        Assertions.assertThat(singlePost.getPhotos().size()).isEqualTo(3);
 
     }
 

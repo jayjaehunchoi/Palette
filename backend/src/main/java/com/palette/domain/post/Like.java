@@ -3,11 +3,13 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.member.Member;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(of = "likes_id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "likes")
@@ -27,9 +29,18 @@ public class Like extends BaseTimeEntity {
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_likes_post"))
     private Post post;
 
-    public Like(Member member, Post post) {
+    public Like(Member member) {
         this.member = member;
+    }
+    public void pushLike(Post post, boolean isExist){
+        if(isExist){
+            post.getLikes().remove(post.getLikes().indexOf(this));
+            post.pushLike(-1);
+            return;
+        }
         this.post = post;
+        post.getLikes().add(this);
+        post.pushLike(1);
     }
 
 }

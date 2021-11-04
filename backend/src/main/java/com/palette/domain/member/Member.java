@@ -23,14 +23,23 @@ public class Member extends BaseTimeEntity {
     private String upw;
     private String uname;
     private String profileFileName;
+    private String email;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
-
-    public Member(String upw, String uname, String profileFileName) {
+    @Builder
+    public Member(String upw, String uname, String profileFileName, String email) {
         this.upw = upw;
         this.uname = uname;
         this.profileFileName = profileFileName;
+        this.email = email;
+    }
+
+    public Member update(String uname, String profileFileName) {
+        this.uname = uname;
+        this.profileFileName = profileFileName;
+
+        return this;
     }
 
     public Member(String upw, String uname, String profileFileName,List<MemberGroup> memberGroups) {

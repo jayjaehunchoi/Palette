@@ -1,4 +1,4 @@
-package com.palette.dto;
+package com.palette.dto.response;
 
 import com.palette.domain.post.Like;
 import com.palette.domain.post.Photo;
@@ -21,24 +21,21 @@ public class StoryListResponseDto {
     private Long postId;
     private Resource thumbNailFullPath;
     private String title;
-    private long likesCount;
-    private PeriodDto period;
+    private int likesCount;
 
     @QueryProjection
     @Builder
-    public StoryListResponseDto(Long memberId, String memberName, Long postId ,String title , LocalDateTime startDate, LocalDateTime endDate) {
+    public StoryListResponseDto(Long memberId, String memberName, Long postId ,String title, int likesCount) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.postId = postId;
         this.title = title;
-        this.period = new PeriodDto(startDate,endDate);
+        this.likesCount = likesCount;
     }
 
     public void setThumbNailFilePath(Resource path){
         this.thumbNailFullPath = path;
     }
-    public void setLikesCount(long likes){
-        this.likesCount = likes;
-    }
+
 
 }
