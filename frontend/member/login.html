@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/frontend/favicon.png" />
+
+  <!-- header jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("section div#headers").load("/frontend/static/header.html");  
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="/frontend/css/member.css">
+  <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script defer src="/frontend/js/login.js"> </script>
+  <title>Palette.</title>
+</head>
+<body>
+  <section>
+    <div id="headers"></div>
+  </section>
+
+  <section>
+  <div class="container">
+  <div class="inner">
+
+    <div class="title">
+     <h2>Login</h2>
+    </div>
+
+    <div class="loginInfo">
+     <input class ="userId" type="text" placeholder="아이디(이메일)"> <br>
+     <input class ="userPw" type="password" placeholder="비밀번호"><br>
+    </div>
+
+    <div class = "rememberId">
+      <input type="checkbox"> 
+      <span> 아이디 저장</span>
+    </div>
+
+    <div class="loginBt">
+     <button>로그인</button> <br>
+    </div>
+
+  <div class="toJoin">
+    <a href="/frontend/member/join.html"> 계정이 없으신가요? 회원가입하기 </a>
+  </div>
+
+  <div class="findInfo">
+    <a href="javascript:void(0)"> 아이디 찾기 </a>
+    <span>|</span>
+    <a href="javascript:void(0)"> 비밀번호 찾기 </a>
+  </div>
+
+
+  </div>
+  </div>
+</section>
+</body>
+</html>
