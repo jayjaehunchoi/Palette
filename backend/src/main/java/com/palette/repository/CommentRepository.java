@@ -8,8 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-//    @Modifying
-//    @Query("delete from Post p where p.id in :ids")
-//    void deleteAllByIdInQuery(@Param("ids") List<Long> ids);
+public interface CommentRepository extends JpaRepository<Comment, Long>, CommentRepositoryCustom {
+
 }
