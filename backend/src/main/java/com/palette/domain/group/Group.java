@@ -22,7 +22,7 @@ public class Group {
 
     private String groupIntroduction;
 
-    private  Long membersNumber;
+    private  Long numberOfPeople;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
