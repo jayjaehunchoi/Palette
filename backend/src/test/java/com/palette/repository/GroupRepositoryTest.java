@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-//@Transactional
+@Transactional
 public class GroupRepositoryTest {
     //group repository crud test
     @Autowired private MemberRepository memberRepository;

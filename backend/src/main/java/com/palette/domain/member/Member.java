@@ -48,10 +48,4 @@ public class Member extends BaseTimeEntity {
         this.profileFileName = profileFileName;
         this.memberGroups = memberGroups;
     }
-
-    public void addMemberGroups(MemberGroup memberGroups){
-        //Member의 membergroups에 추가해주기
-        this.memberGroups.add(memberGroups);
-       memberGroups.getGroup().getMemberGroups().add(memberGroups);
-    }
 }
