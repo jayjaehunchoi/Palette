@@ -1,7 +1,6 @@
 package com.palette.repository.impl;
 
 import com.palette.domain.post.Post;
-import com.palette.domain.post.QPhoto;
 import com.palette.dto.*;
 import com.palette.dto.response.QStoryListResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
@@ -9,8 +8,8 @@ import com.palette.repository.PostRepositoryCustom;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
-
 import javax.persistence.EntityManager;
 
 import java.util.ArrayList;
@@ -18,11 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.palette.domain.post.QLike.*;
 import static com.palette.domain.post.QPhoto.*;
 import static com.palette.domain.post.QPost.*;
 import static org.springframework.util.StringUtils.*;
 
+@Repository
 public class PostRepositoryImpl implements PostRepositoryCustom {
 
     private JPAQueryFactory queryFactory;

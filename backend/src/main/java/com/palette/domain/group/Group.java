@@ -1,5 +1,7 @@
 package com.palette.domain.group;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,7 @@ import java.util.List;
 
 @Table(name = "groups")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Group {
     @Id
@@ -20,8 +22,19 @@ public class Group {
 
     private String groupIntroduction;
 
-    private  Long membersNumber;
+    private  Long numberOfPeople;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
+
+    @Builder
+    public Group(String groupName,String groupIntroduction){
+        this.groupName = groupName;
+        this.groupIntroduction = groupIntroduction;
+    }
+
+    public void updateGroupName(String name){
+        this.groupName = name;
+        System.out.println(groupName);
+    }
 }
