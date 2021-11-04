@@ -26,7 +26,7 @@ public class ProfileTests {
     public void testInsertMembers() { //더미 회원 생성
 
         IntStream.range(1, 101).forEach(i -> {
-            Member member = new Member("pw" + i, "uname" + i, "profileFileName" + i + ".png");
+            Member member = new Member("pw" + i, "uname" + i, "profileFileName" + i + ".png", i +"@sample.com");
             memberRepo.save(member);
         });
 

@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -32,7 +33,7 @@ public class PostServiceTest {
 
     @Test
     void 좋아요_개수_조회(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -53,7 +54,7 @@ public class PostServiceTest {
 
     @Test
     void 좋아요_더블클릭_취소(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -74,7 +75,7 @@ public class PostServiceTest {
 
     @Test
     void 기본_썸네일_조회(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -93,7 +94,7 @@ public class PostServiceTest {
 
     @Test
     void 지정_썸네일_조회(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -130,7 +131,7 @@ public class PostServiceTest {
 
     @Test
     void 복수_쿼리_확인(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -153,8 +154,10 @@ public class PostServiceTest {
 
     @AfterEach
     void tearDown(){
+        System.out.println("================After Each====================");
         postRepository.deleteAll();
         memberRepository.deleteAll();
     }
+
 
 }

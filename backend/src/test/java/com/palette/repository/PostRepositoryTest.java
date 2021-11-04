@@ -31,7 +31,7 @@ class PostRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234", "wogns", "wogns");
+        Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
 
         Member findMember = memberRepository.findAll().get(0);
@@ -119,9 +119,7 @@ class PostRepositoryTest {
     void 단건조회(){
         Post post = postRepository.findAll().get(0);
         Post singlePost = postRepository.findSinglePost(post.getId());
-
         Assertions.assertThat(singlePost.getPhotos().size()).isEqualTo(3);
-
     }
 
 }
