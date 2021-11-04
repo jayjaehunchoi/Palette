@@ -22,7 +22,7 @@ public class Group {
 
     private String groupIntroduction;
 
-    private  Long numberOfPeople;
+    private int numberOfPeople;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
@@ -31,10 +31,10 @@ public class Group {
     public Group(String groupName,String groupIntroduction){
         this.groupName = groupName;
         this.groupIntroduction = groupIntroduction;
+        this.numberOfPeople = 1;
     }
 
     public void updateGroupName(String name){
         this.groupName = name;
-        System.out.println(groupName);
     }
 }
