@@ -4,6 +4,7 @@ package com.palette.config;
 import com.palette.repository.MemberRepository;
 import com.palette.domain.member.Member;
 
+import com.palette.utils.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -35,7 +36,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         Member member = saveOrUpdate(attributes);
-        httpSession.setAttribute("member", new SessionUser(member));
+        httpSession.setAttribute(SessionUtil.MEMBER, new SessionUser(member));
 
 
         return new DefaultOAuth2User(
