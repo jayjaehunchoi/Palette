@@ -46,7 +46,7 @@ public class PostGroup {
 
     public void update(PostGroupDto dto){
         title = dto.getTitle();
-        period = new Period(dto.getPeriodDto().getStartDate(), dto.getPeriodDto().getEndDate());
+        period = new Period(dto.getPeriod().getStartDate(), dto.getPeriod().getEndDate());
         region = dto.getRegion();
     }
 }

@@ -3,16 +3,18 @@ package com.palette.controller;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
-import com.palette.domain.post.Post;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.GeneralResponse;
+import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
+import com.palette.dto.response.StoryListResponseDto;
 import com.palette.service.PostGroupService;
-import com.palette.utils.HttpResponseUtil;
+import com.palette.service.PostService;
 import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import static com.palette.utils.HttpResponseUtil.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/postgroup")
 @RestController
@@ -30,19 +33,20 @@ public class PostGroupController {
 
     private final PostGroupService postGroupService;
     private final S3Uploader s3Uploader;
+    private final PostService postService;
 
     // /postgroup?page={pageNumber}
     // 1페이지당 9개 그룹 출력
     @GetMapping
-    public ResponseEntity<GeneralResponse> getGroupPageWithoutFilter(@RequestParam int page){
+    public ResponseEntity<GeneralResponse> getGroupPostWithoutFilter(@RequestParam(defaultValue = "1", required = false) int page){
         List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(page);
-        GeneralResponse<Object> build = GeneralResponse.builder().data(postGroup).build();
-        return ResponseEntity.ok(build);
+        GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
+        return ResponseEntity.ok(res);
     }
 
     // /postgroup/{필터}/{필터 조건}?page={pageNumber}
     @GetMapping("/{filter}/{condition}")
-    public ResponseEntity<GeneralResponse> getGroupPageWithFilter(@PathVariable String filter, @PathVariable String condition, @RequestParam int page){
+    public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@PathVariable String filter, @PathVariable String condition, @RequestParam(defaultValue = "1", required = false) int page){
         List<PostGroupResponseDto> postGroup = null;
         switch (filter){
             case "member" :
@@ -54,8 +58,17 @@ public class PostGroupController {
             case "title" :
                 postGroup = postGroupService.findPostGroupByTitle(condition, page);
         }
-        GeneralResponse<Object> build = GeneralResponse.builder().data(postGroup).build();
-        return ResponseEntity.ok(build);
+        GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GeneralResponse> getSingleGroupPost(@PathVariable Long id){
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setPostGroupId(id);
+        List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, 1);
+        GeneralResponse<Object> res = GeneralResponse.builder().data(storyList).build();
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping
@@ -95,7 +108,7 @@ public class PostGroupController {
         PostGroup postGroup = PostGroup.builder()
                 .title(dto.getTitle())
                 .member(member)
-                .period(new Period(dto.getPeriodDto()))
+                .period(new Period(dto.getPeriod()))
                 .region(dto.getRegion())
                 .build();
         postGroup.setThumbNail(myFile);
