@@ -3,6 +3,7 @@ package com.palette.repository;
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class BudgetRepositoryTest {
 
     @Test
     void 예산_삭제(){ //delete
-        Budget findBudget = budgetRepository.findById(1L).orElse(null);
+        Budget findBudget = budgetRepository.findAll().get(0);
         if(findBudget != null){
             budgetRepository.delete(findBudget);
         }

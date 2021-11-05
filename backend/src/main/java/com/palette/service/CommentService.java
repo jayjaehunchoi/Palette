@@ -77,5 +77,6 @@ public class CommentService {
         if(comment.getMember().getId() != memberId){
             throw new CommentException("댓글 수정 / 삭제 권한이 없습니다.");
         }
+
     }
 }

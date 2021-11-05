@@ -102,6 +102,6 @@ public class GroupServiceTest {
         Budget budget = new Budget(findGroup,100000L);
         budgetRepository.save(budget);
 
-        assertThat(budgetRepository.getById(budget.getId()).getGroup()).isEqualTo(findGroup);
+        assertThat(budgetRepository.findById(budget.getId()).orElse(null).getGroup()).isEqualTo(findGroup);
     }
 }
