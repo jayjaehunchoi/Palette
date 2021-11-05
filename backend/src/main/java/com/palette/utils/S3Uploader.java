@@ -31,6 +31,7 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
+    // 복수의 파일 한번에 업로드
     public List<MyFile> uploadFiles(List<MultipartFile> multipartFiles) throws IOException{
         List<MyFile> myFiles = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
@@ -38,6 +39,12 @@ public class S3Uploader {
             myFiles.add(uploadToS3(uploadFile));
         }
         return myFiles;
+    }
+
+    // 단건 파일 업로드
+    public MyFile uploadSingleFile(MultipartFile multipartFile) throws IOException{
+        File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("파일 전환 실패"));
+        return uploadToS3(uploadFile);
     }
 
     public void deleteS3(List<String> storedFileNames){

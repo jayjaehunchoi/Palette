@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class PostGroupService {
-    private final int PAGE_SIZE = 10;
+    private final int PAGE_SIZE = 9;
     private final PostGroupRepository postGroupRepository;
 
     @Transactional
