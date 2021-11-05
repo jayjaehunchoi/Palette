@@ -4,6 +4,7 @@ import com.palette.domain.member.Member;
 import com.palette.domain.member.QMember;
 import com.palette.repository.LikeRepositoryCustom;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.palette.domain.member.QMember.*;
+import static com.palette.domain.post.QComment.comment;
 import static com.palette.domain.post.QLike.like;
 
 public class LikeRepositoryImpl implements LikeRepositoryCustom {
@@ -27,9 +29,13 @@ public class LikeRepositoryImpl implements LikeRepositoryCustom {
         return queryFactory.select(member)
                 .from(like)
                 .join(like.member, member).fetchJoin()
-                .where(like.post.id.eq(postId), like.id.lt(likeId))
+                .where(like.post.id.eq(postId), ltLikeId(likeId))
                 .orderBy(like.id.desc())
                 .limit(LIKE_SIZE)
                 .fetch();
+    }
+
+    private BooleanExpression ltLikeId(Long likeId) {
+        return likeId != null ? like.id.lt(likeId) : null;
     }
 }

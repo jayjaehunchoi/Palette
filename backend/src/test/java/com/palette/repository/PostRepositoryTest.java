@@ -36,9 +36,9 @@ class PostRepositoryTest {
 
         Member findMember = memberRepository.findAll().get(0);
 
-        for(int i = 0 ; i < 100 ; i++){
+        for(int i = 0 ; i < 30 ; i++){
             String region = "서울";
-            if(i > 50 )region = "부산";
+            if(i > 15 )region = "부산";
             Post post = Post.builder().title("제목입니다" + i)
                     .member(findMember)
                     .content("내용")
@@ -71,7 +71,7 @@ class PostRepositoryTest {
         searchCondition.setRegion("서울");
         List<StoryListResponseDto> stories = postRepository.findStoryListWithPage(searchCondition, 1, 10);
 
-        int i = 50;
+        int i = 15;
         for (StoryListResponseDto story : stories) {
             assertThat(story.getTitle()).isEqualTo("제목입니다"+i);
             i--;
@@ -84,7 +84,7 @@ class PostRepositoryTest {
         searchCondition.setRegion("부산");
         List<StoryListResponseDto> stories = postRepository.findStoryListWithPage(searchCondition, 1, 10);
 
-        int i = 99;
+        int i = 29;
         for (StoryListResponseDto story : stories) {
             assertThat(story.getTitle()).isEqualTo("제목입니다"+i);
             i--;
@@ -96,7 +96,7 @@ class PostRepositoryTest {
         SearchCondition searchCondition = new SearchCondition();
         searchCondition.setTitle("입니다");
         List<StoryListResponseDto> stories = postRepository.findStoryListWithPage(searchCondition, 1, 10);
-        int i = 99;
+        int i = 29;
         for (StoryListResponseDto story : stories) {
             assertThat(story.getTitle()).isEqualTo("제목입니다"+i);
             i--;
@@ -119,9 +119,18 @@ class PostRepositoryTest {
     void 단건조회(){
         Post post = postRepository.findAll().get(0);
         Post singlePost = postRepository.findSinglePost(post.getId());
+        assertThat(singlePost.getPhotos().size()).isEqualTo(3);
+    }
 
-        Assertions.assertThat(singlePost.getPhotos().size()).isEqualTo(3);
+    @Test
+    void 일정확인(){
+        Post post = postRepository.findAll().get(0);
+        Post singlePost = postRepository.findSinglePost(post.getId());
+        LocalDateTime startDate = singlePost.getPeriod().getStartDate();
+        LocalDateTime endDate = singlePost.getPeriod().getEndDate();
 
+        assertThat(startDate).isEqualTo(LocalDateTime.of(2021, 11, 2, 20, 20));
+        assertThat(endDate).isEqualTo(LocalDateTime.of(2021, 11, 5, 20, 20));
     }
 
 }
