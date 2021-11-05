@@ -1,0 +1,104 @@
+/* common */
+footer{
+    background-color: blue;   
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 25vh;
+}
+
+/* read */
+.title{
+    margin-top: 140px;
+}
+
+.photo{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.image img {
+    width : 600px;
+}
+
+.content{
+    margin-top: 50px;
+}
+
+body{
+    position: relative;
+    text-align: center; 
+    justify-content: center;
+    display: block; 
+    /* margin-top: 50px; */
+}
+
+#modify{
+    margin-top: 50px;
+    justify-content: left;
+}
+
+#delete{
+    margin-top: 50px;
+}
+
+/* 좋아요 버튼 */
+ .like-content{
+    display: inline-block;
+    width:300px;
+    margin: 2px auto;
+    font-size: 13px;
+    text-align: center;
+}
+
+.like-content .btn-secondary{
+    display: block;
+    margin: 30px ;
+    margin-top: 70px;
+    text-align: center;
+    background-color: #ed2553;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(240,75,113);
+    padding :10px 17px;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    outline : none;
+    color:#fff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+
+.like-content .btn-secondary:hover{
+    transform:translateY(-3px);
+}
+
+.like-content .btn-secondary .fa{
+    margin-left: 5px;
+} 
+
+/* 댓글 */
+
+.comments{
+margin: 50px;
+border: 2px solid rgba(232,230,230,0.99);
+}
+
+.comments .comment-detail{
+
+}
+
+.comments .comment-detail #new_comment{
+    border: 2px solid rgba(232,230,230,0.99);
+    width: 760px;
+}
+
+.Ypkk- {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+}
