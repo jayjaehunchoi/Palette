@@ -76,4 +76,8 @@ public class Post extends BaseTimeEntity {
     public void pushLike(int num){
         likeCount += num;
     }
+
+    public void createPostOnPostGroup(PostGroup postGroup){
+        this.postGroup = postGroup;
+    }
 }

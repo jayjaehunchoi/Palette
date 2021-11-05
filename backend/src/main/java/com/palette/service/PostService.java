@@ -3,11 +3,14 @@ package com.palette.service;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
+import com.palette.domain.post.PostGroup;
 import com.palette.dto.request.PostUpdateDto;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
+import com.palette.exception.PostGroupException;
 import com.palette.repository.CommentRepository;
+import com.palette.repository.PostGroupRepository;
 import com.palette.repository.PostRepository;
 import com.palette.utils.ConstantUtil;
 import com.palette.utils.S3Uploader;
@@ -28,14 +31,23 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final PostGroupRepository postGroupRepository;
 
     // 넘어온 사진이 없는 경우
-    public void write(Post post){
+    public void write(Post post, Long postGroupId){
+        PostGroup postGroup = postGroupRepository.findById(postGroupId).orElse(null);
+        isPostGroupExist(postGroup);
+        post.createPostOnPostGroup(postGroup);
         postRepository.save(post);
     }
 
+
     // 넘어온 사진이 있는경우
-    public void write(Post post, List<MyFile> myFiles){
+    public void write(Post post, Long postGroupId, List<MyFile> myFiles){
+        PostGroup postGroup = postGroupRepository.findById(postGroupId).orElse(null);
+        isPostGroupExist(postGroup);
+        post.createPostOnPostGroup(postGroup);
+
         for (MyFile myFile : myFiles) {
             Photo photo = new Photo(myFile);
             photo.setPicturesOnPost(post);
@@ -91,6 +103,11 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    private void isPostGroupExist(PostGroup postGroup) {
+        if(postGroup == null){
+            throw new PostGroupException("게시물 그룹이 존재하지 않습니다.");
+        }
+    }
 
 
 }

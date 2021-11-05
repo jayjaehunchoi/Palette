@@ -36,7 +36,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(post)// 1:n 조회는 페이징 불가, 따라서 페치 조인은 단건까지
                 .where(memberNameEq(condition.getName()),
                         regionEq(condition.getRegion()),
-                        titleContain(condition.getTitle()))
+                        titleContain(condition.getTitle()),
+                        postGroupIdEq(condition.getPostGroupId()))
                 .orderBy(post.id.desc())
                 .offset(pageNo-1)
                 .limit(pageSize)
@@ -105,5 +106,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
     private BooleanExpression titleContain(String title){
         return hasText(title) ? post.title.contains(title) : null; // string 값 포함 검색값 조회
+    }
+    private BooleanExpression postGroupIdEq(Long postGroupId){
+        return postGroupId != null ? post.postGroup.id.eq(postGroupId) : null;
     }
 }
