@@ -49,7 +49,7 @@ public class PostServiceTest {
 
         likeService.pushLike(findMember,post.getId());
 
-        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
+        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(1);
     }
 
@@ -69,7 +69,7 @@ public class PostServiceTest {
         postService.write(post);
         likeService.pushLike(findMember,post.getId());
         likeService.pushLike(findMember,post.getId());
-        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
+        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(0);
 
     }
@@ -89,8 +89,8 @@ public class PostServiceTest {
                 .build();
         postService.write(post);
 
-        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/기본썸네일");
+        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("기본썸네일");
     }
 
     @Test
@@ -125,9 +125,9 @@ public class PostServiceTest {
         postService.write(post2,myFiles2);
 
 
-        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(1).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/ab.jpg");
-        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/abc.jpg");
+        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
+        assertThat(storyList.get(1).getThumbNailFullPath()).isEqualTo("ab.jpg");
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("abc.jpg");
     }
 
     @Test
@@ -172,8 +172,8 @@ public class PostServiceTest {
             postService.write(post);
         }
 
-        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.size()).isEqualTo(10);
+        List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
+        assertThat(storyList.size()).isEqualTo(9);
     }
 
     @AfterEach

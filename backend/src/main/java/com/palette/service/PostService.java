@@ -9,6 +9,7 @@ import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.CommentRepository;
 import com.palette.repository.PostRepository;
+import com.palette.utils.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,8 +70,8 @@ public class PostService {
 
     // storyList 페이징 출력
     @Transactional(readOnly = true)
-    public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo, int pageSize) {
-        List<StoryListResponseDto> results = postRepository.findStoryListWithPage(condition, pageNo, pageSize);
+    public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo) {
+        List<StoryListResponseDto> results = postRepository.findStoryListWithPage(condition, pageNo, ConstantUtil.PAGE_SIZE);
         List<Long> postIds = results.stream().map(result -> result.getPostId()).collect(Collectors.toList());
         Map<Long, String> thumbnailMap = postRepository.findThumbnailByPostId(postIds);
         updateStoryListResponseDto(results, thumbnailMap);
