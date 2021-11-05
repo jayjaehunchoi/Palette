@@ -1,0 +1,55 @@
+header{
+    background-color: blue;
+    height: 100px;
+}
+
+footer{
+    background-color: blue;   
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 25vh;
+}
+
+body{
+    position: relative;
+    text-align: center; 
+    justify-content: center;
+    display: block; 
+    /* margin-top: 50px; */
+}
+
+.container{
+    margin-top: 140px;
+}
+
+.container h2{
+    font-size: 30px;
+}
+
+.container .form-group{
+    margin-top: 30px;
+}
+
+.container .form-group label{
+    display: block; 
+    margin-top: 20px; 
+    letter-spacing: 2px; 
+    font-size: 20px;
+}
+
+.form-control{
+    margin: 0 auto; 
+    width: 459px; 
+}
+
+.photo{
+
+}
+
+.btn{
+
+}
+
+
