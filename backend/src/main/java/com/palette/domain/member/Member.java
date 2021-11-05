@@ -48,4 +48,8 @@ public class Member extends BaseTimeEntity {
         this.profileFileName = profileFileName;
         this.memberGroups = memberGroups;
     }
+
+    public void encodePassword(String encodedPassword) {
+        upw = encodedPassword;
+    }
 }

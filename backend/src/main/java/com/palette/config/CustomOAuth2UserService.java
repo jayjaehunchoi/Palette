@@ -1,8 +1,7 @@
 package com.palette.config;
 
-
-import com.palette.repository.MemberRepository;
 import com.palette.domain.member.Member;
+import com.palette.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

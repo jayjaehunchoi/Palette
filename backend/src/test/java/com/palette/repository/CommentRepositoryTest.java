@@ -5,7 +5,6 @@ import com.palette.domain.member.Member;
 import com.palette.domain.post.Comment;
 import com.palette.domain.post.Post;
 import com.palette.dto.response.CommentResponseDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
