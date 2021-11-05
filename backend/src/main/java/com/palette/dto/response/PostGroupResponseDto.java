@@ -13,7 +13,7 @@ public class PostGroupResponseDto {
     private String memberName;
     private String title;
     private String thumbNailUrl;
-    private PeriodDto periodDto;
+    private PeriodDto period;
     private String region;
 
     public PostGroupResponseDto(Long postGroupId, Long memberId, String memberName, String title, String thumbNailUrl, LocalDateTime startDate, LocalDateTime endDate, String region) {
@@ -22,7 +22,7 @@ public class PostGroupResponseDto {
         this.memberName = memberName;
         this.title = title;
         this.thumbNailUrl = thumbNailUrl;
-        this.periodDto = new PeriodDto(startDate, endDate);
+        this.period = new PeriodDto(startDate, endDate);
         this.region = region;
     }
 

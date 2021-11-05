@@ -15,7 +15,7 @@ public class PostResponseDto {
     private String postContent;
     private int likes;
     private List<String> images;
-    private List<CommentResponseDto> commentResponseDtos;
+    private List<CommentResponseDto> comments;
 
     public PostResponseDto(final Post post){
         this.memberId = post.getMember().getId();
@@ -26,7 +26,7 @@ public class PostResponseDto {
     }
 
     public void setComments(List<CommentResponseDto> commentResponseDtos) {
-        this.commentResponseDtos = commentResponseDtos;
+        this.comments = commentResponseDtos;
     }
 
     public void setImages(List<String> imagesFullPath){
