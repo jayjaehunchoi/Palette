@@ -2,12 +2,11 @@ package com.palette.domain.post;
 
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.member.Member;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(of = {"comment_id", "comment_content"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -26,14 +25,29 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_comment_member"))
     private Member member;
 
-    private String comment_content;
+    private String commentContent;
 
-    private Long parent_comment_id;
+    private Long parentCommentId;
 
-    public Comment(Post post, Member member, String comment_content, Long parent_comment_id) {
-        this.post = post;
+    @Builder
+    public Comment(Member member, String commentContent) {
         this.member = member;
-        this.comment_content = comment_content;
-        this.parent_comment_id = parent_comment_id;
+        this.commentContent = commentContent;
+    }
+
+    // 답글이 아니라면 parent 기본값 0으로 줄 것
+    public void writeComment(Post post, Long parentCommentId){
+        this.post = post;
+        this.parentCommentId = parentCommentId;
+        post.getComments().add(this);
+    }
+
+    public Comment updateComment(String commentContent){
+        this.commentContent = commentContent;
+        return this;
+    }
+
+    public void removeComment(Comment comment){
+        post.getComments().remove(comment);
     }
 }

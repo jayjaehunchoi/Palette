@@ -1,5 +1,6 @@
 package com.palette.domain;
 
+import com.palette.dto.PeriodDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,10 @@ public class Period {
     public Period(LocalDateTime startDate, LocalDateTime endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Period(PeriodDto periodDto){
+        startDate = periodDto.getStartDate();
+        endDate = periodDto.getEndDate();
     }
 }

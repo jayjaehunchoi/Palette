@@ -34,7 +34,7 @@ public class Like extends BaseTimeEntity {
     }
     public void pushLike(Post post, boolean isExist){
         if(isExist){
-            post.getLikes().remove(post.getLikes().indexOf(this));
+            post.getLikes().remove(this);
             post.pushLike(-1);
             return;
         }

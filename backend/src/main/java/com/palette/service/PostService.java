@@ -5,17 +5,17 @@ import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.request.PostUpdateDto;
 import com.palette.dto.SearchCondition;
+import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.LikeRepository;
-import com.palette.repository.PhotoRepository;
+import com.palette.repository.CommentRepository;
 import com.palette.repository.PostRepository;
+import com.palette.utils.ConstantUtil;
+import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final FileStorageService fileStorageService;
+    private final CommentRepository commentRepository;
 
     // 넘어온 사진이 없는 경우
     public void write(Post post){
@@ -55,12 +55,23 @@ public class PostService {
         return findPost;
     }
 
-    //todo : 단건조회 - commentRepository 페이징 조회 만들고 추가방문 ++
+    // 단건 조회
+    public PostResponseDto findSinglePost(Long postId, Long commentId){
+        Post findPost = postRepository.findSinglePost(postId);
+
+        List<String> images = creatFullPathImageList(findPost); // 이미지 풀경로 리스트
+        PostResponseDto postResponseDto = new PostResponseDto(findPost);
+        postResponseDto.setComments(commentRepository.findCommentByPostIdWithCursor(postId, commentId)); // 최초 조회시 comment
+        postResponseDto.setImages(images);
+
+        return postResponseDto;
+    }
+
 
     // storyList 페이징 출력
     @Transactional(readOnly = true)
-    public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo, int pageSize) {
-        List<StoryListResponseDto> results = postRepository.findStoryListWithPage(condition, pageNo, pageSize);
+    public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo) {
+        List<StoryListResponseDto> results = postRepository.findStoryListWithPage(condition, pageNo, ConstantUtil.PAGE_SIZE);
         List<Long> postIds = results.stream().map(result -> result.getPostId()).collect(Collectors.toList());
         Map<Long, String> thumbnailMap = postRepository.findThumbnailByPostId(postIds);
         updateStoryListResponseDto(results, thumbnailMap);
@@ -69,14 +80,17 @@ public class PostService {
 
     private void updateStoryListResponseDto(List<StoryListResponseDto> results,  Map<Long, String> thumbnailMap) {
         results.forEach(result -> {
-            UrlResource path = null;
-            try {
-                path = new UrlResource("file:" +fileStorageService.getFullPath(thumbnailMap.get(result.getPostId())));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            String path = null;
+            path = thumbnailMap.get(result.getPostId());
             result.setThumbNailFilePath(path);
         });
     }
+    private List<String> creatFullPathImageList(Post findPost) {
+        return findPost.getPhotos().stream()
+                .map(photo -> photo.getFile().getStoreFileName())
+                .collect(Collectors.toList());
+    }
+
+
 
 }
