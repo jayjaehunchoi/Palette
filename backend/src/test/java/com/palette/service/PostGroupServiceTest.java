@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -53,7 +54,7 @@ class PostGroupServiceTest {
                 insertMember = member2;
                 region = "가평";
             }
-            if(i > 5){
+            if(i == 14){
                 title = "여행오자";
             }
             PostGroup postGroup = PostGroup.builder().member(insertMember).title(title).period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
@@ -71,23 +72,25 @@ class PostGroupServiceTest {
     @Test
     void 지역_필터_조회(){
         List<PostGroupResponseDto> responses = postGroupService.findPostGroupByRegion("가평", 1);
-        assertThat(responses.size()).isEqualTo(10);
+        assertThat(responses.size()).isEqualTo(9);
     }
 
     @Test
     void 검색어_Like_조회(){
         List<PostGroupResponseDto> responses = postGroupService.findPostGroupByTitle("여행", 1);
-        assertThat(responses.size()).isEqualTo(10);
-        assertThat(responses.get(9).getTitle()).isEqualTo("여행가자");
-        assertThat(responses.get(8).getTitle()).isEqualTo("여행오자");
+        assertThat(responses.size()).isEqualTo(9);
+        assertThat(responses.get(8).getTitle()).isEqualTo("여행가자");
+        assertThat(responses.get(0).getTitle()).isEqualTo("여행오자");
     }
 
     @Test
     void 포스트그룹_업데이트(){
         PostGroup findGroup = postGroupService.findAll().get(0);
 
+
         postGroupService.updatePostGroup(findGroup.getId(), new PostGroupDto("여행이 좋아요", new PeriodDto(LocalDateTime.of(2021, 11, 01, 10, 10),
-                LocalDateTime.of(2021, 11, 03, 10, 10)), "부산"));
+                LocalDateTime.of(2021, 11, 03, 10, 10)), "부산"), null);
+
 
         PostGroup findGroup2 = postGroupService.findById(findGroup.getId());
 
