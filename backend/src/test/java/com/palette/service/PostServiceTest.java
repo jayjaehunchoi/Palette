@@ -2,15 +2,12 @@ package com.palette.service;
 
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
-import com.palette.domain.post.Like;
 import com.palette.domain.post.MyFile;
-import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
+import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.LikeRepository;
 import com.palette.repository.MemberRepository;
-import com.palette.repository.PhotoRepository;
 import com.palette.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -18,17 +15,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-//@Transactional
 public class PostServiceTest {
 
     @Autowired PostService postService;
@@ -38,7 +34,7 @@ public class PostServiceTest {
 
     @Test
     void 좋아요_개수_조회(){
-        Member member = new Member("1234", "wogns", "wogns", "123");
+        Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -59,7 +55,7 @@ public class PostServiceTest {
 
     @Test
     void 좋아요_더블클릭_취소(){
-        Member member = new Member("1234", "wogns", "wogns", "123");
+        Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -94,12 +90,12 @@ public class PostServiceTest {
         postService.write(post);
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(0).getThumbNailFullPath().getFilename()).isEqualTo("기본썸네일");
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/기본썸네일");
     }
 
     @Test
     void 지정_썸네일_조회(){
-        Member member = new Member("1234", "wogns", "wogns", "123");
+        Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
@@ -130,8 +126,31 @@ public class PostServiceTest {
 
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
-        assertThat(storyList.get(1).getThumbNailFullPath().getFilename()).isEqualTo("ab.jpg");
-        assertThat(storyList.get(0).getThumbNailFullPath().getFilename()).isEqualTo("abc.jpg");
+        assertThat(storyList.get(1).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/ab.jpg");
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("C:/Users/JaehunChoi/study/file/abc.jpg");
+    }
+
+    @Test
+    void 단건_게시판_조회(){
+        Member member = new Member("1234", "wogns", "wogns","123");
+        memberRepository.save(member);
+
+        Post post = Post.builder().title("제목입니다")
+                .member(member)
+                .content("내용")
+                .region("서울")
+                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .build();
+        List<MyFile> myFiles = new ArrayList<>();
+        myFiles.add(new MyFile("abc.jpg","abc.jpg"));
+        myFiles.add(new MyFile("abcd.jpg","abcd.jpg"));
+        postService.write(post,myFiles);
+
+        PostResponseDto singlePost = postService.findSinglePost(post.getId(), 0L);
+        assertThat(singlePost.getMemberName()).isEqualTo("wogns");
+        assertThat(singlePost.getPostTitle()).isEqualTo("제목입니다");
+        assertThat(singlePost.getImages().size()).isEqualTo(2);
     }
 
     @Test
@@ -156,9 +175,13 @@ public class PostServiceTest {
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1, 10);
         assertThat(storyList.size()).isEqualTo(10);
     }
+
     @AfterEach
     void tearDown(){
+        System.out.println("================After Each====================");
         postRepository.deleteAll();
         memberRepository.deleteAll();
     }
+
+
 }

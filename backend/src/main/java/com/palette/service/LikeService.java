@@ -30,11 +30,6 @@ public class LikeService {
         likes.pushLike(findPost, true);
     }
 
-    @Transactional
-    public void deleteLike(Long id){
-        likeRepository.deleteById(id);
-    }
-
     // 커서페이징
     @Transactional(readOnly = true)
     public List<Member> findLikeMemberByPost(Long postId, Long likeId){
