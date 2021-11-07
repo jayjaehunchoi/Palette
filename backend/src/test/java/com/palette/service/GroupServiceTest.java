@@ -8,8 +8,7 @@ import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
 import com.palette.repository.MemberRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 public class GroupServiceTest {
-    // 그룹과 멤버 연결 테스트
     @Autowired
     MemberRepository memberRepo;
     @Autowired
@@ -103,5 +101,12 @@ public class GroupServiceTest {
         budgetRepository.save(budget);
 
         assertThat(budgetRepository.findById(budget.getId()).orElse(null).getGroup()).isEqualTo(findGroup);
+    }
+
+    @AfterEach
+    void 전체_삭제(){
+        System.out.println("-------------AfterEach-------------");
+        memberRepo.deleteAll();
+        groupRepository.deleteAll();
     }
 }

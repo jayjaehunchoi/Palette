@@ -41,7 +41,7 @@ public class GroupRepositoryTest {
 
     @Test
     void 그룹_삭제(){
-        Group findGroup = groupRepository.findById(1L).orElse(null);
+        Group findGroup = groupRepository.findAll().get(0);
         if(findGroup != null){
             groupRepository.delete(findGroup);
         }
