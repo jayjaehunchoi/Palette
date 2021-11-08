@@ -18,7 +18,7 @@ public class MemberService {
 
     @Transactional
     public void signUpUser(Member member) {
-        member.encodePassword(passwordEncoder.encode(member.getUpw()));
+        member.encodePassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
     }
 }
