@@ -1,7 +1,6 @@
 package com.palette.config;
 
 import com.palette.domain.member.Member;
-
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,19 +1,14 @@
 package com.palette.repository.impl;
 
 import com.palette.domain.member.Member;
-import com.palette.domain.member.QMember;
 import com.palette.repository.LikeRepositoryCustom;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.palette.domain.member.QMember.*;
-import static com.palette.domain.post.QComment.comment;
 import static com.palette.domain.post.QLike.like;
 
 public class LikeRepositoryImpl implements LikeRepositoryCustom {
