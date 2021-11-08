@@ -7,8 +7,10 @@ import com.palette.domain.post.PostGroup;
 import com.palette.dto.GeneralResponse;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostRequestDto;
+import com.palette.dto.response.LikeResponseDto;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
+import com.palette.service.LikeService;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
 import com.palette.utils.ConstantUtil;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class PostController {
     private final PostService postService;
     private final PostGroupService postGroupService;
     private final S3Uploader s3Uploader;
+    private final LikeService likeService;
 
     // 그룹을 안거치고 조회시, 그룹 거친 조회는 PostGroup에 존재
     @GetMapping("/post")
@@ -50,6 +54,20 @@ public class PostController {
     public PostResponseDto getSinglePost(@PathVariable Long id){
         PostResponseDto postResponseDto = postService.findSinglePost(id, ConstantUtil.INIT_ID);
         return postResponseDto;
+    }
+
+    @GetMapping("/post/{id}/like")
+    public ResponseEntity<GeneralResponse> getLikeMembers(@PathVariable Long id, @RequestParam(required = false) Long likeId){
+        postService.findById(id);
+        List<Member> likeMemberByPost = likeService.findLikeMemberByPost(id, likeId);
+        List<LikeResponseDto> likeResponseDtos = likeMemberByPost.stream().map(LikeResponseDto::new).collect(Collectors.toList());
+        return ResponseEntity.ok(GeneralResponse.builder().data(likeResponseDtos).build());
+    }
+
+    @PostMapping("/post/{id}/like")
+    public ResponseEntity<GeneralResponse> pushLikeButton(@Login Member member, @PathVariable Long id){
+        int likeCount = likeService.pushLike(member, id);
+        return ResponseEntity.ok(GeneralResponse.builder().data(likeCount).build());
     }
 
     @PostMapping("/postgroup/{postGroupId}/post")
