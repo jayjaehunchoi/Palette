@@ -35,7 +35,7 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
-                .password((String) attributes.get("password"))
+                .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileFileName((String) attributes.get("profileFileName"))
                 .attributes(attributes)
@@ -47,7 +47,7 @@ public class OAuthAttributes {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuthAttributes.builder()
-                .password((String) response.get("password"))
+                .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .profileFileName((String) response.get("profileFileName"))
                 .attributes(response)
@@ -57,7 +57,7 @@ public class OAuthAttributes {
 
     public Member toEntity() {
         return Member.builder()
-                .password(password)
+                .name(name)
                 .email(email)
                 .profileFileName(profileFileName)
                 .build();
