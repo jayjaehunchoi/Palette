@@ -29,7 +29,7 @@ public class CommentController {
     private final PostService postService;
 
     @GetMapping("/post/{postId}/comment")
-    public ResponseEntity<GeneralResponse> getNextComment(@PathVariable Long postId, @RequestParam("id") Long lastCommentId){
+    public ResponseEntity<GeneralResponse> getNextComment(@PathVariable Long postId, @RequestParam(value = "id", required = false) Long lastCommentId){
         postService.findById(postId); // 현재 게시물이 존재하는지
         List<CommentResponseDto> commentResponseDtos = commentService.findCommentByClickViewMore(postId, lastCommentId);
         return ResponseEntity.ok(GeneralResponse.builder().data(commentResponseDtos).build());

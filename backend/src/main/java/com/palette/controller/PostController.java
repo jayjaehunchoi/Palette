@@ -93,7 +93,7 @@ public class PostController {
     }
 
     @DeleteMapping("/postgroup/{postGroupId}/post/{id}")
-    public ResponseEntity<Void> deletePost(@Login Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId, @RequestBody @Valid PostRequestDto postRequestDto){
+    public ResponseEntity<Void> deletePost(@Login Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId){
         validateMemberCanUpdateOrDeletePost(member, postGroupId, postId);
         postService.delete(postId);
         return HttpResponseUtil.RESPONSE_OK;

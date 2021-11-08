@@ -9,10 +9,12 @@ import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
+import com.palette.repository.MemberRepository;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
 import com.palette.utils.ConstantUtil;
 import com.palette.utils.S3Uploader;
+import com.palette.utils.SessionUtil;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
@@ -40,7 +43,7 @@ public class PostGroupController {
 
     // /postgroup?filter={필터}&condition={조건}&page={pageNumber}
     @GetMapping
-    public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@RequestParam(required = false) String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
+    public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@RequestParam(required = false, defaultValue = "none") String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
         List<PostGroupResponseDto> postGroup = findWithSearchFilter(filter, condition, page);
         GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
         return ResponseEntity.ok(res);
@@ -76,8 +79,9 @@ public class PostGroupController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePostGroup(@Login Member member, @PathVariable Long id){
-        postGroupService.checkMemberAuth(member,id);
-        postGroupService.deletePostGroup(id);
+        PostGroup postGroup = postGroupService.checkMemberAuth(member, id);
+        postService.findPostIdsByPostGroupId(id).forEach(postId -> postService.delete(postId));
+        postGroupService.deletePostGroup(postGroup);
         return RESPONSE_OK;
     }
 
@@ -93,7 +97,7 @@ public class PostGroupController {
             case "title" :
                 postGroup = postGroupService.findPostGroupByTitle(condition, page);
                 break;
-            default:
+            case "none" :
                 postGroup = postGroupService.findPostGroup(page);
                 break;
         }

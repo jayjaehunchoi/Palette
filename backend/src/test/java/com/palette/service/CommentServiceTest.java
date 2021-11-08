@@ -7,6 +7,7 @@ import com.palette.domain.post.Post;
 import com.palette.domain.post.PostGroup;
 import com.palette.exception.CommentException;
 import com.palette.exception.PostException;
+import com.palette.repository.CommentRepository;
 import com.palette.repository.MemberRepository;
 import com.palette.repository.PostGroupRepository;
 import com.palette.repository.PostRepository;
@@ -30,6 +31,7 @@ public class CommentServiceTest {
     @Autowired MemberRepository memberRepository;
     @Autowired PostService postService;
     @Autowired PostRepository postRepository;
+    @Autowired CommentRepository commentRepository;
     @Autowired PostGroupRepository postGroupRepository;
 
     @Test
@@ -172,6 +174,7 @@ public class CommentServiceTest {
     @AfterEach
     void tearDown(){
         System.out.println("=====================After Each=====================");
+        commentRepository.deleteAll();
         postRepository.deleteAll();
         postGroupRepository.deleteAll();
         memberRepository.deleteAll();
