@@ -23,7 +23,7 @@ public class Budget {
     private Group group;
 
     @Column
-    private Long totalBudget;
+    private long totalBudget;
 
     //지출 기록
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)

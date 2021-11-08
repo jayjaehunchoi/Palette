@@ -44,6 +44,8 @@ public class GroupService {
             MemberGroup memberGroup = new MemberGroup();
             memberGroupRepository.save(memberGroup);
             memberGroup.addMemberGroup(selectGroup,member);
+
+            selectGroup.addNumberOfPeople();
         });
     }
 
@@ -52,9 +54,11 @@ public class GroupService {
     public void deleteGroupMember(Long id,Member member){
         Optional<Group> findGroup = groupRepository.findById(id);
         findGroup.ifPresent(selectGroup ->{
-            // todo: memberGroup 삭제, 그 멤버그룹이랑 이어져있는 member과 group의 membergroup 삭제
+            // todo: 만약 그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능하게 하기 (Exception)
             MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,selectGroup);
             findMemberGroup.deleteMemberGroup(selectGroup,member);
+
+            selectGroup.reduceNumberOfPeople();
         });
     }
 

@@ -35,10 +35,17 @@ public class Group {
         this.numberOfPeople = 1;
     }
 
-    //todo : membergroup 업데이트 이렇게 하는지 맞낭..
     public void updateGroup(GroupUpdateDto dto){
         this.groupName = dto.getGroupName();
         this.groupIntroduction = dto.getGroupIntroduction();
-        this.numberOfPeople = dto.getNumberOfPeople();
     }
+
+    public void addNumberOfPeople(){
+        this.numberOfPeople++;
+    }
+
+    public void reduceNumberOfPeople(){
+        this.numberOfPeople--;
+    }
+
 }

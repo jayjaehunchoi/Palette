@@ -15,7 +15,4 @@ public class GroupUpdateDto {
     @NotBlank
     private String groupIntroduction;
 
-    @NotBlank
-    private int numberOfPeople;
-
 }
