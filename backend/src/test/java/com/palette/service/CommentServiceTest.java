@@ -48,7 +48,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post,group.getId());
+        postService.write(post,group);
 
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
@@ -83,7 +83,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post,group.getId());
+        postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 
@@ -108,7 +108,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post,group.getId());
+        postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 
@@ -131,7 +131,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post, group.getId());
+        postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 
@@ -155,7 +155,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post, group.getId());
+        postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 

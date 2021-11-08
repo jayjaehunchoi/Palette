@@ -38,6 +38,7 @@ public class CommentService {
         Comment findComment = commentRepository.findById(commentId).orElse(null);
         isMemberHaveAuthToUpdate(findComment, memberId);
         findComment.removeComment(findComment);
+        commentRepository.deleteAllChildByIdInQuery(commentId);
     }
 
     /**

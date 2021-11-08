@@ -9,9 +9,6 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class CommentDto {
 
-    @NotBlank
+    @NotBlank(message = "내용을 입력해주세요.")
     private String content;
-    @NotBlank
-    private Long postId;
-    private Long commentId;
 }
