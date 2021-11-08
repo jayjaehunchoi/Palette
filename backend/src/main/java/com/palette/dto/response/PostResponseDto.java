@@ -20,7 +20,7 @@ public class PostResponseDto {
 
     public PostResponseDto(final Post post){
         this.memberId = post.getMember().getId();
-        this.memberName = post.getMember().getUname();
+        this.memberName = post.getMember().getName();
         this.postId = post.getId();
         this.postTitle = post.getTitle();
         this.postContent = post.getContent();

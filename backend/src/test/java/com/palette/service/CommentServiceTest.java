@@ -36,7 +36,7 @@ public class CommentServiceTest {
 
     @Test
     void 댓글_작성(){
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
@@ -62,7 +62,7 @@ public class CommentServiceTest {
 
     @Test
     void 댓글_작성중_게시판삭제_에러(){
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
 
@@ -71,7 +71,7 @@ public class CommentServiceTest {
 
     @Test
     void 댓글_업데이트(){
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
@@ -96,7 +96,7 @@ public class CommentServiceTest {
 
     @Test
     void 댓글_링크타고_부정방식으로_수정(){
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
@@ -119,7 +119,7 @@ public class CommentServiceTest {
 
     @Test
     void 댓글_업데이트_권한_없음(){
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
@@ -143,7 +143,7 @@ public class CommentServiceTest {
 
     @Test
     void 댓글_삭제(){
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
