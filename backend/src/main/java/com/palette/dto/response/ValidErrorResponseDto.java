@@ -1,4 +1,4 @@
-package com.palette.dto;
+package com.palette.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class GeneralResponse<T> {
-
-    private T error;
-    private T data;
-
+public class ValidErrorResponseDto {
+    private String field;
+    private String defaultMessage;
 }

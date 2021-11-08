@@ -5,7 +5,6 @@ import com.palette.domain.member.Member;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostGroupResponseDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,8 +28,8 @@ public class PostGroupRepositoryTest {
 
     @Test
     void 마이블로그_조회(){
-        Member member = new Member("1234","wogns","wogns0108", "123");
-        Member member2 = new Member("1234","wogns11","wogns0108", "123");
+        Member member = new Member("wogns","1234","wogns0108", "123");
+        Member member2 = new Member("wogns11","1234","wogns0108", "123");
         memberRepository.save(member);
         memberRepository.save(member2);
 
@@ -56,13 +55,40 @@ public class PostGroupRepositoryTest {
         assertThat(storyList.get(0).getMemberName()).isEqualTo("wogns");
     }
 
+    @Test
+    void 마이블로그_조건없는_조회(){
+        Member member = new Member("wogns", "1234", "wogns","123");
+        Member member2 = new Member("wogns11", "1234", "wogns","123");
+        memberRepository.save(member);
+        memberRepository.save(member2);
+
+        List<Member> all = memberRepository.findAll();
+        Member findMember = all.get(0);
+        Member findMember2 = all.get(1);
+
+        PostGroup postGroup = PostGroup.builder().member(findMember).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
+                LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+
+        PostGroup postGroup2 = PostGroup.builder().member(findMember2).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
+                LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+        postGroupRepository.save(postGroup);
+        postGroupRepository.save(postGroup2);
+
+        SearchCondition searchCondition = new SearchCondition();
+
+        // 조회 쿼리 2회
+        List<PostGroupResponseDto> storyList = postGroupRepository.findStoryListWithPage(searchCondition, 1, 10);
+
+        assertThat(storyList.size()).isEqualTo(2);
+    }
+
 
 
     @Disabled
     @Test
     void 페이징_성능_확인(){
 
-        Member member = new Member("1234","wogns","wogns0108", "123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         for(int i = 0 ; i < 10000; i++){

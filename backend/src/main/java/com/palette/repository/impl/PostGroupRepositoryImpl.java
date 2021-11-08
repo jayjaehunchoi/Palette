@@ -1,7 +1,6 @@
 package com.palette.repository.impl;
 
-import com.palette.domain.member.QMember;
-import com.palette.domain.post.QPostGroup;
+
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.repository.PostGroupRepositoryCustom;
@@ -14,7 +13,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.palette.domain.member.QMember.*;
-import static com.palette.domain.post.QPost.post;
 import static com.palette.domain.post.QPostGroup.*;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -34,7 +32,7 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
         return queryFactory.select(Projections.constructor(PostGroupResponseDto.class,
                 postGroup.id.as("postGroup_id"),
                 postGroup.member.id.as("member_id"),
-                postGroup.member.uname,
+                postGroup.member.name,
                 postGroup.title,
                 postGroup.thumbNail.storeFileName,
                 postGroup.period.startDate,
@@ -63,8 +61,8 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
 
     }
 
-    private BooleanExpression memberNameEq(String uname){
-        return hasText(uname) ? postGroup.member.uname.eq(uname):null;
+    private BooleanExpression memberNameEq(String name){
+        return hasText(name) ? postGroup.member.name.eq(name):null;
     }
     private BooleanExpression regionEq(String region){
         return hasText(region) ? postGroup.region.eq(region) : null;

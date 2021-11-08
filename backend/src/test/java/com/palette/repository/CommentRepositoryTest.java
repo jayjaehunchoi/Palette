@@ -5,7 +5,6 @@ import com.palette.domain.member.Member;
 import com.palette.domain.post.Comment;
 import com.palette.domain.post.Post;
 import com.palette.dto.response.CommentResponseDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +29,7 @@ public class CommentRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234","wogns","wogns0108", "123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         Post post = Post.builder().title("제목입니다")

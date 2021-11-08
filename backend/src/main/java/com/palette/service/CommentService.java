@@ -21,10 +21,11 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    public void writeComment(Comment comment, Long postId, Long commentId){
+    public Comment writeComment(Comment comment, Long postId, Long commentId){
         Post findPost = postRepository.findById(postId).orElse(null);
         isPostExist(findPost);
         comment.writeComment(findPost, commentId);
+        return comment;
     }
 
     public Comment updateComment(Long memberId, Long commentId, String updateContent){
@@ -37,6 +38,8 @@ public class CommentService {
         Comment findComment = commentRepository.findById(commentId).orElse(null);
         isMemberHaveAuthToUpdate(findComment, memberId);
         findComment.removeComment(findComment);
+        commentRepository.delete(findComment);
+        commentRepository.deleteAllChildById(commentId);
     }
 
     /**

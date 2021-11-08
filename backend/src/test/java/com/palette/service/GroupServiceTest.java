@@ -15,8 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -36,16 +34,16 @@ public class GroupServiceTest {
     public void setUp() {
 
         // 회원생성
-        Member member1 = new Member("1234", "wltn", "wltnfile","123");
+        Member member1 = new Member("wltn", "1234", "wogns","123");
         memberRepo.save(member1);
 
-        Member member2 = new Member("1234", "skfk", "skfkfile","123");
+        Member member2 = new Member("skfk", "1234", "wogns","123");
         memberRepo.save(member2);
 
-        Member member3 = new Member("1234", "wogns", "wognsfile","123");
+        Member member3 = new Member("wogns", "1234", "wogns","123");
         memberRepo.save(member3);
 
-        Member member4 = new Member("1234", "ruddls", "ruddlsfile","123");
+        Member member4 = new Member("ruddls", "1234", "wogns","123");
         memberRepo.save(member4);
 
         // 그룹생성

@@ -36,7 +36,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(post)// 1:n 조회는 페이징 불가, 따라서 페치 조인은 단건까지
                 .where(memberNameEq(condition.getName()),
                         regionEq(condition.getRegion()),
-                        titleContain(condition.getTitle()))
+                        titleContain(condition.getTitle()),
+                        postGroupIdEq(condition.getPostGroupId()))
                 .orderBy(post.id.desc())
                 .offset(pageNo-1)
                 .limit(pageSize)
@@ -46,7 +47,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
             return new ArrayList<>();
         }
         return queryFactory.select(new QStoryListResponseDto(post.member.id.as("memberId"),
-                post.member.uname,
+                post.member.name,
                 post.id.as("postId"),
                 post.title,
                 post.likeCount))
@@ -97,13 +98,16 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     // 동적 쿼리 작성용
-    private BooleanExpression memberNameEq(String uname){
-        return hasText(uname) ? post.member.uname.eq(uname):null;
+    private BooleanExpression memberNameEq(String name){
+        return hasText(name) ? post.member.name.eq(name):null;
     }
     private BooleanExpression regionEq(String region){
         return hasText(region) ? post.region.eq(region) : null;
     }
     private BooleanExpression titleContain(String title){
         return hasText(title) ? post.title.contains(title) : null; // string 값 포함 검색값 조회
+    }
+    private BooleanExpression postGroupIdEq(Long postGroupId){
+        return postGroupId != null ? post.postGroup.id.eq(postGroupId) : null;
     }
 }

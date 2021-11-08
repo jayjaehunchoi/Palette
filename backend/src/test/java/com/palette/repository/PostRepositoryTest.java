@@ -7,7 +7,6 @@ import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.StoryListResponseDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +30,7 @@ class PostRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234", "wogns", "wogns", "123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         Member findMember = memberRepository.findAll().get(0);

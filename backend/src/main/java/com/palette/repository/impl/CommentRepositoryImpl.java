@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.palette.domain.member.QMember.*;
 import static com.palette.domain.post.QComment.*;
+import static com.palette.utils.ConstantUtil.COMMENT_SIZE;
 
 public class CommentRepositoryImpl implements CommentRepositoryCustom {
 
@@ -19,7 +20,6 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     public CommentRepositoryImpl (EntityManager em){
         queryFactory = new JPAQueryFactory(em);
     }
-    private final static int COMMENT_SIZE = 10;
 
 
     // dto로 join 하는경우 fetch join이 아닌 일반 join
@@ -28,7 +28,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     public List<CommentResponseDto> findCommentByPostIdWithCursor(Long postId, Long commentId){
        return queryFactory.select(Projections.constructor(CommentResponseDto.class,
                 member.id.as("memberId"),
-                member.uname,
+                member.name,
                 comment.id.as("commentId"),
                 comment.commentContent,
                 comment.modifiedDate))
@@ -44,7 +44,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     public List<CommentResponseDto> findChildCommentByCommentIdWithCursor(Long commentId, Long curCommentId){
         return queryFactory.select(Projections.constructor(CommentResponseDto.class,
                         member.id.as("memberId"),
-                        member.uname,
+                        member.name,
                         comment.id.as("commentId"),
                         comment.commentContent,
                         comment.modifiedDate))

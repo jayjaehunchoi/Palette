@@ -8,7 +8,6 @@ import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.repository.MemberRepository;
 import com.palette.repository.PostGroupRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,15 +15,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -40,8 +36,8 @@ class PostGroupServiceTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234","재훈", "akds", "123");
-        Member member2 = new Member("1234","훈재", "akdsaa", "123");
+        Member member = new Member("재훈","1234", "akds", "123");
+        Member member2 = new Member("훈재","1234", "akdsaa", "123");
 
         memberRepository.save(member);
         memberRepository.save(member2);

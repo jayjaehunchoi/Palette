@@ -2,6 +2,7 @@ package com.palette.utils;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.palette.domain.post.MyFile;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -48,7 +52,18 @@ public class S3Uploader {
     }
 
     public void deleteS3(List<String> storedFileNames){
-        storedFileNames.forEach(file -> amazonS3Client.deleteObject(bucket,file));
+        List<String> keys = storedFileNames.stream().map(fileName -> getDeleteKey(fileName)).collect(Collectors.toList());
+        for (String key : keys) {
+            DeleteObjectRequest deleteObjectReq = new DeleteObjectRequest(bucket, key);
+            amazonS3Client.deleteObject(deleteObjectReq);
+            log.info("S3에서 삭제 {}",key);
+        }
+    }
+
+    private String getDeleteKey(String fileName){
+        String[] keyArr = fileName.split("/");
+        String key = URLDecoder.decode(keyArr[keyArr.length - 2] + "/" + keyArr[keyArr.length - 1], StandardCharsets.UTF_8);
+        return key;
     }
 
     private MyFile uploadToS3(File uploadFile){
