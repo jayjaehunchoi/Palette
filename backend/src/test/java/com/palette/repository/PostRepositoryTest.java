@@ -30,7 +30,7 @@ class PostRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234", "wogns", "wogns", "123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
         Member findMember = memberRepository.findAll().get(0);

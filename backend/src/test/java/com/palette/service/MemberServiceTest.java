@@ -26,12 +26,12 @@ class MemberServiceTest {
 
     @Test
     void 회원가입() {
-        Member member = new Member("1234", "wogns", "wogns","123");
+        Member member = new Member("wogns", "1234", "wogns","123");
         memberService.signUpUser(member);
 
         List<Member> members = memberRepository.findAll();
         assertThat(members.size()).isEqualTo(1);
-        boolean matches = passwordEncoder.matches("1234", members.get(0).getUpw());
+        boolean matches = passwordEncoder.matches("1234", members.get(0).getPassword());
         assertTrue(matches);
     }
 

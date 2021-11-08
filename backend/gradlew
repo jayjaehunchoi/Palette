@@ -107,7 +107,7 @@ cygwin=false
 msys=false
 darwin=false
 nonstop=false
-case "$( uname )" in                #(
+case "$( password )" in                #(
   CYGWIN* )         cygwin=true  ;; #(
   Darwin* )         darwin=true  ;; #(
   MSYS* | MINGW* )  msys=true    ;; #(

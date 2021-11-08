@@ -28,7 +28,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     public List<CommentResponseDto> findCommentByPostIdWithCursor(Long postId, Long commentId){
        return queryFactory.select(Projections.constructor(CommentResponseDto.class,
                 member.id.as("memberId"),
-                member.uname,
+                member.name,
                 comment.id.as("commentId"),
                 comment.commentContent,
                 comment.modifiedDate))
@@ -44,7 +44,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     public List<CommentResponseDto> findChildCommentByCommentIdWithCursor(Long commentId, Long curCommentId){
         return queryFactory.select(Projections.constructor(CommentResponseDto.class,
                         member.id.as("memberId"),
-                        member.uname,
+                        member.name,
                         comment.id.as("commentId"),
                         comment.commentContent,
                         comment.modifiedDate))

@@ -20,7 +20,7 @@ public class PostGroupResponseDto {
     public PostGroupResponseDto(final PostGroup postGroup) {
         this.postGroupId = postGroup.getId();
         this.memberId = postGroup.getMember().getId();
-        this.memberName = postGroup.getMember().getUname();
+        this.memberName = postGroup.getMember().getName();
         this.title = postGroup.getTitle();
         this.thumbNailUrl = postGroup.getThumbNail().getStoreFileName();
         this.period = new PeriodDto(postGroup.getPeriod().getStartDate(), postGroup.getPeriod().getEndDate());
