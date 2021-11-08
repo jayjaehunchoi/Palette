@@ -53,7 +53,7 @@ public class GroupService {
         Optional<Group> findGroup = groupRepository.findById(id);
         findGroup.ifPresent(selectGroup ->{
             // todo: memberGroup 삭제, 그 멤버그룹이랑 이어져있는 member과 group의 membergroup 삭제
-            MemberGroup findMemberGroup = memberGroupRepository.findByMemberGroup(member,selectGroup);
+            MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,selectGroup);
             findMemberGroup.deleteMemberGroup(selectGroup,member);
         });
     }

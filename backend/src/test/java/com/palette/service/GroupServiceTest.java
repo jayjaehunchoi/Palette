@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -60,9 +62,14 @@ public class GroupServiceTest {
         groupRepository.save(group2);
 
         // 멤버 그룹 생성 후 member에 추가해주기
+        // member1은 group과 group2둘 다 들어감
         MemberGroup memberGroup = new MemberGroup();
         memberGroupRepository.save(memberGroup);
         memberGroup.addMemberGroup(group,member1);
+
+        MemberGroup memberGroup1 = new MemberGroup();
+        memberGroupRepository.save(memberGroup1);
+        memberGroup1.addMemberGroup(group2,member1);
 
         MemberGroup memberGroup2 = new MemberGroup();
         memberGroupRepository.save(memberGroup2);
@@ -103,10 +110,16 @@ public class GroupServiceTest {
         assertThat(budgetRepository.findById(budget.getId()).orElse(null).getGroup()).isEqualTo(findGroup);
     }
 
-//    @Test
-//    public void 그룹에_멤버_삭제(){
-//        
-//    }
+    @Test
+    public void 그룹_멤버_삭제(){
+        Member member = memberRepo.findAll().get(0);
+        Group findGroup = groupRepository.findAll().get(0);
+
+        MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,findGroup);
+        findMemberGroup.deleteMemberGroup(findGroup,member);
+
+        assertThat(member.getMemberGroups().get(0).getGroup()).isEqualTo(groupRepository.findAll().get(1)); //group2만 남아있어야하는 상태
+    }
 
     @AfterEach
     void 전체_삭제(){

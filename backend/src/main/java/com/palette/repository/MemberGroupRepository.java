@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MemberGroupRepository extends JpaRepository<MemberGroup,Long> {
-    public MemberGroup findByMemberGroup(Member member, Group group);
+    public MemberGroup findByMemberAndGroup(Member member, Group group);
 }
