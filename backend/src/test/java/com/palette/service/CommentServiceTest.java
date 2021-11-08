@@ -157,10 +157,16 @@ public class CommentServiceTest {
                 .build();
         postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
-        commentService.writeComment(comment, post.getId(), 0L);
+        Comment comment1 = new Comment(member, "반가워요 우리 친하게 지내요z");
+        Comment comment2 = new Comment(member, "반가워요 우리 친하게 지내요zz");
+
+        Comment saveComment = commentService.writeComment(comment, post.getId(), 0L);
+        commentService.writeComment(comment1, post.getId(), saveComment.getId());
+        commentService.writeComment(comment2, post.getId(), saveComment.getId());
 
         commentService.deleteComment(member.getId(), comment.getId());
         assertThat(commentService.findById(comment.getId())).isEqualTo(null);
+        assertThat(commentService.findCommentByClickViewMore(post.getId(),null).size()).isEqualTo(0);
     }
 
     @AfterEach

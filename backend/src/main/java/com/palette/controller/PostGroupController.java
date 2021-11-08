@@ -38,15 +38,6 @@ public class PostGroupController {
     private final S3Uploader s3Uploader;
     private final PostService postService;
 
-    // /postgroup?page={pageNumber}
-    // 1페이지당 9개 그룹 출력
-    @GetMapping
-    public ResponseEntity<GeneralResponse> getGroupPostWithoutFilter(@RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE, required = false) int page){
-        List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(page);
-        GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
-        return ResponseEntity.ok(res);
-    }
-
     // /postgroup?filter={필터}&condition={조건}&page={pageNumber}
     @GetMapping
     public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@RequestParam(required = false) String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
@@ -101,6 +92,9 @@ public class PostGroupController {
                 break;
             case "title" :
                 postGroup = postGroupService.findPostGroupByTitle(condition, page);
+                break;
+            default:
+                postGroup = postGroupService.findPostGroup(page);
                 break;
         }
         return postGroup;
