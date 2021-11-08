@@ -23,7 +23,7 @@ public class LikeRepositoryImpl implements LikeRepositoryCustom {
     public List<Member> findLikeMemberByPost(Long postId, Long likeId){
         return queryFactory.select(member)
                 .from(like)
-                .join(like.member, member).fetchJoin()
+                .join(like.member, member)
                 .where(like.post.id.eq(postId), ltLikeId(likeId))
                 .orderBy(like.id.desc())
                 .limit(LIKE_SIZE)

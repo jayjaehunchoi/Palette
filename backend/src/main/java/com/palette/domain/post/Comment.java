@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(of = {"comment_id", "comment_content"})
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -48,6 +48,6 @@ public class Comment extends BaseTimeEntity {
     }
 
     public void removeComment(Comment comment){
-        post.getComments().remove(comment);
+        post.getComments().remove(post.getComments().indexOf(comment));
     }
 }

@@ -3,7 +3,7 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
-import com.palette.dto.request.PostUpdateDto;
+import com.palette.dto.request.PostRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,13 +33,13 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "post_group_id", foreignKey = @ForeignKey(name = "fk_post_post_group"))
     private PostGroup postGroup;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Photo> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
 
     @Embedded
@@ -64,7 +64,7 @@ public class Post extends BaseTimeEntity {
         this.hit = 0;
     }
 
-    public void update(PostUpdateDto dto){
+    public void update(PostRequestDto dto){
         title = dto.getTitle();
         content = dto.getContent();
     }
@@ -75,5 +75,9 @@ public class Post extends BaseTimeEntity {
 
     public void pushLike(int num){
         likeCount += num;
+    }
+
+    public void createPostOnPostGroup(PostGroup postGroup){
+        this.postGroup = postGroup;
     }
 }

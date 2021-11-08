@@ -4,9 +4,12 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Comment;
 import com.palette.domain.post.Post;
+import com.palette.domain.post.PostGroup;
 import com.palette.exception.CommentException;
 import com.palette.exception.PostException;
+import com.palette.repository.CommentRepository;
 import com.palette.repository.MemberRepository;
+import com.palette.repository.PostGroupRepository;
 import com.palette.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -28,12 +31,17 @@ public class CommentServiceTest {
     @Autowired MemberRepository memberRepository;
     @Autowired PostService postService;
     @Autowired PostRepository postRepository;
+    @Autowired CommentRepository commentRepository;
+    @Autowired PostGroupRepository postGroupRepository;
 
     @Test
     void 댓글_작성(){
-
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
+
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
@@ -42,7 +50,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post,group);
 
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
@@ -66,6 +74,10 @@ public class CommentServiceTest {
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
 
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
+
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
@@ -73,7 +85,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 
@@ -87,6 +99,10 @@ public class CommentServiceTest {
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
 
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
+
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
@@ -94,7 +110,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 
@@ -106,6 +122,10 @@ public class CommentServiceTest {
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
 
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
+
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
@@ -113,7 +133,7 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
 
@@ -126,6 +146,10 @@ public class CommentServiceTest {
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
 
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
+
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
@@ -133,18 +157,26 @@ public class CommentServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
-        commentService.writeComment(comment, post.getId(), 0L);
+        Comment comment1 = new Comment(member, "반가워요 우리 친하게 지내요z");
+        Comment comment2 = new Comment(member, "반가워요 우리 친하게 지내요zz");
+
+        Comment saveComment = commentService.writeComment(comment, post.getId(), 0L);
+        commentService.writeComment(comment1, post.getId(), saveComment.getId());
+        commentService.writeComment(comment2, post.getId(), saveComment.getId());
 
         commentService.deleteComment(member.getId(), comment.getId());
         assertThat(commentService.findById(comment.getId())).isEqualTo(null);
+        assertThat(commentService.findCommentByClickViewMore(post.getId(),null).size()).isEqualTo(0);
     }
 
     @AfterEach
     void tearDown(){
         System.out.println("=====================After Each=====================");
+        commentRepository.deleteAll();
         postRepository.deleteAll();
+        postGroupRepository.deleteAll();
         memberRepository.deleteAll();
     }
 }

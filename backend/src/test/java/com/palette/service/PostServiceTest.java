@@ -4,11 +4,11 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.Post;
+import com.palette.domain.post.PostGroup;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.MemberRepository;
-import com.palette.repository.PostRepository;
+import com.palette.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,25 +28,31 @@ public class PostServiceTest {
 
     @Autowired PostService postService;
     @Autowired LikeService likeService;
+    @Autowired LikeRepository likeRepository;
+    @Autowired PhotoRepository photoRepository;
     @Autowired MemberRepository memberRepository;
     @Autowired PostRepository postRepository;
+    @Autowired PostGroupRepository postGroupRepository;
 
     @Test
     void 좋아요_개수_조회(){
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
-        Member findMember = memberRepository.findAll().get(0);
+
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
-                .member(findMember)
+                .member(member)
                 .content("내용")
                 .region("서울")
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post, group);
 
-        likeService.pushLike(findMember,post.getId());
+        likeService.pushLike(member,post.getId());
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(1);
@@ -56,18 +62,21 @@ public class PostServiceTest {
     void 좋아요_더블클릭_취소(){
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
-        Member findMember = memberRepository.findAll().get(0);
+
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
-                .member(findMember)
+                .member(member)
                 .content("내용")
                 .region("서울")
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
-        likeService.pushLike(findMember,post.getId());
-        likeService.pushLike(findMember,post.getId());
+        postService.write(post, group);
+        likeService.pushLike(member,post.getId());
+        likeService.pushLike(member,post.getId());
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(0);
 
@@ -77,16 +86,19 @@ public class PostServiceTest {
     void 기본_썸네일_조회(){
         Member member = new Member("1234", "wogns", "wogns", "123");
         memberRepository.save(member);
-        Member findMember = memberRepository.findAll().get(0);
+
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
-                .member(findMember)
+                .member(member)
                 .content("내용")
                 .region("서울")
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post);
+        postService.write(post, group);
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("기본썸네일");
@@ -96,10 +108,13 @@ public class PostServiceTest {
     void 지정_썸네일_조회(){
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
-        Member findMember = memberRepository.findAll().get(0);
+
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
-                .member(findMember)
+                .member(member)
                 .content("내용")
                 .region("서울")
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
@@ -108,11 +123,11 @@ public class PostServiceTest {
 
         List<MyFile> myFiles = new ArrayList<>();
         myFiles.add(new MyFile("ab.jpg","ab.jpg"));
-        postService.write(post,myFiles);
+        postService.write(post,group,myFiles);
 
 
         Post post2 = Post.builder().title("제목입니다")
-                .member(findMember)
+                .member(member)
                 .content("내용")
                 .region("서울")
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
@@ -121,7 +136,7 @@ public class PostServiceTest {
         List<MyFile> myFiles2 = new ArrayList<>();
         myFiles2.add(new MyFile("abc.jpg","abc.jpg"));
         myFiles2.add(new MyFile("abcd.jpg","abcd.jpg"));
-        postService.write(post2,myFiles2);
+        postService.write(post2,group,myFiles2);
 
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
@@ -134,6 +149,10 @@ public class PostServiceTest {
         Member member = new Member("1234", "wogns", "wogns","123");
         memberRepository.save(member);
 
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
+
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
@@ -144,7 +163,7 @@ public class PostServiceTest {
         List<MyFile> myFiles = new ArrayList<>();
         myFiles.add(new MyFile("abc.jpg","abc.jpg"));
         myFiles.add(new MyFile("abcd.jpg","abcd.jpg"));
-        postService.write(post,myFiles);
+        postService.write(post,group,myFiles);
 
         PostResponseDto singlePost = postService.findSinglePost(post.getId(), 0L);
         assertThat(singlePost.getMemberName()).isEqualTo("wogns");
@@ -158,6 +177,10 @@ public class PostServiceTest {
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        postGroupRepository.save(group);
+
         for(int i = 0 ; i < 10 ; i++){
             String region = "서울";
             Post post = Post.builder().title("제목입니다" + i)
@@ -168,17 +191,56 @@ public class PostServiceTest {
                             , LocalDateTime.of(2021, 11, 5, 20, 20)))
                     .build();
 
-            postService.write(post);
+            postService.write(post,group);
         }
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.size()).isEqualTo(9);
     }
 
+    @Test
+    void 그룹내_포스트_조회(){
+        Member member = new Member("1234", "wogns", "wogns", "123");
+        memberRepository.save(member);
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+
+        PostGroup group2 = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+
+        postGroupRepository.save(group);
+        postGroupRepository.save(group2);
+
+        for(int i = 0 ; i < 10 ; i++){
+            String region = "서울";
+            Post post = Post.builder().title("제목입니다" + i)
+                    .member(member)
+                    .content("내용")
+                    .region(region)
+                    .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
+                            , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                    .build();
+
+            if(i > 7){
+                postService.write(post, group2);
+            }else{
+                postService.write(post, group);
+            }
+        }
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setPostGroupId(group.getId());
+        List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, 1);
+
+        assertThat(storyList.size()).isEqualTo(8);
+    }
+
     @AfterEach
     void tearDown(){
         System.out.println("================After Each====================");
+        photoRepository.deleteAll();
+        likeRepository.deleteAll();
         postRepository.deleteAll();
+        postGroupRepository.deleteAll();
         memberRepository.deleteAll();
     }
 
