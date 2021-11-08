@@ -6,7 +6,6 @@ import com.palette.domain.post.PostGroup;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
-import com.palette.exception.PaletteException;
 import com.palette.exception.PostGroupException;
 import com.palette.repository.PostGroupRepository;
 import com.palette.utils.ConstantUtil;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
