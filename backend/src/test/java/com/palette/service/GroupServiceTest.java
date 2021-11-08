@@ -103,6 +103,11 @@ public class GroupServiceTest {
         assertThat(budgetRepository.findById(budget.getId()).orElse(null).getGroup()).isEqualTo(findGroup);
     }
 
+//    @Test
+//    public void 그룹에_멤버_삭제(){
+//        
+//    }
+
     @AfterEach
     void 전체_삭제(){
         System.out.println("-------------AfterEach-------------");

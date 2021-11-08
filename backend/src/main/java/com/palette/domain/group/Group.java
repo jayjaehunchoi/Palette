@@ -1,5 +1,6 @@
 package com.palette.domain.group;
 
+import com.palette.dto.request.GroupUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +35,10 @@ public class Group {
         this.numberOfPeople = 1;
     }
 
-    public void updateGroupName(String name){
-        this.groupName = name;
+    //todo : membergroup 업데이트 이렇게 하는지 맞낭..
+    public void updateGroup(GroupUpdateDto dto){
+        this.groupName = dto.getGroupName();
+        this.groupIntroduction = dto.getGroupIntroduction();
+        this.numberOfPeople = dto.getNumberOfPeople();
     }
 }

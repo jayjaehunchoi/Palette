@@ -6,6 +6,7 @@ import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
+import com.palette.dto.request.GroupUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class GroupService {
+    private final MemberRepository memberRepository;
     private final GroupRepository groupRepository;
     private final MemberGroupRepository memberGroupRepository;
     private final BudgetRepository budgetRepository;
@@ -45,34 +47,48 @@ public class GroupService {
         });
     }
 
+    //그룹 멤버 삭제
+    @Transactional
+    public void deleteGroupMember(Long id,Member member){
+        Optional<Group> findGroup = groupRepository.findById(id);
+        findGroup.ifPresent(selectGroup ->{
+            // todo: memberGroup 삭제, 그 멤버그룹이랑 이어져있는 member과 group의 membergroup 삭제
+            MemberGroup findMemberGroup = memberGroupRepository.findByMemberGroup(member,selectGroup);
+            findMemberGroup.deleteMemberGroup(selectGroup,member);
+        });
+    }
+
     //그룹 업데이트
-    public void updateGroupName(Long id, String updateName){
+    @Transactional
+    public void updateGroup(Long id, GroupUpdateDto dto){
         Optional<Group> group = groupRepository.findById(id);
         group.ifPresent(selectGroup ->{
-            selectGroup.updateGroupName(updateName);
+            selectGroup.updateGroup(dto);
         });
     }
 
     //그룹삭제
+    @Transactional
     public void deleteGroup(Long id){
         Optional<Group> group = groupRepository.findById(id);
         group.ifPresent(selectGroup ->{
             groupRepository.deleteById(id);
         });
-        //todo: 그룹없다면 exception 처리
-
+        // todo: 그룹없다면 exception 처리, 재훈이코드 보고 참고해야지
     }
 
     //그룹에 예산 넣기
+    @Transactional
     public void addBudget(Long id, BudgetDto budgetDto){
         Optional<Group> group = groupRepository.findById(id);
         group.ifPresent(selectGroup ->{ //todo: budgetDto null check
             Budget budget = new Budget(selectGroup,budgetDto.getTotalBudget());
-            budgetRepository .save(budget);
+            budgetRepository.save(budget);
         });
     }
 
     //budget update
+    @Transactional
     public Budget updateBudget(Long id, BudgetUpdateDto dto){
         Budget findBudget = budgetRepository.findById(id).orElse(null);
         findBudget.update(dto);
@@ -80,6 +96,7 @@ public class GroupService {
     }
 
     //budget delete
+    @Transactional
     public void deleteBudget(Long id){
         Optional<Budget> budget = budgetRepository.findById(id);
         budget.ifPresent(selectGroup ->{
