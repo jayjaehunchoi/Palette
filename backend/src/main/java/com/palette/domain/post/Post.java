@@ -3,7 +3,7 @@ package com.palette.domain.post;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
-import com.palette.dto.request.PostUpdateDto;
+import com.palette.dto.request.PostRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -64,7 +64,7 @@ public class Post extends BaseTimeEntity {
         this.hit = 0;
     }
 
-    public void update(PostUpdateDto dto){
+    public void update(PostRequestDto dto){
         title = dto.getTitle();
         content = dto.getContent();
     }

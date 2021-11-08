@@ -97,7 +97,9 @@ public class PostGroupService {
     }
 
     public PostGroup findById(Long id){
-        return postGroupRepository.findById(id).orElse(null);
+        PostGroup postGroup = postGroupRepository.findById(id).orElse(null);
+        isPostGroupExist(postGroup);
+        return postGroup;
     }
 
     public List<PostGroup> findAll(){

@@ -11,6 +11,7 @@ public class PostResponseDto {
 
     private Long memberId;
     private String memberName;
+    private Long postId;
     private String postTitle;
     private String postContent;
     private int likes;
@@ -20,6 +21,7 @@ public class PostResponseDto {
     public PostResponseDto(final Post post){
         this.memberId = post.getMember().getId();
         this.memberName = post.getMember().getUname();
+        this.postId = post.getId();
         this.postTitle = post.getTitle();
         this.postContent = post.getContent();
         this.likes = post.getLikeCount();

@@ -1,10 +1,11 @@
 package com.palette.service;
 
+import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.domain.post.PostGroup;
-import com.palette.dto.request.PostUpdateDto;
+import com.palette.dto.request.PostRequestDto;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
@@ -36,25 +37,22 @@ public class PostService {
     private final S3Uploader s3Uploader;
 
     // 넘어온 사진이 없는 경우
-    public Post write(Post post, Long postGroupId){
-        PostGroup postGroup = postGroupRepository.findById(postGroupId).orElse(null);
-        isPostGroupExist(postGroup);
+    public Post write(Post post, PostGroup postGroup){
         post.createPostOnPostGroup(postGroup);
+        // 기본 사진 세팅 필요 or 사진 없으면 글 작성 못하게 제한
         return postRepository.save(post);
     }
 
 
     // 넘어온 사진이 있는경우
-    public void write(Post post, Long postGroupId, List<MyFile> myFiles){
-        PostGroup postGroup = postGroupRepository.findById(postGroupId).orElse(null);
-        isPostGroupExist(postGroup);
+    public Post write(Post post, PostGroup postGroup, List<MyFile> myFiles){
         post.createPostOnPostGroup(postGroup);
 
         for (MyFile myFile : myFiles) {
             Photo photo = new Photo(myFile);
             photo.setPicturesOnPost(post);
         }
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 
     public void delete(Long postId){
@@ -66,11 +64,10 @@ public class PostService {
     }
 
     // todo : update 가능 목록 이야기 필요
-    public Post update(Long postId, PostUpdateDto dto){
+    public void update(Long postId, PostRequestDto dto){
         Post findPost = postRepository.findById(postId).orElse(null);
         isPostExist(findPost);
         findPost.update(dto);
-        return findPost;
     }
 
     // 단건 조회
@@ -87,6 +84,13 @@ public class PostService {
         return postResponseDto;
     }
 
+    @Transactional(readOnly = true)
+    public Post findById(Long id){
+        Post findPost = postRepository.findById(id).orElse(null);
+        isPostExist(findPost);
+        return findPost;
+    }
+
     // storyList 페이징 출력
     @Transactional(readOnly = true)
     public List<StoryListResponseDto> findStoryList(SearchCondition condition, int pageNo) {
@@ -96,6 +100,11 @@ public class PostService {
         updateStoryListResponseDto(results, thumbnailMap);
         return results;
     }
+    public List<String> creatFullPathImageList(Post findPost) {
+        return findPost.getPhotos().stream()
+                .map(photo -> photo.getFile().getStoreFileName())
+                .collect(Collectors.toList());
+    }
 
     private void updateStoryListResponseDto(List<StoryListResponseDto> results,  Map<Long, String> thumbnailMap) {
         results.forEach(result -> {
@@ -104,15 +113,16 @@ public class PostService {
             result.setThumbNailFilePath(path);
         });
     }
-    private List<String> creatFullPathImageList(Post findPost) {
-        return findPost.getPhotos().stream()
-                .map(photo -> photo.getFile().getStoreFileName())
-                .collect(Collectors.toList());
+
+    public void isAvailablePostOnPostGroup(PostGroup postGroup, Long memberId) {
+        if(postGroup.getMember().getId() != memberId){
+            throw new PostException("그룹 내 게시물 작성 / 수정 / 삭제 권한이 없습니다.");
+        }
     }
 
-    private void isPostGroupExist(PostGroup postGroup) {
-        if(postGroup == null){
-            throw new PostGroupException("게시물 그룹이 존재하지 않습니다.");
+    public void isAvailableUpdatePost(Post findPost, Member member){
+        if(member.getId() != findPost.getMember().getId()){
+            throw new PostException("게시물 수정 / 삭제 권한이 없습니다.");
         }
     }
 

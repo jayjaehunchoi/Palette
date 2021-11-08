@@ -50,7 +50,7 @@ public class PostServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post, group.getId());
+        postService.write(post, group);
 
         likeService.pushLike(member,post.getId());
 
@@ -74,7 +74,7 @@ public class PostServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post, group.getId());
+        postService.write(post, group);
         likeService.pushLike(member,post.getId());
         likeService.pushLike(member,post.getId());
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
@@ -98,7 +98,7 @@ public class PostServiceTest {
                 .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
                         , LocalDateTime.of(2021, 11, 5, 20, 20)))
                 .build();
-        postService.write(post, group.getId());
+        postService.write(post, group);
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("기본썸네일");
@@ -123,7 +123,7 @@ public class PostServiceTest {
 
         List<MyFile> myFiles = new ArrayList<>();
         myFiles.add(new MyFile("ab.jpg","ab.jpg"));
-        postService.write(post,group.getId(),myFiles);
+        postService.write(post,group,myFiles);
 
 
         Post post2 = Post.builder().title("제목입니다")
@@ -136,7 +136,7 @@ public class PostServiceTest {
         List<MyFile> myFiles2 = new ArrayList<>();
         myFiles2.add(new MyFile("abc.jpg","abc.jpg"));
         myFiles2.add(new MyFile("abcd.jpg","abcd.jpg"));
-        postService.write(post2,group.getId(),myFiles2);
+        postService.write(post2,group,myFiles2);
 
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
@@ -163,7 +163,7 @@ public class PostServiceTest {
         List<MyFile> myFiles = new ArrayList<>();
         myFiles.add(new MyFile("abc.jpg","abc.jpg"));
         myFiles.add(new MyFile("abcd.jpg","abcd.jpg"));
-        postService.write(post,group.getId(),myFiles);
+        postService.write(post,group,myFiles);
 
         PostResponseDto singlePost = postService.findSinglePost(post.getId(), 0L);
         assertThat(singlePost.getMemberName()).isEqualTo("wogns");
@@ -191,7 +191,7 @@ public class PostServiceTest {
                             , LocalDateTime.of(2021, 11, 5, 20, 20)))
                     .build();
 
-            postService.write(post,group.getId());
+            postService.write(post,group);
         }
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
@@ -222,9 +222,9 @@ public class PostServiceTest {
                     .build();
 
             if(i > 7){
-                postService.write(post, group2.getId());
+                postService.write(post, group2);
             }else{
-                postService.write(post, group.getId());
+                postService.write(post, group);
             }
         }
         SearchCondition searchCondition = new SearchCondition();

@@ -11,6 +11,7 @@ import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
+import com.palette.utils.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +41,7 @@ public class PostGroupController {
     // /postgroup?page={pageNumber}
     // 1페이지당 9개 그룹 출력
     @GetMapping
-    public ResponseEntity<GeneralResponse> getGroupPostWithoutFilter(@RequestParam(defaultValue = "1", required = false) int page){
+    public ResponseEntity<GeneralResponse> getGroupPostWithoutFilter(@RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE, required = false) int page){
         List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(page);
         GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
         return ResponseEntity.ok(res);
@@ -55,25 +57,25 @@ public class PostGroupController {
 
     // PostGroup 내의 Post보기
     @GetMapping("/{id}")
-    public ResponseEntity<GeneralResponse> getSingleGroupPost(@PathVariable Long id){
+    public ResponseEntity<GeneralResponse> getSingleGroupPost(@PathVariable Long id, @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE, required = false) int page){
         SearchCondition searchCondition = new SearchCondition();
         searchCondition.setPostGroupId(id);
-        List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, 1);
+        List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, page);
         GeneralResponse<Object> res = GeneralResponse.builder().data(storyList).build();
         return ResponseEntity.ok(res);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public PostGroupResponseDto uploadPostGroup(@Login Member member, @RequestPart(value = "data")PostGroupDto dto, @RequestPart(value = "file")MultipartFile file) throws IOException {
+    public Long uploadPostGroup(@Login Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
         PostGroup postGroup = createPostGroupEntity(member, dto, file);
         PostGroup savePostGroup = postGroupService.createPostGroup(postGroup);
-        return new PostGroupResponseDto(savePostGroup);
+        return savePostGroup.getId();
     }
 
     // 로그인 체크 꼭 필요
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePostGroup(@Login Member member, @PathVariable Long id, @RequestPart(value = "data") PostGroupDto dto, @RequestPart(value = "file") MultipartFile file) throws IOException{
+    public ResponseEntity<Void> updatePostGroup(@Login Member member, @PathVariable Long id, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file") MultipartFile file) throws IOException{
         postGroupService.checkMemberAuth(member,id);
         String storeFileName = postGroupService.getStoreFileNameIfChanged(id, file);
         MyFile myFile = updateDirectoryFile(file, storeFileName);
@@ -110,6 +112,7 @@ public class PostGroupController {
             s3Uploader.deleteS3(Arrays.asList(storeFileName));
             return s3Uploader.uploadSingleFile(file);
         }
+        log.info("Group update 파일 없음");
         return null;
     }
 
