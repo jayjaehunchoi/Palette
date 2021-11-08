@@ -9,10 +9,10 @@ import java.util.List;
 
 @Getter
 public class GroupUpdateDto {
-    @NotBlank//todo:메세지 적기 max값도 설정
+    @NotBlank(message = "그룹 이름을 입력해주세요.")
     private String groupName;
 
-    @NotBlank
+    @NotBlank(message = "그룹 정보를 입력해주세요.")
     private String groupIntroduction;
 
 }
