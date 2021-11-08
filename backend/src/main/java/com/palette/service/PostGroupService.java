@@ -33,8 +33,8 @@ public class PostGroupService {
     private final S3Uploader s3Uploader;
 
     @Transactional
-    public void createPostGroup(PostGroup postGroup){
-        postGroupRepository.save(postGroup);
+    public PostGroup createPostGroup(PostGroup postGroup){
+        return postGroupRepository.save(postGroup);
     }
 
     @Transactional

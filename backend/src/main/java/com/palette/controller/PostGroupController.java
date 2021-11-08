@@ -15,6 +15,7 @@ import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,24 +45,15 @@ public class PostGroupController {
         return ResponseEntity.ok(res);
     }
 
-    // /postgroup/{필터}/{필터 조건}?page={pageNumber}
-    @GetMapping("/{filter}/{condition}")
-    public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@PathVariable String filter, @PathVariable String condition, @RequestParam(defaultValue = "1", required = false) int page){
-        List<PostGroupResponseDto> postGroup = null;
-        switch (filter){
-            case "member" :
-                postGroup = postGroupService.findPostGroupByMember(condition, page);
-                break;
-            case "region" :
-                postGroup = postGroupService.findPostGroupByRegion(condition, page);
-                break;
-            case "title" :
-                postGroup = postGroupService.findPostGroupByTitle(condition, page);
-        }
+    // /postgroup?filter={필터}&condition={조건}&page={pageNumber}
+    @GetMapping
+    public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@RequestParam(required = false) String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
+        List<PostGroupResponseDto> postGroup = findWithSearchFilter(filter, condition, page);
         GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
         return ResponseEntity.ok(res);
     }
 
+    // PostGroup 내의 Post보기
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getSingleGroupPost(@PathVariable Long id){
         SearchCondition searchCondition = new SearchCondition();
@@ -71,11 +63,12 @@ public class PostGroupController {
         return ResponseEntity.ok(res);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<Void> uploadPostGroup(@Login Member member, @RequestPart(value = "data")PostGroupDto dto, @RequestPart(value = "file")MultipartFile file) throws IOException {
+    public PostGroupResponseDto uploadPostGroup(@Login Member member, @RequestPart(value = "data")PostGroupDto dto, @RequestPart(value = "file")MultipartFile file) throws IOException {
         PostGroup postGroup = createPostGroupEntity(member, dto, file);
-        postGroupService.createPostGroup(postGroup);
-        return RESPONSE_CREATED;
+        PostGroup savePostGroup = postGroupService.createPostGroup(postGroup);
+        return new PostGroupResponseDto(savePostGroup);
     }
 
     // 로그인 체크 꼭 필요
@@ -94,6 +87,23 @@ public class PostGroupController {
         postGroupService.deletePostGroup(id);
         return RESPONSE_OK;
     }
+
+    private List<PostGroupResponseDto> findWithSearchFilter(String filter, String condition, int page) {
+        List<PostGroupResponseDto> postGroup = null;
+        switch (filter){
+            case "member" :
+                postGroup = postGroupService.findPostGroupByMember(condition, page);
+                break;
+            case "region" :
+                postGroup = postGroupService.findPostGroupByRegion(condition, page);
+                break;
+            case "title" :
+                postGroup = postGroupService.findPostGroupByTitle(condition, page);
+                break;
+        }
+        return postGroup;
+    }
+
 
     private MyFile updateDirectoryFile(MultipartFile file, String storeFileName) throws IOException {
         if(storeFileName != null){

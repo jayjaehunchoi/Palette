@@ -1,7 +1,6 @@
 package com.palette.repository.impl;
 
-import com.palette.domain.member.QMember;
-import com.palette.domain.post.QPostGroup;
+
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.repository.PostGroupRepositoryCustom;
@@ -14,7 +13,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.palette.domain.member.QMember.*;
-import static com.palette.domain.post.QPost.post;
 import static com.palette.domain.post.QPostGroup.*;
 import static org.springframework.util.StringUtils.hasText;
 

@@ -8,6 +8,7 @@ import com.palette.dto.request.PostUpdateDto;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
+import com.palette.exception.PostException;
 import com.palette.exception.PostGroupException;
 import com.palette.repository.CommentRepository;
 import com.palette.repository.PostGroupRepository;
@@ -32,13 +33,14 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final PostGroupRepository postGroupRepository;
+    private final S3Uploader s3Uploader;
 
     // 넘어온 사진이 없는 경우
-    public void write(Post post, Long postGroupId){
+    public Post write(Post post, Long postGroupId){
         PostGroup postGroup = postGroupRepository.findById(postGroupId).orElse(null);
         isPostGroupExist(postGroup);
         post.createPostOnPostGroup(postGroup);
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 
 
@@ -55,21 +57,27 @@ public class PostService {
         postRepository.save(post);
     }
 
-    // todo : null check
     public void delete(Long postId){
+        Post findPost = postRepository.findById(postId).orElse(null);
+        isPostExist(findPost);
         postRepository.deleteById(postId);
+        List<String> storedFileList = findPost.getPhotos().stream().map(photo -> photo.getFile().getStoreFileName()).collect(Collectors.toList());
+        s3Uploader.deleteS3(storedFileList);
     }
 
-    // todo : null check , update 가능 목록 이야기 필요
+    // todo : update 가능 목록 이야기 필요
     public Post update(Long postId, PostUpdateDto dto){
         Post findPost = postRepository.findById(postId).orElse(null);
+        isPostExist(findPost);
         findPost.update(dto);
         return findPost;
     }
 
     // 단건 조회
+    @Transactional(readOnly = true)
     public PostResponseDto findSinglePost(Long postId, Long commentId){
         Post findPost = postRepository.findSinglePost(postId);
+        isPostExist(findPost);
 
         List<String> images = creatFullPathImageList(findPost); // 이미지 풀경로 리스트
         PostResponseDto postResponseDto = new PostResponseDto(findPost);
@@ -78,7 +86,6 @@ public class PostService {
 
         return postResponseDto;
     }
-
 
     // storyList 페이징 출력
     @Transactional(readOnly = true)
@@ -106,6 +113,12 @@ public class PostService {
     private void isPostGroupExist(PostGroup postGroup) {
         if(postGroup == null){
             throw new PostGroupException("게시물 그룹이 존재하지 않습니다.");
+        }
+    }
+
+    private void isPostExist(Post findPost) {
+        if(findPost == null){
+            throw new PostException("게시물이 존재하지 않습니다.");
         }
     }
 

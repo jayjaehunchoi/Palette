@@ -1,5 +1,6 @@
 package com.palette.dto.response;
 
+import com.palette.domain.post.PostGroup;
 import com.palette.dto.PeriodDto;
 import lombok.Getter;
 
@@ -15,6 +16,16 @@ public class PostGroupResponseDto {
     private String thumbNailUrl;
     private PeriodDto period;
     private String region;
+
+    public PostGroupResponseDto(final PostGroup postGroup) {
+        this.postGroupId = postGroup.getId();
+        this.memberId = postGroup.getMember().getId();
+        this.memberName = postGroup.getMember().getUname();
+        this.title = postGroup.getTitle();
+        this.thumbNailUrl = postGroup.getThumbNail().getStoreFileName();
+        this.period = new PeriodDto(postGroup.getPeriod().getStartDate(), postGroup.getPeriod().getEndDate());
+        this.region = postGroup.getRegion();
+    }
 
     public PostGroupResponseDto(Long postGroupId, Long memberId, String memberName, String title, String thumbNailUrl, LocalDateTime startDate, LocalDateTime endDate, String region) {
         this.postGroupId = postGroupId;
