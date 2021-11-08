@@ -8,9 +8,7 @@ import com.palette.domain.post.PostGroup;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.MemberRepository;
-import com.palette.repository.PostGroupRepository;
-import com.palette.repository.PostRepository;
+import com.palette.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +28,8 @@ public class PostServiceTest {
 
     @Autowired PostService postService;
     @Autowired LikeService likeService;
+    @Autowired LikeRepository likeRepository;
+    @Autowired PhotoRepository photoRepository;
     @Autowired MemberRepository memberRepository;
     @Autowired PostRepository postRepository;
     @Autowired PostGroupRepository postGroupRepository;
@@ -237,6 +237,8 @@ public class PostServiceTest {
     @AfterEach
     void tearDown(){
         System.out.println("================After Each====================");
+        photoRepository.deleteAll();
+        likeRepository.deleteAll();
         postRepository.deleteAll();
         postGroupRepository.deleteAll();
         memberRepository.deleteAll();

@@ -32,6 +32,7 @@ public class LikeService {
             return findPost.getLikeCount();
         }
         likes.pushLike(findPost, true);
+        likeRepository.delete(findLike);
         return findPost.getLikeCount();
     }
 

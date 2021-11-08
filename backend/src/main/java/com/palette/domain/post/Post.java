@@ -33,13 +33,13 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "post_group_id", foreignKey = @ForeignKey(name = "fk_post_post_group"))
     private PostGroup postGroup;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Photo> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
 
     @Embedded

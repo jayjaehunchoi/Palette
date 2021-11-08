@@ -10,10 +10,7 @@ import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.exception.PostException;
-import com.palette.exception.PostGroupException;
-import com.palette.repository.CommentRepository;
-import com.palette.repository.PostGroupRepository;
-import com.palette.repository.PostRepository;
+import com.palette.repository.*;
 import com.palette.utils.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +30,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
-    private final PostGroupRepository postGroupRepository;
+    private final LikeRepository likeRepository;
+    private final PhotoRepository photoRepository;
     private final S3Uploader s3Uploader;
 
     // 넘어온 사진이 없는 경우
@@ -58,9 +56,12 @@ public class PostService {
     public void delete(Long postId){
         Post findPost = postRepository.findById(postId).orElse(null);
         isPostExist(findPost);
-        postRepository.deleteById(postId);
+        likeRepository.deleteAllLikeByPostId(postId);
         List<String> storedFileList = findPost.getPhotos().stream().map(photo -> photo.getFile().getStoreFileName()).collect(Collectors.toList());
         s3Uploader.deleteS3(storedFileList);
+        commentRepository.deleteAllCommentByPostId(postId);
+        photoRepository.deleteAllPhotoByPostId(postId);
+        postRepository.deleteById(postId);
     }
 
     // todo : update 가능 목록 이야기 필요
@@ -75,7 +76,7 @@ public class PostService {
     public PostResponseDto findSinglePost(Long postId, Long commentId){
         Post findPost = postRepository.findSinglePost(postId);
         isPostExist(findPost);
-
+        findPost.visitPost();
         List<String> images = creatFullPathImageList(findPost); // 이미지 풀경로 리스트
         PostResponseDto postResponseDto = new PostResponseDto(findPost);
         postResponseDto.setComments(commentRepository.findCommentByPostIdWithCursor(postId, commentId)); // 최초 조회시 comment
@@ -89,6 +90,11 @@ public class PostService {
         Post findPost = postRepository.findById(id).orElse(null);
         isPostExist(findPost);
         return findPost;
+    }
+
+    public List<Long> findPostIdsByPostGroupId(Long postGroupId){
+        List<Post> posts = postRepository.findByPostGroupId(postGroupId);
+        return posts.stream().map(post -> post.getId()).collect(Collectors.toList());
     }
 
     // storyList 페이징 출력
