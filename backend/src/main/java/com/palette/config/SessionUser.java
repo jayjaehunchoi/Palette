@@ -7,12 +7,12 @@ import java.io.Serializable;
 
 @Getter
 public class SessionUser implements Serializable {
-    private String password;
+    private String name;
     private String email;
     private String profileFileName;
 
     public SessionUser(Member member) {
-        this.password = member.getPassword();
+        this.name = member.getName();
         this.email = member.getEmail();
         this.profileFileName = member.getProfileFileName();
     }
