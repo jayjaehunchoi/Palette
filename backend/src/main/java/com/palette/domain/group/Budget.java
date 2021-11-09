@@ -1,5 +1,6 @@
 package com.palette.domain.group;
 
+import com.palette.dto.request.BudgetUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class Budget {
     private Group group;
 
     @Column
-    private Long totalBudget;
+    private long totalBudget;
 
     //지출 기록
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,5 +33,9 @@ public class Budget {
     public Budget(Group group, Long totalBudget){
         this.group = group;
         this.totalBudget = totalBudget;
+    }
+
+    public void update(BudgetUpdateDto dto){
+        totalBudget = dto.getBudget();
     }
 }

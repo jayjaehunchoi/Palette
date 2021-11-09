@@ -14,6 +14,6 @@ public class LikeResponseDto {
 
     public LikeResponseDto(final Member member) {
         this.memberId = member.getId();
-        this.memberName = member.getUname();
+        this.memberName = member.getName();
     }
 }

@@ -10,17 +10,17 @@ import java.util.Map;
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
-    private String upw;
-    private String uname;
+    private String name;
+    private String password;
     private String profileFileName;
     private String email;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String upw, String uname, String profileFileName, String email) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String password, String profileFileName, String email) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
-        this.upw = upw;
-        this.uname = uname;
+        this.name = name;
+        this.password = password;
         this.profileFileName = profileFileName;
         this.email = email;
     }
@@ -35,7 +35,7 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
-                .uname((String) attributes.get("uname"))
+                .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileFileName((String) attributes.get("profileFileName"))
                 .attributes(attributes)
@@ -47,7 +47,7 @@ public class OAuthAttributes {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuthAttributes.builder()
-                .uname((String) response.get("uname"))
+                .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .profileFileName((String) response.get("profileFileName"))
                 .attributes(response)
@@ -57,7 +57,7 @@ public class OAuthAttributes {
 
     public Member toEntity() {
         return Member.builder()
-                .uname(uname)
+                .name(name)
                 .email(email)
                 .profileFileName(profileFileName)
                 .build();

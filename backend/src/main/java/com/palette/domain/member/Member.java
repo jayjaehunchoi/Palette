@@ -20,36 +20,36 @@ public class Member extends BaseTimeEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
-    private String upw;
-    private String uname;
+    private String name;
+    private String password;
     private String profileFileName;
     private String email;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
     @Builder
-    public Member(String upw, String uname, String profileFileName, String email) {
-        this.upw = upw;
-        this.uname = uname;
+    public Member(String name, String password, String profileFileName, String email) {
+        this.name = name;
+        this.password = password;
         this.profileFileName = profileFileName;
         this.email = email;
     }
 
-    public Member update(String uname, String profileFileName) {
-        this.uname = uname;
+    public Member update(String name, String profileFileName) {
+        this.name = name;
         this.profileFileName = profileFileName;
 
         return this;
     }
 
-    public Member(String upw, String uname, String profileFileName,List<MemberGroup> memberGroups) {
-        this.upw = upw;
-        this.uname = uname;
+    public Member(String name, String password, String profileFileName,List<MemberGroup> memberGroups) {
+        this.name = name;
+        this.password = password;
         this.profileFileName = profileFileName;
         this.memberGroups = memberGroups;
     }
 
     public void encodePassword(String encodedPassword) {
-        upw = encodedPassword;
+        password = encodedPassword;
     }
 }

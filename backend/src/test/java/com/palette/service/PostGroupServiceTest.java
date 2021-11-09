@@ -36,8 +36,8 @@ class PostGroupServiceTest {
 
     @BeforeEach
     void setUp(){
-        Member member = new Member("1234","재훈", "akds", "123");
-        Member member2 = new Member("1234","훈재", "akdsaa", "123");
+        Member member = new Member("재훈","1234", "akds", "123");
+        Member member2 = new Member("훈재","1234", "akdsaa", "123");
 
         memberRepository.save(member);
         memberRepository.save(member2);

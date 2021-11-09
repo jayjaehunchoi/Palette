@@ -49,7 +49,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
             return new ArrayList<>();
         }
         return queryFactory.select(new QStoryListResponseDto(post.member.id.as("memberId"),
-                post.member.uname,
+                post.member.name,
                 post.id.as("postId"),
                 post.title,
                 post.likeCount))
@@ -99,8 +99,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     // 동적 쿼리 작성용
-    private BooleanExpression memberNameEq(String uname){
-        return hasText(uname) ? post.member.uname.eq(uname):null;
+    private BooleanExpression memberNameEq(String name){
+        return hasText(name) ? post.member.name.eq(name):null;
     }
     private BooleanExpression regionEq(String region){
         return hasText(region) ? post.region.eq(region) : null;
