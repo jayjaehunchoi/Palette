@@ -4,7 +4,6 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Like;
 import com.palette.domain.post.Post;
-import com.palette.repository.impl.LikeRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

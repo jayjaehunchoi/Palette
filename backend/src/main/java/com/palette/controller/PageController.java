@@ -4,7 +4,7 @@ import com.palette.dto.GeneralResponse;
 import com.palette.dto.SearchCondition;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
-import com.palette.utils.ConstantUtil;
+import com.palette.utils.constant.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

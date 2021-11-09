@@ -11,7 +11,7 @@ import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.exception.PostException;
 import com.palette.repository.*;
-import com.palette.utils.ConstantUtil;
+import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.palette.utils.ConstantUtil.PAGE_SIZE;
+import static com.palette.utils.constant.ConstantUtil.PAGE_SIZE;
 
 @Transactional
 @RequiredArgsConstructor

@@ -2,7 +2,6 @@ package com.palette.service;
 
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
-import com.palette.domain.post.Post;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
@@ -10,7 +9,6 @@ import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.exception.PostGroupException;
 import com.palette.repository.PostGroupRepository;
 import com.palette.repository.PostRepository;
-import com.palette.utils.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.palette.utils.ConstantUtil.*;
+import static com.palette.utils.constant.ConstantUtil.*;
 
 @Transactional(readOnly = true)
 @Slf4j

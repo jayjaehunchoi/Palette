@@ -5,7 +5,6 @@ import com.palette.dto.*;
 import com.palette.dto.response.QStoryListResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.PostRepositoryCustom;
-import com.palette.utils.ConstantUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -20,7 +19,7 @@ import java.util.Map;
 
 import static com.palette.domain.post.QPhoto.*;
 import static com.palette.domain.post.QPost.*;
-import static com.palette.utils.ConstantUtil.*;
+import static com.palette.utils.constant.ConstantUtil.*;
 import static org.springframework.util.StringUtils.*;
 
 @Repository

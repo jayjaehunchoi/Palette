@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.palette.utils.ConstantUtil.*;
+import static com.palette.utils.constant.ConstantUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor

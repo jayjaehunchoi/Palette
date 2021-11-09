@@ -9,7 +9,7 @@ import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.*;
-import com.palette.utils.ConstantUtil;
+import com.palette.utils.constant.ConstantUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
