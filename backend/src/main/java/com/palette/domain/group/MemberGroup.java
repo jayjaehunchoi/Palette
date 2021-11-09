@@ -28,7 +28,7 @@ public class MemberGroup {
         this.group = group;
         this.member = member;
         group.getMemberGroups().add(this);
-        member.getMemberGroups().add(this);
+        //member.getMemberGroups().add(this);
     }
 
     public void deleteMemberGroup(Group group, Member member){

@@ -32,8 +32,6 @@ public class GroupServiceTest {
     @Autowired
     GroupService groupService;
 
-    // todo: groupService 테스트
-
     @BeforeEach
     public void setUp() {
 
@@ -53,13 +51,13 @@ public class GroupServiceTest {
         // 그룹생성
         Group group = Group.builder().
                 groupName("그룹1").
-                groupIntroduction("테스트 그룹 1입니다.")
+                groupsIntroduction("테스트 그룹 1입니다.")
                 .build();
         groupRepository.save(group);
 
         Group group2 = Group.builder()
                 .groupName("그룹2")
-                .groupIntroduction("테스트 그룹 2입니다")
+                .groupsIntroduction("테스트 그룹 2입니다")
                 .build();
         groupRepository.save(group2);
 
@@ -87,7 +85,19 @@ public class GroupServiceTest {
 
         // group : member1, member2
         // group2 : member1, member3, member4
+
+        System.out.println("-------------setUp end-------------");
     }// end method
+
+    @Test
+    public void 그룹_최초생성(){
+        // todo : groupDto에서 받아와서 group 객체에 담아주기, memberDto도 마찬가지..?
+        Group group = new Group("청춘은바로지금","우리의 태국 여행~");
+        Member findMember = memberRepo.findAll().get(0);
+        groupService.addGroup(group,findMember);
+
+        assertThat(groupRepository.findAll().get(2)).isEqualTo(group);
+    }
 
     @Test
     public void 그룹의_멤버확인(){

@@ -32,7 +32,7 @@ public class GroupService {
     public void addGroup(Group group, Member member){
         groupRepository.save(group);
         MemberGroup memberGroup = new MemberGroup();
-        memberGroupRepository.save(memberGroup);
+        //memberGroupRepository.save(memberGroup); -> cascadeAll 때문
         memberGroup.addMemberGroup(group,member);
     }
 

@@ -45,6 +45,7 @@ public class BudgetRepositoryTest {
     void 예산_조회(){ //read
         for(int i = 0; i < 2; i++) {
             budgetRepository.findAll().get(i);
+            //todo: assertJ쓰기
         }
     }
 
