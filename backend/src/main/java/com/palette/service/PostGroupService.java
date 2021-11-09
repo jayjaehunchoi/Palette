@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.palette.utils.ConstantUtil.*;
+
 @Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
@@ -80,24 +82,24 @@ public class PostGroupService {
     // 멤버 아이디 조건으로 그룹 조회 (마이 블로그에서 활용 가능)
     public List<PostGroupResponseDto> findPostGroupByMember(String memberName, int pageNo){
         SearchCondition searchCondition = setSearchCondFilterMemberName(memberName);
-        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, ConstantUtil.PAGE_SIZE);
+        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
     }
 
     // 지역 조건으로 그룹 조회 (스토리 검색 기능)
     public List<PostGroupResponseDto> findPostGroupByRegion(String region, int pageNo){
         SearchCondition searchCondition = setSearchCondFilterRegion(region);
-        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, ConstantUtil.PAGE_SIZE);
+        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
     }
 
     // 그룹 타이틀 조건으로 그룹 조회 (스토리 검색 기능)
     public List<PostGroupResponseDto> findPostGroupByTitle(String title, int pageNo){
         SearchCondition searchCondition = setSearchCondFilterTitle(title);
-        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, ConstantUtil.PAGE_SIZE);
+        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
     }
 
     // 조건 없이 그룹 조회
     public List<PostGroupResponseDto> findPostGroup(int pageNo){
-        return postGroupRepository.findStoryListWithPage(new SearchCondition(), pageNo, ConstantUtil.PAGE_SIZE);
+        return postGroupRepository.findStoryListWithPage(new SearchCondition(), pageNo, PAGE_SIZE);
     }
 
     public PostGroup findById(Long id){
@@ -110,6 +112,20 @@ public class PostGroupService {
         return postGroupRepository.findAll();
     }
 
+    // 페이지 수 조회
+    public long getTotalPage(String filter, String condition){
+        SearchCondition searchCondition;
+        if(filter.equals("member")){
+            searchCondition = setSearchCondFilterMemberName(condition);
+        }else if(filter.equals("region")){
+            searchCondition = setSearchCondFilterRegion(condition);
+        }else if(filter.equals("title")){
+            searchCondition = setSearchCondFilterTitle(condition);
+        }else{
+            searchCondition = new SearchCondition();
+        }
+        return ((postGroupRepository.getStoryListTotalCount(searchCondition) - 1) / PAGE_SIZE)+1;
+    }
 
     private void isPostGroupExist(PostGroup findPostGroup) {
         if (findPostGroup == null) {

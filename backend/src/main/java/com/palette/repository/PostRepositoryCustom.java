@@ -12,4 +12,5 @@ public interface PostRepositoryCustom {
     List<StoryListResponseDto> findStoryListWithPage(SearchCondition condition, int pageNo, int pageSize);
     Map<Long, String> findThumbnailByPostId(List<Long> postIds);
     Post findSinglePost(Long postId);
+    long getPostTotalCount(SearchCondition condition);
 }

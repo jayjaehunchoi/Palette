@@ -9,5 +9,5 @@ import java.util.Map;
 
 public interface PostGroupRepositoryCustom {
     List<PostGroupResponseDto> findStoryListWithPage(SearchCondition condition, int pageNo, int pageSize);
-
+    long getStoryListTotalCount(SearchCondition condition);
 }

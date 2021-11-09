@@ -9,6 +9,7 @@ import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.repository.*;
+import com.palette.utils.ConstantUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,7 +102,7 @@ public class PostServiceTest {
         postService.write(post, group);
 
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
-        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo("기본썸네일");
+        assertThat(storyList.get(0).getThumbNailFullPath()).isEqualTo(ConstantUtil.BASIC_THUMBNAIL);
     }
 
     @Test

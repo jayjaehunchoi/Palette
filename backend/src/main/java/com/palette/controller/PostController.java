@@ -44,7 +44,7 @@ public class PostController {
                                                     @RequestParam(required = false) String region,
                                                     @RequestParam(required = false) String title,
                                                     @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
-        SearchCondition searchCondition = setSearchCondition(name, region, title);
+        SearchCondition searchCondition = SearchCondition.setSearchCondition(name, region, title);
         List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, page);
         GeneralResponse<Object> res = GeneralResponse.builder().data(storyList).build();
         return ResponseEntity.ok(res);
@@ -106,23 +106,6 @@ public class PostController {
         postService.isAvailableUpdatePost(findPost, member);
     }
 
-
-    private SearchCondition setSearchCondition(String name, String region, String title) {
-        SearchCondition searchCondition = new SearchCondition();
-        if(name != null){
-            log.info("검색 조건 {} 추가", name);
-            searchCondition.setName(name);
-        }
-        if(region != null){
-            log.info("검색 조건 {} 추가", region);
-            searchCondition.setRegion(region);
-        }
-        if(title != null){
-            log.info("검색 조건 {} 추가", title);
-            searchCondition.setTitle(title);
-        }
-        return searchCondition;
-    }
 
 
 }

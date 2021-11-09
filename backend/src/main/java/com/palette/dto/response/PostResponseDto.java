@@ -1,7 +1,6 @@
 package com.palette.dto.response;
 
 import com.palette.domain.post.Post;
-import com.palette.dto.request.CommentDto;
 import lombok.Getter;
 
 import java.util.List;

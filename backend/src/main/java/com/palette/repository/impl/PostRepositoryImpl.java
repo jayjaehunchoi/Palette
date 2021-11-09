@@ -90,6 +90,16 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return posts.get(0);
     }
 
+    public long getPostTotalCount(SearchCondition condition){
+        return queryFactory.select(post.id)
+                .from(post)
+                .where(memberNameEq(condition.getName()),
+                        regionEq(condition.getRegion()),
+                        titleContain(condition.getTitle()),
+                        postGroupIdEq(condition.getPostGroupId()))
+                .fetchCount();
+    }
+
     private Map<Long, String> createBaseMap(List<Long> postIds) {
         Map<Long, String> baseThumbnailMap = new HashMap<>();
         for (Long postId : postIds) {

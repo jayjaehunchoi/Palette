@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.palette.utils.ConstantUtil.PAGE_SIZE;
+
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
@@ -110,6 +112,11 @@ public class PostService {
         return findPost.getPhotos().stream()
                 .map(photo -> photo.getFile().getStoreFileName())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public long getTotalPage(SearchCondition condition){
+        return ((postRepository.getPostTotalCount(condition) - 1) / PAGE_SIZE)+1;
     }
 
     private void updateStoryListResponseDto(List<StoryListResponseDto> results,  Map<Long, String> thumbnailMap) {
