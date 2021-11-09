@@ -9,12 +9,10 @@ import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.MemberRepository;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
-import com.palette.utils.ConstantUtil;
+import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.S3Uploader;
-import com.palette.utils.SessionUtil;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.palette.utils.HttpResponseUtil.*;
+import static com.palette.utils.constant.HttpResponseUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor

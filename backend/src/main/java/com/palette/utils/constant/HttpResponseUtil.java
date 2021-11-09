@@ -1,4 +1,4 @@
-package com.palette.utils;
+package com.palette.utils.constant;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

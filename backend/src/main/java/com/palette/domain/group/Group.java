@@ -10,13 +10,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "groups")
+@Table(name = "travel_group")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "group_id")
     private Long id;
 
     private String groupName;

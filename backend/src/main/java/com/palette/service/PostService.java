@@ -11,7 +11,7 @@ import com.palette.dto.response.PostResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.exception.PostException;
 import com.palette.repository.*;
-import com.palette.utils.ConstantUtil;
+import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.palette.utils.constant.ConstantUtil.PAGE_SIZE;
 
 @Transactional
 @RequiredArgsConstructor
@@ -110,6 +112,11 @@ public class PostService {
         return findPost.getPhotos().stream()
                 .map(photo -> photo.getFile().getStoreFileName())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public long getTotalPage(SearchCondition condition){
+        return ((postRepository.getPostTotalCount(condition) - 1) / PAGE_SIZE)+1;
     }
 
     private void updateStoryListResponseDto(List<StoryListResponseDto> results,  Map<Long, String> thumbnailMap) {
