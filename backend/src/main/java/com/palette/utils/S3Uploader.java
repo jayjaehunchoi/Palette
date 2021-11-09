@@ -22,6 +22,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.palette.utils.ConstantUtil.*;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -54,6 +56,7 @@ public class S3Uploader {
     public void deleteS3(List<String> storedFileNames){
         List<String> keys = storedFileNames.stream().map(fileName -> getDeleteKey(fileName)).collect(Collectors.toList());
         for (String key : keys) {
+            if(key.equals(BASIC_THUMBNAIL))continue;
             DeleteObjectRequest deleteObjectReq = new DeleteObjectRequest(bucket, key);
             amazonS3Client.deleteObject(deleteObjectReq);
             log.info("S3에서 삭제 {}",key);
