@@ -91,7 +91,7 @@ public class GroupServiceTest {
 
     @Test
     public void 그룹_최초생성(){
-        // todo : groupDto에서 받아와서 group 객체에 담아주기, memberDto도 마찬가지..?
+        // todo : groupDto에서 받아와서 group 객체에 담아주기, memberDto도 마찬가지..
         Group group = new Group("청춘은바로지금","우리의 태국 여행~");
         Member findMember = memberRepo.findAll().get(0);
         groupService.addGroup(group,findMember);
