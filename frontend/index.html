@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palette.</title>
 
+  <!-- favicon -->
   <link rel="icon" href="/frontend/favicon.png" />
 
   <!-- header jquery -->
@@ -15,17 +16,37 @@
     $("#headers").load("/frontend/static/header.html");  
     });
   </script>
-  
+
+  <!-- css reset cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"/>
+
+  <!-- font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" >
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  
+  <!-- Material-icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- main.css -->
   <link rel="stylesheet" href="/frontend/css/main.css" />
 
-   <!-- SWIPER -->
-   <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css" />
-   <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+  <!-- SWIPER -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+
+  <!-- lord-icon -->
+  <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js" integrity="sha512-eP6ippJojIKXKO8EPLtsUMS+/sAGHGo1UN/38swqZa1ypfcD4I0V/ac5G3VzaHfDaklFmQLEs51lhkkVaqg60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
+  <!-- ScrollMagic -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js" integrity="sha512-8E3KZoPoZCD+1dgfqhPbejQBnQfBXe8FuwL4z/c8sTrgeDMFEnoyTlH3obB4/fV+6Sg0a0XF+L/6xS4Xx1fUEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- main.js -->
   <script defer src="/frontend/js/main.js"></script>
 </head>
 
@@ -59,7 +80,102 @@
       </ul>
      </div>
   </section> 
+
+    <!-- INTRO -->
+    <section class="intro">
+      <div class="inner">
+        <div class="intro_list">
+          <div class="intro_box">
+            <a href="/frontend/plan.html" class="intro_icon">
+              <lord-icon
+                  src="https://cdn.lordicon.com/zzcjjxew.json"
+                  trigger="hover"
+                  colors="primary:#121331,secondary:#000000"
+                  style="width:150px;height:150px">
+              </lord-icon>
+            </a>
+            <div class="intro_title">PLAN</div>
+          </div>
+          <div class="intro_box">
+            <a href="/frontend/Board/myblog.html" class="intro_icon">
+              <lord-icon
+                src="https://cdn.lordicon.com/vixtkkbk.json"
+                trigger="hover"
+                colors="primary:#121331,secondary:#000000"
+                style="width:150px;height:150px">
+              </lord-icon>
+            </a>
+            <div class="intro_title">MY BLOG</div>
+          </div><div class="intro_box">
+            <a href="/frontend/Board/story.html" class="intro_icon">
+              <lord-icon
+                src="https://cdn.lordicon.com/fgkmrslx.json"
+                trigger="hover"
+                colors="primary:#121331,secondary:#000000"
+                style="width:150px;height:150px">
+              </lord-icon>
+            </a>
+            <div class="intro_title">STORY</div>
+          </div>
+        </div>  
+      </div>
+    </section>
+
+
+    <!-- ABOUT -->
+    <section class="about scroll-spy">
+      <div class="inner">
+        <div class="about_title">
+          <p>about</p>
+          <p>Palette.</p>
+          <p>XXX</p>
+        </div>
+        <div class="about_block">
+          <div class="about_contents">
+            <span>01</span>
+            <h4 class="subtitle back-to-position to-right delay-0">가장 소중한 순간의 기록</h4>
+            <p class="paragraph back-to-position to-right delay-1">팔레트에 당신의 여행을 기록해보세요.</p>
+            <p class="paragraph back-to-position to-right delay-1">각 장소에 담긴 추억을 되새기다 보면</p>
+            <p class="paragraph back-to-position to-right delay-1">단 하나뿐인 나만의 여행일지가 완성됩니다.</p>
+            <span>02</span>
+            <h4 class="subtitle back-to-position to-right delay-2">여행 전에도 팔레트와 함께</h4>
+            <p class="paragraph back-to-position to-right delay-3">친구, 가족, 연인과 함께 여행을 계획하고 있나요?</p>
+            <p class="paragraph back-to-position to-right delay-3">팔레트에서 여행 계획을 함께 세워보세요.</p>
+            <p class="paragraph back-to-position to-right delay-3">당신의 여행을 더욱 완벽하게 만들어 줄거예요.</p>
+            <span>03</span>
+            <h4 class="subtitle back-to-position to-right delay-4">랜선으로 떠나는 여행</h4>
+            <p class="paragraph back-to-position to-right delay-5">팔레트에 당신의 여행을 기록해보세요.</p>
+            <p class="paragraph back-to-position to-right delay-5">다른 이들의 스토리를 마음껏 돌아다니며 함께 해보세요.</p>
+            <p class="paragraph back-to-position to-right delay-5">집에서 떠날 수 있는 또 다른 여행이 될 거예요.</p>
+          </div>
+          <div class="about_figure">
+            <div class="figure_triangle">
+              <img src="/frontend/images/triangle.png" alt="triangle" />
+            </div>
+            <div class="figure_square">
+              <img src="/frontend/images/square.png" alt="square" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FROM PALETTE -->
+    <section class="from-palette scroll-spy">
+      <div class="inner">
+        <div class="greeting">
+          <img src="/frontend/images/from_palette_image.png" alt="from-palette" />
+          <div class="text_group">
+            <h4 class="subtitle back-to-position to-left delay-0">Sketch your memories</br>with the Palette.</h4>
+            <p class="paragraph back-to-position to-left delay-1">여행작가가 되어보는 시간.</p>
+            <p class="paragraph back-to-position to-left delay-1">간단한 클릭만으로 여행작가가 되어보세요.</p>
+            <p class="paragraph back-to-position to-left delay-1">내가 간 최고의 장소, 나만의 스토리를 남들과 나누어보세요.</p>
+            <p class="paragraph back-to-position to-left delay-1">작은 발자국이 모여 역사적인 발걸음을 만듭니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
 </body>
 </html>
-
-
