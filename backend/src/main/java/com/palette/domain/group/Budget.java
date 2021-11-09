@@ -16,13 +16,13 @@ import java.util.List;
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "budget_id")
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "fk_budget_group"))
     private Group group;
 
-    @Column
     private long totalBudget;
 
     //지출 기록

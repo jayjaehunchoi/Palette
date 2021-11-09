@@ -29,6 +29,10 @@ public class GroupServiceTest {
     MemberGroupRepository memberGroupRepository;
     @Autowired
     BudgetRepository budgetRepository;
+    @Autowired
+    GroupService groupService;
+
+    // todo: groupService 테스트
 
     @BeforeEach
     public void setUp() {
