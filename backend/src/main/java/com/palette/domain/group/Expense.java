@@ -24,7 +24,7 @@ public class Expense {
     private String detail;
 
     //가격
-    private Long price;
+    private long price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "budget_id")

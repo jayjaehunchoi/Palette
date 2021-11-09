@@ -77,8 +77,12 @@ public class CommentService {
         if(comment == null){
             throw new CommentException("존재하지 않는 댓글입니다.");
         }
-        if(comment.getMember().getId() != memberId){
+        // System.out.println("true or false" + comment.getMember().getId().equals(memberId));
+        // if(comment.getMember().getId() != memberId)
+        if(!comment.getMember().getId().equals(memberId)){
+            // equals 는 값비교, ==는 객체비교~!
             throw new CommentException("댓글 수정 / 삭제 권한이 없습니다.");
         }
+
     }
 }
