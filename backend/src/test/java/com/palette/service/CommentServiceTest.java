@@ -7,10 +7,7 @@ import com.palette.domain.post.Post;
 import com.palette.domain.post.PostGroup;
 import com.palette.exception.CommentException;
 import com.palette.exception.PostException;
-import com.palette.repository.CommentRepository;
-import com.palette.repository.MemberRepository;
-import com.palette.repository.PostGroupRepository;
-import com.palette.repository.PostRepository;
+import com.palette.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +30,6 @@ public class CommentServiceTest {
     @Autowired PostRepository postRepository;
     @Autowired CommentRepository commentRepository;
     @Autowired PostGroupRepository postGroupRepository;
-
     @Test
     void 댓글_작성(){
         Member member = new Member("wogns", "1234", "wogns","123");

@@ -40,7 +40,7 @@ public class GroupServiceTest {
         Member member2 = new Member("skfk", "1234", "wogns","123");
         memberRepo.save(member2);
 
-        Member member3 = new Member("wogns", "1234", "wogns","123");
+        Member member3 = new Member("wognswognwosgns", "1234", "wogns","123");
         memberRepo.save(member3);
 
         Member member4 = new Member("ruddls", "1234", "wogns","123");
@@ -81,6 +81,8 @@ public class GroupServiceTest {
         memberGroupRepository.save(memberGroup4);
         memberGroup4.addMemberGroup(group2,member4);
 
+        // group : member1, member2
+        // group2 : member1, member3, member4
     }// end method
 
     @Test
@@ -94,6 +96,7 @@ public class GroupServiceTest {
         Group group2 = groupRepository.findAll().get(1);
 
         assertThat(findMember.getMemberGroups().get(0).getGroup()).isEqualTo(group1);
+        assertThat(findMember.getMemberGroups().get(1).getGroup()).isEqualTo(group2);
         assertThat(findMember2.getMemberGroups().get(0).getGroup()).isEqualTo(group1);
         assertThat(findMember3.getMemberGroups().get(0).getGroup()).isEqualTo(group2);
         assertThat(findMember4.getMemberGroups().get(0).getGroup()).isEqualTo(group2);
