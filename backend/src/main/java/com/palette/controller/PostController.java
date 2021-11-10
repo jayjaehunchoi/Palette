@@ -7,9 +7,7 @@ import com.palette.domain.post.PostGroup;
 import com.palette.dto.GeneralResponse;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostRequestDto;
-import com.palette.dto.response.LikeResponseDto;
-import com.palette.dto.response.PostResponseDto;
-import com.palette.dto.response.StoryListResponseDto;
+import com.palette.dto.response.*;
 import com.palette.service.LikeService;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
@@ -40,13 +38,13 @@ public class PostController {
 
     // 그룹을 안거치고 조회시, 그룹 거친 조회는 PostGroup에 존재
     @GetMapping("/post")
-    public ResponseEntity<GeneralResponse> getPosts(@RequestParam(required = false) String name,
-                                                    @RequestParam(required = false) String region,
-                                                    @RequestParam(required = false) String title,
-                                                    @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
+    public ResponseEntity<StoryListResponsesDto> getPosts(@RequestParam(required = false) String name,
+                                                          @RequestParam(required = false) String region,
+                                                          @RequestParam(required = false) String title,
+                                                          @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
         SearchCondition searchCondition = SearchCondition.setSearchCondition(name, region, title);
         List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, page);
-        GeneralResponse<Object> res = GeneralResponse.builder().data(storyList).build();
+        StoryListResponsesDto res = StoryListResponsesDto.builder().storyLists(storyList).build();
         return ResponseEntity.ok(res);
     }
 
@@ -57,11 +55,11 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}/like")
-    public ResponseEntity<GeneralResponse> getLikeMembers(@PathVariable Long id, @RequestParam(required = false) Long likeId){
+    public ResponseEntity<LikeResponsesDto> getLikeMembers(@PathVariable Long id, @RequestParam(required = false) Long likeId){
         postService.findById(id);
         List<Member> likeMemberByPost = likeService.findLikeMemberByPost(id, likeId);
         List<LikeResponseDto> likeResponseDtos = likeMemberByPost.stream().map(LikeResponseDto::new).collect(Collectors.toList());
-        return ResponseEntity.ok(GeneralResponse.builder().data(likeResponseDtos).build());
+        return ResponseEntity.ok(LikeResponsesDto.builder().likeResponses(likeResponseDtos).build());
     }
 
     @PostMapping("/post/{id}/like")
