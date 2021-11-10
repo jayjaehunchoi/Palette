@@ -154,7 +154,7 @@ a {
   font-size: 25px;
   margin: 18px 0;
 }
-.about .inner .about_block .about_contents .paragragh {
+.about .inner .about_block .about_contents .paragraph {
   font-family: 'Quicksand', sans-serif;
   line-height: 2;
 }
@@ -163,21 +163,21 @@ a {
 }
 .about .inner .about_block .about_figure .figure_triangle {
   position: absolute;
-  top: 40px;
+  top: 5px;
   left: 240px;
   z-index: 1;
 }
 .about .inner .about_block .about_figure .figure_square {
   position: absolute;
   left: 220px;
-  bottom: 130px;
+  bottom: 180px;
 }
 
 
 /* FROM PALETTE */
 .from-palette .inner .greeting {
   display: flex;
-  margin-top: 150px;
+  margin: 150px 0;
 }
 .from-palette .inner .greeting .text_group .subtitle {
   font-family: 'DM Serif Text', serif;
@@ -187,4 +187,83 @@ a {
 .from-palette .inner .greeting .text_group .paragraph {
   line-height: 2;
   margin-left: 180px;
+}
+
+
+/* PALETTE STORY */
+.palette-story .inner {
+  padding: 0 0 40px 0;
+}
+.palette-story .inner .text_group {
+  margin-bottom: 50px;
+}
+.palette-story .inner .text_group .subtitle {
+  font-family: 'DM Serif Text', serif;
+  font-size: 60px;
+}
+.palette-story .inner .text_group .sentence {
+  font-size: 25px;
+  font-weight: 500;
+  color: #A8A7C7;
+  line-height: 1.4;
+}
+.palette-story .inner .thumbnail {
+  margin-bottom: 100px;
+}
+.palette-story .inner .thumbnail .swiper-container {
+  width: 100%;
+  height: 300px;
+}
+.palette-story .inner .thumbnail .swiper-container .swiper-wrapper .swiper-slide {
+  width: 100%;
+  height: 300px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(221, 221, 221, 0.75);
+  box-sizing: border-box;
+}
+.palette-story .inner .swiper-prev,
+.palette-story .inner .swiper-next {
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.palette-story .swiper-prev {
+  left: -100px;
+}
+.palette-story .swiper-next {
+  right: -100px;
+}
+.palette-story .swiper-prev .material-icons,
+.palette-story .swiper-next .material-icons {
+  font-size: 30px;
+}
+.palette-story .swiper-prev:hover,
+.palette-story .swiper-next:hover {
+  color: #333;
+}
+
+
+#to-top {
+  width: 42px;
+  height: 42px;
+  background-color: #333;
+  color: #fff;
+  border: 2px solid #fff;
+  /* border-radius: 50%; */
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9;
 }
