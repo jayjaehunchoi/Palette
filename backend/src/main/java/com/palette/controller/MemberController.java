@@ -5,7 +5,6 @@ import com.palette.domain.post.Comment;
 import com.palette.dto.MemberDto;
 import com.palette.dto.request.CommentDto;
 import com.palette.service.MemberService;
-import com.palette.utils.SessionUtil;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.palette.utils.ConstantUtil.INIT_ID;
-import static com.palette.utils.SessionUtil.*;
+import static com.palette.utils.constant.ConstantUtil.INIT_ID;
+import static com.palette.utils.constant.SessionUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor
