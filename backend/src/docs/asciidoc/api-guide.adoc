@@ -1,0 +1,25 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== postgroup 생성
+include::{snippets}/postgroup-create-group/http-request.adoc[]
+include::{snippets}/postgroup-create-group/http-response.adoc[]
+
+== postgroup 조회하기
+include::{snippets}/postgroup-get-postgroup/http-request.adoc[]
+include::{snippets}/postgroup-get-postgroup/http-response.adoc[]
+
+== postgroup내 post 조회하기
+include::{snippets}/postgroup-get-post/http-request.adoc[]
+include::{snippets}/postgroup-get-post/http-response.adoc[]
+
+== postgroup 업데이트
+include::{snippets}/postgroup-update-group/http-request.adoc[]
+include::{snippets}/postgroup-update-group/http-response.adoc[]
+
+== postgroup 삭제
+include::{snippets}/postgroup-delete-group/http-request.adoc[]
+include::{snippets}/postgroup-delete-group/http-response.adoc[]
+
+
