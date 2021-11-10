@@ -7,9 +7,7 @@ import com.palette.domain.post.PostGroup;
 import com.palette.dto.GeneralResponse;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostRequestDto;
-import com.palette.dto.response.LikeResponseDto;
-import com.palette.dto.response.PostResponseDto;
-import com.palette.dto.response.StoryListResponseDto;
+import com.palette.dto.response.*;
 import com.palette.service.LikeService;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
@@ -19,6 +17,7 @@ import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,28 +39,26 @@ public class PostController {
 
     // 그룹을 안거치고 조회시, 그룹 거친 조회는 PostGroup에 존재
     @GetMapping("/post")
-    public ResponseEntity<GeneralResponse> getPosts(@RequestParam(required = false) String name,
-                                                    @RequestParam(required = false) String region,
-                                                    @RequestParam(required = false) String title,
-                                                    @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
+    public ResponseEntity<StoryListResponsesDto> getPosts(@RequestParam(required = false) String name,
+                                                          @RequestParam(required = false) String region,
+                                                          @RequestParam(required = false) String title,
+                                                          @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
         SearchCondition searchCondition = SearchCondition.setSearchCondition(name, region, title);
         List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, page);
-        GeneralResponse<Object> res = GeneralResponse.builder().data(storyList).build();
+        StoryListResponsesDto res = StoryListResponsesDto.builder().storyLists(storyList).build();
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("/post/{id}")
     public PostResponseDto getSinglePost(@PathVariable Long id){
-        PostResponseDto postResponseDto = postService.findSinglePost(id, ConstantUtil.INIT_ID);
-        return postResponseDto;
+        return postService.findSinglePost(id, ConstantUtil.INIT_ID);
     }
 
     @GetMapping("/post/{id}/like")
-    public ResponseEntity<GeneralResponse> getLikeMembers(@PathVariable Long id, @RequestParam(required = false) Long likeId){
-        postService.findById(id);
+    public ResponseEntity<LikeResponsesDto> getLikeMembers(@PathVariable Long id, @RequestParam(required = false) Long likeId){
         List<Member> likeMemberByPost = likeService.findLikeMemberByPost(id, likeId);
         List<LikeResponseDto> likeResponseDtos = likeMemberByPost.stream().map(LikeResponseDto::new).collect(Collectors.toList());
-        return ResponseEntity.ok(GeneralResponse.builder().data(likeResponseDtos).build());
+        return ResponseEntity.ok(LikeResponsesDto.builder().likeResponses(likeResponseDtos).build());
     }
 
     @PostMapping("/post/{id}/like")
@@ -70,6 +67,7 @@ public class PostController {
         return ResponseEntity.ok(GeneralResponse.builder().data(likeCount).build());
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/postgroup/{postGroupId}/post")
     public Long createPost(@Login Member member, @PathVariable Long postGroupId, @RequestPart("data")@Valid PostRequestDto postRequestDto, @RequestPart("files") List<MultipartFile> imageFiles) throws IOException {
         PostGroup findPostGroup = postGroupService.findById(postGroupId);
@@ -99,7 +97,7 @@ public class PostController {
         return HttpResponseUtil.RESPONSE_OK;
     }
 
-    private void validateMemberCanUpdateOrDeletePost(Member member, Long postGroupId, Long postId) {
+    private void validateMemberCanUpdateOrDeletePost(@Login Member member, Long postGroupId, Long postId) {
         PostGroup findPostGroup = postGroupService.findById(postGroupId);
         Post findPost = postService.findById(postId);
         postService.isAvailablePostOnPostGroup(findPostGroup, member.getId());
