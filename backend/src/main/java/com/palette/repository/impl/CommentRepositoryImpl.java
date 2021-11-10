@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.palette.domain.member.QMember.*;
 import static com.palette.domain.post.QComment.*;
-import static com.palette.utils.ConstantUtil.COMMENT_SIZE;
+import static com.palette.utils.constant.ConstantUtil.COMMENT_SIZE;
 
 public class CommentRepositoryImpl implements CommentRepositoryCustom {
 

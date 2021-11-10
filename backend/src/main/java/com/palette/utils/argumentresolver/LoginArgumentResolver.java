@@ -1,7 +1,7 @@
 package com.palette.utils.argumentresolver;
 
 import com.palette.domain.member.Member;
-import com.palette.utils.SessionUtil;
+import com.palette.utils.constant.SessionUtil;
 import com.palette.utils.annotation.Login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

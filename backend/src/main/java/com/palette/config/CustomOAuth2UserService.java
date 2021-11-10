@@ -3,7 +3,7 @@ package com.palette.config;
 import com.palette.domain.member.Member;
 import com.palette.repository.MemberRepository;
 
-import com.palette.utils.SessionUtil;
+import com.palette.utils.constant.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

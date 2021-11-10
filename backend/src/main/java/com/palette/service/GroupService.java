@@ -1,22 +1,93 @@
 package com.palette.service;
 
 import com.palette.domain.group.Group;
+import com.palette.domain.group.MemberGroup;
+import com.palette.domain.member.Member;
+import com.palette.dto.request.GroupUpdateDto;
+import com.palette.exception.GroupException;
 import com.palette.repository.GroupRepository;
+import com.palette.repository.MemberGroupRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
+@Service
 public class GroupService {
     private final GroupRepository groupRepository;
-    public void updateGroupName(Long id, String updateName){
-        Optional<Group> group = groupRepository.findById(id);
-        group.ifPresent(selectGroup ->{
-            selectGroup.updateGroupName(updateName);
-        });
+    private final MemberGroupRepository memberGroupRepository;
+
+    //그룹 조회
+    @Transactional
+    public Group findById(Long id){
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+        return findGroup;
     }
+
+    //그룹 최초 추가
+    @Transactional
+    public void addGroup(Group group, Member member){
+        groupRepository.save(group);
+        MemberGroup memberGroup = new MemberGroup();
+        memberGroup.addMemberGroup(group,member);
+    }
+
+    //그룹에 멤버 추가
+    @Transactional
+    public void addGroupMember(Long id,Member member){
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+
+        MemberGroup memberGroup = new MemberGroup();
+        memberGroupRepository.save(memberGroup);
+        memberGroup.addMemberGroup(findGroup,member);
+
+        findGroup.addNumberOfPeople();
+    }
+
+    //그룹 멤버 삭제
+    @Transactional
+    public void deleteGroupMember(Long id,Member member){
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+
+        // todo: 만약 그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능하게 하기 (Exception)
+        MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,findGroup);
+        findMemberGroup.deleteMemberGroup(findGroup,member);
+
+        findGroup.reduceNumberOfPeople();
+
+    }
+
+    //그룹 업데이트
+    @Transactional
+    public void updateGroup(Long id, GroupUpdateDto dto){
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+        findGroup.updateGroup(dto);
+    }
+
+    //그룹삭제
+    @Transactional
+    public void deleteGroup(Long id){
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+        groupRepository.deleteById(id);
+    }
+
+    //그룹이 존재하는지 확인
+    private void isGroupExist(Group findGroup) {
+        if (findGroup == null) {
+            log.error("Group Not Exist Error");
+            throw new GroupException("존재하지 않는 게시물 그룹입니다.");
+        }
+    }
+
+
 }

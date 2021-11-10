@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "expense_id")
     private Long id;
 
     //종류 : 어떤 종류의 지출인지(교통,식비,숙박,기타) EnumType으로 설정
@@ -24,10 +25,10 @@ public class Expense {
     private String detail;
 
     //가격
-    private Long price;
+    private long price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "budget_id")
+    @JoinColumn(name = "budget_id",foreignKey = @ForeignKey(name = "fk_expense_budget"))
     private Budget budget;
 
     @Builder

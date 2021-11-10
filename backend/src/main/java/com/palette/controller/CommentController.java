@@ -7,7 +7,6 @@ import com.palette.dto.request.CommentDto;
 import com.palette.dto.response.CommentResponseDto;
 import com.palette.service.CommentService;
 import com.palette.service.PostService;
-import com.palette.utils.HttpResponseUtil;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.palette.utils.ConstantUtil.INIT_ID;
-import static com.palette.utils.HttpResponseUtil.*;
+import static com.palette.utils.constant.ConstantUtil.INIT_ID;
+import static com.palette.utils.constant.HttpResponseUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor
