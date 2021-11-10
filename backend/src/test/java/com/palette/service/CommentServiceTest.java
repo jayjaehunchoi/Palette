@@ -88,7 +88,6 @@ public class CommentServiceTest {
         postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         commentService.writeComment(comment, post.getId(), 0L);
-
         commentService.updateComment(member.getId(),comment.getId(),"니가가라 하와이");
         Comment findComment = commentService.findById(comment.getId());
         assertThat(findComment.getCommentContent()).isEqualTo("니가가라 하와이");
@@ -161,7 +160,6 @@ public class CommentServiceTest {
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
         Comment comment1 = new Comment(member, "반가워요 우리 친하게 지내요z");
         Comment comment2 = new Comment(member, "반가워요 우리 친하게 지내요zz");
-
         Comment saveComment = commentService.writeComment(comment, post.getId(), 0L);
         commentService.writeComment(comment1, post.getId(), saveComment.getId());
         commentService.writeComment(comment2, post.getId(), saveComment.getId());
