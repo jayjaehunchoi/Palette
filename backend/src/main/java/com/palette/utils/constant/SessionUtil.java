@@ -1,4 +1,4 @@
-package com.palette.utils;
+package com.palette.utils.constant;
 
 public class SessionUtil {
 

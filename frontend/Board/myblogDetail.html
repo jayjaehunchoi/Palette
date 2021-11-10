@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,13 +15,19 @@
            $("#headers").load("/frontend/static/header.html");  
            });
          </script>
+
+           <!-- footer jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
        
        <link rel="preconnect" href="https://fonts.gstatic.com" >
        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
        <link rel="stylesheet" href="/frontend/css/main.css" />
-       
-       <script defer src="/frontend/js/main.js"></script>
        
        </head>
        <body>
@@ -67,12 +73,32 @@
       </div>
     </div>
 
+    <div class="inner">
+      <div class="card-image">
+        <figure class="image"><img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" alt=""></figure>
+      </div>
+    </div>
+
+    <div class="inner">
+      <div class="card-image">
+        <figure class="image"><img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" alt=""></figure>
+      </div>
+    </div>
+
+    <div class="inner">
+      <div class="card-image">
+        <figure class="image"><img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" alt=""></figure>
+      </div>
+    </div>
+
+    
+
     </section>
 
     <!-- 버튼 --> 
     <input type="button" value="Wirte" name="wirte" class = "btn" onclick="location.href='/frontend/Board/write.html'">
     
-  <footer>
-    </footer>
+     <!-- footer 연결 -->
+     <div id="footers"></div>
 </body>
 </html>
