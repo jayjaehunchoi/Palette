@@ -17,7 +17,7 @@ public class MemberGroup {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "fk_member_group_travel_group"))
+    @JoinColumn(name = "group_id",foreignKey = @ForeignKey(name = "fk_member_group_travel_group"))
     private Group group;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,6 +29,8 @@ public class MemberGroup {
         this.member = member;
         group.getMemberGroups().add(this);
         member.getMemberGroups().add(this);
+
+        // todo: 양방향 참조가 아닌 일방향 참조 생각해보기
     }
 
     public void deleteMemberGroup(Group group, Member member){
