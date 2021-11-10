@@ -1,19 +1,32 @@
 /* common */
-footer{
-    background-color: blue;   
-    width: 100%;
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    min-height: 25vh;
+#footers{
+    margin-bottom: 0;
 }
+
+body {
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center; 
+    justify-content: center;
+    display: block; 
+  }
 
 /* read */
-.title{
+.day{
     margin-top: 140px;
+    /* display: flex; */
+    margin-right: 600px;
+}
+.title{
+    font-size: 30px;
 }
 
-.photo{
+.author{
+    margin-left: 600px;
+}
+
+/* .photo{
     margin-top: 50px;
     display: flex;
     justify-content: center;
@@ -21,27 +34,22 @@ footer{
 
 .image img {
     width : 600px;
-}
+} */
 
 .content{
     margin-top: 50px;
 }
 
-body{
-    position: relative;
-    text-align: center; 
-    justify-content: center;
-    display: block; 
-    /* margin-top: 50px; */
-}
 
-#modify{
+
+#modify,
+#delete {
     margin-top: 50px;
     justify-content: left;
-}
-
-#delete{
-    margin-top: 50px;
+    background: #333;
+    color: white;
+    width :50px;
+    height:30px;
 }
 
 /* 좋아요 버튼 */
@@ -54,7 +62,7 @@ body{
 }
 
 .like-content .btn-secondary{
-    display: block;
+    /* display: block;
     margin: 30px ;
     margin-top: 70px;
     text-align: center;
@@ -69,7 +77,16 @@ body{
     color:#fff;
     text-decoration: none;
     -webkit-transition: 0.3s ease;
-    transition: 0.3s ease;
+    transition: 0.3s ease; */
+    display: block;
+    background-color: white;
+    border-color: transparent;
+}
+
+.like-content .btn-secondary img{
+    display: block;
+    width: 30px;
+    height:30px;
 }
 
 .like-content .btn-secondary:hover{
@@ -85,20 +102,95 @@ body{
 .comments{
 margin: 50px;
 border: 2px solid rgba(232,230,230,0.99);
+position: relative;
 }
 
-.comments .comment-detail{
-
+.comments label{
+    /* position: relative; */
 }
 
-.comments .comment-detail #new_comment{
+.comments label .like-content .btn-secondary {
+    display: block;
+    position: absolute;
+    right: 3%;
+    top: -5%;
+}
+.comments  #new_comment{
     border: 2px solid rgba(232,230,230,0.99);
     width: 760px;
 }
 
-.Ypkk- {
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
-    padding-bottom: 30px;
+ textarea {
+    width: 800px;
+    height: 100px;
+    padding: 10px;
+    resize: none;
+  }
+  
+
+  div + div {
+    margin-top: 20px;
+  }
+  
+ .comments label {
+    display: block;
+    margin: 30px;
+    font-weight: bold;
+    color: #666;
+    font-size: 20px;
+    text-align: left;
+    border-bottom: 2px solid rgba(232,230,230,0.99);
+  }
+
+button{
+    margin: 30px auto;
+}
+
+  .comment-row{
+    /* border: 2px solid rgba(232,230,230,0.99); */
+  }
+
+  hr{
+    width:1200px;
+    border-top : 2px solid rgba(232,230,230,0.99);
+}
+
+  .comment-row .comment-date{
+
+  }
+
+  .comment-row .comment-content{
+
+  }
+  
+/* swiper */
+ .mySwiper {
+    width:640px;
+    height:420px;
+    border:5px solid silver;
+    border-radius:7px;
+    box-shadow:0 0 20px #ccc inset;
+}
+
+.swiper-slide {
+    text-align:center;
+    display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+    align-items:center; /* 위아래 기준 중앙정렬*/
+    justify-content:center; /* 좌우 기준 중앙정렬*/
+} 
+
+.swiper-slide img {
+	box-shadow:0 0 5px #555;
+    width: 640px;
+    height: 420px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    color: black;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 4px;
+    background-color: black;
 }
