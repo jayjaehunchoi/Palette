@@ -1,111 +1,93 @@
 package com.palette.service;
 
-import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
 import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
-import com.palette.dto.request.BudgetDto;
-import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.GroupUpdateDto;
-import com.palette.dto.response.BudgetResponseDto;
-import com.palette.repository.BudgetRepository;
+import com.palette.exception.GroupException;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
-import com.palette.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
+@Service
 public class GroupService {
-    private final MemberRepository memberRepository;
     private final GroupRepository groupRepository;
     private final MemberGroupRepository memberGroupRepository;
-    private final BudgetRepository budgetRepository;
+
+    //그룹 조회
+    @Transactional
+    public Group findById(Long id){
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+        return findGroup;
+    }
 
     //그룹 최초 추가
     @Transactional
     public void addGroup(Group group, Member member){
         groupRepository.save(group);
         MemberGroup memberGroup = new MemberGroup();
-        //memberGroupRepository.save(memberGroup); -> cascadeAll 때문
         memberGroup.addMemberGroup(group,member);
     }
 
     //그룹에 멤버 추가
     @Transactional
     public void addGroupMember(Long id,Member member){
-        Optional<Group> findGroup = groupRepository.findById(id);
-        findGroup.ifPresent(selectGroup -> {
-            MemberGroup memberGroup = new MemberGroup();
-            memberGroupRepository.save(memberGroup);
-            memberGroup.addMemberGroup(selectGroup,member);
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
 
-            selectGroup.addNumberOfPeople();
-        });
+        MemberGroup memberGroup = new MemberGroup();
+        memberGroupRepository.save(memberGroup);
+        memberGroup.addMemberGroup(findGroup,member);
+
+        findGroup.addNumberOfPeople();
     }
 
     //그룹 멤버 삭제
     @Transactional
     public void deleteGroupMember(Long id,Member member){
-        Optional<Group> findGroup = groupRepository.findById(id);
-        findGroup.ifPresent(selectGroup ->{
-            // todo: 만약 그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능하게 하기 (Exception)
-            MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,selectGroup);
-            findMemberGroup.deleteMemberGroup(selectGroup,member);
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
 
-            selectGroup.reduceNumberOfPeople();
-        });
+        // todo: 만약 그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능하게 하기 (Exception)
+        MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,findGroup);
+        findMemberGroup.deleteMemberGroup(findGroup,member);
+
+        findGroup.reduceNumberOfPeople();
+
     }
 
     //그룹 업데이트
     @Transactional
     public void updateGroup(Long id, GroupUpdateDto dto){
-        Optional<Group> group = groupRepository.findById(id);
-        group.ifPresent(selectGroup ->{
-            selectGroup.updateGroup(dto);
-        });
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+        findGroup.updateGroup(dto);
     }
 
     //그룹삭제
     @Transactional
     public void deleteGroup(Long id){
-        Optional<Group> group = groupRepository.findById(id);
-        group.ifPresent(selectGroup ->{
-            groupRepository.deleteById(id);
-        });
-        // todo: 그룹없다면 exception 처리, 재훈이코드 보고 참고해야지
+        Group findGroup = groupRepository.findById(id).orElse(null);
+        isGroupExist(findGroup);
+        groupRepository.deleteById(id);
     }
 
-    //그룹에 예산 넣기
-    @Transactional
-    public void addBudget(Long id, BudgetDto budgetDto){
-        Optional<Group> group = groupRepository.findById(id);
-        group.ifPresent(selectGroup ->{ //todo: budgetDto null check
-            Budget budget = new Budget(selectGroup,budgetDto.getTotalBudget());
-            budgetRepository.save(budget);
-        });
+    //그룹이 존재하는지 확인
+    private void isGroupExist(Group findGroup) {
+        if (findGroup == null) {
+            log.error("Group Not Exist Error");
+            throw new GroupException("존재하지 않는 게시물 그룹입니다.");
+        }
     }
 
-    //budget update
-    @Transactional
-    public Budget updateBudget(Long id, BudgetUpdateDto dto){
-        Budget findBudget = budgetRepository.findById(id).orElse(null);
-        findBudget.update(dto);
-        return findBudget;
-    }
-
-    //budget delete
-    @Transactional
-    public void deleteBudget(Long id){
-        Optional<Budget> budget = budgetRepository.findById(id);
-        budget.ifPresent(selectGroup ->{
-            budgetRepository.delete(selectGroup);
-        });
-    }
 
 }

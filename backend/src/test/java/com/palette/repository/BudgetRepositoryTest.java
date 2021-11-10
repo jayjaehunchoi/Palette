@@ -34,19 +34,16 @@ public class BudgetRepositoryTest {
 
         Group findGroup = groupRepository.findAll().get(0);
 
-        Budget budget = new Budget(findGroup,1000000L);
+        //budget은 한 그룹당 하나만 만들어져야한다. 업데이트는 업데이트 메소드를 이용할것
+        Budget budget = new Budget(findGroup,1000000l);
         budgetRepository.save(budget);
-
-        Budget budget2 = new Budget(findGroup,2000000L);
-        budgetRepository.save(budget2);
     }
 
     @Test
     void 예산_조회(){ //read
-        for(int i = 0; i < 2; i++) {
-            budgetRepository.findAll().get(i);
-            //todo: assertJ쓰기
-        }
+        Group findGroup = groupRepository.findAll().get(0);
+        Budget findBudget = budgetRepository.findAll().get(0);
+        assertThat(findGroup).isEqualTo(findBudget.getGroup());
     }
 
     @Test
@@ -55,6 +52,6 @@ public class BudgetRepositoryTest {
         if(findBudget != null){
             budgetRepository.delete(findBudget);
         }
-        assertThat(budgetRepository.findAll().size()).isEqualTo(1);
+        assertThat(budgetRepository.findAll().size()).isEqualTo(0);
     }
 }
