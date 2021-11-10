@@ -17,6 +17,14 @@
     });
   </script>
 
+  <!-- footer jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
+
   <!-- css reset cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"/>
 
@@ -40,8 +48,11 @@
   <!-- lord-icon -->
   <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 
-  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- GSAP & ScrollToPlugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js" integrity="sha512-eP6ippJojIKXKO8EPLtsUMS+/sAGHGo1UN/38swqZa1ypfcD4I0V/ac5G3VzaHfDaklFmQLEs51lhkkVaqg60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollToPlugin.min.js" integrity="sha512-eI+25yMAnyrpomQoYCqvHBmY4dLfqKWPnD4j8y0E3Js+yqpF26xncL4t81M1zxC+ISYfRoCN52rN/n0q2UIBZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
   <!-- ScrollMagic -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js" integrity="sha512-8E3KZoPoZCD+1dgfqhPbejQBnQfBXe8FuwL4z/c8sTrgeDMFEnoyTlH3obB4/fV+6Sg0a0XF+L/6xS4Xx1fUEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -51,6 +62,7 @@
 </head>
 
 <body>
+  <!-- header 연결 -->
   <div id="headers"></div>
 
   <!--VISUAL-->
@@ -175,6 +187,66 @@
         </div>
       </div>
     </section>
+
+
+    <div id="to-top">
+      <!-- <div class="material-icons">arrow_upward</div> -->
+      <div class="material-icons">keyboard_arrow_up</div>
+    </div> 
+
+    
+    <!-- PALETTE STORY -->
+    <section class="palette-story">
+      <div class="inner">
+        <div class="text_group">
+          <h4 class="subtitle">Palette.Story</h4>
+          <p class="sentence">plan your own relax time</p>
+        </div>
+        <div class="thumbnail">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-prev">
+          <div class="material-icons">arrow_back_ios</div>
+        </div>
+        <div class="swiper-next">
+          <div class="material-icons">arrow_forward_ios</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- footer 연결 -->
+    <div id="footers"></div>
 
     
 </body>

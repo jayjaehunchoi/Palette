@@ -12,8 +12,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -34,9 +36,9 @@ public class GroupRepositoryTest {
     }
     @Test
     void 그룹_조회(){ //read
-        for(int i = 0; i < 2; i++) {
-            groupRepository.findAll().get(i);
-        }
+        List<Group> groups = groupRepository.findAll();
+        assertThat(groups.get(0).getGroupName()).isEqualTo("wltn group");
+        assertThat(groups.get(1).getGroupName()).isEqualTo("1ho group");
     }
 
     @Test

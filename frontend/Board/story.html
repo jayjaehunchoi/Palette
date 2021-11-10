@@ -15,23 +15,25 @@
        $("#headers").load("/frontend/static/header.html");  
        });
      </script>
+
+       <!-- footer jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
    
    <link rel="preconnect" href="https://fonts.gstatic.com" >
    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    <link rel="stylesheet" href="/frontend/css/main.css" />
    
-   <script defer src="/frontend/js/main.js"></script>
    
    </head>
    <body>
      <div id="headers"></div>
-    <!-- <div class="sort_list">
-        <p>
-            <a href = "#">최신순</a>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
-            <a href = "#">인기순</a>
-        </p>
-    </div> -->
+
 
     <section class = "posting">
         <div class="inner">
@@ -145,7 +147,7 @@
 
           </section>
           
-    <!-- <footer>
-    </footer> -->
+     <!-- footer 연결 -->
+     <div id="footers"></div>
 </body>
 </html>

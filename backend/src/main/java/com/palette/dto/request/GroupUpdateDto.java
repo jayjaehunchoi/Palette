@@ -1,12 +1,11 @@
 package com.palette.dto.request;
 
-import com.palette.domain.group.MemberGroup;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
+@NoArgsConstructor
 @Getter
 public class GroupUpdateDto {
     @NotBlank(message = "그룹 이름을 입력해주세요.")

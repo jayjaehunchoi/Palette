@@ -28,7 +28,7 @@ public class Expense {
     private long price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "budget_id", foreignKey = @ForeignKey(name = "fk_expense_budget"))
+    @JoinColumn(name = "budget_id",foreignKey = @ForeignKey(name = "fk_expense_budget"))
     private Budget budget;
 
     @Builder
