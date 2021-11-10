@@ -1,5 +1,6 @@
 package com.palette.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,4 +17,9 @@ public class PostRequestDto {
     @NotBlank(message = "내용을 입력해주세요.")
     private String content;
 
+    @Builder
+    public PostRequestDto(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

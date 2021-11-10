@@ -20,6 +20,7 @@ public abstract class RestDocControllerTest extends ControllerTest{
     protected static final LocalDateTime END = LocalDateTime.of(2021,11,12,10,0,0);
     protected static final String REGION = "서울";
     protected static final String TITLE = "제목";
+    protected static final String CONTENT = "내용";
 
 
     protected MockMvc restDocsMockMvc;
