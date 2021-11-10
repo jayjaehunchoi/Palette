@@ -20,12 +20,19 @@
     });
   </script>
 
+    <!-- footer jquery -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">   
+      $(document).ready( function() {
+      $("#footers").load("/frontend/static/footer.html");  
+      });
+    </script>
+
 <link rel="preconnect" href="https://fonts.gstatic.com" >
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- <link rel="stylesheet" href="/frontend/css/main.css" /> -->
+<link rel="stylesheet" href="/frontend/css/main.css" />
 
-<script defer src="/frontend/js/main.js"></script>
 
 </head>
 <body>
@@ -157,9 +164,9 @@
            <div class="modal-content"> 
                <span class="close-button">&times;</span> 
                <h1 class="title"> 여행 일정 </h1> 
-               <form action = "./page1.html">
+               <!-- <form action = "./page1.html"> -->
              
-               <!-- <form action="#post.php" method="POST">  -->
+               <form action="#" name = "myblog" method="POST" enctype = "multipart/form-data"> 
                  <label for="date">DATE</label> 
                  <!-- required="required" 필수 입력 필드를 지정하는 속성 -->
                  <input type="date" name="date" placeholder="여행 시작 날짜" required="required"> 
@@ -182,7 +189,7 @@
                      </select>
                  <!-- </form> -->
                  <label>썸네일</label> 
-                 <input type = "file" name = "Thumbnail">
+                 <input type = "file" name = "Thumbnail" accept="image/*">
                  <!-- <div id="t_space"> -->
                  <input type="button" id="cancel" value="취소"> 
                  <input type="submit" id="submit" value="저장"> 
@@ -193,8 +200,7 @@
        </div>
    </div>
     
-     <!-- <footer>
-     </footer> -->
+   <div id="footers"></div>
  </body>
  </html>
 
