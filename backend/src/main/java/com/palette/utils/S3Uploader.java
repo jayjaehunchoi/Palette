@@ -70,6 +70,7 @@ public class S3Uploader {
     }
 
     private MyFile uploadToS3(File uploadFile){
+        log.info("파일 업로드 {}",uploadFile.getName());
         String originalName = uploadFile.getName();
         String fileName = DIR_NAME+"/"+ UUID.randomUUID()+originalName;
         String storeFileName = putS3(uploadFile, fileName);
