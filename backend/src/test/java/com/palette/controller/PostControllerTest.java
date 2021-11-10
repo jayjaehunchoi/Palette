@@ -1,6 +1,6 @@
 package com.palette.controller;
 
-import com.palette.RestDocUtil;
+import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
@@ -12,18 +12,14 @@ import com.palette.dto.response.*;
 import com.palette.utils.constant.SessionUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;

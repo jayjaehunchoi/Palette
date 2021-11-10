@@ -1,25 +1,103 @@
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
-
-== postgroup 생성
-include::{snippets}/postgroup-create-group/http-request.adoc[]
-include::{snippets}/postgroup-create-group/http-response.adoc[]
-
-== postgroup 조회하기
-include::{snippets}/postgroup-get-postgroup/http-request.adoc[]
-include::{snippets}/postgroup-get-postgroup/http-response.adoc[]
-
-== postgroup내 post 조회하기
-include::{snippets}/postgroup-get-post/http-request.adoc[]
-include::{snippets}/postgroup-get-post/http-response.adoc[]
-
-== postgroup 업데이트
-include::{snippets}/postgroup-update-group/http-request.adoc[]
-include::{snippets}/postgroup-update-group/http-response.adoc[]
-
-== postgroup 삭제
-include::{snippets}/postgroup-delete-group/http-request.adoc[]
-include::{snippets}/postgroup-delete-group/http-response.adoc[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:docinfo: shared-head
 
 
+[[common]]
+== Common
+
+=== Domain
+
+|===
+| 환경 | Domain
+| 운영서버
+| `http://localhost:8080/`
+|===
+
+=== Exception
+
+|===
+| 상태 코드 | 설명
+
+| 400
+| `대부분의 에러 bad request 예정`
+
+| 401
+| `권한 없음`
+|===
+
+
+= PostGroup API
+
+== postGroup 생성
+include::{snippets}/postgroup-create-group/auto-section.adoc[]
+
+== postGroup 조회하기
+include::{snippets}/postgroup-get-postgroup/auto-section.adoc[]
+
+== postGroup내 post 조회하기
+include::{snippets}/postgroup-get-post/auto-section.adoc[]
+
+== postGroup 업데이트
+include::{snippets}/postgroup-update-group/auto-section.adoc[]
+
+== postGroup 삭제
+include::{snippets}/postgroup-delete-group/auto-section.adoc[]
+
+= Post API
+
+== post 생성
+include::{snippets}/post-create-post/auto-section.adoc[]
+
+== post 필터 조회
+include::{snippets}/post-get-with-filter/auto-section.adoc[]
+
+== post 단건 조회
+include::{snippets}/post-get-single-post/auto-section.adoc[]
+
+== post 업데이트
+include::{snippets}/post-update-post/auto-section.adoc[]
+
+== post 삭제
+include::{snippets}/post-delete-post/auto-section.adoc[]
+
+== 좋아요 누르기
+include::{snippets}/post-push-like/auto-section.adoc[]
+
+== 좋아요 조회
+include::{snippets}/post-get-like-paging/auto-section.adoc[]
+
+= Comment API
+
+== 댓글 작성
+include::{snippets}/comment-create-comment/auto-section.adoc[]
+
+== 답글 작성
+include::{snippets}/comment-create-child-comment/auto-section.adoc[]
+
+== 댓글 조회
+include::{snippets}/comment-get-paging/auto-section.adoc[]
+
+== 답글 조회
+include::{snippets}/comment-get-child-paging/auto-section.adoc[]
+
+== 댓글 수정
+include::{snippets}/comment-update-comment/auto-section.adoc[]
+
+== 댓글 삭제
+include::{snippets}/comment-delete-comment/auto-section.adoc[]
+
+= Page API
+
+== 게시물 그룹 페이지 개수 조회
+include::{snippets}/page-postgroup-page/auto-section.adoc[]
+
+== 게시물 페이지 개수 조회
+include::{snippets}/page-post-page/auto-section.adoc[]

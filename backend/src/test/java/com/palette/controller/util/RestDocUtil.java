@@ -1,8 +1,10 @@
-package com.palette;
+package com.palette.controller.util;
 
 import capital.scalable.restdocs.AutoDocumentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.boot.test.autoconfigure.restdocs.RestDocsMockMvcConfigurationCustomizer;
+import org.springframework.boot.test.autoconfigure.restdocs.RestDocsWebTestClientConfigurationCustomizer;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -16,6 +18,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import static capital.scalable.restdocs.SnippetRegistry.*;
 import static capital.scalable.restdocs.jackson.JacksonResultHandlers.prepareJackson;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
 public class RestDocUtil {
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
@@ -63,6 +66,10 @@ public class RestDocUtil {
     @TestConfiguration
     public static class MockMvcConfig {
 
+        @Bean
+        public static PrettyPrintingUtils prettyPrintingUtils() {
+            return new PrettyPrintingUtils();
+        }
 
         @Bean
         public static CharacterEncodingFilter utf8Filter() {
