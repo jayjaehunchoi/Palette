@@ -7,10 +7,9 @@ import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.ExpenseResponseDto;
-import com.palette.repository.BudgetRepository;
-import com.palette.repository.GroupRepository;
-import com.palette.repository.MemberGroupRepository;
-import com.palette.repository.MemberRepository;
+import com.palette.exception.BudgetException;
+import com.palette.repository.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 @Transactional
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ExpenseServiceTest {
     @Autowired ExpenseService expenseService;
@@ -32,6 +31,7 @@ public class ExpenseServiceTest {
     @Autowired MemberRepository memberRepository;
     @Autowired MemberGroupRepository memberGroupRepository;
     @Autowired BudgetRepository budgetRepository;
+    @Autowired ExpenseRepository expenseRepository;
 
     @BeforeEach
     void setUp(){
@@ -66,18 +66,18 @@ public class ExpenseServiceTest {
                 .category(category)
                 .detail("마포에서 월곡 택시")
                 .price(20000l)
-                .budget(budget)
                 .build();
 
         Expense expense2 = Expense.builder()
                 .category(category)
                 .detail("공릉에서 노원역 택시")
                 .price(10000l)
-                .budget(budget)
                 .build();
 
-        expenseService.addExpense(findMember,group,expense1);
-        expenseService.addExpense(findMember,group,expense2);
+        expenseService.addExpense(findMember,group,expense1,budget);
+        expenseService.addExpense(findMember,group,expense2,budget);
+
+        System.out.println("-----------------------before each-----------------------");
     }
 
     @Test
@@ -92,7 +92,31 @@ public class ExpenseServiceTest {
 
     }
 
-    //todo: 지출 단권 수정
-    //todo: 지출 단권 삭제
+    //존재하지 않는 예산일 때 exception 확인하기
+    @Test
+    void 예산_존재확인(){
+        Member member = memberRepository.findAll().get(0);
+        Group group = groupRepository.findAll().get(0);
+        Budget budget = budgetRepository.findBudgetJoinWithExpenses();
+
+        Expense.Category category = Expense.Category.valueOf("TRANSPORTATION");
+        Expense expense = Expense.builder()
+                .category(category)
+                .detail("버스")
+                .price(20000l)
+                .build();
+
+        budgetRepository.deleteById(budget.getId());
+
+        Budget deletedBudget = budgetRepository.findByGroup(group).orElse(null);
+        assertThatThrownBy(()->{
+            expenseService.addExpense(member,group,expense,deletedBudget);
+        }).isInstanceOf(BudgetException.class);
+    }
+
+    //todo: 지출 단건 수정
+    //todo: 지출 단건 삭제
     //todo: 지출 전체 삭제
+
+
 }

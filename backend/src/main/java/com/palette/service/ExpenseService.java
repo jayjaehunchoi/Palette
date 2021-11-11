@@ -36,12 +36,13 @@ public class ExpenseService {
     //todo: 지출변경(단권삭제,전체삭제,단권수정)
 
     @Transactional
-    public Expense addExpense(Member member,Group group,Expense expense){
+    public Expense addExpense(Member member,Group group,Expense expense,Budget budget){
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
         isBudgetExist(group);
-        Expense savedExpense = expenseRepository.save(expense);
-        return savedExpense;
+        //Expense savedExpense = expenseRepository.save(expense);
+        expense.saveExpenseOnBudget(budget);
+        return expense;
     }
 
     @Transactional
@@ -96,8 +97,10 @@ public class ExpenseService {
         }
     }
 
+    //그룹에 Budget이 존재하는지 확인
     private void isBudgetExist(Group group){
         Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
+        System.out.println("isBudget    " + findBudget);
         if(findBudget == null){
             log.error("Budget Not Exist Error");
             throw new BudgetException("예산이 존재하지 않습니다.");

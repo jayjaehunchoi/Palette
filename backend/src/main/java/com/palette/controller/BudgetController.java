@@ -36,11 +36,6 @@ public class BudgetController {
         return budgetService.readBudget(member,travelGroupId);
     }
 
-    @GetMapping("/{travelgroupid}/expense")
-    public ExpenseResponseDto readExpense(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
-        return expenseService.readExpenses(member,travelGroupId);
-    }
-
 
     //총 예산 추가
     @PostMapping("/{travelgroupid}/totalbudget") // Restful url : 동사대신 명사와 http 메소드로 표현
@@ -54,21 +49,5 @@ public class BudgetController {
         return savedBudget.getId();
     }
 
-    //지출 추가
-    @PostMapping("/{travelgroupid}/expense")
-    public Long addExpense(@Login Member member, @RequestBody @Validated ExpenseDto expenseDto,@PathVariable("travelgroupid") long travelGroupId){
-        Group group = groupService.findById(travelGroupId);
-        Budget budget = budgetService.findByGroup(group);
-
-        Expense.Category category = Expense.Category.valueOf(expenseDto.getCategory());
-        Expense expense = Expense.builder()
-                .category(category)
-                .detail(expenseDto.getDetail())
-                .price(expenseDto.getPrice())
-                .budget(budget)
-                .build();
-        Expense savedExpense = expenseService.addExpense(member,group,expense);
-        return savedExpense.getId();
-    }
 
 }

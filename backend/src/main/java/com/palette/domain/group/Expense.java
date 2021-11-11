@@ -32,11 +32,16 @@ public class Expense {
     private Budget budget;
 
     @Builder
-    public Expense(Category category, String detail, Long price, Budget budget){
+    public Expense(Category category, String detail, Long price){
         this.category = category;
         this.detail = detail;
         this.price = price;
+        //this.budget = budget;
+    }
+
+    public void saveExpenseOnBudget(Budget budget){
         this.budget = budget;
+        budget.getExpenses().add(this);
     }
 
     public enum Category{

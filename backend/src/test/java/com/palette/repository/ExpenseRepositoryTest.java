@@ -36,11 +36,11 @@ public class ExpenseRepositoryTest {
         budgetRepository.save(budget);
 
         Expense.Category category = Expense.Category.TRANSPORTATION;
-        Expense expense = new Expense(category,"574 버스",1200l, budget);
+        Expense expense = new Expense(category,"574 버스",1200l);
         expenseRepository.save(expense);
 
         Expense.Category category2 = Expense.Category.FOOD;
-        Expense expense2 = new Expense(category,"텐동키츠네",12000l, budget);
+        Expense expense2 = new Expense(category,"텐동키츠네",12000l);
         expenseRepository.save(expense2);
 
     }
