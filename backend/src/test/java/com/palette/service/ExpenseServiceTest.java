@@ -9,7 +9,6 @@ import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.BudgetException;
 import com.palette.repository.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +58,7 @@ public class ExpenseServiceTest {
     void 지출_추가(){
         Member findMember = memberRepository.findAll().get(0);
         Group group = groupRepository.findAll().get(0);
-        Budget budget = budgetRepository.findByGroup(group).orElse(null);
+        Budget budget = budgetRepository.findBudgetJoinWithGroup();
 
         Expense.Category category = Expense.Category.valueOf("TRANSPORTATION");
         Expense expense1 = Expense.builder()
@@ -108,7 +107,7 @@ public class ExpenseServiceTest {
 
         budgetRepository.deleteById(budget.getId());
 
-        Budget deletedBudget = budgetRepository.findByGroup(group).orElse(null);
+        Budget deletedBudget = budgetRepository.findBudgetJoinWithGroup();
         assertThatThrownBy(()->{
             expenseService.addExpense(member,group,expense,deletedBudget);
         }).isInstanceOf(BudgetException.class);

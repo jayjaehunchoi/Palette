@@ -4,15 +4,12 @@ import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
 import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
-import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
-import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,7 +43,7 @@ public class BudgetService {
         Group group = groupRepository.findById(id).orElse(null);
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
-        Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
 
         long totalBudget = findBudget.getTotalBudget();
         long totalExpense = 0l;
@@ -65,7 +62,7 @@ public class BudgetService {
 
     //budget의 그룹 조회
     public Budget findByGroup(Group group){
-        Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
         return findBudget;
     }
 

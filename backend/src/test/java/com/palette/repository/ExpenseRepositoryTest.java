@@ -11,17 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Transactional
 public class ExpenseRepositoryTest {
     //지출 crud
     @Autowired GroupRepository groupRepository;
     @Autowired MemberRepository memberRepository;
     @Autowired BudgetRepository budgetRepository;
     @Autowired ExpenseRepository expenseRepository;
+    @Autowired EntityManager em;
 
     //expense create
     @BeforeEach
@@ -37,12 +41,11 @@ public class ExpenseRepositoryTest {
 
         Expense.Category category = Expense.Category.TRANSPORTATION;
         Expense expense = new Expense(category,"574 버스",1200l);
-        expenseRepository.save(expense);
+        expense.saveExpenseOnBudget(budget);
 
         Expense.Category category2 = Expense.Category.FOOD;
         Expense expense2 = new Expense(category,"텐동키츠네",12000l);
-        expenseRepository.save(expense2);
-
+        expense2.saveExpenseOnBudget(budget);
     }
 
     @Test
@@ -62,7 +65,8 @@ public class ExpenseRepositoryTest {
     @Test
     void 지출_삭제(){
         Expense expense1 = expenseRepository.findAll().get(0);
-        expenseRepository.delete(expense1);
+        Budget budget = budgetRepository.findAll().get(0);
+        budget.getExpenses().remove(expense1);
 
         assertThat(expenseRepository.count()).isEqualTo(1);
     }

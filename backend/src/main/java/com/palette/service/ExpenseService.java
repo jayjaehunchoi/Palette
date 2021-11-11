@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +50,7 @@ public class ExpenseService {
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
         isBudgetExist(group);
-        Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
 
         long totalBudget = findBudget.getTotalBudget();
         long totalExpense = 0l;
@@ -99,7 +98,7 @@ public class ExpenseService {
 
     //그룹에 Budget이 존재하는지 확인
     private void isBudgetExist(Group group){
-        Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
         System.out.println("isBudget    " + findBudget);
         if(findBudget == null){
             log.error("Budget Not Exist Error");

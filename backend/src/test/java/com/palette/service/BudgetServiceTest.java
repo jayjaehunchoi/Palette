@@ -11,7 +11,6 @@ import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
 import com.palette.repository.MemberRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +58,7 @@ public class BudgetServiceTest {
     @Test
     void 그룹의_예산정보_조회(){
         Group findGroup = groupRepository.findAll().get(0);
-        Budget findBudget = budgetRepository.findByGroup(findGroup).orElse(null);
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
 
         BudgetResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
 
