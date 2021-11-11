@@ -27,7 +27,7 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         Member member = new Member("wogns", "1234", "wogns","123");
-        memberService.signUpUser(member);
+        memberService.signUp(member);
 
         List<Member> members = memberRepository.findAll();
         assertThat(members.size()).isEqualTo(1);

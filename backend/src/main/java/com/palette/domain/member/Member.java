@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.group.MemberGroup;
+import com.palette.domain.post.Post;
 import lombok.*;
 
 import java.util.ArrayList;
