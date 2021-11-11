@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.http.HttpDocumentation;
+import org.springframework.restdocs.operation.preprocess.ContentModifyingOperationPreprocessor;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -65,6 +66,11 @@ public class RestDocUtil {
 
     @TestConfiguration
     public static class MockMvcConfig {
+
+        @Bean
+        public static ContentModifyingOperationPreprocessor prettyPrintPreProcessor() {
+            return new ContentModifyingOperationPreprocessor(prettyPrintingUtils());
+        }
 
         @Bean
         public static PrettyPrintingUtils prettyPrintingUtils() {
