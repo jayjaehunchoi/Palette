@@ -6,20 +6,24 @@ import com.palette.domain.post.Comment;
 import com.palette.dto.request.CommentDto;
 import com.palette.dto.response.CommentResponseDto;
 import com.palette.utils.constant.SessionUtil;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 
 import java.util.Arrays;
 
+import static com.palette.controller.util.RestDocUtil.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
 @AutoConfigureRestDocs
 public class CommentControllerTest extends RestDocControllerTest{
@@ -28,7 +32,7 @@ public class CommentControllerTest extends RestDocControllerTest{
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
-        this.restDocsMockMvc = RestDocUtil.successRestDocsMockMvc(provider, commentController);
+        this.restDocsMockMvc = successRestDocsMockMvc(provider, commentController);
 
         Member member = new Member(NAME,PASSWORD,IMAGE,EMAIL);
         session.setAttribute(SessionUtil.MEMBER,member);
@@ -45,7 +49,8 @@ public class CommentControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(get("/post/1/comment?id=0"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("comment-get-paging"));
+                .andDo(document("comment-get-paging",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                        ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
 
     }
 
@@ -59,7 +64,8 @@ public class CommentControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(get("/post/1/comment/1"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("comment-get-child-paging"));
+                .andDo(document("comment-get-child-paging",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
 
     }
 
@@ -73,7 +79,8 @@ public class CommentControllerTest extends RestDocControllerTest{
                         .content(objectMapper.writeValueAsString(commentDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andDo(document("comment-create-comment"));
+                .andDo(document("comment-create-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -86,7 +93,8 @@ public class CommentControllerTest extends RestDocControllerTest{
                 .content(objectMapper.writeValueAsString(commentDto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andDo(document("comment-create-child-comment"));
+                .andDo(document("comment-create-child-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -99,7 +107,8 @@ public class CommentControllerTest extends RestDocControllerTest{
                 .content(objectMapper.writeValueAsString(commentDto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("comment-update-comment"));
+                .andDo(document("comment-update-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -108,7 +117,8 @@ public class CommentControllerTest extends RestDocControllerTest{
 
         restDocsMockMvc.perform(delete("/post/1/comment/1"))
                 .andExpect(status().isOk())
-                .andDo(document("comment-delete-comment"));
+                .andDo(document("comment-delete-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
 
@@ -119,6 +129,13 @@ public class CommentControllerTest extends RestDocControllerTest{
                 .build();
         return comment;
     }
+
+    @AfterEach
+    void tearDown(){
+        session.clearAttributes();;
+        session = null;
+    }
+
 
 
 }

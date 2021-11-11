@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(of = "likes_id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "likes")
@@ -34,7 +33,6 @@ public class Like extends BaseTimeEntity {
     }
     public void pushLike(Post post, boolean isExist){
         if(isExist){
-            post.getLikes().remove(this);
             post.pushLike(-1);
             return;
         }
