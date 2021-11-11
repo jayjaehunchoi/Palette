@@ -2,10 +2,15 @@ package com.palette.service;
 
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
+import com.palette.domain.group.MemberGroup;
+import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
+import com.palette.repository.MemberGroupRepository;
+import com.palette.repository.MemberRepository;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -24,21 +30,31 @@ public class BudgetServiceTest {
     @Autowired BudgetService budgetService;
     @Autowired GroupRepository groupRepository;
     @Autowired BudgetRepository budgetRepository;
+    @Autowired MemberRepository memberRepository;
+    @Autowired MemberGroupRepository memberGroupRepository;
 
     //그룹생성, 예산설정
     @BeforeEach
     void setup(){
+        // 회원생성
+        Member member = new Member("wltn", "1234", "wogns","123");
+        memberRepository.save(member);
+
         Group group = Group.builder().
                 groupName("그룹1").
                 groupsIntroduction("테스트 그룹 1입니다.")
                 .build();
         groupRepository.save(group);
 
+        MemberGroup memberGroup = new MemberGroup();
+        memberGroupRepository.save(memberGroup);
+        memberGroup.addMemberGroup(group,member);
+
         Group findGroup = groupRepository.findAll().get(0);
 
         Budget budget = new Budget(findGroup,1000000l);
 
-        budgetService.addBudget(group,budget);
+        budgetService.addBudget(member,group,budget);
     }
 
     @Test
@@ -46,7 +62,7 @@ public class BudgetServiceTest {
         Group findGroup = groupRepository.findAll().get(0);
         Budget findBudget = budgetRepository.findByGroup(findGroup).orElse(null);
 
-        BudgetResponseDto budgetResponseDto = budgetService.readBudget(findGroup.getId());
+        BudgetResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
 
         assertThat(budgetResponseDto.getGroupId()).isEqualTo(findBudget.getGroup().getId());
         assertThat(budgetResponseDto.getTotalBudget()).isEqualTo(findBudget.getTotalBudget());
@@ -67,5 +83,16 @@ public class BudgetServiceTest {
         assertThat(findBudget.getTotalBudget()).isEqualTo(200000l);
     }
 
+    @Test
+    void 접근권환_확인(){
+        Member notGrantMember = new Member("easy", "1234", "easy","123");
+        memberRepository.save(notGrantMember);
 
+        Group findGroup = groupRepository.findAll().get(0);
+        Budget budget = new Budget(findGroup,50000l);
+
+        assertThatThrownBy(() -> {
+            budgetService.addBudget(notGrantMember,findGroup,budget);
+        }).isInstanceOf(GroupException.class).hasMessage("그룹 접근 권한이 없습니다.");
+    }
 }

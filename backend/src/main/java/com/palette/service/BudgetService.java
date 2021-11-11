@@ -2,19 +2,25 @@ package com.palette.service;
 
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
+import com.palette.domain.group.MemberGroup;
+import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
 import com.palette.dto.response.ExpenseResponseDto;
+import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
+import com.palette.repository.MemberGroupRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -22,20 +28,24 @@ public class BudgetService {
 
     private final GroupRepository groupRepository;
     private final BudgetRepository budgetRepository;
+    private final MemberGroupRepository memberGroupRepository;
 
     //그룹에 예산 넣기
     @Transactional
-    public Budget addBudget(Group group, Budget budget){
-        Budget saveBudget = new Budget(group,budget.getTotalBudget());
-        budgetRepository.save(saveBudget);
+    public Budget addBudget(Member member,Group group, Budget budget){
+        isGroupExist(group);
+        isMemberHaveAuthToUpdate(member,group);
+        Budget saveBudget = new Budget(group,budget.getTotalBudget()); // todo: 이거 없이 바로 budget save해도 되지않낭
+        budgetRepository.save(saveBudget); // todo: 수정해도 으차피 update되려낭..
         return saveBudget;
     }
 
     //그룹의 예산,경비,남은금액 조회
     @Transactional
-    public BudgetResponseDto readBudget(Long id){
-        //todo: group 이랑 budget 있는지 확인 exception
+    public BudgetResponseDto readBudget(Member member, Long id){
         Group group = groupRepository.findById(id).orElse(null);
+        isGroupExist(group);
+        isMemberHaveAuthToUpdate(member,group);
         Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
 
         long totalBudget = findBudget.getTotalBudget();
@@ -74,5 +84,22 @@ public class BudgetService {
         budget.ifPresent(selectGroup ->{
             budgetRepository.delete(selectGroup);
         });
+    }
+
+    //그룹 수정 권한이 있는지 확인 (그룹의 멤버인지 확인)
+    public void isMemberHaveAuthToUpdate(Member member,Group group){
+        MemberGroup memberGroup = memberGroupRepository.findByMemberAndGroup(member,group);
+        if(memberGroup == null){
+            log.error("Group Access Grant Error");
+            throw new GroupException("그룹 접근 권한이 없습니다.");
+        }
+    }
+
+    //그룹이 존재하는지 확인
+    private void isGroupExist(Group findGroup) {
+        if (findGroup == null) {
+            log.error("Group Not Exist Error");
+            throw new GroupException("존재하지 않는 그룹입니다.");
+        }
     }
 }

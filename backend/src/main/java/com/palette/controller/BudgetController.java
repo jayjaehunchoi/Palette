@@ -31,26 +31,26 @@ public class BudgetController {
     private final ExpenseService expenseService;
 
     //todo: getMapping, 예산/지출 수정(put)
-    @GetMapping("/{travlegroupid}/totalbudget")
-    public BudgetResponseDto readBudget(@Login Member member,@PathVariable("travlegroupid") long travelGroupId){
-        return budgetService.readBudget(travelGroupId);
+    @GetMapping("/{travelgroupid}/totalbudget")
+    public BudgetResponseDto readBudget(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
+        return budgetService.readBudget(member,travelGroupId);
     }
 
     @GetMapping("/{travelgroupid}/expense")
-    public ExpenseResponseDto readExpense(@Login Member member,@PathVariable("travlegroupid") long travelGroupId){
+    public ExpenseResponseDto readExpense(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
         return expenseService.readExpenses(travelGroupId);
     }
 
 
     //총 예산 추가
     @PostMapping("/{travelgroupid}/totalbudget") // Restful url : 동사대신 명사와 http 메소드로 표현
-    public Long saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable long travelGroupId){
+    public Long saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = Budget.builder()
                         .group(group)
                         .totalBudget(budgetDto.getTotalBudget())
                         .build();
-        Budget savedBudget = budgetService.addBudget(group,budget);
+        Budget savedBudget = budgetService.addBudget(member,group,budget);
         return savedBudget.getId();
     }
 

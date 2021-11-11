@@ -85,7 +85,7 @@ public class GroupService {
     private void isGroupExist(Group findGroup) {
         if (findGroup == null) {
             log.error("Group Not Exist Error");
-            throw new GroupException("존재하지 않는 게시물 그룹입니다.");
+            throw new GroupException("존재하지 않는 그룹입니다.");
         }
     }
 
