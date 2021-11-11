@@ -25,7 +25,7 @@ TBD
 ## 🕺 팀원 소개
 ### 🙋‍♀️ FrontEnd
 |[이나라](https://github.com/01Lrzr)|[이진희](https://github.com/jjinheeWorld)|[조아람](https://github.com/che2rish)|
-|--|--|--|--|
+|--|--|--|
 |![image](https://user-images.githubusercontent.com/87312401/141253987-b82269ed-22c8-4b9d-94c2-a541d84997f4.png)|![image](https://user-images.githubusercontent.com/87312401/141253882-293f7557-759b-4acc-8dee-80cd67f9adb4.png)|![image](https://user-images.githubusercontent.com/87312401/141254085-758b1732-2c21-4864-be9f-d097fa01bec6.png)|
 
 ### 🙋‍♂️ BackEnd
