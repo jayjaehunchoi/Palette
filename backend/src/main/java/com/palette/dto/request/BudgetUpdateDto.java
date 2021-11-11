@@ -10,4 +10,8 @@ import javax.validation.constraints.NotBlank;
 public class BudgetUpdateDto {
     @NotBlank(message = "예산을 입력해주세요")
     private long budget;
+
+    public BudgetUpdateDto(long budget) {
+        this.budget = budget;
+    }
 }

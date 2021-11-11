@@ -136,7 +136,9 @@ public class GroupServiceTest {
         assertThat(member.getMemberGroups().get(0).getGroup()).isEqualTo(groupRepository.findAll().get(1)); //group2만 남아있어야하는 상태
     }
 
-    @AfterEach
+    //todo: 그룹업데이트 테스트
+
+   @AfterEach
     void 전체_삭제(){
         System.out.println("-------------AfterEach-------------");
         memberRepo.deleteAll();
