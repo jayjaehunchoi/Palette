@@ -2,12 +2,11 @@ package com.palette.controller;
 
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Comment;
-import com.palette.dto.GeneralResponse;
 import com.palette.dto.request.CommentDto;
 import com.palette.dto.response.CommentResponseDto;
+import com.palette.dto.response.CommentResponsesDto;
 import com.palette.service.CommentService;
 import com.palette.service.PostService;
-import com.palette.utils.HttpResponseUtil;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.palette.utils.ConstantUtil.INIT_ID;
-import static com.palette.utils.HttpResponseUtil.*;
+import static com.palette.utils.constant.ConstantUtil.INIT_ID;
+import static com.palette.utils.constant.HttpResponseUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,20 +25,17 @@ import static com.palette.utils.HttpResponseUtil.*;
 public class CommentController {
 
     private final CommentService commentService;
-    private final PostService postService;
 
     @GetMapping("/post/{postId}/comment")
-    public ResponseEntity<GeneralResponse> getNextComment(@PathVariable Long postId, @RequestParam(value = "id", required = false) Long lastCommentId){
-        postService.findById(postId); // 현재 게시물이 존재하는지
+    public ResponseEntity<CommentResponsesDto> getNextComment(@PathVariable Long postId, @RequestParam(value = "id", required = false) Long lastCommentId){
         List<CommentResponseDto> commentResponseDtos = commentService.findCommentByClickViewMore(postId, lastCommentId);
-        return ResponseEntity.ok(GeneralResponse.builder().data(commentResponseDtos).build());
+        return ResponseEntity.ok(CommentResponsesDto.builder().commentResponses(commentResponseDtos).build());
     }
 
     @GetMapping("/post/{postId}/comment/{commentId}")
-    public ResponseEntity<GeneralResponse> getChildComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestParam(value = "id", required = false) Long lastCommentId){
-        postService.findById(postId);
+    public ResponseEntity<CommentResponsesDto> getChildComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestParam(value = "id", required = false) Long lastCommentId){
         List<CommentResponseDto> childCommentResponseDtos = commentService.findChildComment(commentId, lastCommentId);
-        return ResponseEntity.ok(GeneralResponse.builder().data(childCommentResponseDtos).build());
+        return ResponseEntity.ok(CommentResponsesDto.builder().commentResponses(childCommentResponseDtos).build());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,14 +56,12 @@ public class CommentController {
 
     @PutMapping("/post/{postId}/comment/{commentId}")
     public ResponseEntity<Void> updateComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
-        postService.findById(postId);
         commentService.updateComment(member.getId(),commentId,commentDto.getContent());
         return RESPONSE_OK;
     }
 
     @DeleteMapping("/post/{postId}/comment/{commentId}")
     public ResponseEntity<Void> deleteComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId){
-        postService.findById(postId);
         commentService.deleteComment(member.getId(), commentId);
         return RESPONSE_OK;
     }

@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static com.palette.domain.post.QPhoto.*;
 import static com.palette.domain.post.QPost.*;
+import static com.palette.utils.constant.ConstantUtil.*;
 import static org.springframework.util.StringUtils.*;
 
 @Repository
@@ -69,7 +70,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .fetch();
 
         for (Tuple tuple : result) {
-            if(baseMap.get(tuple.get(0,Long.class)) == "기본썸네일"){
+            if(baseMap.get(tuple.get(0,Long.class)).equals(BASIC_THUMBNAIL)){
                 baseMap.replace(tuple.get(0,Long.class), tuple.get(1,String.class));
             }
         }
@@ -88,11 +89,20 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return posts.get(0);
     }
 
-    // todo : 기본 썸네일 파일 지정 후 파일 명 update 필요
+    public long getPostTotalCount(SearchCondition condition){
+        return queryFactory.select(post.id)
+                .from(post)
+                .where(memberNameEq(condition.getName()),
+                        regionEq(condition.getRegion()),
+                        titleContain(condition.getTitle()),
+                        postGroupIdEq(condition.getPostGroupId()))
+                .fetchCount();
+    }
+
     private Map<Long, String> createBaseMap(List<Long> postIds) {
         Map<Long, String> baseThumbnailMap = new HashMap<>();
         for (Long postId : postIds) {
-            baseThumbnailMap.put(postId,"기본썸네일");
+            baseThumbnailMap.put(postId,BASIC_THUMBNAIL);
         }
         return baseThumbnailMap;
     }

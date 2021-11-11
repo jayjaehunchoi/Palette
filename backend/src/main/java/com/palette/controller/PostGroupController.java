@@ -4,17 +4,16 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.PostGroup;
-import com.palette.dto.GeneralResponse;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
+import com.palette.dto.response.PostGroupsResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.repository.MemberRepository;
+import com.palette.dto.response.StoryListResponsesDto;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
-import com.palette.utils.ConstantUtil;
+import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.S3Uploader;
-import com.palette.utils.SessionUtil;
 import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +22,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.palette.utils.HttpResponseUtil.*;
+import static com.palette.utils.constant.HttpResponseUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -43,19 +41,19 @@ public class PostGroupController {
 
     // /postgroup?filter={필터}&condition={조건}&page={pageNumber}
     @GetMapping
-    public ResponseEntity<GeneralResponse> getGroupPostWithFilter(@RequestParam(required = false, defaultValue = "none") String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
+    public ResponseEntity<PostGroupsResponseDto> getGroupPostWithFilter(@RequestParam(required = false, defaultValue = "none") String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
         List<PostGroupResponseDto> postGroup = findWithSearchFilter(filter, condition, page);
-        GeneralResponse<Object> res = GeneralResponse.builder().data(postGroup).build();
+        PostGroupsResponseDto res = PostGroupsResponseDto.builder().postGroupResponses(postGroup).build();
         return ResponseEntity.ok(res);
     }
 
     // PostGroup 내의 Post보기
     @GetMapping("/{id}")
-    public ResponseEntity<GeneralResponse> getSingleGroupPost(@PathVariable Long id, @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE, required = false) int page){
+    public ResponseEntity<StoryListResponsesDto> getSingleGroupPost(@PathVariable Long id, @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE, required = false) int page){
         SearchCondition searchCondition = new SearchCondition();
         searchCondition.setPostGroupId(id);
         List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, page);
-        GeneralResponse<Object> res = GeneralResponse.builder().data(storyList).build();
+        StoryListResponsesDto res = StoryListResponsesDto.builder().storyLists(storyList).build();
         return ResponseEntity.ok(res);
     }
 

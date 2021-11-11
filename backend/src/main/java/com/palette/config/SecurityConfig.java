@@ -25,12 +25,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .authorizeRequests()
                 //URL별 권한 관리를 설정하는 옵션의 시작점.
-                .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll() //권한 관리 대상들을 지정
+                .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile", "/**").permitAll() //권한 관리 대상들을 지정
                 //.antMatchers("/api/v1/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated() //설정된 이외의 나머지 URL 값들을 의미한다.
-                .and()
+                /*.and()
                 .logout()
                 .logoutSuccessUrl("/")
+                .invalidateHttpSession(true) // 로그아웃 이후 세션 전체 삭제 여부
+                */
                 //로그아웃 기능에 대한 여러 설정의 진입점.
                 //로그아웃 성공 시 / 주소로 이동한다.
                 .and()

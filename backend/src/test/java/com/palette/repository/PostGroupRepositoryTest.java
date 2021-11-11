@@ -104,4 +104,38 @@ public class PostGroupRepositoryTest {
         System.out.println(" 1만건 기준 마지막 페이지 조회 성능 : " + (end-start) + "ms");
     }
 
+    @Test
+    void 그룹_총개수(){
+        Member member = new Member("wogns", "1234", "wogns","123");
+        memberRepository.save(member);
+        for(int i = 0 ; i < 100; i++){
+            PostGroup postGroup = PostGroup.builder().member(member).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
+                    LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+            postGroupRepository.save(postGroup);
+        }
+        long count = postGroupRepository.getStoryListTotalCount(new SearchCondition());
+        assertThat(count).isEqualTo(100);
+    }
+
+    @Test
+    void 그룹_총개수_member(){
+        Member member = new Member("wogns", "1234", "wogns","123");
+        memberRepository.save(member);
+        Member member2 = new Member("rlacl", "1234", "wogns","123");
+        memberRepository.save(member2);
+        for(int i = 0 ; i < 10; i++){
+            Member input = member;
+            if(i > 5){
+                input = member2;
+            }
+            PostGroup postGroup = PostGroup.builder().member(input).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
+                    LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+            postGroupRepository.save(postGroup);
+        }
+        SearchCondition condition = new SearchCondition();
+        condition.setName("wogns");
+        long count = postGroupRepository.getStoryListTotalCount(condition);
+        assertThat(count).isEqualTo(6);
+    }
+
 }

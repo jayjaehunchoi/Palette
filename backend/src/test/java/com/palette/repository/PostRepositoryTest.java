@@ -132,4 +132,18 @@ class PostRepositoryTest {
         assertThat(endDate).isEqualTo(LocalDateTime.of(2021, 11, 5, 20, 20));
     }
 
+    @Test
+    void post_개수(){
+        long count = postRepository.getPostTotalCount(new SearchCondition());
+        assertThat(count).isEqualTo(30);
+    }
+
+    @Test
+    void post_개수_지역검색(){
+        SearchCondition condition = new SearchCondition();
+        condition.setRegion("부산");
+        long count = postRepository.getPostTotalCount(condition);
+        assertThat(count).isEqualTo(14);
+    }
+
 }

@@ -32,15 +32,15 @@ public class ExpenseRepositoryTest {
 
         Group findGroup = groupRepository.findAll().get(0);
 
-        Budget budget = new Budget(findGroup,1000000L);
+        Budget budget = new Budget(findGroup,1000000l);
         budgetRepository.save(budget);
 
         Expense.Category category = Expense.Category.TRANSPORTATION;
-        Expense expense = new Expense(category,"574 버스",1200L, budget);
+        Expense expense = new Expense(category,"574 버스",1200l, budget);
         expenseRepository.save(expense);
 
         Expense.Category category2 = Expense.Category.FOOD;
-        Expense expense2 = new Expense(category,"텐동키츠네",12000L, budget);
+        Expense expense2 = new Expense(category,"텐동키츠네",12000l, budget);
         expenseRepository.save(expense2);
 
     }

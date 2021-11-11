@@ -45,7 +45,14 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
                 .fetch();
     }
 
-
+    public long getStoryListTotalCount(SearchCondition condition){
+        return queryFactory.select(postGroup.id)
+                .from(postGroup)
+                .where(memberNameEq(condition.getName()),
+                        regionEq(condition.getRegion()),
+                        titleContain(condition.getTitle()))
+                .fetchCount();
+    }
 
     private List<Long> getPostGroupIdsWithIndex(SearchCondition condition, int pageNo, int pageSize) {
         return queryFactory.select(postGroup.id)

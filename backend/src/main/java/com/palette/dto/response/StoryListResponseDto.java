@@ -6,12 +6,14 @@ import com.palette.domain.post.Post;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.core.io.Resource;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 // Story List에 단건마다 띄울 정보
+@NoArgsConstructor
 @Getter
 public class StoryListResponseDto {
 

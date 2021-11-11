@@ -10,18 +10,19 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "groups")
+@Table(name = "travel_group")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "group_id")
     private Long id;
 
     private String groupName;
 
-    private String groupIntroduction;
+    private String groupsIntroduction;
 
     private int numberOfPeople;
 
@@ -29,15 +30,15 @@ public class Group {
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
     @Builder
-    public Group(String groupName,String groupIntroduction){
+    public Group(String groupName,String groupsIntroduction){
         this.groupName = groupName;
-        this.groupIntroduction = groupIntroduction;
+        this.groupsIntroduction = groupsIntroduction;
         this.numberOfPeople = 1;
     }
 
     public void updateGroup(GroupUpdateDto dto){
         this.groupName = dto.getGroupName();
-        this.groupIntroduction = dto.getGroupIntroduction();
+        this.groupsIntroduction = dto.getGroupIntroduction();
     }
 
     public void addNumberOfPeople(){
