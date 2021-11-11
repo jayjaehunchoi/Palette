@@ -60,9 +60,9 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         List<PostGroupResponseDto> responses = Arrays.asList(dto1, dto2);
         PostGroupsResponseDto dtos = PostGroupsResponseDto.builder().postGroupResponses(responses).build();
 
-        given(postGroupService.findPostGroupByMember(anyString(),anyInt())).willReturn(responses);
+        given(postGroupService.findPostGroup(any(),anyInt())).willReturn(responses);
 
-        ResultActions result = this.restDocsMockMvc.perform(get("/postgroup?filter=member&condition=jaehunChoi")
+        ResultActions result = this.restDocsMockMvc.perform(get("/postgroup?memberId=1&region=Seoul")
                 .contentType(MediaType.APPLICATION_JSON));
 
         result
