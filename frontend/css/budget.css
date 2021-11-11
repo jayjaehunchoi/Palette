@@ -19,6 +19,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	flex-direction: column;
 	align-items: center;
 	margin-top: 130px;
+  margin-bottom: 100px;
 }
 
 .app .inner {
@@ -190,7 +191,9 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .budgetlist .itemContainer .left .detail {
+  margin-top: 6px;
   font-size: 25px;
+  font-weight: 600;
 }
 
 .budgetlist .itemContainer .left .price {
