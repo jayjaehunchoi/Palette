@@ -2,7 +2,7 @@ HELP.md
 .gradle
 .idea
 build/
-BOOT-INF
+BOOT-INF/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
