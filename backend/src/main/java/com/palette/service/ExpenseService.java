@@ -33,7 +33,7 @@ public class ExpenseService {
     private final BudgetService budgetService;
     private final MemberGroupRepository memberGroupRepository;
 
-    //todo: 지출변경
+    //todo: 지출변경(단권삭제,전체삭제,단권수정)
 
     @Transactional
     public Expense addExpense(Member member,Group group,Expense expense){
