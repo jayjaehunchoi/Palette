@@ -12,6 +12,10 @@ a {
 	color: #333;
 }
 
+button {
+	cursor: pointer;
+}
+
 .container {
 	width: 100%;
 	display: flex;
@@ -22,11 +26,12 @@ a {
 
 .container .inner {
 	width: 700px;
-	min-height: 700px;
+	min-height: 500px;
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-bottom: 50px;
 }
 
 .container .inner .title {
@@ -82,7 +87,7 @@ a {
 
 .modal .modalContent {
   width:500px;
-  margin: -800px auto;
+  margin: -700px auto;
   padding:20px 10px;
   background:#fff;
   border:3px solid #333;
@@ -150,3 +155,91 @@ a {
   background:rgba(0, 0, 0, 0.5);
   z-index:-1;
 }   
+
+/* GROUP */
+
+.inner .groupName {
+	width: 100%;
+	margin-top: 50px;
+	margin-left: 50px;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.inner .groupIntroduction {
+	width: 100%;
+	margin-top: 20px;
+	margin-left: 50px;
+	line-height: 1.4em;
+}
+
+.inner .groupMember {
+	width: 100%;
+	margin-top: 20px;
+	margin-left: 50px;
+	line-height: 1.4em;
+}
+
+.inner .groupMember .listTitle {
+	font-weight: 700;
+}
+
+.inner .groupMember .memberList{
+	display: flex;
+}
+
+.inner .groupMember .memberList li{
+	margin-right: 12px;
+}
+
+.inner .budgetbox {
+	margin-top: 50px;
+	width: 600px;
+}
+
+.inner .budgetbox span {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.inner .budgetbox .totalBudget, 
+.inner .budgetbox .expense, 
+.inner .budgetbox .budgetLeft  {
+  text-align: center;
+  width: 300px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 25px;
+  font-weight: 700;
+  color: #707070;
+}
+
+.inner .budgetContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.inner .budgetPlanning {
+	display: flex;
+}
+
+.inner .budgetPlanning .expContainer,
+.inner .budgetPlanning .leftContainer {
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.inner .toBudgetBt {
+	margin-top: 30px;
+	width: 500px;
+	height: 50px;
+	background-color: #333;
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+	text-align: center;
+	line-height: 50px;
+}
