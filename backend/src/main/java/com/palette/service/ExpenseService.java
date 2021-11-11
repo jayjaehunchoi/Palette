@@ -3,12 +3,18 @@ package com.palette.service;
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Expense;
 import com.palette.domain.group.Group;
+import com.palette.domain.group.MemberGroup;
+import com.palette.domain.member.Member;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.ExpenseResponseDto;
+import com.palette.exception.BudgetException;
+import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.ExpenseRepository;
 import com.palette.repository.GroupRepository;
+import com.palette.repository.MemberGroupRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -24,19 +31,25 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final GroupRepository groupRepository;
     private final BudgetService budgetService;
+    private final MemberGroupRepository memberGroupRepository;
 
     //todo: 지출변경
 
     @Transactional
-    public Expense addExpense(Expense expense){
+    public Expense addExpense(Member member,Group group,Expense expense){
+        isGroupExist(group);
+        isMemberHaveAuthToUpdate(member,group);
+        isBudgetExist(group);
         Expense savedExpense = expenseRepository.save(expense);
         return savedExpense;
     }
 
     @Transactional
-    public ExpenseResponseDto readExpenses(Long id){
-        //todo: group 이랑 budget 있는지 확인 exception
+    public ExpenseResponseDto readExpenses(Member member,Long id){
         Group group = groupRepository.findById(id).orElse(null);
+        isGroupExist(group);
+        isMemberHaveAuthToUpdate(member,group);
+        isBudgetExist(group);
         Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
 
         long totalBudget = findBudget.getTotalBudget();
@@ -73,6 +86,31 @@ public class ExpenseService {
         }
         return expenseDtos;
  */
+    }
+
+    //그룹이 존재하는지 확인
+    private void isGroupExist(Group findGroup) {
+        if (findGroup == null) {
+            log.error("Group Not Exist Error");
+            throw new GroupException("존재하지 않는 그룹입니다.");
+        }
+    }
+
+    private void isBudgetExist(Group group){
+        Budget findBudget = budgetRepository.findByGroup(group).orElse(null);
+        if(findBudget == null){
+            log.error("Budget Not Exist Error");
+            throw new BudgetException("예산이 존재하지 않습니다.");
+        }
+    }
+
+    //지출 수정 권한이 있는지 확인 (그룹의 멤버인지 확인)
+    public void isMemberHaveAuthToUpdate(Member member,Group group){
+        MemberGroup memberGroup = memberGroupRepository.findByMemberAndGroup(member,group);
+        if(memberGroup == null){
+            log.error("Group Access Grant Error");
+            throw new GroupException("그룹 접근 권한이 없습니다.");
+        }
     }
 }
 

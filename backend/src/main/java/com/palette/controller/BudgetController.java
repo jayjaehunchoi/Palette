@@ -30,7 +30,7 @@ public class BudgetController {
     private final BudgetService budgetService;
     private final ExpenseService expenseService;
 
-    //todo: getMapping, 예산/지출 수정(put)
+    //todo: 예산/지출 수정(put)
     @GetMapping("/{travelgroupid}/totalbudget")
     public BudgetResponseDto readBudget(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
         return budgetService.readBudget(member,travelGroupId);
@@ -38,7 +38,7 @@ public class BudgetController {
 
     @GetMapping("/{travelgroupid}/expense")
     public ExpenseResponseDto readExpense(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
-        return expenseService.readExpenses(travelGroupId);
+        return expenseService.readExpenses(member,travelGroupId);
     }
 
 
@@ -67,7 +67,7 @@ public class BudgetController {
                 .price(expenseDto.getPrice())
                 .budget(budget)
                 .build();
-        Expense savedExpense = expenseService.addExpense(expense);
+        Expense savedExpense = expenseService.addExpense(member,group,expense);
         return savedExpense.getId();
     }
 
