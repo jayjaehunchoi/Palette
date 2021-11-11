@@ -12,6 +12,12 @@
     $("#headers").load("../static/header.html");  
     });
   </script>
+  <!-- footer jquery -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
 
   <link rel="icon" href="/frontend/favicon.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
@@ -91,7 +97,9 @@
   </div>
   </section>
   
-
+  <section>
+    <div id="footers"></div>
+  </section>
 
   <!-- MODAL -->
     <!-- 예산 설정 -->
