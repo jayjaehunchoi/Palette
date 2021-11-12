@@ -8,6 +8,7 @@ import com.palette.dto.response.MemberResponseDto;
 import com.palette.service.MemberService;
 import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
+import com.palette.utils.annotation.LoginChecker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,6 @@ public class MemberController {
         return member.getId();
     }
 
-    //로그인
     @PostMapping("/signin")
     public void logIn(@RequestBody MemberDto memberDto) {
         Member findMember = memberService.logIn(memberDto.getEmail(), memberDto.getPassword());
@@ -53,25 +53,28 @@ public class MemberController {
         log.info("session {}",session.getAttribute(MEMBER));
     }
 
-    //로그아웃
+    @LoginChecker
     @GetMapping("/signout")
     public void logout() {
         session.removeAttribute(MEMBER);
         log.info("로그아웃 실행");
     }
 
+    @LoginChecker
     @GetMapping("/member/{memberId}")
     public MemberResponseDto getMember(@PathVariable Long memberId){
         Member findMember = memberService.getMemberInfo(memberId);
         return new MemberResponseDto(findMember);
     }
 
+    @LoginChecker
     @PutMapping("/member/{memberId}")
     public void updateMember(@PathVariable Long memberId,@RequestPart("member-update-data") @Valid MemberUpdateDto dto, @RequestPart("file") MultipartFile multipartFile) throws IOException {
         MyFile myFile = s3Uploader.uploadSingleFile(multipartFile);
         memberService.updateMember(memberId, dto, myFile.getStoreFileName());
     }
 
+    @LoginChecker
     @DeleteMapping("/member")
     public void deleteMember(@Login Member member, @RequestBody MemberUpdateDto dto){
        memberService.deleteMember(member,dto.getPassword());
