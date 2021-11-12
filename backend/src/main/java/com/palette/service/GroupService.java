@@ -22,6 +22,8 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final MemberGroupRepository memberGroupRepository;
 
+    //todo: 멤버 검증 필요? read 할때만
+
     //그룹 조회
     @Transactional
     public Group findById(Long id){
@@ -40,8 +42,8 @@ public class GroupService {
 
     //그룹에 멤버 추가
     @Transactional
-    public void addGroupMember(Long id,Member member){
-        Group findGroup = groupRepository.findById(id).orElse(null);
+    public void addGroupMember(Long groupCode,Member member){
+        Group findGroup = groupRepository.findGroupByGroupCode(groupCode).orElse(null);
         isGroupExist(findGroup);
 
         MemberGroup memberGroup = new MemberGroup();
@@ -88,6 +90,5 @@ public class GroupService {
             throw new GroupException("존재하지 않는 그룹입니다.");
         }
     }
-
 
 }

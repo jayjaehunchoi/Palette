@@ -30,7 +30,7 @@ public class BudgetController {
     private final BudgetService budgetService;
     private final ExpenseService expenseService;
 
-    //todo: 예산/지출 수정(put)
+    //todo: 예산/지출 수정(put),삭제(delete)
     @GetMapping("/{travelgroupid}/totalbudget")
     public BudgetResponseDto readBudget(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
         return budgetService.readBudget(member,travelGroupId);

@@ -20,6 +20,9 @@ public class Group {
     @Column(name = "group_id")
     private Long id;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long groupCode;
+
     private String groupName;
 
     private String groupsIntroduction;
