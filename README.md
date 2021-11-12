@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/87312401/141249127-838af121-b0a4-4303-b5c2-2080265ee645.png"/>
+  <img src="https://user-images.githubusercontent.com/87312401/141436476-df3daced-f39b-4b1a-83bb-819e053f03b0.png"/>
 </p>
 
 ## 💻 서비스 소개
