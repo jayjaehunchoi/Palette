@@ -32,6 +32,7 @@ button {
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 50px;
+		font-family: 'Noto Sans KR', sans-serif;
 }
 
 .container .inner .title {
@@ -113,7 +114,7 @@ button {
 	font-weight: 700;
 }
 
-.modal .itemContainer  input {
+.modal .itemContainer input {
 	width: 350px;
 	height: 30px;
 	font-size: 1em;
@@ -144,8 +145,6 @@ button {
 	margin-left: 6px;
 }
 
-
-
 .modal .modal_layer {
   position:fixed;
   top:0;
@@ -162,7 +161,15 @@ button {
 	width: 100%;
 	margin-top: 50px;
 	margin-left: 50px;
-	font-size: 20px;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.inner .groupCode{
+	width: 100%;
+	margin-top: 4px;
+	margin-left: 50px;
+	line-height: 1.4em;
 	font-weight: 700;
 }
 
@@ -192,7 +199,7 @@ button {
 	margin-right: 12px;
 }
 
-.inner .budgetbox {
+/* .inner .budgetbox {
 	margin-top: 50px;
 	width: 600px;
 }
@@ -230,16 +237,43 @@ button {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
+} */
 
 .inner .toBudgetBt {
-	margin-top: 30px;
+	margin-top: 100px;
 	width: 500px;
-	height: 50px;
+	height: 60px;
 	background-color: #333;
 	color: #fff;
 	font-weight: 700;
 	cursor: pointer;
 	text-align: center;
-	line-height: 50px;
+	line-height: 60px;
+}
+
+.groupBts {
+	display: flex;
+	margin-top: 30px;
+
+}
+
+.groupBts button {
+	width: 120px;
+	height: 40px;
+	background-color: #fff;
+	border: 2px #333 solid;
+	color: #333;
+	font-weight: 700;
+
+}
+
+.groupBts .bts-left{
+	position: relative;
+	right: 200px;
+}
+
+
+.groupBts .bts-right{
+	position: relative;
+	left: 200px;
 }
