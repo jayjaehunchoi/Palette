@@ -1,13 +1,17 @@
 package com.palette.service;
 
 import com.palette.domain.group.Budget;
+import com.palette.domain.group.Expense;
 import com.palette.domain.group.Group;
 import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
+import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
+import com.palette.repository.ExpenseRepository;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -26,6 +32,7 @@ public class BudgetService {
     private final GroupRepository groupRepository;
     private final BudgetRepository budgetRepository;
     private final MemberGroupRepository memberGroupRepository;
+    private final ExpenseRepository expenseRepository;
 
     //그룹에 예산 넣기
     @Transactional
@@ -39,7 +46,7 @@ public class BudgetService {
 
     //그룹의 예산,경비,남은금액 조회
     @Transactional
-    public BudgetResponseDto readBudget(Member member, Long id){
+    public ExpenseResponseDto readBudget(Member member, Long id){
         Group group = groupRepository.findById(id).orElse(null);
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
@@ -56,8 +63,20 @@ public class BudgetService {
 
         remainingBudget = totalBudget - totalExpense;
 
-        BudgetResponseDto dto = new BudgetResponseDto(group.getId(),totalBudget,totalExpense,remainingBudget);
+        //그룹에 해당되는 expense 들만 list에 담아서 보내주기
+        List<Expense> findExpenses = expenseRepository.findByBudget(findBudget);
+
+        List<ExpenseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
+
+        ExpenseResponseDto dto = new ExpenseResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
         return dto;
+
+       // BudgetResponseDto dto = new BudgetResponseDto(group.getId(),totalBudget,totalExpense,remainingBudget);
+       // return dto;
+    }
+
+    public List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
+        return expenses.stream().map(ExpenseDto::new).collect(Collectors.toList());
     }
 
     //budget의 그룹 조회

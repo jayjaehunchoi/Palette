@@ -1,5 +1,6 @@
 package com.palette.domain.group;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,5 +56,16 @@ public class Expense {
         Category(String categoryName) {
             this.categoryName = categoryName;
         }
+
+        @JsonCreator
+        public static Category getRoleFromRoleName(String categoryName){
+            for (Category category : Category.values()) {
+                if(category.categoryName.equals(categoryName)){
+                    return category;
+                }
+            }
+            return null;
+        }
+
     }
 }

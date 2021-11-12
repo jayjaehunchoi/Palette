@@ -25,10 +25,12 @@ public class ExpenseController {
     private final BudgetService budgetService;
     private final ExpenseService expenseService;
 
+
     @GetMapping("/{travelgroupid}/expense")
     public ExpenseResponseDto readExpense(@Login Member member, @PathVariable("travelgroupid") long travelGroupId){
         return expenseService.readExpenses(member,travelGroupId);
     }
+
 
     //지출 추가
     @PostMapping("/{travelgroupid}/expense")

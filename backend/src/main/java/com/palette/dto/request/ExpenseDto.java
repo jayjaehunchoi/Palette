@@ -12,8 +12,7 @@ import javax.validation.constraints.NotBlank;
 public class ExpenseDto {
 
     @NotBlank(message = "지출 분류를 입력해주세요.")
-    private String category;
-    //todo: enum으로 바꿔보자아아아아ㅏ
+    private Expense.Category category;
 
     @NotBlank(message = "항목을 입력해주세요.")
     private String detail;
@@ -22,14 +21,14 @@ public class ExpenseDto {
     @Max(value = 2000000000, message = "입력할 수 있는 최대 지출값을 초과하였습니다.")
     private long price;
 
-    public ExpenseDto(String category, String detail, long price) {
+    public ExpenseDto(Expense.Category category, String detail, long price) {
         this.category = category;
         this.detail = detail;
         this.price = price;
     }
 
     public ExpenseDto(final Expense expense){
-        this.category = expense.getCategory().name(); //todo: 이것도바꿔
+        this.category = expense.getCategory();
         this.detail = expense.getDetail();
         this.price = expense.getPrice();
     }

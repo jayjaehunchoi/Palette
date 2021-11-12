@@ -6,6 +6,7 @@ import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
@@ -60,7 +61,7 @@ public class BudgetServiceTest {
         Group findGroup = groupRepository.findAll().get(0);
         Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
 
-        BudgetResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
+        ExpenseResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
 
         assertThat(budgetResponseDto.getGroupId()).isEqualTo(findBudget.getGroup().getId());
         assertThat(budgetResponseDto.getTotalBudget()).isEqualTo(findBudget.getTotalBudget());
