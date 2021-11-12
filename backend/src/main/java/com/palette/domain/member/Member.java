@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.group.MemberGroup;
-import com.palette.domain.post.Post;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -52,5 +51,9 @@ public class Member extends BaseTimeEntity {
 
     public void encodePassword(String encodedPassword) {
         password = encodedPassword;
+    }
+
+    public void changeProfileFile(String profileFileName) {
+        this.profileFileName = profileFileName;
     }
 }
