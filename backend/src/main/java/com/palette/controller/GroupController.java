@@ -5,6 +5,7 @@ import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.GroupDto;
 import com.palette.dto.request.GroupJoinDto;
+import com.palette.dto.request.GroupUpdateDto;
 import com.palette.dto.response.GroupResponseDto;
 import com.palette.dto.response.GroupsResponseDto;
 import com.palette.service.GroupService;
@@ -28,7 +29,7 @@ public class GroupController {
 
     private GroupService groupService;
 
-    //그룹 생성, 그룹 조회(전체,각자), 그룹 수정(삭제), 그룹 조인, 그룹 코드 조회(그룹 마이파이지 조회)
+    //그룹 생성, 그룹 조회(전체,각자), 그룹 수정(삭제), 그룹 조인
 
     //전체 그룹 조회( plan 버튼 클릭 했을 때)
     @GetMapping
@@ -83,22 +84,23 @@ public class GroupController {
         groupService.addGroupMember(groupCode,member);
     }
 
+    //그룹 탈퇴
+    @DeleteMapping //todo: 그룹삭제랑 url 구분 어케할까????????????????
+    public void ExitGroup(@Login Member member,@RequestBody GroupDto groupDto){
+        groupService.deleteGroupMember(groupDto.getGroupId(),member);
+    }
+
     //그룹 수정
     @PutMapping("/{travelgroupid}")
-    public void updateGroup(){
-
+    public ResponseEntity<GroupUpdateDto> updateGroup(@Login Member member, @RequestBody GroupUpdateDto groupUpdateDto){
+        groupService.updateGroup(groupUpdateDto.getGroupId(),groupUpdateDto);
+        return ResponseEntity.ok(groupUpdateDto);
     }
 
     //그룹 삭제
     @DeleteMapping("/{travelgroupid}")
-    public void deleteGroup(){
-
-    }
-
-    //그룹 마이페이지 조회
-    @GetMapping("{travelgroupid}/my")
-    public void readGroupMyPage(){
-
+    public void deleteGroup(@Login Member member,@RequestBody GroupDto groupDto){
+        groupService.deleteGroup(groupDto.getGroupId());
     }
 
     //group을 groupResponseDto로 변환

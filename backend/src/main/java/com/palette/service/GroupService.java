@@ -58,7 +58,7 @@ public class GroupService {
     public void deleteGroupMember(Long id,Member member){
         Group findGroup = groupRepository.findById(id).orElse(null);
         isGroupExist(findGroup);
-        isDeleted(findGroup);
+        isMemberDeleted(findGroup);
         MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,findGroup);
         findMemberGroup.deleteMemberGroup(findGroup,member);
 
@@ -77,7 +77,7 @@ public class GroupService {
     //그룹삭제
     @Transactional
     public void deleteGroup(Long id){
-        //todo: 경고장 하나 날리기~
+        //todo: 경고장 하나 날리기
         Group findGroup = groupRepository.findById(id).orElse(null);
         isGroupExist(findGroup);
         groupRepository.deleteById(id);
@@ -102,7 +102,7 @@ public class GroupService {
     }
 
     //그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능
-    private void isDeleted(Group group){
+    private void isMemberDeleted(Group group){
         if(group.getNumberOfPeople() == 1) {
             throw new GroupException("그룹에 남은 유일한 멤버라 탈퇴 불가능합니다.");
         }

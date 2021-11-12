@@ -8,10 +8,12 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Getter
 public class GroupUpdateDto {
-    @NotBlank(message = "그룹 이름을 입력해주세요.")
+    private long groupId;
+
+    @NotBlank(message = "수정된 그룹 이름을 입력해주세요.")
     private String groupName;
 
-    @NotBlank(message = "그룹 정보를 입력해주세요.")
+    @NotBlank(message = "수정된 그룹 정보를 입력해주세요.")
     private String groupIntroduction;
 
 }
