@@ -53,5 +53,4 @@ public class MemberController {
         session.removeAttribute(MEMBER);
         log.info("로그아웃 실행");
     }
-
 }
