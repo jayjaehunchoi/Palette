@@ -110,7 +110,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
                 .file(file)
                 .content("multipart/mixed")
                 .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isCreated())
+                .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isCreated())
                 .andDo(document("postgroup-create-group"
                         ,requestParts(partWithName("data").description("postGroupDto")
                         , partWithName("file").description("multiple files"))
@@ -145,7 +145,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
                 .file(file)
                 .content("multipart/mixed")
                 .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isOk())
+                .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isOk())
                 .andDo(document("postgroup-update-group"
                         ,requestParts(partWithName("data").description("postGroupDto")
                         , partWithName("file").description("multiple files"))
@@ -163,7 +163,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         given(postService.findPostIdsByPostGroupId(anyLong())).willReturn(Arrays.asList(1L));
         doNothing().when(postGroupService).deletePostGroup(postGroup);
 
-        restDocsMockMvc.perform(delete("/postgroup/1")).andExpect(status().isOk())
+        restDocsMockMvc.perform(delete("/postgroup/1").session(session)).andExpect(status().isOk())
                 .andDo(document("postgroup-delete-group",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
 
