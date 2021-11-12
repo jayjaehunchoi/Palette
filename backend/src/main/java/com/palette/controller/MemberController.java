@@ -12,7 +12,6 @@ import javax.validation.Valid;
 
 import static com.palette.utils.constant.SessionUtil.*;
 
-@SessionAttributes("member")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -21,7 +20,7 @@ public class MemberController {
     private final HttpSession session;
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public Long signUp(@RequestBody @Valid MemberDto memberDto) {
         Member member = Member.builder()
@@ -35,7 +34,7 @@ public class MemberController {
     }
 
     //로그인
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public void logIn(@RequestBody MemberDto memberDto) {
         Member member = Member.builder()
                 .name(memberDto.getName())
@@ -49,8 +48,10 @@ public class MemberController {
     }
 
     //로그아웃
-    @PostMapping("/close")
-    public void logout(HttpSession httpSession) {
-        httpSession.removeAttribute(MEMBER);
+    @PostMapping("/signout")
+    public void logout() {
+        session.removeAttribute(MEMBER);
+        log.info("로그아웃 실행");
     }
+
 }

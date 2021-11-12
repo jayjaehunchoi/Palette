@@ -26,8 +26,8 @@ public class MemberService {
             throw new MemberException("중복된 ID입니다.");
         }
         member.encodePassword(passwordEncoder.encode(member.getPassword()));
-        memberRepository.save(member);
-        return findMember;
+        Member saveMember = memberRepository.save(member);
+        return saveMember;
     }
 
     //로그인
@@ -39,4 +39,13 @@ public class MemberService {
         }
         return findMember;
     }
+
+    //회원수정 중 이미지 변경
+    //todo
+    @Transactional
+    public void imgUpdate(String email, String profileFileName) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(); // 유저이메일로 유저찾음
+        member.changeProfileFile(profileFileName);
+    }
+
 }
