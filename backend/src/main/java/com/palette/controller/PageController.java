@@ -20,7 +20,7 @@ public class PageController {
     private final PostGroupService postGroupService;
 
     @GetMapping("/postgroup")
-    public ResponseEntity<GeneralResponse> getGroupPostCountWithFilter(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = "1", required = false) int page){
+    public ResponseEntity<GeneralResponse> getGroupPostPageWithFilter(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = "1", required = false) int page){
         long totalPage = postGroupService.getTotalPage(searchCondition);
         GeneralResponse<Object> res = GeneralResponse.builder().data(totalPage).build();
         return ResponseEntity.ok(res);
