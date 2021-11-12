@@ -41,8 +41,8 @@ public class PostGroupController {
 
     // /postgroup?filter={필터}&condition={조건}&page={pageNumber}
     @GetMapping
-    public ResponseEntity<PostGroupsResponseDto> getGroupPostWithFilter(@RequestParam(required = false, defaultValue = "none") String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
-        List<PostGroupResponseDto> postGroup = findWithSearchFilter(filter, condition, page);
+    public ResponseEntity<PostGroupsResponseDto> getGroupPostWithFilter(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = "1", required = false) int page){
+        List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(searchCondition,page);
         PostGroupsResponseDto res = PostGroupsResponseDto.builder().postGroupResponses(postGroup).build();
         return ResponseEntity.ok(res);
     }
@@ -82,26 +82,6 @@ public class PostGroupController {
         postGroupService.deletePostGroup(postGroup);
         return RESPONSE_OK;
     }
-
-    private List<PostGroupResponseDto> findWithSearchFilter(String filter, String condition, int page) {
-        List<PostGroupResponseDto> postGroup = null;
-        switch (filter){
-            case "member" :
-                postGroup = postGroupService.findPostGroupByMember(condition, page);
-                break;
-            case "region" :
-                postGroup = postGroupService.findPostGroupByRegion(condition, page);
-                break;
-            case "title" :
-                postGroup = postGroupService.findPostGroupByTitle(condition, page);
-                break;
-            case "none" :
-                postGroup = postGroupService.findPostGroup(page);
-                break;
-        }
-        return postGroup;
-    }
-
 
     private MyFile updateDirectoryFile(MultipartFile file, String storeFileName) throws IOException {
         if(storeFileName != null){

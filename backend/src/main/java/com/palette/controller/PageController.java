@@ -8,10 +8,7 @@ import com.palette.utils.constant.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/page")
@@ -23,19 +20,15 @@ public class PageController {
     private final PostGroupService postGroupService;
 
     @GetMapping("/postgroup")
-    public ResponseEntity<GeneralResponse> getGroupPostCountWithFilter(@RequestParam(required = false, defaultValue = "none") String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
-        long totalPage = postGroupService.getTotalPage(filter, condition);
+    public ResponseEntity<GeneralResponse> getGroupPostCountWithFilter(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = "1", required = false) int page){
+        long totalPage = postGroupService.getTotalPage(searchCondition);
         GeneralResponse<Object> res = GeneralResponse.builder().data(totalPage).build();
         return ResponseEntity.ok(res);
     }
 
 
     @GetMapping("/post")
-    public ResponseEntity<GeneralResponse> getPostPage(@RequestParam(required = false) String name,
-                                                       @RequestParam(required = false) String region,
-                                                       @RequestParam(required = false) String title,
-                                                       @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
-        SearchCondition searchCondition = SearchCondition.setSearchCondition(name, region, title);
+    public ResponseEntity<GeneralResponse> getPostPage(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
         long totalPage = postService.getTotalPage(searchCondition);
         GeneralResponse<Object> res = GeneralResponse.builder().data(totalPage).build();
         return ResponseEntity.ok(res);

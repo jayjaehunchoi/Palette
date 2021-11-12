@@ -65,7 +65,6 @@ dependencies {
 
 	// oauth
 	implementation 'org.springframework.boot:spring-boot-starter-security' // 암호화 기능
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	implementation 'mysql:mysql-connector-java'
 

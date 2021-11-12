@@ -1,21 +1,15 @@
 package com.palette.controller;
 
 import com.palette.domain.member.Member;
-import com.palette.domain.post.Comment;
 import com.palette.dto.MemberDto;
-import com.palette.dto.request.CommentDto;
 import com.palette.service.MemberService;
-import com.palette.utils.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
-import static com.palette.utils.constant.ConstantUtil.INIT_ID;
 import static com.palette.utils.constant.SessionUtil.*;
 
 @Slf4j
@@ -26,9 +20,9 @@ public class MemberController {
     private final HttpSession session;
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long signUp(@RequestBody MemberDto memberDto) {
+    public Long signUp(@RequestBody @Valid MemberDto memberDto) {
         Member member = Member.builder()
                 .name(memberDto.getName())
                 .password((memberDto.getPassword()))
@@ -40,7 +34,7 @@ public class MemberController {
     }
 
     //로그인
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public void logIn(@RequestBody MemberDto memberDto) {
         Member member = Member.builder()
                 .name(memberDto.getName())
@@ -54,8 +48,10 @@ public class MemberController {
     }
 
     //로그아웃
-    @GetMapping("/logout")
-    public void logOut() {
+    @PostMapping("/signout")
+    public void logout() {
         session.removeAttribute(MEMBER);
+        log.info("로그아웃 실행");
     }
+
 }

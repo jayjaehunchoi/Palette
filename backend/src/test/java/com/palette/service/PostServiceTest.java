@@ -81,6 +81,9 @@ public class PostServiceTest {
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(0);
 
+        List<Member> likeMembers = likeService.findLikeMemberByPost(post.getId(), 0L);
+        assertThat(likeMembers.size()).isEqualTo(0);
+
     }
 
     @Test

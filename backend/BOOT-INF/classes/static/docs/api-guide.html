@@ -801,9 +801,36 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 556
+Content-Length: 796
 
-{"postGroupResponses":[{"postGroupId":1,"memberId":1,"memberName":"jaehunChoi","title":"title","thumbNailUrl":"https://palette-bucket.s3.ap-northeast-2.amazonaws.com/static/BasicThumbnail.jpg","period":{"startDate":"2021-11-10 10:00:00","endDate":"2021-11-12 10:00:00"},"region":"서울"},{"postGroupId":1,"memberId":1,"memberName":"jaehunChoi","title":"title","thumbNailUrl":"https://palette-bucket.s3.ap-northeast-2.amazonaws.com/static/BasicThumbnail.jpg","period":{"startDate":"2021-11-10 10:00:00","endDate":"2021-11-12 10:00:00"},"region":"서울"}]}</code></pre>
+{
+  "postGroupResponses" : [
+    {
+      "postGroupId" : 1,
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "title" : "title",
+      "thumbNailUrl" : "https://palette-bucket.s3.ap-northeast-2.amazonaws.com/static/BasicThumbnail.jpg",
+      "period" : {
+        "startDate" : "2021-11-10 10:00:00",
+        "endDate" : "2021-11-12 10:00:00"
+      },
+      "region" : "서울"
+    },
+    {
+      "postGroupId" : 1,
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "title" : "title",
+      "thumbNailUrl" : "https://palette-bucket.s3.ap-northeast-2.amazonaws.com/static/BasicThumbnail.jpg",
+      "period" : {
+        "startDate" : "2021-11-10 10:00:00",
+        "endDate" : "2021-11-12 10:00:00"
+      },
+      "region" : "서울"
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -950,9 +977,28 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 236
+Content-Length: 392
 
-{"storyLists":[{"memberId":1,"memberName":"jaehunChoi","postId":1,"thumbNailFullPath":null,"title":"제목","likesCount":10},{"memberId":1,"memberName":"jaehunChoi","postId":2,"thumbNailFullPath":null,"title":"제목","likesCount":50}]}</code></pre>
+{
+  "storyLists" : [
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "postId" : 1,
+      "thumbNailFullPath" : null,
+      "title" : "제목",
+      "likesCount" : 10
+    },
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "postId" : 2,
+      "thumbNailFullPath" : null,
+      "title" : "제목",
+      "likesCount" : 50
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1284,9 +1330,20 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 127
+Content-Length: 211
 
-{"storyLists":[{"memberId":1,"memberName":"jaehunChoi","postId":1,"thumbNailFullPath":null,"title":"제목","likesCount":100}]}</code></pre>
+{
+  "storyLists" : [
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "postId" : 1,
+      "thumbNailFullPath" : null,
+      "title" : "제목",
+      "likesCount" : 100
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1442,9 +1499,18 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 141
+Content-Length: 191
 
-{"memberId":null,"memberName":"jaehunChoi","postId":null,"postTitle":"제목","postContent":"내용","likes":0,"images":null,"comments":null}</code></pre>
+{
+  "memberId" : null,
+  "memberName" : "jaehunChoi",
+  "postId" : null,
+  "postTitle" : "제목",
+  "postContent" : "내용",
+  "likes" : 0,
+  "images" : null,
+  "comments" : null
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1537,10 +1603,13 @@ Content-Length: 141
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /postgroup/1/post/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 37
+Content-Length: 51
 Host: localhost:8080
 
-{"title":"제목","content":"내용"}</code></pre>
+{
+  "title" : "제목",
+  "content" : "내용"
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1705,9 +1774,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 23
+Content-Length: 37
 
-{"error":null,"data":1}</code></pre>
+{
+  "error" : null,
+  "data" : 1
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1830,9 +1902,16 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 63
+Content-Length: 107
 
-{"likeResponses":[{"memberId":null,"memberName":"jaehunChoi"}]}</code></pre>
+{
+  "likeResponses" : [
+    {
+      "memberId" : null,
+      "memberName" : "jaehunChoi"
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1914,10 +1993,12 @@ Content-Length: 63
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /post/1/comment HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 20
+Content-Length: 28
 Host: localhost:8080
 
-{"content":"내용"}</code></pre>
+{
+  "content" : "내용"
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2012,10 +2093,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /post/1/comment/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 20
+Content-Length: 28
 Host: localhost:8080
 
-{"content":"내용"}</code></pre>
+{
+  "content" : "내용"
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2164,9 +2247,26 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 254
+Content-Length: 390
 
-{"commentResponses":[{"memberId":1,"memberName":"jaehunChoi","commentId":1,"commentContent":"내용","createDate":"2021-11-10 10:00:00"},{"memberId":1,"memberName":"jaehunChoi","commentId":2,"commentContent":"내용","createDate":"2021-11-10 10:00:00"}]}</code></pre>
+{
+  "commentResponses" : [
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "commentId" : 1,
+      "commentContent" : "내용",
+      "createDate" : "2021-11-10 10:00:00"
+    },
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "commentId" : 2,
+      "commentContent" : "내용",
+      "createDate" : "2021-11-10 10:00:00"
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2313,9 +2413,26 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 254
+Content-Length: 390
 
-{"commentResponses":[{"memberId":1,"memberName":"jaehunChoi","commentId":1,"commentContent":"내용","createDate":"2021-11-10 10:00:00"},{"memberId":1,"memberName":"jaehunChoi","commentId":2,"commentContent":"내용","createDate":"2021-11-10 10:00:00"}]}</code></pre>
+{
+  "commentResponses" : [
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "commentId" : 1,
+      "commentContent" : "내용",
+      "createDate" : "2021-11-10 10:00:00"
+    },
+    {
+      "memberId" : 1,
+      "memberName" : "jaehunChoi",
+      "commentId" : 2,
+      "commentContent" : "내용",
+      "createDate" : "2021-11-10 10:00:00"
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2402,10 +2519,12 @@ Content-Length: 254
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /post/1/comment/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 20
+Content-Length: 28
 Host: localhost:8080
 
-{"content":"내용"}</code></pre>
+{
+  "content" : "내용"
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2583,9 +2702,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 24
+Content-Length: 38
 
-{"error":null,"data":10}</code></pre>
+{
+  "error" : null,
+  "data" : 10
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2693,9 +2815,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 24
+Content-Length: 38
 
-{"error":null,"data":10}</code></pre>
+{
+  "error" : null,
+  "data" : 10
+}</code></pre>
 </div>
 </div>
 </div>

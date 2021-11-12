@@ -37,7 +37,6 @@ public class CommentService {
     public void deleteComment(Long memberId, Long commentId){
         Comment findComment = commentRepository.findById(commentId).orElse(null);
         isMemberHaveAuthToUpdate(findComment, memberId);
-        findComment.removeComment(findComment);
         commentRepository.delete(findComment);
         commentRepository.deleteAllChildById(commentId);
     }
