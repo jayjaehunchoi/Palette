@@ -1,10 +1,12 @@
 package com.palette.controller;
 
 import com.palette.domain.group.Group;
+import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.GroupDto;
 import com.palette.dto.request.GroupJoinDto;
 import com.palette.dto.response.GroupResponseDto;
+import com.palette.dto.response.GroupsResponseDto;
 import com.palette.service.GroupService;
 import com.palette.utils.annotation.Login;
 import lombok.Getter;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @RequestMapping("/travelgroup")
 @RequiredArgsConstructor
@@ -23,26 +28,56 @@ public class GroupController {
 
     private GroupService groupService;
 
-    //그룹 생성, 그룹 조회, 그룹 수정(삭제), 그룹 입장, 그룹 코드 조회(그룹 마이파이지 조회)
+    //그룹 생성, 그룹 조회(전체,각자), 그룹 수정(삭제), 그룹 조인, 그룹 코드 조회(그룹 마이파이지 조회)
 
-    //그룹 조회
-    @GetMapping("/{travelgroupid}")
-    public ResponseEntity<GroupResponseDto>  readGroup(@Login Member member, @PathVariable("travelgroupid") long travelGroupId){
-        Group group = groupService.findById(travelGroupId);
-        GroupResponseDto dto = createSingleGroupDto(group);
-
+    //전체 그룹 조회( plan 버튼 클릭 했을 때)
+    @GetMapping
+    public ResponseEntity<GroupsResponseDto> readGroups(@Login Member member){
+        //나의 모든 그룹들 response 해주기
+        List<Group> groups = getGroups(member);
+        GroupsResponseDto dto = new GroupsResponseDto();
+        dto.setResponseDtoGroups(groups);
         return ResponseEntity.ok(dto);
     }
 
-    //그룹 생성
+    private List<Group> getGroups(Member member) {
+        List<Group> groups = new ArrayList<>();
+        List<MemberGroup> memberGroups = member.getMemberGroups();
+        for(int i = 0; i < memberGroups.size(); i++){
+            groups.add(memberGroups.get(i).getGroup());
+        }
+        return groups;
+    }
+
+    //단건 그룹 조회 ( 해당 그룹 클릭 했을 때 )
+    @GetMapping("/{travelgroupid}")
+    public ResponseEntity<GroupResponseDto> readGroup(@Login Member member, @PathVariable("travelgroupid") long travelGroupId){
+        Group group = groupService.findById(travelGroupId);
+        GroupResponseDto dto = createSingleGroupDto(group);
+        List<Member> members = getMembers(group);
+        dto.setMembers(members);
+        return ResponseEntity.ok(dto);
+    }
+
+    //memberGroups에서 각각 멤버들 가져와서 member 리스트에 넣기
+    private List<Member> getMembers(Group group) {
+        List<Member> members = new ArrayList<>();
+        List<MemberGroup> memberGroups = group.getMemberGroups();
+        for(int i = 0 ; i < memberGroups.size(); i++){
+            members.add(memberGroups.get(i).getMember());
+        }
+        return members;
+    }
+
+    //그룹 생성( 그룹생성-> 확인 버튼 눌렀을 때 )
     @PostMapping
     public void addGroup(@Login Member member, @RequestBody @Validated GroupDto groupDto){
         Group group = new Group(groupDto.getGroupName(),groupDto.getGroupIntroduction());
         groupService.addGroup(group,member);
     }
 
-    //그룹 입장 , 그룹코드로 바로 입장 or 그룹 리스트에 넣어주기만할까? 고민해보장
-    @PostMapping("") // todo: url 정하기
+    //그룹 가입( 그룹 들어가기-> 가입 버튼 눌렀을 때)
+    @PostMapping("/{travelgroupid}")
     public void joinGroup(@Login Member member,@RequestBody @Validated GroupJoinDto groupJoinDto){
         long groupCode = groupJoinDto.getCode();
         groupService.addGroupMember(groupCode,member);
@@ -66,6 +101,7 @@ public class GroupController {
 
     }
 
+    //group을 groupResponseDto로 변환
     private GroupResponseDto createSingleGroupDto(Group group){
         return new GroupResponseDto(group);
     }

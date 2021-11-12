@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -21,8 +22,6 @@ import java.util.Optional;
 public class GroupService {
     private final GroupRepository groupRepository;
     private final MemberGroupRepository memberGroupRepository;
-
-    //todo: 멤버 검증 필요? read 할때만
 
     //그룹 조회
     @Transactional
@@ -45,6 +44,7 @@ public class GroupService {
     public void addGroupMember(Long groupCode,Member member){
         Group findGroup = groupRepository.findGroupByGroupCode(groupCode).orElse(null);
         isGroupExist(findGroup);
+        isAlreadyJoin(member,findGroup);
 
         MemberGroup memberGroup = new MemberGroup();
         memberGroupRepository.save(memberGroup);
@@ -58,8 +58,7 @@ public class GroupService {
     public void deleteGroupMember(Long id,Member member){
         Group findGroup = groupRepository.findById(id).orElse(null);
         isGroupExist(findGroup);
-
-        // todo: 만약 그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능하게 하기 (Exception)
+        isDeleted(findGroup);
         MemberGroup findMemberGroup = memberGroupRepository.findByMemberAndGroup(member,findGroup);
         findMemberGroup.deleteMemberGroup(findGroup,member);
 
@@ -78,6 +77,7 @@ public class GroupService {
     //그룹삭제
     @Transactional
     public void deleteGroup(Long id){
+        //todo: 경고장 하나 날리기~
         Group findGroup = groupRepository.findById(id).orElse(null);
         isGroupExist(findGroup);
         groupRepository.deleteById(id);
@@ -88,6 +88,23 @@ public class GroupService {
         if (findGroup == null) {
             log.error("Group Not Exist Error");
             throw new GroupException("존재하지 않는 그룹입니다.");
+        }
+    }
+
+    //이미 그룹에 해당 멤버가 존재하는지 확인 todo: 테스트해보기
+    private void isAlreadyJoin(Member member, Group group){
+        List<MemberGroup> memberGroups = group.getMemberGroups();
+        for(int i = 0; i < memberGroups.size(); i++){
+            if(member == memberGroups.get(i).getMember()){
+                throw new GroupException("이미 가입된 그룹입니다.");
+            }
+        }
+    }
+
+    //그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능
+    private void isDeleted(Group group){
+        if(group.getNumberOfPeople() == 1) {
+            throw new GroupException("그룹에 남은 유일한 멤버라 탈퇴 불가능합니다.");
         }
     }
 
