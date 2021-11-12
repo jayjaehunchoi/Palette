@@ -50,11 +50,11 @@ profileFile.onchange = function () {
             var canvasContext = canvas.getContext("2d");
             
             //캔버스 크기 설정
-            canvas.width = 200;
-            canvas.height = 200; 
+            canvas.width = 225;
+            canvas.height = 225; 
             
             //이미지를 캔버스에 그리기
-            canvasContext.drawImage(this, 0, 0, 200, 200);
+            canvasContext.drawImage(this, 0, 0, 225, 225);
             //캔버스에 그린 이미지를 다시 data-uri 형태로 변환
             var dataURI = canvas.toDataURL("image/jpeg");
             
