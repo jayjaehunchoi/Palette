@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- header jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#headers").load("../static/header.html");  
+    });
+  </script>
+  <!-- footer -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
+  
+  <link rel="icon" href="/frontend/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"> 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="/frontend/css/plan.css">
+  <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script defer src="/frontend/js/planmain.js"> </script>
+  <title>Palette.</title>
+</head>
+<body>
+  <section>
+    <div id="headers"></div>  
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="inner">
+        <div class="title">
+          <h2>Plan</h2>
+        </div>
+
+        <div class="bts">
+          <button class="openModalBt" onclick="openMakeGroupModal()">그룹 만들기</button>
+          <div class="gap"></div>
+          <button class="openModalBt" onclick="openJoinGroupModal()">그룹 들어가기</button>
+        </div>
+
+        <div class="myGroup">
+          <p> my Group </p> <br>
+            <ul class="list">
+              리스트 출력!!
+            </ul>
+        </div>
+      </div>
+
+   
+    </div> 
+  </section>    
+
+  <section>
+    <div id="footers"></div>
+  </section>
+
+    <!-- MODAL -->
+    <!-- 새그룹 만들기-->
+    <div class="modal" id="makeGroupModal">
+   
+      <div class="modalContent">
+          <h2>새 그룹</h2>
+         
+          <div class="itemContainer">
+            <span class="instruction">그룹 이름</span>
+            <input type="text" class="groupName"> 
+          </div>
+          <div class="itemContainer">
+            <span class="instruction">그룹 소개</span>
+            <textarea class="groupIntroduction"></textarea> 
+          </div>
+
+          <div class="modalBts">
+            <button type="button" class="modalBt" onclick="location.href='./group.html'">확인</button>
+            <button type="button" class="modalCloseBt" onclick="closeMakeGroupModal()">닫기</button>
+           </div>
+      </div>
+     
+      <div class="modal_layer"></div>
+  </div>
+  <!-- 그룹 가입-->
+  <div class="modal" id="joinGroupModal">
+   
+    <div class="modalContent">
+        <h2>그룹 코드를 입력하세요</h2>
+       
+        <div class="itemContainer">
+          <input type="text" class="groupCode"> 
+        </div>
+        
+        <div class="modalBts">
+          <button type="button" class="modalOkBt" onclick="location.href='./group.html'">가입</button>
+          <button type="button" class="modalCloseBt" onclick="closeJoinGroupModal()">닫기</button>
+        </div>
+    </div>
+   
+    <div class="modal_layer"></div>
+</div>
+
+</body>
+</html>

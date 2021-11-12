@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join</title>
+  <title>Palette.</title>
   <link rel="icon" href="/frontend/favicon.png" />
 
   <!-- header jquery -->
@@ -13,6 +13,11 @@
     $(document).ready( function() {
       $("section div#headers").load("/frontend/static/header.html");  
       });
+  </script>
+   <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
   </script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
@@ -75,4 +80,7 @@
     </div>
   </section>
 
+  <section>
+    <div id="footers"></div>
+  </section>
 </body>

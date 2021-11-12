@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- header jquery -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">   
+      $(document).ready( function() {
+      $("#headers").load("../static/header.html");  
+      });
+    </script>
+    <!-- footer jquery -->
+    <script type="text/javascript">   
+      $(document).ready( function() {
+      $("#footers").load("/frontend/static/footer.html");  
+      });
+    </script>
+  
+  <link rel="icon" href="/frontend/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"> 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="/frontend/css/plan.css">
+  <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script defer src="/frontend/js/planmain.js"> </script>
+  <title>Palette.</title>
+</head>
+<body>
+  <section>
+    <div id="headers"></div>  
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="groupBts">
+        <div class="bts-left">
+          <button class="backBt" onclick="location.href='./main.html'">이전으로</button>
+        </div>
+        <div class="bts-right">
+        <button class="modifyGroupInfoBt" onclick="location.href='./groupInfo.html'">그룹 정보 수정</button>
+        <button class="withdrawGroupBt" onclick="location.href='./main.html'"> 그룹 탈퇴</button>
+        </div>
+      </div>
+      <div class="inner">
+
+        <div class="groupName">
+          <p>경인고속도로</p>
+        </div>
+        <div class="groupCode">
+          <p> CODE | 12345</p>
+        </div>
+        <div class="groupIntroduction">
+          <p>
+            그룹 소개가 나올 자리예요. <br>
+            어떻게 나올까요? <br>
+            할일이 너무 많아요. <br>
+            너무 허전하긴 한데 어떻게 꾸며야 좋을지 모르겠네요?
+          </p>
+        </div>
+        <div class="groupMember">
+          <div class="listTitle">
+            MEMBER
+          </div>
+          <ul class="memberList">
+            <li>이나라</li>
+            <li>이진희</li>
+            <li>조아람</li>
+            <li>최재훈</li>
+            <li>홍경인</li>
+            <li>홍지수</li>
+          </ul>
+        </div>
+<!--         
+        <div class="budgetbox">
+          <div>
+            <div class="budgetContainer">
+              <span>총 예산</span>
+              <div class="totalBudget">값 받아오기</div>
+            </div>
+            <div class="budgetPlanning">
+              <div class="expContainer">
+                <span>총 경비</span>
+                <div class="expense">값 받아오기</div>
+              </div>
+              <div class="leftContainer">
+                <span>남은 금액</span>
+                <div class="budgetLeft">값 받아오기</div>
+              </div>
+            </div>
+          </div> 
+        </div>
+         -->
+        <div class="toBudgetBt" onclick="location.href='/frontend/plan/budget.html';">
+          <span>여행계획하기</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+  <section>
+    <div id="footers"></div>  
+  </section>
+</body>
+</html>
