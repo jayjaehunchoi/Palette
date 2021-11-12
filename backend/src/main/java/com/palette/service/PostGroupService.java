@@ -70,7 +70,7 @@ public class PostGroupService {
     public PostGroup checkMemberAuth(Member member, Long id){
         PostGroup findPostGroup = postGroupRepository.findById(id).orElse(null);
         isPostGroupExist(findPostGroup);
-        if(findPostGroup.getMember().getId() != member.getId()){
+        if(!findPostGroup.getMember().getId().equals(member.getId())){
             throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "권한이 없습니다."){};
         }
         return findPostGroup;
