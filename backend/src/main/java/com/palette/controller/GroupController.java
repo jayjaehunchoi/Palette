@@ -80,12 +80,12 @@ public class GroupController {
     //그룹 가입( 그룹 들어가기-> 가입 버튼 눌렀을 때)
     @PostMapping("/{travelgroupid}")
     public void joinGroup(@Login Member member,@RequestBody @Validated GroupJoinDto groupJoinDto){
-        long groupCode = groupJoinDto.getCode();
+        String groupCode = groupJoinDto.getCode();
         groupService.addGroupMember(groupCode,member);
     }
 
     //그룹 탈퇴
-    @DeleteMapping //todo: 그룹삭제랑 url 구분 어케할까????????????????
+    @DeleteMapping //todo: 그룹삭제랑 url 구분 어케할까???????????????? t/1/m/1 or t/1/m
     public void ExitGroup(@Login Member member,@RequestBody GroupDto groupDto){
         groupService.deleteGroupMember(groupDto.getGroupId(),member);
     }

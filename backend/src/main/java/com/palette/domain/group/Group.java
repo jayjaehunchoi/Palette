@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 @Table(name = "travel_group")
 @Getter
@@ -20,8 +22,7 @@ public class Group {
     @Column(name = "group_id")
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long groupCode;
+    private String groupCode;
 
     private String groupName;
 
@@ -37,6 +38,16 @@ public class Group {
         this.groupName = groupName;
         this.groupsIntroduction = groupsIntroduction;
         this.numberOfPeople = 1;
+        this.groupCode = createUUID();
+
+    }
+
+    private String createUUID() {
+        String uuid = UUID.randomUUID().toString();
+        String[] splitUUIDList = uuid.split("-");
+        String splitUUID = splitUUIDList[1] + splitUUIDList[2] + splitUUIDList[3];
+        String result = Base64.getEncoder().encodeToString(splitUUID.getBytes());
+        return  result;
     }
 
     public void updateGroup(GroupUpdateDto dto){

@@ -41,7 +41,7 @@ public class GroupService {
 
     //그룹에 멤버 추가
     @Transactional
-    public void addGroupMember(Long groupCode,Member member){
+    public void addGroupMember(String groupCode,Member member){
         Group findGroup = groupRepository.findGroupByGroupCode(groupCode).orElse(null);
         isGroupExist(findGroup);
         isAlreadyJoin(member,findGroup);
@@ -77,7 +77,6 @@ public class GroupService {
     //그룹삭제
     @Transactional
     public void deleteGroup(Long id){
-        //todo: 경고장 하나 날리기
         Group findGroup = groupRepository.findById(id).orElse(null);
         isGroupExist(findGroup);
         groupRepository.deleteById(id);

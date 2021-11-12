@@ -10,11 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 //그룹 단건 조회 dto
 public class GroupResponseDto {
     private Long id;
-    private long groupCode;
+    private String groupCode;
     private String groupName;
     private String groupsIntroduction;
     private int numberOfPeople;

@@ -9,5 +9,5 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class GroupJoinDto {
     @NotBlank(message="그룹 코드를 입력해주세요.")
-    private long code;
+    private String code;
 }
