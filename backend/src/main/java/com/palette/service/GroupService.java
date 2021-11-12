@@ -63,7 +63,6 @@ public class GroupService {
         findMemberGroup.deleteMemberGroup(findGroup,member);
 
         findGroup.reduceNumberOfPeople();
-
     }
 
     //그룹 업데이트
@@ -90,7 +89,7 @@ public class GroupService {
         }
     }
 
-    //이미 그룹에 해당 멤버가 존재하는지 확인 todo: 테스트해보기
+    //이미 그룹에 해당 멤버가 존재하는지 확인
     private void isAlreadyJoin(Member member, Group group){
         List<MemberGroup> memberGroups = group.getMemberGroups();
         for(int i = 0; i < memberGroups.size(); i++){
@@ -103,7 +102,7 @@ public class GroupService {
     //그룹의 멤버가 1명 남았을때는 멤버 삭제 불가능
     private void isMemberDeleted(Group group){
         if(group.getNumberOfPeople() == 1) {
-            throw new GroupException("그룹에 남은 유일한 멤버라 탈퇴 불가능합니다.");
+            throw new GroupException("그룹에 남은 유일한 멤버이기 때문에 탈퇴 불가능합니다.");
         }
     }
 

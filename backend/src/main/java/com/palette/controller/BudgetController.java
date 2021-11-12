@@ -33,14 +33,13 @@ public class BudgetController {
 
     //총 예산 추가
     @PostMapping("/{travelgroupid}/totalbudget") // Restful url : 동사대신 명사와 http 메소드로 표현
-    public Long saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") long travelGroupId){
+    public void saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = Budget.builder()
                         .group(group)
                         .totalBudget(budgetDto.getTotalBudget())
                         .build();
-        Budget savedBudget = budgetService.addBudget(member,group,budget);
-        return savedBudget.getId();
+        budgetService.addBudget(member,group,budget);
     }
 
 

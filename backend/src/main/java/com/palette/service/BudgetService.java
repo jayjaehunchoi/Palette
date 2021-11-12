@@ -29,12 +29,12 @@ public class BudgetService {
 
     //그룹에 예산 넣기
     @Transactional
-    public Budget addBudget(Member member,Group group, Budget budget){
+    public void addBudget(Member member,Group group, Budget budget){
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
         Budget saveBudget = new Budget(group,budget.getTotalBudget()); // todo: 이거 없이 바로 budget save해도 되지않낭
-        budgetRepository.save(saveBudget); // todo: 수정해도 으차피 update되려낭..
-        return saveBudget;
+       // budget.saveBudgetOnGroup(group);
+       budgetRepository.save(saveBudget);
     }
 
     //그룹의 예산,경비,남은금액 조회

@@ -35,6 +35,11 @@ public class Budget {
         this.totalBudget = totalBudget;
     }
 
+    public void saveBudgetOnGroup(Group group){
+        this.group = group;
+        group.setBudget(this);
+    }
+
     public void update(BudgetUpdateDto dto){
         totalBudget = dto.getBudget();
     }

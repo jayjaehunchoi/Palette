@@ -30,6 +30,10 @@ public class Group {
 
     private int numberOfPeople;
 
+    @OneToOne
+    @JoinColumn(name = "budget_id", foreignKey = @ForeignKey(name = "fk_budget_group"))
+    private Budget budget;
+
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
@@ -40,6 +44,10 @@ public class Group {
         this.numberOfPeople = 1;
         this.groupCode = createUUID();
 
+    }
+
+    public void setBudget(Budget budget){
+        this.budget = budget;
     }
 
     private String createUUID() {

@@ -16,4 +16,9 @@ public class GroupUpdateDto {
     @NotBlank(message = "수정된 그룹 정보를 입력해주세요.")
     private String groupIntroduction;
 
+    public GroupUpdateDto(long groupId, String groupName, String groupIntroduction) {
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupIntroduction = groupIntroduction;
+    }
 }
