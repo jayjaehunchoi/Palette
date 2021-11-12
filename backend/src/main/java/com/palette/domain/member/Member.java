@@ -35,18 +35,11 @@ public class Member extends BaseTimeEntity {
         this.email = email;
     }
 
-    public Member update(String name, String profileFileName) {
-        this.name = name;
+    public Member update(String password, String profileFileName) {
+        this.password = password;
         this.profileFileName = profileFileName;
 
         return this;
-    }
-
-    public Member(String name, String password, String profileFileName,List<MemberGroup> memberGroups) {
-        this.name = name;
-        this.password = password;
-        this.profileFileName = profileFileName;
-        this.memberGroups = memberGroups;
     }
 
     public void encodePassword(String encodedPassword) {

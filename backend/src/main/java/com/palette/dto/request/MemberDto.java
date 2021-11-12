@@ -1,4 +1,4 @@
-package com.palette.dto;
+package com.palette.dto.request;
 
 
 import com.palette.domain.member.Member;
@@ -13,7 +13,6 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @Data
 public class MemberDto {
-    private Long id;
 
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;
