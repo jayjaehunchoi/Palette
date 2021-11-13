@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class PostServiceTest {
@@ -80,6 +82,9 @@ public class PostServiceTest {
         likeService.pushLike(member,post.getId());
         List<StoryListResponseDto> storyList = postService.findStoryList(new SearchCondition(), 1);
         assertThat(storyList.get(0).getLikesCount()).isEqualTo(0);
+
+        List<Member> likeMembers = likeService.findLikeMemberByPost(post.getId(), 0L);
+        assertThat(likeMembers.size()).isEqualTo(0);
 
     }
 

@@ -1,0 +1,426 @@
+/* COMMON */
+body {
+	color: #333;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.4;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.app {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 130px;
+  margin-bottom: 100px;
+}
+
+.app .backBt{
+  width: 100px;
+  height: 42px;
+  background-color: #fff;
+  border: #333 2px solid;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9;
+}
+
+.app .inner {
+	width: 700px;
+	min-height: 700px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* BUDGETBOX */
+.budgetbox {
+	width: 600px;
+
+}
+.budgetbox .budgetBts {
+  text-align: right;
+}
+
+.budgetbox .budgetBts button {
+  display: inline-block;
+  width:100px;
+	height: 40px;
+  border: none;
+	background-color: #333;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.budgetbox .budgetBts .setBt{
+  left: 105px;
+  position: relative;
+  z-index: 1;
+}
+
+.budgetbox .budgetBts .changeBt{
+  position: relative;
+}
+
+.budgetbox .inputBudgetBox {
+	width: 300px;
+}
+
+
+.budgetbox span {
+	font-size: 20px;
+	font-weight: 700;
+  
+}
+
+.budgetbox .totalBudget, 
+.budgetbox .expense, 
+.budgetbox .budgetLeft  {
+  text-align: center;
+  width: 300px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 50px;
+  font-weight: 700;
+  color: #707070;
+}
+
+.budgetContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.budgetPlanning {
+	display: flex;
+}
+
+.budgetPlanning .expContainer,
+.budgetPlanning .leftContainer {
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* INPUTBOX */
+
+.inputbox {
+  border: solid rgb(201, 209, 216) 2px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  
+ }
+
+.inputbox .line1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.inputbox .line1 .category__input {
+  width: 100px;
+  height: 34px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+
+.inputbox .line1 .category__input::-ms-expand {
+  display: none;
+}
+
+.inputbox .line1 .detail__input {
+  width: 300px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.inputbox .line2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.inputbox .line2 .price__input {
+  width: 360px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.inputbox .line2 .addBt {
+  width: 36px;
+  height: 36px;
+  margin-left: 8px;
+  background-color: #fff;
+  border: none;
+  font-size: 33px;
+  font-weight: 700;
+}
+
+
+/* BUDGETLIST */
+.budgetlist {
+  width: 600px;
+
+}
+
+.budgetlist .itemContainer {
+  border: rgb(201, 209, 216) 4px solid;
+  background-color: rgb(201, 209, 216);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  margin-top: 2px;
+}
+
+.budgetlist .itemContainer .left {
+  padding: 0 50px;
+  width: 500px;
+  height: 150px;
+  background-color: #fff;
+}
+
+.budgetlist .itemContainer .left .category {
+  color: #707070;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.budgetlist .itemContainer .left .detail {
+  margin-top: 6px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.budgetlist .itemContainer .left .price {
+  font-size: 25px;
+  font-weight: 700;
+  text-align: end;
+}
+
+.budgetlist .itemContainer .right {
+  width: 100px;
+  height: 150px;
+  line-height: 75px;
+  text-align: center;
+  margin-right: -2px;
+  margin-bottom: -2px;
+  margin-top: -2px;
+  
+}
+
+.budgetlist .itemContainer .right i {
+  color: #fff;
+}
+
+/* REMOVE */
+.clear {
+  margin-top: 10px;
+}
+
+.clear .clearAllBt{
+  display: inline-block;
+  width:150px;
+	height: 40px;
+	background-color: #fff;
+  border: #333 2px solid;
+	color: #333;
+	font-size: 14px;
+	font-weight: 700;
+}
+/* MODAL */
+
+.modal {
+	display: none;
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+
+.modal .modalContent {
+  width:500px;
+  margin: -800px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:3px solid #333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal .modalContent h2 {
+  margin:0 auto; 
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.modal .itemContainer {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.modal .itemContainer  input {
+	width: 350px;
+	height: 30px;
+	font-size: 1em;
+}
+ 
+
+.modal .modalBts {
+	margin-top: 30px;
+	margin-left: 200px;
+	display: flex;
+}
+
+.modal .modalBts button {
+  display:inline-block;
+  width:100px;
+	height: 40px;
+	background-color: #fff;
+	border: 2px solid #333;
+	color: #333;
+	font-size: 14px;
+	font-weight: 700;
+	margin-left: 6px;
+}
+
+.modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}   
+
+
+
+/* VUE MODAL  */
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 500px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-body .line1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.modal-body .line1 .category__input {
+  width: 100px;
+  height: 34px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+
+.modal-body  .line1 .category__input::-ms-expand {
+  display: none;
+}
+
+.modal-body .line1 .detail__input {
+  width: 300px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.modal-body  .line2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.modal-body  .line2 .price__input {
+  width: 360px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.modal-body  .line2 .addBt {
+  width: 36px;
+  height: 36px;
+  margin-left: 8px;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+.modal-footer{
+  text-align: right;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}

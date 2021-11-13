@@ -33,71 +33,106 @@ endif::[]
 | `권한 없음`
 |===
 
+=== SearchCondition query parameter
+|===
+|Parameter|Type|Optional|Description
+
+|memberId
+|Long
+|true
+|my blog 조회시 "/postgroup?memberId=1" 과 같이 입력하면 됨
+
+|postgroupId
+|Long
+|true
+|query parameter로 사용하지말고 따로 path이용해서 사용할 것
+
+|name
+|String
+|true
+|이름으로 검색시 /postgroup?name=jaehunChoi or /post?name=jaehunChoi 입력, 페이징도 동일하게 파라미터 줄 것.
+
+|region
+|String
+|true
+|지역으로 검색시 /postgroup?region=서울 or /post?region=서울 입력, 페이징도 동일하게 파라미터 줄 것.
+
+|title
+|String
+|true
+|제목으로 검색시 /postgroup?title=제목 or /post?title=제목 입력, 페이징도 동일하게 파라미터 줄 것.
+
+|===
+
+= Member API
+include::{snippets}/member-signup/auto-section.adoc[]
+include::{snippets}/member-signup/request-parts.adoc[]
+include::{snippets}/member-signup/request-part-member-data-body.adoc[]
+
+include::{snippets}/member-login/auto-section.adoc[]
+
+include::{snippets}/member-logout/auto-section.adoc[]
+
+include::{snippets}/member-getMember/auto-section.adoc[]
+
+include::{snippets}/member-update/auto-section.adoc[]
+include::{snippets}/member-update/request-parts.adoc[]
+include::{snippets}/member-update/request-part-member-update-data-body.adoc[]
+
+include::{snippets}/member-delete/auto-section.adoc[]
 
 = PostGroup API
 
-== postGroup 생성
 include::{snippets}/postgroup-create-group/auto-section.adoc[]
+include::{snippets}/postgroup-create-group/request-parts.adoc[]
+include::{snippets}/postgroup-create-group/request-part-data-body.adoc[]
 
-== postGroup 조회하기
 include::{snippets}/postgroup-get-postgroup/auto-section.adoc[]
 
-== postGroup내 post 조회하기
 include::{snippets}/postgroup-get-post/auto-section.adoc[]
 
-== postGroup 업데이트
 include::{snippets}/postgroup-update-group/auto-section.adoc[]
+include::{snippets}/postgroup-update-group/request-parts.adoc[]
+include::{snippets}/postgroup-update-group/request-part-data-body.adoc[]
 
-== postGroup 삭제
 include::{snippets}/postgroup-delete-group/auto-section.adoc[]
 
 = Post API
 
-== post 생성
 include::{snippets}/post-create-post/auto-section.adoc[]
+include::{snippets}/post-create-post/request-parts.adoc[]
+include::{snippets}/post-create-post/request-part-data-body.adoc[]
 
-== post 필터 조회
 include::{snippets}/post-get-with-filter/auto-section.adoc[]
 
-== post 단건 조회
 include::{snippets}/post-get-single-post/auto-section.adoc[]
 
-== post 업데이트
 include::{snippets}/post-update-post/auto-section.adoc[]
 
-== post 삭제
 include::{snippets}/post-delete-post/auto-section.adoc[]
 
-== 좋아요 누르기
 include::{snippets}/post-push-like/auto-section.adoc[]
 
-== 좋아요 조회
 include::{snippets}/post-get-like-paging/auto-section.adoc[]
 
 = Comment API
 
-== 댓글 작성
 include::{snippets}/comment-create-comment/auto-section.adoc[]
 
-== 답글 작성
 include::{snippets}/comment-create-child-comment/auto-section.adoc[]
 
-== 댓글 조회
 include::{snippets}/comment-get-paging/auto-section.adoc[]
 
-== 답글 조회
 include::{snippets}/comment-get-child-paging/auto-section.adoc[]
 
-== 댓글 수정
 include::{snippets}/comment-update-comment/auto-section.adoc[]
 
-== 댓글 삭제
 include::{snippets}/comment-delete-comment/auto-section.adoc[]
 
 = Page API
 
-== 게시물 그룹 페이지 개수 조회
+게시물 그룹 페이지 개수 조회
 include::{snippets}/page-postgroup-page/auto-section.adoc[]
 
-== 게시물 페이지 개수 조회
+게시물 페이지 개수 조회
 include::{snippets}/page-post-page/auto-section.adoc[]

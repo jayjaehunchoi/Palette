@@ -2,11 +2,12 @@ HELP.md
 .gradle
 .idea
 build/
+BOOT-INF/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-application-oauth.properties
 application-aws.properties
+application-dev.properties
 
 ### STS ###
 .apt_generated

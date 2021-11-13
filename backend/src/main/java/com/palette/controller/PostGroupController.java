@@ -12,6 +12,7 @@ import com.palette.dto.response.StoryListResponseDto;
 import com.palette.dto.response.StoryListResponsesDto;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
+import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
@@ -41,8 +42,8 @@ public class PostGroupController {
 
     // /postgroup?filter={필터}&condition={조건}&page={pageNumber}
     @GetMapping
-    public ResponseEntity<PostGroupsResponseDto> getGroupPostWithFilter(@RequestParam(required = false, defaultValue = "none") String filter, @RequestParam(required = false) String condition, @RequestParam(defaultValue = "1", required = false) int page){
-        List<PostGroupResponseDto> postGroup = findWithSearchFilter(filter, condition, page);
+    public ResponseEntity<PostGroupsResponseDto> getGroupPostWithFilter(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = "1", required = false) int page){
+        List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(searchCondition,page);
         PostGroupsResponseDto res = PostGroupsResponseDto.builder().postGroupResponses(postGroup).build();
         return ResponseEntity.ok(res);
     }
@@ -57,6 +58,7 @@ public class PostGroupController {
         return ResponseEntity.ok(res);
     }
 
+    @LoginChecker
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Long uploadPostGroup(@Login Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
@@ -65,7 +67,7 @@ public class PostGroupController {
         return savePostGroup.getId();
     }
 
-    // 로그인 체크 꼭 필요
+    @LoginChecker
     @PutMapping("/{id}")
     public ResponseEntity<Void> updatePostGroup(@Login Member member, @PathVariable Long id, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file") MultipartFile file) throws IOException{
         postGroupService.checkMemberAuth(member,id);
@@ -75,6 +77,7 @@ public class PostGroupController {
         return RESPONSE_OK;
     }
 
+    @LoginChecker
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePostGroup(@Login Member member, @PathVariable Long id){
         PostGroup postGroup = postGroupService.checkMemberAuth(member, id);
@@ -82,26 +85,6 @@ public class PostGroupController {
         postGroupService.deletePostGroup(postGroup);
         return RESPONSE_OK;
     }
-
-    private List<PostGroupResponseDto> findWithSearchFilter(String filter, String condition, int page) {
-        List<PostGroupResponseDto> postGroup = null;
-        switch (filter){
-            case "member" :
-                postGroup = postGroupService.findPostGroupByMember(condition, page);
-                break;
-            case "region" :
-                postGroup = postGroupService.findPostGroupByRegion(condition, page);
-                break;
-            case "title" :
-                postGroup = postGroupService.findPostGroupByTitle(condition, page);
-                break;
-            case "none" :
-                postGroup = postGroupService.findPostGroup(page);
-                break;
-        }
-        return postGroup;
-    }
-
 
     private MyFile updateDirectoryFile(MultipartFile file, String storeFileName) throws IOException {
         if(storeFileName != null){

@@ -4,6 +4,7 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.PeriodDto;
+import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.repository.MemberRepository;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class PostGroupServiceTest {
@@ -61,22 +64,37 @@ class PostGroupServiceTest {
 
     @Test
     void 멤버_필터_조회(){
-        List<PostGroupResponseDto> responses = postGroupService.findPostGroupByMember("재훈", 1);
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setName("재훈");
+        List<PostGroupResponseDto> responses = postGroupService.findPostGroup(searchCondition, 1);
         assertThat(responses.size()).isEqualTo(5);
     }
 
     @Test
     void 지역_필터_조회(){
-        List<PostGroupResponseDto> responses = postGroupService.findPostGroupByRegion("가평", 1);
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setRegion("가평");
+        List<PostGroupResponseDto> responses = postGroupService.findPostGroup(searchCondition, 1);
         assertThat(responses.size()).isEqualTo(9);
     }
 
     @Test
     void 검색어_Like_조회(){
-        List<PostGroupResponseDto> responses = postGroupService.findPostGroupByTitle("여행", 1);
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setTitle("여행");
+        List<PostGroupResponseDto> responses = postGroupService.findPostGroup(searchCondition, 1);
         assertThat(responses.size()).isEqualTo(9);
         assertThat(responses.get(8).getTitle()).isEqualTo("여행가자");
         assertThat(responses.get(0).getTitle()).isEqualTo("여행오자");
+    }
+
+    @Test
+    void Id_필터_조회(){
+        Long id = memberRepository.findAll().get(0).getId();
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setMemberId(id);
+        List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(searchCondition, 1);
+        assertThat(postGroup.size()).isEqualTo(5);
     }
 
     @Test

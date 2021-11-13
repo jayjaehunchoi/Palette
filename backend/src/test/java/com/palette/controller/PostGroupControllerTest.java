@@ -30,6 +30,10 @@ import java.util.List;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestPartBody;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -56,12 +60,16 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         List<PostGroupResponseDto> responses = Arrays.asList(dto1, dto2);
         PostGroupsResponseDto dtos = PostGroupsResponseDto.builder().postGroupResponses(responses).build();
 
-        given(postGroupService.findPostGroupByMember(anyString(),anyInt())).willReturn(responses);
+        given(postGroupService.findPostGroup(any(),anyInt())).willReturn(responses);
 
-        ResultActions result = this.restDocsMockMvc.perform(get("/postgroup?filter=member&condition=jaehunChoi")
+        ResultActions result = this.restDocsMockMvc.perform(get("/postgroup?memberId=1&region=Seoul")
                 .contentType(MediaType.APPLICATION_JSON));
 
-        result.andExpect(status().isOk()).andDo(print()).andDo(document("postgroup-get-postgroup"));
+        result
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(document("postgroup-get-postgroup",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
 
     }
 
@@ -77,7 +85,8 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(get("/postgroup/1"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("postgroup-get-post"));
+                .andDo(document("postgroup-get-post",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -101,8 +110,11 @@ public class PostGroupControllerTest extends RestDocControllerTest{
                 .file(file)
                 .content("multipart/mixed")
                 .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isCreated())
-                .andDo(document("postgroup-create-group"));
+                .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isCreated())
+                .andDo(document("postgroup-create-group"
+                        ,requestParts(partWithName("data").description("postGroupDto")
+                        , partWithName("file").description("multiple files"))
+                        ,requestPartBody("data")));
 
 
     }
@@ -133,8 +145,11 @@ public class PostGroupControllerTest extends RestDocControllerTest{
                 .file(file)
                 .content("multipart/mixed")
                 .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isOk())
-                .andDo(document("postgroup-update-group"));
+                .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isOk())
+                .andDo(document("postgroup-update-group"
+                        ,requestParts(partWithName("data").description("postGroupDto")
+                        , partWithName("file").description("multiple files"))
+                        ,requestPartBody("data")));
     }
 
     @Test
@@ -148,8 +163,9 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         given(postService.findPostIdsByPostGroupId(anyLong())).willReturn(Arrays.asList(1L));
         doNothing().when(postGroupService).deletePostGroup(postGroup);
 
-        restDocsMockMvc.perform(delete("/postgroup/1")).andExpect(status().isOk())
-                .andDo(document("postgroup-delete-group"));
+        restDocsMockMvc.perform(delete("/postgroup/1").session(session)).andExpect(status().isOk())
+                .andDo(document("postgroup-delete-group",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
 
     }
 

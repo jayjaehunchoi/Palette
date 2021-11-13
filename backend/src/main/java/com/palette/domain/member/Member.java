@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.group.MemberGroup;
-import com.palette.domain.post.Post;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -36,21 +35,18 @@ public class Member extends BaseTimeEntity {
         this.email = email;
     }
 
-    public Member update(String name, String profileFileName) {
-        this.name = name;
+    public Member update(String password, String profileFileName) {
+        this.password = password;
         this.profileFileName = profileFileName;
 
         return this;
     }
 
-    public Member(String name, String password, String profileFileName,List<MemberGroup> memberGroups) {
-        this.name = name;
-        this.password = password;
-        this.profileFileName = profileFileName;
-        this.memberGroups = memberGroups;
-    }
-
     public void encodePassword(String encodedPassword) {
         password = encodedPassword;
+    }
+
+    public void changeProfileFile(String profileFileName) {
+        this.profileFileName = profileFileName;
     }
 }

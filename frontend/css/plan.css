@@ -1,0 +1,279 @@
+/*common*/
+body {
+	color: #333;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.4;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #333;
+}
+
+button {
+	cursor: pointer;
+}
+
+.container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 150px;
+}
+
+.container .inner {
+	width: 700px;
+	min-height: 500px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 50px;
+		font-family: 'Noto Sans KR', sans-serif;
+}
+
+.container .inner .title {
+	margin-top: 50px;
+	font-size: 40px;
+	font-weight: 100;
+	color: #333;
+	margin-bottom: 50px;
+	
+} 
+
+/* MAIN */
+
+.bts {
+	display: flex;
+}
+
+.bts .openModalBt {
+	width: 150px;
+	height: 50px;
+	background-color: #333;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+ }
+
+ .bts .gap {
+	width: 50px;
+ }
+ 
+
+.myGroup {
+	margin-top: 60px;
+	width: 400px;
+}
+
+.myGroup p {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+
+/* MODAL */
+
+.modal {
+	display: none;
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+
+.modal .modalContent {
+  width:500px;
+  margin: -700px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:3px solid #333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal .modalContent h2 {
+  margin:0 auto; 
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.modal .itemContainer {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.modal .itemContainer .instruction {
+	margin-bottom: 12px;
+	font-weight: 700;
+}
+
+.modal .itemContainer input {
+	width: 350px;
+	height: 30px;
+	font-size: 1em;
+}
+ 
+.modal .itemContainer .groupIntroduction {
+	width: 350px;
+	height: 100px;
+	resize: none;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.modal .modalBts {
+	margin-top: 30px;
+	margin-left: 200px;
+	display: flex;
+}
+
+.modal .modalBts button {
+  display:inline-block;
+  width:100px;
+	height: 40px;
+	background-color: #fff;
+	border: 2px solid #333;
+	color: #333;
+	font-size: 14px;
+	font-weight: 700;
+	margin-left: 6px;
+}
+
+.modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}   
+
+/* GROUP */
+
+.inner .groupName {
+	width: 100%;
+	margin-top: 50px;
+	margin-left: 50px;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.inner .groupCode{
+	width: 100%;
+	margin-top: 4px;
+	margin-left: 50px;
+	line-height: 1.4em;
+	font-weight: 700;
+}
+
+.inner .groupIntroduction {
+	width: 100%;
+	margin-top: 20px;
+	margin-left: 50px;
+	line-height: 1.4em;
+}
+
+.inner .groupMember {
+	width: 100%;
+	margin-top: 20px;
+	margin-left: 50px;
+	line-height: 1.4em;
+}
+
+.inner .groupMember .listTitle {
+	font-weight: 700;
+}
+
+.inner .groupMember .memberList{
+	display: flex;
+}
+
+.inner .groupMember .memberList li{
+	margin-right: 12px;
+}
+
+/* .inner .budgetbox {
+	margin-top: 50px;
+	width: 600px;
+}
+
+.inner .budgetbox span {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.inner .budgetbox .totalBudget, 
+.inner .budgetbox .expense, 
+.inner .budgetbox .budgetLeft  {
+  text-align: center;
+  width: 300px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 25px;
+  font-weight: 700;
+  color: #707070;
+}
+
+.inner .budgetContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.inner .budgetPlanning {
+	display: flex;
+}
+
+.inner .budgetPlanning .expContainer,
+.inner .budgetPlanning .leftContainer {
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+} */
+
+.inner .toBudgetBt {
+	margin-top: 100px;
+	width: 500px;
+	height: 60px;
+	background-color: #333;
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+	text-align: center;
+	line-height: 60px;
+}
+
+.groupBts {
+	display: flex;
+	margin-top: 30px;
+
+}
+
+.groupBts button {
+	width: 120px;
+	height: 40px;
+	background-color: #fff;
+	border: 2px #333 solid;
+	color: #333;
+	font-weight: 700;
+
+}
+
+.groupBts .bts-left{
+	position: relative;
+	right: 200px;
+}
+
+
+.groupBts .bts-right{
+	position: relative;
+	left: 200px;
+}
