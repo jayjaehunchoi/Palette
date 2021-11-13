@@ -22,7 +22,7 @@ a {
 
 .container .inner {
 	width: 700px;
-	min-height: 700px;
+	min-height: 500px;
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
@@ -33,7 +33,7 @@ a {
 	margin-top: 50px;
 	font-size: 40px;
 	font-weight: 100;
-	color: #333;
+	color: #333;	
 }
 
 /*Login*/
@@ -109,17 +109,53 @@ a {
 	color: #686868;
 }
 
-.container .inner .findInfo {
+.container .inner .tofindInfo {
 	margin-top: 40px;
+	margin-bottom: 100px;
 }
-.container .inner .findInfo span{
+.container .inner .tofindInfo span{
 	margin-right: 15px;
 	margin-left: 15px;
 }
-.container .inner .findInfo a{
+.container .inner .tofindInfo a{
   font-size: 14px;
   color : #656565;
 }
+
+/* FINDPW*/
+
+.container .inner .finfPwTitle h2{
+	margin-top: 70px;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 32px;
+}
+
+.container .inner .findInfo {
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+.container .inner .findInfo input {
+	width: 350px;
+	padding: 13px;
+	border: 1px solid #a7a7a7;
+	color: #333;
+	font-size: 16px;
+	margin-top: 20px;	
+}
+
+.container .inner .findPwBt button{
+	display: block;
+	background: #333;
+	color: white;
+	width: 380px;
+	height: 45px;
+	cursor: pointer;
+	font-size: 15px;
+	font-family: 'Noto Sans KR', sans-serif;
+	transition: .4s;
+}
+
 
 /* JOIN */
 
