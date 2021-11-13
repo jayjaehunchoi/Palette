@@ -8,7 +8,6 @@ import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.BudgetResponseDto;
-import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.ExpenseRepository;
@@ -40,13 +39,13 @@ public class BudgetService {
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
         Budget saveBudget = new Budget(group,budget.getTotalBudget()); // todo: 이거 없이 바로 budget save해도 되지않낭
-       // budget.saveBudgetOnGroup(group);
-       budgetRepository.save(saveBudget);
+        budgetRepository.save(saveBudget);
+        saveBudget.saveBudgetOnGroup(group);
     }
 
     //그룹의 예산,경비,남은금액 조회
     @Transactional
-    public ExpenseResponseDto readBudget(Member member, Long id){
+    public BudgetResponseDto readBudget(Member member, Long id){
         Group group = groupRepository.findById(id).orElse(null);
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
@@ -68,11 +67,8 @@ public class BudgetService {
 
         List<ExpenseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
 
-        ExpenseResponseDto dto = new ExpenseResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
+        BudgetResponseDto dto = new BudgetResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
         return dto;
-
-       // BudgetResponseDto dto = new BudgetResponseDto(group.getId(),totalBudget,totalExpense,remainingBudget);
-       // return dto;
     }
 
     public List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
@@ -97,8 +93,8 @@ public class BudgetService {
     @Transactional
     public void deleteBudget(Long id){
         Optional<Budget> budget = budgetRepository.findById(id);
-        budget.ifPresent(selectGroup ->{
-            budgetRepository.delete(selectGroup);
+        budget.ifPresent(selectBudget ->{
+            budgetRepository.delete(selectBudget);
         });
     }
 

@@ -1,6 +1,7 @@
 package com.palette.domain.group;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.palette.dto.request.ExpenseDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,6 +44,16 @@ public class Expense {
     public void saveExpenseOnBudget(Budget budget){
         this.budget = budget;
         budget.getExpenses().add(this);
+    }
+
+    public void update(ExpenseDto expenseDto){
+        this.category = expenseDto.getCategory();
+        this.detail = expenseDto.getDetail();
+        this.price = expenseDto.getPrice();
+    }
+
+    public void deleteExpense(Budget budget){
+        budget.getExpenses().remove(this);
     }
 
     public enum Category{

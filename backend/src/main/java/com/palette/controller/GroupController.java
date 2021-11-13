@@ -10,6 +10,7 @@ import com.palette.dto.response.GroupResponseDto;
 import com.palette.dto.response.GroupsResponseDto;
 import com.palette.service.GroupService;
 import com.palette.utils.annotation.Login;
+import com.palette.utils.constant.HttpResponseUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,22 +73,25 @@ public class GroupController {
 
     //그룹 생성( 그룹생성-> 확인 버튼 눌렀을 때 )
     @PostMapping
-    public void addGroup(@Login Member member, @RequestBody @Validated GroupDto groupDto){
+    public ResponseEntity<Void> addGroup(@Login Member member, @RequestBody @Validated GroupDto groupDto){
         Group group = new Group(groupDto.getGroupName(),groupDto.getGroupIntroduction());
         groupService.addGroup(group,member);
+        return HttpResponseUtil.RESPONSE_OK;
     }
 
     //그룹 가입( 그룹 들어가기-> 가입 버튼 눌렀을 때)
     @PostMapping("/{travelgroupid}")
-    public void joinGroup(@Login Member member,@RequestBody @Validated GroupJoinDto groupJoinDto){
+    public ResponseEntity<Void> joinGroup(@Login Member member,@RequestBody @Validated GroupJoinDto groupJoinDto){
         String groupCode = groupJoinDto.getCode();
         groupService.addGroupMember(groupCode,member);
+        return HttpResponseUtil.RESPONSE_OK;
     }
 
     //그룹 탈퇴
     @DeleteMapping("{travlegroupid}/member")
-    public void ExitGroup(@Login Member member,@RequestBody GroupDto groupDto){
+    public ResponseEntity<Void> ExitGroup(@Login Member member,@RequestBody GroupDto groupDto){
         groupService.deleteGroupMember(groupDto.getGroupId(),member);
+        return HttpResponseUtil.RESPONSE_OK;
     }
 
     //그룹 수정
@@ -99,8 +103,9 @@ public class GroupController {
 
     //그룹 삭제
     @DeleteMapping("/{travelgroupid}")
-    public void deleteGroup(@Login Member member,@RequestBody GroupDto groupDto){
+    public ResponseEntity<Void> deleteGroup(@Login Member member,@RequestBody GroupDto groupDto){
         groupService.deleteGroup(groupDto.getGroupId());
+        return HttpResponseUtil.RESPONSE_OK;
     }
 
     //group을 groupResponseDto로 변환

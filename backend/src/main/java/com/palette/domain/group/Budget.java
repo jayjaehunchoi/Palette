@@ -40,6 +40,10 @@ public class Budget {
         group.setBudget(this);
     }
 
+    public void deleteAllExpenses(){
+        this.expenses.clear();
+    }
+
     public void update(BudgetUpdateDto dto){
         totalBudget = dto.getBudget();
     }

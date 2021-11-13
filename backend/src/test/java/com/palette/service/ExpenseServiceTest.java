@@ -6,7 +6,7 @@ import com.palette.domain.group.Group;
 import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.ExpenseDto;
-import com.palette.dto.response.ExpenseResponseDto;
+import com.palette.dto.response.BudgetResponseDto;
 import com.palette.exception.BudgetException;
 import com.palette.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,12 +14,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
+@ActiveProfiles("test")
 @Transactional
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -83,12 +85,47 @@ public class ExpenseServiceTest {
     void 지출_전체_조회(){
         Member member = memberRepository.findAll().get(0);
         Group findGroup = groupRepository.findAll().get(0);
-        ExpenseResponseDto dto = expenseService.readExpenses(member,findGroup.getId());
+        BudgetResponseDto dto = expenseService.readExpenses(member,findGroup.getId());
         List<ExpenseDto> expenses = dto.getExpenses();
 
         assertThat(expenses.get(0).getDetail()).isEqualTo("마포에서 월곡 택시");
         assertThat(expenses.get(1).getDetail()).isEqualTo("공릉에서 노원역 택시");
 
+    }
+
+    @Test
+    void 지출_수정(){
+        Group findGroup = groupRepository.findAll().get(0);
+        Budget budget = findGroup.getBudget();
+        Expense findExpense= budget.getExpenses().get(0);
+
+        assertThat(findExpense.getDetail()).isEqualTo("마포에서 월곡 택시");
+
+        Expense.Category category = Expense.Category.valueOf("TRANSPORTATION");
+        Expense updateExpense = Expense.builder()
+                .category(category)
+                .detail("인천->부평 택시")
+                .price(15000l)
+                .build();
+        ExpenseDto expenseDto = new ExpenseDto(updateExpense);
+        expenseService.updateExpense(findExpense.getId(),expenseDto);
+        assertThat(findExpense.getDetail()).isEqualTo("인천->부평 택시");
+    }
+
+    @Test
+    void 지출_단건_삭제(){
+        Group findGroup = groupRepository.findAll().get(0);
+        Expense expense = findGroup.getBudget().getExpenses().get(0);
+        expenseService.deleteExpense(findGroup.getBudget(),expense);
+        assertThat(findGroup.getBudget().getExpenses().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 지출_전체_삭제(){
+        Group findGroup = groupRepository.findAll().get(0);
+        assertThat(findGroup.getBudget().getExpenses().size()).isEqualTo(2);
+        expenseService.deleteAll(findGroup.getBudget());
+        assertThat(findGroup.getBudget().getExpenses().size()).isEqualTo(0);
     }
 
     //존재하지 않는 예산일 때 exception 확인하기
@@ -112,10 +149,5 @@ public class ExpenseServiceTest {
             expenseService.addExpense(member,group,expense,deletedBudget);
         }).isInstanceOf(BudgetException.class);
     }
-
-    //todo: 지출 단건 수정
-    //todo: 지출 단건 삭제
-    //todo: 지출 전체 삭제
-
 
 }

@@ -6,7 +6,6 @@ import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
-import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
@@ -17,11 +16,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
 
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
@@ -61,13 +62,14 @@ public class BudgetServiceTest {
         Group findGroup = groupRepository.findAll().get(0);
         Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
 
-        ExpenseResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
+        BudgetResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
 
         assertThat(budgetResponseDto.getGroupId()).isEqualTo(findBudget.getGroup().getId());
         assertThat(budgetResponseDto.getTotalBudget()).isEqualTo(findBudget.getTotalBudget());
 
         System.out.println(budgetResponseDto.getTotalExpense());
         System.out.println(budgetResponseDto.getRemainingBudget());
+        System.out.println(budgetResponseDto.getExpenses().size());
     }
 
     //budget update 테스트
@@ -82,6 +84,13 @@ public class BudgetServiceTest {
         assertThat(findBudget.getTotalBudget()).isEqualTo(200000l);
     }
 
+    @Test
+    void 예산_삭제(){
+        Group group = groupRepository.findAll().get(0);
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        budgetService.deleteBudget(findBudget.getId());
+        assertThat(budgetRepository.findBudgetJoinWithGroup()).isEqualTo(null);
+    }
     @Test
     void 접근권환_확인(){
         Member notGrantMember = new Member("easy", "1234", "easy","123");
