@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- header jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#headers").load("../static/header.html");  
+    });
+  </script>
+  <!-- footer jquery -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
+
+  <link rel="icon" href="/frontend/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+  <link rel="stylesheet" href="/frontend/css/budget.css">
+  <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  <script defer src="/frontend/js/budget.js"></script>
+  <title>Palette.</title>
+
+</head>
+<body>
+  <section>
+    <div id="headers"></div>  
+  </section>
+
+
+  <section>
+  <div class="app">
+
+    <div class="inner"> 
+    <section class="budgetbox">
+      <div class="budgetBts"> 
+        <button class="setBt" onclick="openSetModal()">예산 설정</button>
+        <button class="changeBt" onclick="openChangeModal()">예산 수정</button>
+      </div>
+      <div>
+        <div class="budgetContainer">
+          <span>총 예산</span>
+          <div class="totalBudget"> </div>
+        </div>
+        <div class="budgetPlanning">
+          <div class="expContainer">
+            <span>총 경비</span>
+            <div class="expense"> </div>
+          </div>
+          <div class="leftContainer">
+            <span>남은 금액</span>
+            <div class="budgetLeft"> </div>
+          </div>
+        </div>
+      </div> 
+    </section>
+
+    <inputbox class="inputbox" v-on:add_item="add_item"></inputbox>
+    <budgetlist class="budgetlist" v-bind:propsdata="budgetItems" @remove_item="remove_item" @open_edit="open_edit"></budgetlist>
+    <clear class="clear" v-on:remove_all="clearAll"></clear>
+
+    <modal v-if="showModal" @close="showModal = false">
+      <h3 slot="header"> 수정 </h3>
+      <div slot="body">
+        <div class="line1">
+          <select class="category__input" >
+            <option value="" selected>분류</option>
+            <option value="교통">교통</option>
+            <option value="식비">식비</option>
+            <option value="숙박">숙박</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="detail__input" type="text" placeholder="항목" /> <br>
+          </div>
+          <div class="line2">
+          <input class="price__input" type="number" placeholder="금액" >
+            <div class="addContainer" v-on:click="add_item">
+              <button class="addBt"> + </button>
+            </div>
+          </div>
+      </div>
+      <span slot="footer" @click="showModal = false">
+        <i class="closeModalBtn fas fa-times" aria-hidden="true"></i> 
+      </span>
+    </modal>
+    </div>
+    <div class="backBt" onclick="location.href='./group.html'">
+      완료
+    </div>
+  </div>
+ 
+  </section>
+  
+  <section>
+    <div id="footers"></div>
+  </section>
+
+  <!-- MODAL -->
+    <!-- 예산 설정 -->
+    <div class="modal" id="setModal">
+   
+      <div class="modalContent">
+          <h2>예산을 입력하세요</h2>
+         
+          <div class="itemContainer">
+            <input type="number" class="totalBudget__input"> 
+          </div>
+          
+          <div class="modalBts">
+            <button type="button" class="modalOkBt" onclick="setTotalBudget()">확인</button>
+            <button type="button" class="modalCloseBt" onclick="closeSetModal()">닫기</button>
+          </div>
+      </div>
+     
+      <div class="modal_layer"></div> 
+
+    </div>
+
+    <!-- 예산 수정 -->
+    <div class="modal" id="changeModal">
+   
+      <div class="modalContent">
+          <h2>수정할 예산을 입력하세요</h2>
+         
+          <div class="itemContainer">
+            <input type="number" class="totalBudget__input"> 
+          </div>
+          
+          <div class="modalBts">
+            <button type="button" class="modalOkBt"  onclick="changeTotalBudget()"> 확인</button>
+            <button type="button" class="modalCloseBt" onclick="closeChangeModal()">닫기</button>
+          </div>
+      </div>
+     
+      <div class="modal_layer"></div>
+
+    </div>
+
+</body>
+</html>

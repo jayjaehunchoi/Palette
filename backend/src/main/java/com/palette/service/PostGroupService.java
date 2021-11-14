@@ -30,7 +30,6 @@ import static com.palette.utils.constant.ConstantUtil.*;
 public class PostGroupService {
 
     private final PostGroupRepository postGroupRepository;
-    private final PostRepository postRepository;
     private final S3Uploader s3Uploader;
 
     @Transactional
@@ -71,33 +70,15 @@ public class PostGroupService {
     public PostGroup checkMemberAuth(Member member, Long id){
         PostGroup findPostGroup = postGroupRepository.findById(id).orElse(null);
         isPostGroupExist(findPostGroup);
-        if(findPostGroup.getMember().getId() != member.getId()){
+        if(!findPostGroup.getMember().getId().equals(member.getId())){
             throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "권한이 없습니다."){};
         }
         return findPostGroup;
     }
 
-    // 멤버 아이디 조건으로 그룹 조회 (마이 블로그에서 활용 가능)
-    public List<PostGroupResponseDto> findPostGroupByMember(String memberName, int pageNo){
-        SearchCondition searchCondition = setSearchCondFilterMemberName(memberName);
+    // 조건 없거나, 멤버 조건만으로 그룹 조회
+    public List<PostGroupResponseDto> findPostGroup(SearchCondition searchCondition,int pageNo){
         return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
-    }
-
-    // 지역 조건으로 그룹 조회 (스토리 검색 기능)
-    public List<PostGroupResponseDto> findPostGroupByRegion(String region, int pageNo){
-        SearchCondition searchCondition = setSearchCondFilterRegion(region);
-        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
-    }
-
-    // 그룹 타이틀 조건으로 그룹 조회 (스토리 검색 기능)
-    public List<PostGroupResponseDto> findPostGroupByTitle(String title, int pageNo){
-        SearchCondition searchCondition = setSearchCondFilterTitle(title);
-        return postGroupRepository.findStoryListWithPage(searchCondition, pageNo, PAGE_SIZE);
-    }
-
-    // 조건 없이 그룹 조회
-    public List<PostGroupResponseDto> findPostGroup(int pageNo){
-        return postGroupRepository.findStoryListWithPage(new SearchCondition(), pageNo, PAGE_SIZE);
     }
 
     public PostGroup findById(Long id){
@@ -111,17 +92,7 @@ public class PostGroupService {
     }
 
     // 페이지 수 조회
-    public long getTotalPage(String filter, String condition){
-        SearchCondition searchCondition;
-        if(filter.equals("member")){
-            searchCondition = setSearchCondFilterMemberName(condition);
-        }else if(filter.equals("region")){
-            searchCondition = setSearchCondFilterRegion(condition);
-        }else if(filter.equals("title")){
-            searchCondition = setSearchCondFilterTitle(condition);
-        }else{
-            searchCondition = new SearchCondition();
-        }
+    public long getTotalPage(SearchCondition searchCondition){
         return ((postGroupRepository.getStoryListTotalCount(searchCondition) - 1) / PAGE_SIZE)+1;
     }
 
@@ -130,25 +101,6 @@ public class PostGroupService {
             log.error("Post Group Not Exist Error");
             throw new PostGroupException("존재하지 않는 게시물 그룹입니다.");
         }
-    }
-
-
-    private SearchCondition setSearchCondFilterMemberName(String memberName) {
-        SearchCondition searchCondition = new SearchCondition();
-        searchCondition.setName(memberName);
-        return searchCondition;
-    }
-
-    private SearchCondition setSearchCondFilterRegion(String region) {
-        SearchCondition searchCondition = new SearchCondition();
-        searchCondition.setRegion(region);
-        return searchCondition;
-    }
-
-    private SearchCondition setSearchCondFilterTitle(String groupTitle){
-        SearchCondition searchCondition = new SearchCondition();
-        searchCondition.setTitle(groupTitle);
-        return searchCondition;
     }
 
 }

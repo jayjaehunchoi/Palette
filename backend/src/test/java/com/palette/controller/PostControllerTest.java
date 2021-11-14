@@ -10,6 +10,7 @@ import com.palette.dto.GeneralResponse;
 import com.palette.dto.request.PostRequestDto;
 import com.palette.dto.response.*;
 import com.palette.utils.constant.SessionUtil;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,17 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import static com.palette.controller.util.RestDocUtil.*;
 import static org.mockito.BDDMockito.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 
 @AutoConfigureRestDocs
 public class PostControllerTest extends RestDocControllerTest{
@@ -36,7 +42,7 @@ public class PostControllerTest extends RestDocControllerTest{
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
-        this.restDocsMockMvc = RestDocUtil.successRestDocsMockMvc(provider, postController);
+        this.restDocsMockMvc = successRestDocsMockMvc(provider, postController);
 
         Member member = createMember();
         session.setAttribute(SessionUtil.MEMBER,member);
@@ -51,19 +57,25 @@ public class PostControllerTest extends RestDocControllerTest{
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(new StoryListResponsesDto(Arrays.asList(dto)))))
-                .andDo(document("post-get-with-filter"));
+                .andDo(document("post-get-with-filter",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
 
     }
 
     @Test
     void 단건_게시물_조회() throws Exception{
         PostResponseDto postResponseDto = new PostResponseDto(new Post(TITLE, CONTENT, new Member(NAME, PASSWORD, IMAGE, EMAIL), new Period(START, END), REGION));
+        postResponseDto.setImages(Arrays.asList(IMAGE, IMAGE));
+        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, START);
+        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, START);
+        postResponseDto.setComments(Arrays.asList(dto1, dto2));
         given(postService.findSinglePost(any(),any())).willReturn(postResponseDto);
         restDocsMockMvc.perform(get("/post/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(postResponseDto)))
                 .andDo(print())
-                .andDo(document("post-get-single-post"));
+                .andDo(document("post-get-single-post",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -77,7 +89,8 @@ public class PostControllerTest extends RestDocControllerTest{
                 .andExpect(content()
                         .json(objectMapper.writeValueAsString(new LikeResponsesDto(Arrays.asList(likeResponseDto)))))
                 .andDo(print())
-                .andDo(document("post-get-like-paging"));
+                .andDo(document("post-get-like-paging",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -87,7 +100,8 @@ public class PostControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(post("/post/1/like"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("post-push-like"));
+                .andDo(document("post-push-like",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -117,7 +131,10 @@ public class PostControllerTest extends RestDocControllerTest{
                 .content("multipart/mixed")
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isCreated())
-                .andDo(document("post-create-post"));
+                .andDo(document("post-create-post"
+                        ,requestParts(partWithName("data").description("postRequestDto")
+                        , partWithName("files").description("multiple files"))
+                        ,requestPartBody("data")));
     }
 
     @Test
@@ -134,7 +151,9 @@ public class PostControllerTest extends RestDocControllerTest{
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk())
-                .andDo(document("post-update-post"));
+                .andDo(document("post-update-post"
+                        ,preprocessRequest(MockMvcConfig.prettyPrintPreProcessor())
+                        ,preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -147,7 +166,8 @@ public class PostControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(delete("/postgroup/1/post/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("post-delete-post"));
+                .andDo(document("post-delete-post",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     private void validate(PostRequestDto postRequestDto){
@@ -176,5 +196,12 @@ public class PostControllerTest extends RestDocControllerTest{
                 .period(postGroup.getPeriod())
                 .build();
     }
+
+    @AfterEach
+    void tearDown(){
+        session.clearAttributes();;
+        session = null;
+    }
+
 
 }

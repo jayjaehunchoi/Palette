@@ -7,11 +7,13 @@ import com.palette.exception.PostException;
 import com.palette.repository.LikeRepository;
 import com.palette.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class LikeService {
@@ -31,8 +33,8 @@ public class LikeService {
             likes.pushLike(findPost, false);
             return findPost.getLikeCount();
         }
-        likes.pushLike(findPost, true);
         likeRepository.delete(findLike);
+        likes.pushLike(findPost, true);
         return findPost.getLikeCount();
     }
 

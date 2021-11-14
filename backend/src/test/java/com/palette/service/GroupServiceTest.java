@@ -39,13 +39,13 @@ public class GroupServiceTest {
         Member member1 = new Member("wltn", "1234", "wogns","123");
         memberRepo.save(member1);
 
-        Member member2 = new Member("skfk", "1234", "wogns","123");
+        Member member2 = new Member("skfk", "1234", "wogns","1234");
         memberRepo.save(member2);
 
-        Member member3 = new Member("wognswognwosgns", "1234", "wogns","123");
+        Member member3 = new Member("wognswognwosgns", "1234", "wogns","12345");
         memberRepo.save(member3);
 
-        Member member4 = new Member("ruddls", "1234", "wogns","123");
+        Member member4 = new Member("ruddls", "1234", "wogns","123456");
         memberRepo.save(member4);
 
         // 그룹생성

@@ -39,11 +39,7 @@ public class PostController {
 
     // 그룹을 안거치고 조회시, 그룹 거친 조회는 PostGroup에 존재
     @GetMapping("/post")
-    public ResponseEntity<StoryListResponsesDto> getPosts(@RequestParam(required = false) String name,
-                                                          @RequestParam(required = false) String region,
-                                                          @RequestParam(required = false) String title,
-                                                          @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
-        SearchCondition searchCondition = SearchCondition.setSearchCondition(name, region, title);
+    public ResponseEntity<StoryListResponsesDto> getPosts(@ModelAttribute SearchCondition searchCondition, @RequestParam(defaultValue = ConstantUtil.DEFAULT_PAGE,required = false) int page){
         List<StoryListResponseDto> storyList = postService.findStoryList(searchCondition, page);
         StoryListResponsesDto res = StoryListResponsesDto.builder().storyLists(storyList).build();
         return ResponseEntity.ok(res);
@@ -103,7 +99,4 @@ public class PostController {
         postService.isAvailablePostOnPostGroup(findPostGroup, member.getId());
         postService.isAvailableUpdatePost(findPost, member);
     }
-
-
-
 }

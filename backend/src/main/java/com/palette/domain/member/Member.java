@@ -5,15 +5,19 @@ import javax.persistence.*;
 import com.palette.domain.BaseTimeEntity;
 import com.palette.domain.group.MemberGroup;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Getter
-@ToString
+@ToString(exclude = "memberGroups")
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="members")
+@Table(name="members",uniqueConstraints = @UniqueConstraint(name="un_member_email",columnNames = "email"))
+@DynamicUpdate
 public class Member extends BaseTimeEntity {
 
     @Id
@@ -27,6 +31,7 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
+
     @Builder
     public Member(String name, String password, String profileFileName, String email) {
         this.name = name;
@@ -35,22 +40,16 @@ public class Member extends BaseTimeEntity {
         this.email = email;
     }
 
-    public Member update(String name, String profileFileName) {
-        this.name = name;
+    //회원정보수정
+    public Member update(String password, String profileFileName) {
+        this.password = password;
         this.profileFileName = profileFileName;
 
         return this;
     }
 
-    public Member(String name, String password, String profileFileName,List<MemberGroup> memberGroups) {
-        this.name = name;
-        this.password = password;
-        this.profileFileName = profileFileName;
-        this.memberGroups = memberGroups;
-    }
-
     public void encodePassword(String encodedPassword) {
-        password = encodedPassword;
+        this.password = encodedPassword;
     }
 
     public void changeProfileFile(String profileFileName) {

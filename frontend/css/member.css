@@ -201,6 +201,7 @@ a {
 	font-weight: 700;
 	transition: .4s;
 	margin-top: 50px;
+	margin-bottom: 100px;
 }
 
 /* MODIFYINFO */
@@ -273,7 +274,7 @@ a {
 	display: flex;
 	width: 650px;
 	position: relative;
-	margin-bottom: 20px;
+	margin-bottom: 120px;
 }
 
 .myInner .bts button {

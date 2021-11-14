@@ -48,7 +48,8 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
     public long getStoryListTotalCount(SearchCondition condition){
         return queryFactory.select(postGroup.id)
                 .from(postGroup)
-                .where(memberNameEq(condition.getName()),
+                .where(memberIdEq(condition.getMemberId()),
+                        memberNameEq(condition.getName()),
                         regionEq(condition.getRegion()),
                         titleContain(condition.getTitle()))
                 .fetchCount();
@@ -58,7 +59,8 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
         return queryFactory.select(postGroup.id)
                 .from(postGroup)
                 .join(postGroup.member, member)
-                .where(memberNameEq(condition.getName()),
+                .where(memberIdEq(condition.getMemberId()),
+                        memberNameEq(condition.getName()),
                         regionEq(condition.getRegion()),
                         titleContain(condition.getTitle()))
                 .orderBy(postGroup.id.desc())
@@ -68,6 +70,9 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
 
     }
 
+    private BooleanExpression memberIdEq(Long memberId){
+        return memberId != null ? postGroup.member.id.eq(memberId) : null;
+    }
     private BooleanExpression memberNameEq(String name){
         return hasText(name) ? postGroup.member.name.eq(name):null;
     }

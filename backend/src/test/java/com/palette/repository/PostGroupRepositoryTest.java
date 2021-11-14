@@ -29,7 +29,7 @@ public class PostGroupRepositoryTest {
     @Test
     void 마이블로그_조회(){
         Member member = new Member("wogns","1234","wogns0108", "123");
-        Member member2 = new Member("wogns11","1234","wogns0108", "123");
+        Member member2 = new Member("wogns11","1234","wogns0108", "1234");
         memberRepository.save(member);
         memberRepository.save(member2);
 
@@ -58,7 +58,7 @@ public class PostGroupRepositoryTest {
     @Test
     void 마이블로그_조건없는_조회(){
         Member member = new Member("wogns", "1234", "wogns","123");
-        Member member2 = new Member("wogns11", "1234", "wogns","123");
+        Member member2 = new Member("wogns11", "1234", "wogns","1234");
         memberRepository.save(member);
         memberRepository.save(member2);
 
@@ -121,7 +121,7 @@ public class PostGroupRepositoryTest {
     void 그룹_총개수_member(){
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
-        Member member2 = new Member("rlacl", "1234", "wogns","123");
+        Member member2 = new Member("rlacl", "1234", "wogns","1234");
         memberRepository.save(member2);
         for(int i = 0 ; i < 10; i++){
             Member input = member;
