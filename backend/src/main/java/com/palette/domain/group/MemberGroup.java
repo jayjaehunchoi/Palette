@@ -29,8 +29,6 @@ public class MemberGroup {
         this.member = member;
         group.getMemberGroups().add(this);
         member.getMemberGroups().add(this);
-
-        // todo: 양방향 참조가 아닌 일방향 참조 생각해보기
     }
 
     public void deleteMemberGroup(Group group, Member member){
