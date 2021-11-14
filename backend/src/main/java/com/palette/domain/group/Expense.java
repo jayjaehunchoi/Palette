@@ -38,7 +38,6 @@ public class Expense {
         this.category = category;
         this.detail = detail;
         this.price = price;
-        //this.budget = budget;
     }
 
     public void saveExpenseOnBudget(Budget budget){

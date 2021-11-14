@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity

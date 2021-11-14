@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/travelgroup")
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class GroupController {
 
     private final GroupService groupService;
@@ -75,7 +75,6 @@ public class GroupController {
     }
 
     //그룹 생성( 그룹생성-> 확인 버튼 눌렀을 때 )
-    @ResponseBody
     @PostMapping //test완료, groupId 값 넣지말기
     public Long addGroup(@Login Member member, @RequestBody @Validated GroupDto groupDto){
         Group group = new Group(groupDto.getGroupName(),groupDto.getGroupIntroduction());

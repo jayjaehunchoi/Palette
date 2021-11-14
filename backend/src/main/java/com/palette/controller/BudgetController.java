@@ -29,7 +29,7 @@ public class BudgetController {
     //budget 정보 읽기
     @LoginChecker
     @GetMapping("/{travelgroupid}/budget") //테스트완료
-    public BudgetResponseDto readBudget(@Login Member member, @PathVariable("travelgroupid") long travelGroupId){
+    public BudgetResponseDto readBudget(@Login Member member, @PathVariable("travelgroupid") Long travelGroupId){
         return budgetService.readBudget(member,travelGroupId);
     }
 
