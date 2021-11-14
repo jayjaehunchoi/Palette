@@ -10,6 +10,7 @@ import com.palette.service.BudgetService;
 import com.palette.service.ExpenseService;
 import com.palette.service.GroupService;
 import com.palette.utils.annotation.Login;
+import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +30,16 @@ public class ExpenseController {
 
 
     //지출 전체 조회
-    @GetMapping("/{travelgroupid}/expenses")
+    @LoginChecker
+    @GetMapping("/{travelgroupid}/expenses") //테스트완료
     public BudgetResponseDto readExpense(@Login Member member, @PathVariable("travelgroupid") long travelGroupId){
         return expenseService.readExpenses(member,travelGroupId);
     }
 
     //지출 추가
-    @PostMapping("/{travelgroupid}/expenses")
+    @LoginChecker
+    @ResponseBody
+    @PostMapping("/{travelgroupid}/expenses") //테스트완료, id 포함하지말기
     public Long addExpense(@Login Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = budgetService.findByGroup(group);
@@ -50,23 +54,26 @@ public class ExpenseController {
     }
 
     //지출 전체 삭제
-    @DeleteMapping("/{travelgroupid}/expenses")
+    @LoginChecker
+    @DeleteMapping("/{travelgroupid}/expenses") //테스트완료
     public ResponseEntity<Void> deleteExpenses(@Login Member member,  @PathVariable("travelgroupid") long travelGroupId){
         Group group = groupService.findById(travelGroupId);
-        expenseService.deleteAll(group.getBudget()); // todo: 그룹에 budget있는지 확인해보기
+        expenseService.deleteAll(group.getBudget());
         return HttpResponseUtil.RESPONSE_OK;
     }
 
     //지출 단건 수정
-    @PutMapping("/{travelgroupid}/expenses/expense/{expenseid}")
-    public ResponseEntity<Void> updateExpense(@Login Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") long travelGroupId,@PathVariable("expenseid") long expenseId){
+    @LoginChecker
+    @PutMapping("/{travelgroupid}/expenses/expense") //테스트완료, id 포함해서 줘야함!!
+    public ResponseEntity<Void> updateExpense(@Login Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") long travelGroupId){
         Expense expense = expenseService.findById(expenseDto.getId());
-        expenseService.updateExpense(expenseId,expenseDto);
+        expenseService.updateExpense(expenseDto.getId(),expenseDto);
         return HttpResponseUtil.RESPONSE_OK;
     }
 
     //지출 단건 삭제
-    @DeleteMapping("/{travelgroupid}/expenses/expense")
+    @LoginChecker
+    @DeleteMapping("/{travelgroupid}/expenses/expense") //테스트완료 , id 포함해서 줘야함!!
     public ResponseEntity<Void> deleteExpense(@Login Member member,@RequestBody @Validated ExpenseDto expenseDto,@PathVariable("travelgroupid") long travelGroupId){
         Expense expense = expenseService.findById(expenseDto.getId());
         Budget budget = expense.getBudget();

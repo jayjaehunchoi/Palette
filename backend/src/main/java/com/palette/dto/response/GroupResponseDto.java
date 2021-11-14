@@ -1,18 +1,15 @@
 package com.palette.dto.response;
 
 import com.palette.domain.group.Group;
-import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
-
-import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 //그룹 단건 조회 dto
+@Getter
+@NoArgsConstructor
 public class GroupResponseDto {
     private Long id;
     private String groupCode;

@@ -7,9 +7,9 @@ import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
 import com.palette.service.BudgetService;
-import com.palette.service.ExpenseService;
 import com.palette.service.GroupService;
 import com.palette.utils.annotation.Login;
+import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,42 +25,43 @@ public class BudgetController {
 
     private final GroupService groupService;
     private final BudgetService budgetService;
-    private final ExpenseService expenseService;
 
-    @GetMapping("/{travelgroupid}/budget")
+    //budget 정보 읽기
+    @LoginChecker
+    @GetMapping("/{travelgroupid}/budget") //테스트완료
     public BudgetResponseDto readBudget(@Login Member member, @PathVariable("travelgroupid") long travelGroupId){
         return budgetService.readBudget(member,travelGroupId);
     }
 
     //총 예산 추가
-    @PostMapping("/{travelgroupid}/budget") // Restful url : 동사대신 명사와 http 메소드로 표현
-    public ResponseEntity<Void> saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") long travelGroupId){
+    @LoginChecker
+    @ResponseBody
+    @PostMapping("/{travelgroupid}/budget") //테스트완료 (중복추가안되게도 완료)
+    public Long saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = Budget.builder()
                         .group(group)
                         .totalBudget(budgetDto.getTotalBudget())
                         .build();
-        budgetService.addBudget(member,group,budget);
-        return HttpResponseUtil.RESPONSE_OK;
+        return budgetService.addBudget(member,group,budget);
     }
 
     //예산 수정
-    @PutMapping("/{travelgroupid}/budget")
-    public ResponseEntity<Void> updateBudget(@Login Member member, @RequestBody @Validated BudgetUpdateDto budgetUpdateDto, @PathVariable("travelgroupid") long travelGroupId){
+    @LoginChecker
+    @PutMapping("/{travelgroupid}/budget") //테스트완료
+    public ResponseEntity<Void> updateBudget(@Login Member member, @RequestBody @Validated BudgetUpdateDto budgetUpdateDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
-        Budget budget = Budget.builder()
-                .group(group)
-                .totalBudget(budgetUpdateDto.getBudget())
-                .build();
+        log.info("dto budget = {}",budgetUpdateDto.getTotalBudget());
         budgetService.updateBudget(group.getBudget().getId(),budgetUpdateDto);
         return HttpResponseUtil.RESPONSE_OK;
     }
 
     //예산 삭제
-    @DeleteMapping("/{travlegroupid}/budget")
-    public ResponseEntity<Void> deleteBudget(@Login Member member,@PathVariable("travelgroupid") long travelGroupId){
+    @LoginChecker
+    @DeleteMapping("/{travelgroupid}/budget") //테스트완료
+    public ResponseEntity<Void> deleteBudget(@Login Member member,@PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
-        budgetService.deleteBudget(group.getBudget().getId());
+        budgetService.deleteBudget(group);
         return HttpResponseUtil.RESPONSE_OK;
     }
 }

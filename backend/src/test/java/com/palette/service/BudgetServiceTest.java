@@ -88,7 +88,7 @@ public class BudgetServiceTest {
     void 예산_삭제(){
         Group group = groupRepository.findAll().get(0);
         Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
-        budgetService.deleteBudget(findBudget.getId());
+        budgetService.deleteBudget(group);
         assertThat(budgetRepository.findBudgetJoinWithGroup()).isEqualTo(null);
     }
     @Test

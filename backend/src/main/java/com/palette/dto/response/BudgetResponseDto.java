@@ -2,10 +2,12 @@ package com.palette.dto.response;
 
 import com.palette.dto.request.ExpenseDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class BudgetResponseDto {
     private Long groupId;
     private long totalBudget;

@@ -1,15 +1,16 @@
 package com.palette.domain.group;
 
-import com.palette.dto.request.BudgetUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -44,7 +45,8 @@ public class Budget {
         this.expenses.clear();
     }
 
-    public void update(BudgetUpdateDto dto){
-        totalBudget = dto.getBudget();
+    public void update(long totalBudget){
+        this.totalBudget = totalBudget;
+        this.group.setBudget(this);
     }
 }

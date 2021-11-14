@@ -8,6 +8,7 @@ import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.exception.BudgetException;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.ExpenseRepository;
@@ -35,12 +36,14 @@ public class BudgetService {
 
     //그룹에 예산 넣기
     @Transactional
-    public void addBudget(Member member,Group group, Budget budget){
+    public Long addBudget(Member member,Group group, Budget budget){
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
-        Budget saveBudget = new Budget(group,budget.getTotalBudget()); // todo: 이거 없이 바로 budget save해도 되지않낭
+        isBudgetAlreadyExist(group);
+        Budget saveBudget = new Budget(group,budget.getTotalBudget());
         budgetRepository.save(saveBudget);
         saveBudget.saveBudgetOnGroup(group);
+        return saveBudget.getId();
     }
 
     //그룹의 예산,경비,남은금액 조회
@@ -48,6 +51,7 @@ public class BudgetService {
     public BudgetResponseDto readBudget(Member member, Long id){
         Group group = groupRepository.findById(id).orElse(null);
         isGroupExist(group);
+        isBudgetExist(group);
         isMemberHaveAuthToUpdate(member,group);
         Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
 
@@ -56,7 +60,6 @@ public class BudgetService {
         long remainingBudget = totalBudget;
 
         for(int i = 0; i < findBudget.getExpenses().size(); i++){
-            //todo: 매번 반복문 돌리지말고 하나만 추가하는 방법 생각해보기, 그럼 db에 저장해야함
             totalExpense += findBudget.getExpenses().get(i).getPrice();
         }
 
@@ -85,17 +88,19 @@ public class BudgetService {
     @Transactional
     public Budget updateBudget(Long id, BudgetUpdateDto dto){
         Budget findBudget = budgetRepository.findById(id).orElse(null);
-        findBudget.update(dto);
+        log.info("update budget = {}" ,dto.getTotalBudget());
+        findBudget.update(dto.getTotalBudget());
         return findBudget;
     }
 
     //budget delete
     @Transactional
-    public void deleteBudget(Long id){
-        Optional<Budget> budget = budgetRepository.findById(id);
-        budget.ifPresent(selectBudget ->{
-            budgetRepository.delete(selectBudget);
-        });
+    public void deleteBudget(Group group){
+        isBudgetExist(group);
+        Budget budget = budgetRepository.findById(group.getBudget().getId()).orElse(null);
+        budgetRepository.delete(budget);
+        budget.getGroup().setBudget(null);
+
     }
 
     //그룹 수정 권한이 있는지 확인 (그룹의 멤버인지 확인)
@@ -114,4 +119,23 @@ public class BudgetService {
             throw new GroupException("존재하지 않는 그룹입니다.");
         }
     }
+
+    //그룹에 Budget이 존재하는지 확인
+    private void isBudgetExist(Group group){
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        if(findBudget == null){
+            log.error("Budget Not Exist Error");
+            throw new BudgetException("예산이 존재하지 않습니다.");
+        }
+    }
+
+    //이미 예산이 존재하는지 확인
+    private void isBudgetAlreadyExist(Group group){
+        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        if(findBudget != null){
+            log.error("Budget Is Already Exists");
+            throw new BudgetException("예산이 이미 존재합니다.");
+        }
+    }
+
 }

@@ -12,7 +12,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
-@Table(name = "travel_group")
+@Table(name = "travel_group",uniqueConstraints = @UniqueConstraint(name = "un_group_groupCode",columnNames = {"groupCode"}))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
