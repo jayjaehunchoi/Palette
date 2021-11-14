@@ -4,6 +4,8 @@ import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
 import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
+import com.palette.dto.request.GroupUpdateDto;
+import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
@@ -17,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -93,7 +96,6 @@ public class GroupServiceTest {
 
     @Test
     public void 그룹_최초생성(){
-        // todo : groupDto에서 받아와서 group 객체에 담아주기, memberDto도 마찬가지..
         Group group = new Group("청춘은바로지금","우리의 태국 여행~");
         Member findMember = memberRepo.findAll().get(0);
         groupService.addGroup(group,findMember);
@@ -138,10 +140,28 @@ public class GroupServiceTest {
         assertThat(member.getMemberGroups().get(0).getGroup()).isEqualTo(groupRepository.findAll().get(1)); //group2만 남아있어야하는 상태
     }
 
-    @AfterEach
-    void 전체_삭제(){
-        System.out.println("-------------AfterEach-------------");
-        memberRepo.deleteAll();
-        groupRepository.deleteAll();
+    @Test
+    void 그룹_업데이트(){
+        Group group = groupRepository.findAll().get(0);
+        GroupUpdateDto groupUpdateDto = new GroupUpdateDto(group.getId(),"업데이트된제목","업데이트내용");
+        groupService.updateGroup(group.getId(),groupUpdateDto);
+        assertThat(group.getGroupName()).isEqualTo("업데이트된제목");
+    }
+
+    @Test
+    void 그룹삭제불가_테스트(){
+        Member member1 = new Member("wltn", "1234", "wogns","123");
+        memberRepo.save(member1);
+
+        Group group = Group.builder().
+                groupName("테스트그룹").
+                groupsIntroduction("테스트 그룹입니다.")
+                .build();
+
+        groupService.addGroup(group,member1);
+
+        assertThatThrownBy(() -> {
+            groupService.deleteGroupMember(group.getId(),group.getMemberGroups().get(0).getMember());
+        }).isInstanceOf(GroupException.class);
     }
 }

@@ -12,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -24,6 +27,7 @@ public class ExpenseRepositoryTest {
     @Autowired MemberRepository memberRepository;
     @Autowired BudgetRepository budgetRepository;
     @Autowired ExpenseRepository expenseRepository;
+    @Autowired EntityManager em;
 
     //expense create
     @BeforeEach
@@ -38,13 +42,12 @@ public class ExpenseRepositoryTest {
         budgetRepository.save(budget);
 
         Expense.Category category = Expense.Category.TRANSPORTATION;
-        Expense expense = new Expense(category,"574 버스",1200l, budget);
-        expenseRepository.save(expense);
+        Expense expense = new Expense(category,"574 버스",1200l);
+        expense.saveExpenseOnBudget(budget);
 
         Expense.Category category2 = Expense.Category.FOOD;
-        Expense expense2 = new Expense(category,"텐동키츠네",12000l, budget);
-        expenseRepository.save(expense2);
-
+        Expense expense2 = new Expense(category,"텐동키츠네",12000l);
+        expense2.saveExpenseOnBudget(budget);
     }
 
     @Test
@@ -64,7 +67,8 @@ public class ExpenseRepositoryTest {
     @Test
     void 지출_삭제(){
         Expense expense1 = expenseRepository.findAll().get(0);
-        expenseRepository.delete(expense1);
+        Budget budget = budgetRepository.findAll().get(0);
+        budget.getExpenses().remove(expense1);
 
         assertThat(expenseRepository.count()).isEqualTo(1);
     }
