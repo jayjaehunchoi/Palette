@@ -89,16 +89,17 @@ public class MemberControllerTest extends RestDocControllerTest{
     void 로그아웃() throws Exception{
         session.setAttribute(MEMBER, createMember());
 
-        restDocsMockMvc.perform(get("/signout"))
+        restDocsMockMvc.perform(get("/signout").session(session))
                 .andExpect(status().isOk())
                 .andDo(document("member-logout"));
     }
 
     @Test
     void 멤버정보_가져오기() throws Exception{
+        session.setAttribute(MEMBER, createMember());
         Member member = createMember();
         given(memberService.getMemberInfo(anyLong())).willReturn(member);
-        restDocsMockMvc.perform(get("/member/1")).andExpect(status().isOk())
+        restDocsMockMvc.perform(get("/member/1").session(session)).andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().json(objectMapper.writeValueAsString(new MemberResponseDto(member))))
                 .andExpect(status().isOk())
@@ -108,6 +109,7 @@ public class MemberControllerTest extends RestDocControllerTest{
 
     @Test
     void 멤버정보_수정() throws Exception{
+        session.setAttribute(MEMBER, createMember());
         MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
         MemberUpdateDto dto = new MemberUpdateDto(PASSWORD);
         String memberJson = objectMapper.writeValueAsString(dto);
@@ -122,7 +124,7 @@ public class MemberControllerTest extends RestDocControllerTest{
                 .file(file)
                         .content("multipart/mixed")
                         .accept(MediaType.APPLICATION_JSON)
-                        .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isOk())
+                        .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isOk())
                 .andDo(document("member-update"
                         ,requestParts(partWithName("member-update-data").description("memberUpdateDto")
                                 , partWithName("file").description("multipart file"))
@@ -140,7 +142,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(delete("/member")
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON).session(session))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("member-delete"));

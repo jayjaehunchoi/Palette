@@ -1,5 +1,7 @@
 package com.palette.domain.group;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.palette.dto.request.ExpenseDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,11 +34,25 @@ public class Expense {
     private Budget budget;
 
     @Builder
-    public Expense(Category category, String detail, Long price, Budget budget){
+    public Expense(Category category, String detail, Long price){
         this.category = category;
         this.detail = detail;
         this.price = price;
+    }
+
+    public void saveExpenseOnBudget(Budget budget){
         this.budget = budget;
+        budget.getExpenses().add(this);
+    }
+
+    public void update(ExpenseDto expenseDto){
+        this.category = expenseDto.getCategory();
+        this.detail = expenseDto.getDetail();
+        this.price = expenseDto.getPrice();
+    }
+
+    public void deleteExpense(Budget budget){
+        budget.getExpenses().remove(this);
     }
 
     public enum Category{
@@ -50,5 +66,16 @@ public class Expense {
         Category(String categoryName) {
             this.categoryName = categoryName;
         }
+
+        @JsonCreator
+        public static Category getRoleFromRoleName(String categoryName){
+            for (Category category : Category.values()) {
+                if(category.categoryName.equals(categoryName)){
+                    return category;
+                }
+            }
+            return null;
+        }
+
     }
 }

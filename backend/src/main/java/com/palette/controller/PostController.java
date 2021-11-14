@@ -11,6 +11,7 @@ import com.palette.dto.response.*;
 import com.palette.service.LikeService;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
+import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.constant.HttpResponseUtil;
 import com.palette.utils.S3Uploader;
@@ -57,12 +58,14 @@ public class PostController {
         return ResponseEntity.ok(LikeResponsesDto.builder().likeResponses(likeResponseDtos).build());
     }
 
+    @LoginChecker
     @PostMapping("/post/{id}/like")
     public ResponseEntity<GeneralResponse> pushLikeButton(@Login Member member, @PathVariable Long id){
         int likeCount = likeService.pushLike(member, id);
         return ResponseEntity.ok(GeneralResponse.builder().data(likeCount).build());
     }
 
+    @LoginChecker
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/postgroup/{postGroupId}/post")
     public Long createPost(@Login Member member, @PathVariable Long postGroupId, @RequestPart("data")@Valid PostRequestDto postRequestDto, @RequestPart("files") List<MultipartFile> imageFiles) throws IOException {
@@ -79,6 +82,7 @@ public class PostController {
         return savedPost.getId();
     }
 
+    @LoginChecker
     @PutMapping("/postgroup/{postGroupId}/post/{id}")
     public ResponseEntity<Void> updatePost(@Login Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId, @RequestBody @Valid PostRequestDto postRequestDto){
         validateMemberCanUpdateOrDeletePost(member, postGroupId, postId);
@@ -86,6 +90,7 @@ public class PostController {
         return HttpResponseUtil.RESPONSE_OK;
     }
 
+    @LoginChecker
     @DeleteMapping("/postgroup/{postGroupId}/post/{id}")
     public ResponseEntity<Void> deletePost(@Login Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId){
         validateMemberCanUpdateOrDeletePost(member, postGroupId, postId);
@@ -93,7 +98,7 @@ public class PostController {
         return HttpResponseUtil.RESPONSE_OK;
     }
 
-    private void validateMemberCanUpdateOrDeletePost(@Login Member member, Long postGroupId, Long postId) {
+    private void validateMemberCanUpdateOrDeletePost(Member member, Long postGroupId, Long postId) {
         PostGroup findPostGroup = postGroupService.findById(postGroupId);
         Post findPost = postService.findById(postId);
         postService.isAvailablePostOnPostGroup(findPostGroup, member.getId());

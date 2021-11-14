@@ -97,7 +97,7 @@ public class PostControllerTest extends RestDocControllerTest{
     void 좋아요_클릭() throws Exception{
         given(likeService.pushLike(any(),any())).willReturn(1);
         GeneralResponse.builder().data(1).build();
-        restDocsMockMvc.perform(post("/post/1/like"))
+        restDocsMockMvc.perform(post("/post/1/like").session(session))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("post-push-like",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
@@ -130,7 +130,7 @@ public class PostControllerTest extends RestDocControllerTest{
                 .file(json)
                 .content("multipart/mixed")
                 .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")).andDo(print()).andExpect(status().isCreated())
+                .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isCreated())
                 .andDo(document("post-create-post"
                         ,requestParts(partWithName("data").description("postRequestDto")
                         , partWithName("files").description("multiple files"))
@@ -149,7 +149,7 @@ public class PostControllerTest extends RestDocControllerTest{
         String content = objectMapper.writeValueAsString(postRequestDto);
         restDocsMockMvc.perform(put("/postgroup/1/post/1")
                         .content(content)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON).session(session))
                 .andDo(print()).andExpect(status().isOk())
                 .andDo(document("post-update-post"
                         ,preprocessRequest(MockMvcConfig.prettyPrintPreProcessor())
@@ -163,7 +163,7 @@ public class PostControllerTest extends RestDocControllerTest{
 
         doNothing().when(postService).delete(1L);
 
-        restDocsMockMvc.perform(delete("/postgroup/1/post/1"))
+        restDocsMockMvc.perform(delete("/postgroup/1/post/1").session(session))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("post-delete-post",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
