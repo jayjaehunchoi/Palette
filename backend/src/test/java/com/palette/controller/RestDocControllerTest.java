@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public abstract class RestDocControllerTest extends ControllerTest{
 
     protected static final String NAME = "jaehunChoi";
-    protected static final String PASSWORD = "1234";
+    protected static final String PASSWORD = "qwer12345!";
     protected static final String EMAIL = "wogns0108@gmail.com";
     protected static final String IMAGE = "https://palette-bucket.s3.ap-northeast-2.amazonaws.com/static/BasicThumbnail.jpg";
     protected static final LocalDateTime START = LocalDateTime.of(2021,11,10,10,0,0);

@@ -18,3 +18,38 @@ searchInputEl.addEventListener('blur', function () {
   searchEl.classList.remove('focused');
   searchInputEl.setAttribute('placeholder', '');
 });
+
+
+/**
+ *스크롤 이동
+ */
+// 원하는 위치로 스크롤 이동
+// function clickToScroll() {
+// 	jQuery("a[href^='/frontend/index.html#about_move']").on('click',function (e) {
+// 		e.preventDefault();
+// 		var targets = this.hash;
+// 		jQuery('html, body').animate({
+// 			scrollTop: $(targets).offset().top + 70
+// 		}, 1000);
+// 	});
+// }
+
+// 페이지 이동 후 원하는 위치로 스크롤 이동
+function otherPage(){
+	$("html, body").scrollTop(0);
+	if (window.location.hash) {
+        setTimeout(function() {
+        	var headerH = jQuery('header').outerHeight();
+            $('html, body').animate({
+                scrollTop: $(window.location.hash).offset().top -20
+            }, 2000)
+            window.location.hash = '/frontend/index.html#about_move';
+            history.replaceState('', document.title, window.location.pathname);
+        }, 100);
+    }
+}
+
+$(document).ready(function() {
+  // clickToScroll();
+	otherPage();
+});

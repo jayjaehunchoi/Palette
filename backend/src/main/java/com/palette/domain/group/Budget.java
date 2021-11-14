@@ -1,10 +1,10 @@
 package com.palette.domain.group;
 
-import com.palette.dto.request.BudgetUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,7 +35,17 @@ public class Budget {
         this.totalBudget = totalBudget;
     }
 
-    public void update(BudgetUpdateDto dto){
-        totalBudget = dto.getBudget();
+    public void saveBudgetOnGroup(Group group){
+        this.group = group;
+        group.setBudget(this);
+    }
+
+    public void deleteAllExpenses(){
+        this.expenses.clear();
+    }
+
+    public void update(long totalBudget){
+        this.totalBudget = totalBudget;
+        this.group.setBudget(this);
     }
 }

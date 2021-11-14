@@ -8,6 +8,7 @@ import com.palette.dto.response.CommentResponsesDto;
 import com.palette.service.CommentService;
 import com.palette.service.PostService;
 import com.palette.utils.annotation.Login;
+import com.palette.utils.annotation.LoginChecker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,7 @@ public class CommentController {
         return ResponseEntity.ok(CommentResponsesDto.builder().commentResponses(childCommentResponseDtos).build());
     }
 
+    @LoginChecker
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/post/{postId}/comment")
     public Long writeComment(@Login Member member, @PathVariable Long postId, @RequestBody CommentDto commentDto){
@@ -46,6 +48,7 @@ public class CommentController {
         return saveComment.getId();
     }
 
+    @LoginChecker
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/post/{postId}/comment/{commentId}")
     public Long writeChildComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
@@ -54,12 +57,14 @@ public class CommentController {
         return saveComment.getId();
     }
 
+    @LoginChecker
     @PutMapping("/post/{postId}/comment/{commentId}")
     public ResponseEntity<Void> updateComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
         commentService.updateComment(member.getId(),commentId,commentDto.getContent());
         return RESPONSE_OK;
     }
 
+    @LoginChecker
     @DeleteMapping("/post/{postId}/comment/{commentId}")
     public ResponseEntity<Void> deleteComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId){
         commentService.deleteComment(member.getId(), commentId);

@@ -128,13 +128,13 @@ public class PostService {
     }
 
     public void isAvailablePostOnPostGroup(PostGroup postGroup, Long memberId) {
-        if(postGroup.getMember().getId() != memberId){
+        if(!postGroup.getMember().getId().equals(memberId)){
             throw new PostException("그룹 내 게시물 작성 / 수정 / 삭제 권한이 없습니다.");
         }
     }
 
     public void isAvailableUpdatePost(Post findPost, Member member){
-        if(member.getId() != findPost.getMember().getId()){
+        if(!member.getId().equals(findPost.getMember().getId())){
             throw new PostException("게시물 수정 / 삭제 권한이 없습니다.");
         }
     }
