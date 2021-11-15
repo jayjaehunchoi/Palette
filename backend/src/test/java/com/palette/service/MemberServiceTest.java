@@ -4,10 +4,8 @@ import com.palette.domain.member.Member;
 import com.palette.dto.request.MemberUpdateDto;
 import com.palette.exception.MemberException;
 import com.palette.repository.MemberRepository;
-import com.palette.repository.PostRepository;
 import com.palette.utils.S3Uploader;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -31,6 +29,7 @@ class MemberServiceTest {
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
     @Autowired PasswordEncoder passwordEncoder;
+    @Autowired SendEmailService sendEmailService;
     @MockBean
     S3Uploader s3Uploader;
 
@@ -83,13 +82,22 @@ class MemberServiceTest {
     }
 
     @Test
-    void 회원_삭제하기(){
+    void 회원_삭제하기() {
         Member member = new Member("wogns", "1234", "1234","wogns@naver.com");
         memberService.signUp(member);
         BDDMockito.doNothing().when(s3Uploader).deleteS3(Arrays.asList("1234"));
         memberService.deleteMember(member, "1234");
         assertThat(memberRepository.findAll().size()).isEqualTo(0);
     }
+
+//    @Test
+//    void 임시비밀번호발급() {
+//        Member member = new Member("wogns", "1234", "1234","wogns@naver.com");
+//        memberService.signUp(member);
+//        sendEmailService.changePassword("4321", member.getEmail());
+//        boolean matches = passwordEncoder.matches("4321", member.getPassword());
+//        assertTrue(matches);
+//    }
 
     @AfterEach
     void tearDown() {

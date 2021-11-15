@@ -6,7 +6,6 @@ import com.palette.exception.MemberException;
 import com.palette.repository.MemberRepository;
 import com.palette.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,4 +67,13 @@ public class MemberService {
         }
     }
 
+    public boolean checkEmail(String email, String name) {
+        Member member = memberRepository.findByEmail(email).orElseThrow();
+        if(member!=null && member.getName().equals(name)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
