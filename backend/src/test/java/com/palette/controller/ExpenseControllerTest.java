@@ -72,7 +72,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("expense-update-expense"));
+                .andDo(document("expense-create-expense"));
     }
 
     @Test

@@ -18,7 +18,7 @@ endif::[]
 |===
 | 환경 | Domain
 | 운영서버
-| `http://localhost:8080/`
+| `http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080`
 |===
 
 === Exception
@@ -81,6 +81,8 @@ include::{snippets}/member-update/request-part-member-update-data-body.adoc[]
 
 include::{snippets}/member-delete/auto-section.adoc[]
 
+include::{snippets}/member-sendMail/auto-section.adoc[]
+
 = PostGroup API
 
 include::{snippets}/postgroup-create-group/auto-section.adoc[]
@@ -129,10 +131,46 @@ include::{snippets}/comment-update-comment/auto-section.adoc[]
 
 include::{snippets}/comment-delete-comment/auto-section.adoc[]
 
+= Group API
+
+include::{snippets}/group_create_group/auto-section.adoc[]
+
+include::{snippets}/group_read_groups/auto-section.adoc[]
+
+include::{snippets}/group_read_single_group/auto-section.adoc[]
+
+include::{snippets}/group_join_group/auto-section.adoc[]
+
+include::{snippets}/group_update_member/auto-section.adoc[]
+
+include::{snippets}/group_delete_member/auto-section.adoc[]
+
+include::{snippets}/group_delete_group/auto-section.adoc[]
+
+= Budget API
+
+include::{snippets}/budget_create_budget/auto-section.adoc[]
+
+include::{snippets}/budget_get_budget/auto-section.adoc[]
+
+include::{snippets}/budget_update_budget/auto-section.adoc[]
+
+include::{snippets}/budget_delete_budget/auto-section.adoc[]
+
+= Expense API
+
+include::{snippets}/expense-create-expense/auto-section.adoc[]
+
+include::{snippets}/expense_get_expenses/auto-section.adoc[]
+
+include::{snippets}/expense-update-expense/auto-section.adoc[]
+
+include::{snippets}/expense-delete-all/auto-section.adoc[]
+
+include::{snippets}/expense-delete-expense/auto-section.adoc[]
+
 = Page API
 
-게시물 그룹 페이지 개수 조회
 include::{snippets}/page-postgroup-page/auto-section.adoc[]
 
-게시물 페이지 개수 조회
 include::{snippets}/page-post-page/auto-section.adoc[]
