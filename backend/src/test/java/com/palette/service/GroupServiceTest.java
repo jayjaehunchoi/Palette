@@ -150,7 +150,7 @@ public class GroupServiceTest {
 
     @Test
     void 그룹삭제불가_테스트(){
-        Member member1 = new Member("wltn", "1234", "wogns","123");
+        Member member1 = new Member("wltn", "1234", "wogns","12356");
         memberRepo.save(member1);
 
         Group group = Group.builder().
