@@ -7,16 +7,13 @@ import com.palette.domain.member.Member;
 import com.palette.dto.request.GroupDto;
 import com.palette.dto.request.GroupJoinDto;
 import com.palette.dto.request.GroupUpdateDto;
-import com.palette.utils.constant.SessionUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 import java.nio.charset.StandardCharsets;
 

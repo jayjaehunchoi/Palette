@@ -38,4 +38,10 @@ public abstract class ControllerTest {
 
     @MockBean
     protected SendEmailService sendEmailService;
+
+    @MockBean
+    protected BudgetService budgetService;
+
+    @MockBean
+    protected ExpenseService expenseService;
 }
