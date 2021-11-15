@@ -41,6 +41,7 @@ public class GroupControllerTest extends RestDocControllerTest{
     }
 
 
+    // todo : controller 확인 필요
     @Test
     void 여행_그룹_조회() throws Exception {
         Member member = (Member) session.getAttribute(MEMBER);
