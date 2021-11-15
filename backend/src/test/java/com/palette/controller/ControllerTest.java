@@ -35,4 +35,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected S3Uploader s3Uploader;
+
+    @MockBean
+    protected SendEmailService sendEmailService;
 }

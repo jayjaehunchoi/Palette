@@ -31,7 +31,7 @@ public class Group {
     private int numberOfPeople;
 
     @OneToOne
-    @JoinColumn(name = "budget_id", foreignKey = @ForeignKey(name = "fk_budget_group"))
+    @JoinColumn(name = "budget_id", foreignKey = @ForeignKey(name = "fk_travel_group_budget"))
     private Budget budget;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)

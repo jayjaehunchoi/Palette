@@ -143,7 +143,7 @@ public class GroupServiceTest {
     @Test
     void 그룹_업데이트(){
         Group group = groupRepository.findAll().get(0);
-        GroupUpdateDto groupUpdateDto = new GroupUpdateDto(group.getId(),"업데이트된제목","업데이트내용");
+        GroupUpdateDto groupUpdateDto = new GroupUpdateDto("업데이트된제목","업데이트내용");
         groupService.updateGroup(group.getId(),groupUpdateDto);
         assertThat(group.getGroupName()).isEqualTo("업데이트된제목");
     }

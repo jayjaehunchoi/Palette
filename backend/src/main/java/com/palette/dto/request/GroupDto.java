@@ -9,16 +9,13 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class GroupDto {
 
-    private long groupId;
-
     @NotBlank(message = "그룹 이름을 입력해주세요.")
     private String groupName;
 
     @NotBlank(message = "그룹 정보를 입력해주세요.")
     private String groupIntroduction;
 
-    public GroupDto(long groupId, String groupName, String groupIntroduction) {
-        this.groupId = groupId;
+    public GroupDto(String groupName, String groupIntroduction) {
         this.groupName = groupName;
         this.groupIntroduction = groupIntroduction;
     }
