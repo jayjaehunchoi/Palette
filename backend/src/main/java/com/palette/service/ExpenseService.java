@@ -33,7 +33,7 @@ public class ExpenseService {
     private final MemberGroupRepository memberGroupRepository;
 
     @Transactional
-    public Expense findById(long id){
+    public Expense findById(Long id){
         Expense expense = expenseRepository.findById(id).orElse(null);
         isExpenseExists(expense);
         return expense;
@@ -79,7 +79,7 @@ public class ExpenseService {
 
     //지출 수정
     @Transactional
-    public void updateExpense(long id, ExpenseDto expenseDto){
+    public void updateExpense(Long id, ExpenseDto expenseDto){
         Expense expense = findById(id);
         expense.update(expenseDto);
     }

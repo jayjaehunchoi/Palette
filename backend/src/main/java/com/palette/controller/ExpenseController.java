@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/travelgroup")
 @RestController
@@ -63,18 +62,17 @@ public class ExpenseController {
 
     //지출 단건 수정
     @LoginChecker
-    @PutMapping("/{travelgroupid}/expenses/expense") //테스트완료, id 포함해서 줘야함!!
-    public ResponseEntity<Void> updateExpense(@Login Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId){
-        Expense expense = expenseService.findById(expenseDto.getId());
-        expenseService.updateExpense(expenseDto.getId(),expenseDto);
+    @PutMapping("/{travelgroupid}/expenses/{expenseid}") //테스트완료, id 포함해서 줘야함!!
+    public ResponseEntity<Void> updateExpense(@Login Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId, @PathVariable("expenseid") Long expenseId){
+        expenseService.updateExpense(expenseId,expenseDto);
         return HttpResponseUtil.RESPONSE_OK;
     }
 
     //지출 단건 삭제
     @LoginChecker
-    @DeleteMapping("/{travelgroupid}/expenses/expense") //테스트완료 , id 포함해서 줘야함!!
-    public ResponseEntity<Void> deleteExpense(@Login Member member,@RequestBody @Validated ExpenseDto expenseDto,@PathVariable("travelgroupid") Long travelGroupId){
-        Expense expense = expenseService.findById(expenseDto.getId());
+    @DeleteMapping("/{travelgroupid}/expenses/{expenseid}") //테스트완료 , id 포함해서 줘야함!!
+    public ResponseEntity<Void> deleteExpense(@Login Member member,@PathVariable("travelgroupid") Long travelGroupId, @PathVariable("expenseid") Long expenseId){
+        Expense expense = expenseService.findById(expenseId);
         Budget budget = expense.getBudget();
         expenseService.deleteExpense(budget,expense);
         return HttpResponseUtil.RESPONSE_OK;

@@ -1,5 +1,6 @@
 package com.palette.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,4 +16,10 @@ public class EmailDto {
 
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;
+
+    @Builder
+    public EmailDto(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
 }

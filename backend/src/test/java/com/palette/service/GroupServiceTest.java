@@ -143,14 +143,14 @@ public class GroupServiceTest {
     @Test
     void 그룹_업데이트(){
         Group group = groupRepository.findAll().get(0);
-        GroupUpdateDto groupUpdateDto = new GroupUpdateDto(group.getId(),"업데이트된제목","업데이트내용");
+        GroupUpdateDto groupUpdateDto = new GroupUpdateDto("업데이트된제목","업데이트내용");
         groupService.updateGroup(group.getId(),groupUpdateDto);
         assertThat(group.getGroupName()).isEqualTo("업데이트된제목");
     }
 
     @Test
     void 그룹삭제불가_테스트(){
-        Member member1 = new Member("wltn", "1234", "wogns","123");
+        Member member1 = new Member("wltn", "1234", "wogns","12356");
         memberRepo.save(member1);
 
         Group group = Group.builder().

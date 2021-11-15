@@ -93,7 +93,7 @@ public class BudgetServiceTest {
     }
     @Test
     void 접근권환_확인(){
-        Member notGrantMember = new Member("easy", "1234", "easy","123");
+        Member notGrantMember = new Member("easy", "1234", "easy","123124");
         memberRepository.save(notGrantMember);
 
         Group findGroup = groupRepository.findAll().get(0);

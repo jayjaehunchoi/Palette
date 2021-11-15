@@ -12,4 +12,8 @@ public class BudgetDto {
     @NotNull(message = "예산을 입력해주세요")
     @Max(value = 2000000000, message = "입력할 수 있는 최대 예산값을 초과하였습니다.")
     private long totalBudget;
+
+    public BudgetDto(long totalBudget) {
+        this.totalBudget = totalBudget;
+    }
 }
