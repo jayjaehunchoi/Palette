@@ -2,10 +2,13 @@ package com.palette.controller;
 
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
+import com.palette.dto.MailDto;
+import com.palette.dto.request.EmailDto;
 import com.palette.dto.request.MemberDto;
 import com.palette.dto.request.MemberUpdateDto;
 import com.palette.dto.response.MemberResponseDto;
 import com.palette.service.MemberService;
+import com.palette.service.SendEmailService;
 import com.palette.utils.S3Uploader;
 import com.palette.utils.annotation.Login;
 import com.palette.utils.annotation.LoginChecker;
@@ -29,6 +32,7 @@ public class MemberController {
     private final MemberService memberService;
     private final HttpSession session;
     private final S3Uploader s3Uploader;
+    private final SendEmailService sendEmailService;
 
     // 회원가입
     @PostMapping("/signup")
@@ -80,4 +84,20 @@ public class MemberController {
        memberService.deleteMember(member,dto.getPassword());
     }
 
+//    //Email과 name의 일치여부를 check하는 컨트롤러
+//    @GetMapping("/checkEmail")
+//    public Map<String, Boolean> pw_find(@RequestBody @Valid EmailDto emailDto) {
+//        Map<String,Boolean> json = new HashMap<>();
+//        boolean pwFindCheck = memberService.checkEmail(emailDto.getEmail(), emailDto.getName());
+//        System.out.println(pwFindCheck);
+//        json.put("check", pwFindCheck);
+//        return json;
+//    }
+
+    //등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
+    @PostMapping("/sendEmail")
+    public void sendEmail(@RequestBody @Valid EmailDto emailDto){
+        MailDto dto = sendEmailService.changePassword(emailDto.getEmail(), emailDto.getName());
+        sendEmailService.mailSend(dto);
+    }
 }

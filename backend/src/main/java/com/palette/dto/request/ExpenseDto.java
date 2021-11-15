@@ -1,6 +1,7 @@
 package com.palette.dto.request;
 
 import com.palette.domain.group.Expense;
+import com.palette.utils.annotation.EnumNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,9 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class ExpenseDto {
 
-    private Long id;
-
-    @NotNull(message = "지출 분류를 입력해주세요.")
+    @EnumNull(message = "지출 분류를 입력해주세요.")
     private Expense.Category category;
 
     @NotBlank(message = "항목을 입력해주세요.")
@@ -25,7 +24,6 @@ public class ExpenseDto {
     private long price;
 
     public ExpenseDto(final Expense expense){
-        this.id = expense.getId();
         this.category = expense.getCategory();
         this.detail = expense.getDetail();
         this.price = expense.getPrice();

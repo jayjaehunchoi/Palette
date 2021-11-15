@@ -3,6 +3,8 @@ package com.palette.controller;
 import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
+import com.palette.dto.MailDto;
+import com.palette.dto.request.EmailDto;
 import com.palette.dto.request.MemberDto;
 import com.palette.dto.request.MemberUpdateDto;
 import com.palette.dto.response.MemberResponseDto;
@@ -147,6 +149,22 @@ public class MemberControllerTest extends RestDocControllerTest{
                 .andDo(print())
                 .andDo(document("member-delete"));
 
+    }
+
+    @Test
+    void 이메일_전송() throws Exception{
+        MailDto mailDto = MailDto.builder().title(TITLE).address(EMAIL).message(CONTENT).build();
+        given(sendEmailService.changePassword(any(),any())).willReturn(mailDto);
+
+        EmailDto emailDto = EmailDto.builder().email(EMAIL).name(NAME).build();
+        String json = objectMapper.writeValueAsString(emailDto);
+        restDocsMockMvc.perform(post("/sendEmail")
+                .content(json)
+                .characterEncoding(StandardCharsets.UTF_8)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(document("member-sendMail"));
     }
 
     private Member createMember(){

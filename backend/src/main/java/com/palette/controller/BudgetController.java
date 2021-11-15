@@ -13,6 +13,7 @@ import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class BudgetController {
     }
 
     //총 예산 추가
+    @ResponseStatus(HttpStatus.CREATED)
     @LoginChecker
-    @ResponseBody
     @PostMapping("/{travelgroupid}/budget") //테스트완료 (중복추가안되게도 완료)
     public Long saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);

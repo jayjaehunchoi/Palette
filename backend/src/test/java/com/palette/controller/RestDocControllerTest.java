@@ -21,6 +21,7 @@ public abstract class RestDocControllerTest extends ControllerTest{
     protected static final String REGION = "서울";
     protected static final String TITLE = "제목";
     protected static final String CONTENT = "내용";
+    protected static final String CODE = "das1-123s-fvj1-pqaz";
 
 
     protected MockMvc restDocsMockMvc;
