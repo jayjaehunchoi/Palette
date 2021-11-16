@@ -85,7 +85,8 @@ public class MemberControllerTest extends RestDocControllerTest{
                 .characterEncoding(StandardCharsets.UTF_8))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("member-login"));
+                .andDo(document("member-login",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
