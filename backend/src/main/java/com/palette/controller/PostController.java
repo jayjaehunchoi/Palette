@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,9 +67,8 @@ public class PostController {
     }
 
     @LoginChecker
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/postgroup/{postGroupId}/post")
-    public Long createPost(@Login Member member, @PathVariable Long postGroupId, @RequestPart("data")@Valid PostRequestDto postRequestDto, @RequestPart("files") List<MultipartFile> imageFiles) throws IOException {
+    public ResponseEntity<Void> createPost(@Login Member member, @PathVariable Long postGroupId, @RequestPart("data")@Valid PostRequestDto postRequestDto, @RequestPart("files") List<MultipartFile> imageFiles) throws IOException {
         PostGroup findPostGroup = postGroupService.findById(postGroupId);
         postService.isAvailablePostOnPostGroup(findPostGroup, member.getId());
         List<MyFile> myFiles = s3Uploader.uploadFiles(imageFiles);
@@ -79,7 +79,7 @@ public class PostController {
                 .period(findPostGroup.getPeriod())
                 .build();
         Post savedPost = postService.write(post, findPostGroup, myFiles);
-        return savedPost.getId();
+        return ResponseEntity.created(URI.create("/post/"+savedPost.getId())).build();
     }
 
     @LoginChecker
