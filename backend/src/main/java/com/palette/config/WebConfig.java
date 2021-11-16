@@ -32,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:5500","http://127.0.0.1:5500") // todo : 프론트 서버 배포 후 변경
                 .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
                 .allowedHeaders("*")
+                .exposedHeaders("Set-Cookie","authorization")
                 .allowCredentials(true)
                 .maxAge(MAX_AGE_SECS);
     }
