@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,12 +60,11 @@ public class PostGroupController {
     }
 
     @LoginChecker
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long uploadPostGroup(@Login Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
+    public ResponseEntity<Void> uploadPostGroup(@Login Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
         PostGroup postGroup = createPostGroupEntity(member, dto, file);
         PostGroup savePostGroup = postGroupService.createPostGroup(postGroup);
-        return savePostGroup.getId();
+        return ResponseEntity.created(URI.create("/postgroup/"+savePostGroup.getId())).build();
     }
 
     @LoginChecker

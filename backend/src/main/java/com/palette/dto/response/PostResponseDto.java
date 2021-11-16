@@ -14,6 +14,7 @@ public class PostResponseDto {
     private String postTitle;
     private String postContent;
     private int likes;
+    private int hit;
     private List<String> images;
     private List<CommentResponseDto> comments;
 
@@ -24,6 +25,7 @@ public class PostResponseDto {
         this.postTitle = post.getTitle();
         this.postContent = post.getContent();
         this.likes = post.getLikeCount();
+        this.hit = post.getHit();
     }
 
     public void setComments(List<CommentResponseDto> commentResponseDtos) {
