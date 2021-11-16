@@ -45,7 +45,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         ExpenseDto expenseDto = new ExpenseDto(new Expense(Expense.Category.TRANSPORTATION, "내용", 1000L));
         BudgetResponseDto budgetResponseDto = new BudgetResponseDto(1L, 10000, 1000, 9000, Arrays.asList(expenseDto));
         given(expenseService.readExpenses(any(),any())).willReturn(budgetResponseDto);
-        restDocsMockMvc.perform(get("/travelgroup/1/expenses").session(session))
+        restDocsMockMvc.perform(get("/travelgroup/1/expenses").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("expense_get_expenses",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
@@ -66,7 +66,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         ExpenseDto expenseDto = new ExpenseDto(expense);
         String json = objectMapper.writeValueAsString(expenseDto);
 
-        restDocsMockMvc.perform(post("/travelgroup/1/expenses").session(session)
+        restDocsMockMvc.perform(post("/travelgroup/1/expenses").header(AUTH, TOKEN)
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -80,7 +80,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         Group group = createGroup();
         given(groupService.findById(any())).willReturn(group);
         doNothing().when(expenseService).deleteExpense(any(),any());
-        restDocsMockMvc.perform(delete("/travelgroup/1/expenses").session(session))
+        restDocsMockMvc.perform(delete("/travelgroup/1/expenses").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("expense-delete-all"));
@@ -94,7 +94,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
 
         ExpenseDto expenseDto = new ExpenseDto(expense);
         String json = objectMapper.writeValueAsString(expenseDto);
-        restDocsMockMvc.perform(put("/travelgroup/1/expenses/1").session(session)
+        restDocsMockMvc.perform(put("/travelgroup/1/expenses/1").header(AUTH, TOKEN)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -109,7 +109,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         given(expenseService.findById(any())).willReturn(expense);
         doNothing().when(expenseService).deleteExpense(any(),any());
 
-        restDocsMockMvc.perform(delete("/travelgroup/1/expenses/1").session(session))
+        restDocsMockMvc.perform(delete("/travelgroup/1/expenses/1").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("expense-delete-expense"));

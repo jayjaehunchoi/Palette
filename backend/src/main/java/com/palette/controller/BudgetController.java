@@ -8,7 +8,7 @@ import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.response.BudgetResponseDto;
 import com.palette.service.BudgetService;
 import com.palette.service.GroupService;
-import com.palette.utils.annotation.Login;
+import com.palette.controller.auth.AuthenticationPrincipal;
 import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class BudgetController {
     //budget 정보 읽기
     @LoginChecker
     @GetMapping("/{travelgroupid}/budget") //테스트완료
-    public BudgetResponseDto readBudget(@Login Member member, @PathVariable("travelgroupid") Long travelGroupId){
+    public BudgetResponseDto readBudget(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
         return budgetService.readBudget(member,travelGroupId);
     }
 
@@ -38,7 +38,7 @@ public class BudgetController {
     @ResponseStatus(HttpStatus.CREATED)
     @LoginChecker
     @PostMapping("/{travelgroupid}/budget") //테스트완료 (중복추가안되게도 완료)
-    public Long saveBudget(@Login Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") Long travelGroupId){
+    public Long saveBudget(@AuthenticationPrincipal Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = Budget.builder()
                         .group(group)
@@ -50,7 +50,7 @@ public class BudgetController {
     //예산 수정
     @LoginChecker
     @PutMapping("/{travelgroupid}/budget") //테스트완료
-    public ResponseEntity<Void> updateBudget(@Login Member member, @RequestBody @Validated BudgetUpdateDto budgetUpdateDto, @PathVariable("travelgroupid") Long travelGroupId){
+    public ResponseEntity<Void> updateBudget(@AuthenticationPrincipal Member member, @RequestBody @Validated BudgetUpdateDto budgetUpdateDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         log.info("dto budget = {}",budgetUpdateDto.getTotalBudget());
         budgetService.updateBudget(group.getBudget().getId(),budgetUpdateDto);
@@ -60,7 +60,7 @@ public class BudgetController {
     //예산 삭제
     @LoginChecker
     @DeleteMapping("/{travelgroupid}/budget") //테스트완료
-    public ResponseEntity<Void> deleteBudget(@Login Member member,@PathVariable("travelgroupid") Long travelGroupId){
+    public ResponseEntity<Void> deleteBudget(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         budgetService.deleteBudget(group);
         return HttpResponseUtil.RESPONSE_OK;

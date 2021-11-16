@@ -6,8 +6,7 @@ import com.palette.dto.request.CommentDto;
 import com.palette.dto.response.CommentResponseDto;
 import com.palette.dto.response.CommentResponsesDto;
 import com.palette.service.CommentService;
-import com.palette.service.PostService;
-import com.palette.utils.annotation.Login;
+import com.palette.controller.auth.AuthenticationPrincipal;
 import com.palette.utils.annotation.LoginChecker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +41,7 @@ public class CommentController {
     @LoginChecker
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/post/{postId}/comment")
-    public Long writeComment(@Login Member member, @PathVariable Long postId, @RequestBody CommentDto commentDto){
+    public Long writeComment(@AuthenticationPrincipal Member member, @PathVariable Long postId, @RequestBody CommentDto commentDto){
         Comment comment = Comment.builder().member(member).commentContent(commentDto.getContent()).build();
         Comment saveComment = commentService.writeComment(comment, postId, INIT_ID);
         return saveComment.getId();
@@ -51,7 +50,7 @@ public class CommentController {
     @LoginChecker
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/post/{postId}/comment/{commentId}")
-    public Long writeChildComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
+    public Long writeChildComment(@AuthenticationPrincipal Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
         Comment comment = Comment.builder().member(member).commentContent(commentDto.getContent()).build();
         Comment saveComment = commentService.writeComment(comment, postId, commentId);
         return saveComment.getId();
@@ -59,14 +58,14 @@ public class CommentController {
 
     @LoginChecker
     @PutMapping("/post/{postId}/comment/{commentId}")
-    public ResponseEntity<Void> updateComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
+    public ResponseEntity<Void> updateComment(@AuthenticationPrincipal Member member, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDto commentDto){
         commentService.updateComment(member.getId(),commentId,commentDto.getContent());
         return RESPONSE_OK;
     }
 
     @LoginChecker
     @DeleteMapping("/post/{postId}/comment/{commentId}")
-    public ResponseEntity<Void> deleteComment(@Login Member member, @PathVariable Long postId, @PathVariable Long commentId){
+    public ResponseEntity<Void> deleteComment(@AuthenticationPrincipal Member member, @PathVariable Long postId, @PathVariable Long commentId){
         commentService.deleteComment(member.getId(), commentId);
         return RESPONSE_OK;
     }

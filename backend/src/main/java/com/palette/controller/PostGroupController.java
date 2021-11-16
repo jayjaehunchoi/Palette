@@ -15,10 +15,9 @@ import com.palette.service.PostService;
 import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.S3Uploader;
-import com.palette.utils.annotation.Login;
+import com.palette.controller.auth.AuthenticationPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +60,8 @@ public class PostGroupController {
 
     @LoginChecker
     @PostMapping
-    public ResponseEntity<Void> uploadPostGroup(@Login Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
+    public ResponseEntity<Void> uploadPostGroup(@AuthenticationPrincipal Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
+        log.info("member {}",member);
         PostGroup postGroup = createPostGroupEntity(member, dto, file);
         PostGroup savePostGroup = postGroupService.createPostGroup(postGroup);
         return ResponseEntity.created(URI.create("/postgroup/"+savePostGroup.getId())).build();
@@ -69,7 +69,7 @@ public class PostGroupController {
 
     @LoginChecker
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePostGroup(@Login Member member, @PathVariable Long id, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file") MultipartFile file) throws IOException{
+    public ResponseEntity<Void> updatePostGroup(@AuthenticationPrincipal Member member, @PathVariable Long id, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file") MultipartFile file) throws IOException{
         postGroupService.checkMemberAuth(member,id);
         String storeFileName = postGroupService.getStoreFileNameIfChanged(id, file);
         MyFile myFile = updateDirectoryFile(file, storeFileName);
@@ -79,7 +79,7 @@ public class PostGroupController {
 
     @LoginChecker
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePostGroup(@Login Member member, @PathVariable Long id){
+    public ResponseEntity<Void> deletePostGroup(@AuthenticationPrincipal Member member, @PathVariable Long id){
         PostGroup postGroup = postGroupService.checkMemberAuth(member, id);
         postService.findPostIdsByPostGroupId(id).forEach(postId -> postService.delete(postId));
         postGroupService.deletePostGroup(postGroup);
