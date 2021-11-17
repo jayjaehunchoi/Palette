@@ -66,8 +66,8 @@ public class PostControllerTest extends RestDocControllerTest{
     void 단건_게시물_조회() throws Exception{
         PostResponseDto postResponseDto = new PostResponseDto(new Post(TITLE, CONTENT, new Member(NAME, PASSWORD, IMAGE, EMAIL), new Period(START, END), REGION));
         postResponseDto.setImages(Arrays.asList(IMAGE, IMAGE));
-        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, START);
-        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, START);
+        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, CREATED_DATE);
+        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, CREATED_DATE);
         postResponseDto.setComments(Arrays.asList(dto1, dto2));
         given(postService.findSinglePost(any(),any())).willReturn(postResponseDto);
         restDocsMockMvc.perform(get("/post/1"))

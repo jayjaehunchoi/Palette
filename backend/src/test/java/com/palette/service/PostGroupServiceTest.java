@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -56,8 +57,8 @@ class PostGroupServiceTest {
             if(i == 14){
                 title = "여행오자";
             }
-            PostGroup postGroup = PostGroup.builder().member(insertMember).title(title).period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                    LocalDateTime.of(2021, 11, 03, 10, 10))).region(region).build();
+            PostGroup postGroup = PostGroup.builder().member(insertMember).title(title).period(new Period(LocalDate.of(2021, 11, 01),
+                    LocalDate.of(2021, 11, 03))).region(region).build();
             postGroupService.createPostGroup(postGroup);
         }
     }
@@ -102,8 +103,8 @@ class PostGroupServiceTest {
         PostGroup findGroup = postGroupService.findAll().get(0);
 
 
-        postGroupService.updatePostGroup(findGroup.getId(), new PostGroupDto("여행이 좋아요", new PeriodDto(LocalDateTime.of(2021, 11, 01, 10, 10),
-                LocalDateTime.of(2021, 11, 03, 10, 10)), "부산"), null);
+        postGroupService.updatePostGroup(findGroup.getId(), new PostGroupDto("여행이 좋아요", new PeriodDto(LocalDate.of(2021, 11, 01),
+                LocalDate.of(2021, 11, 03)), "부산"), null);
 
 
         PostGroup findGroup2 = postGroupService.findById(findGroup.getId());

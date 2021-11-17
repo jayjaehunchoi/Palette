@@ -40,8 +40,8 @@ public class CommentControllerTest extends RestDocControllerTest{
 
     @Test
     void 게시물_댓글_조회_페이징() throws Exception {
-        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, START);
-        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, START);
+        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, CREATED_DATE);
+        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, CREATED_DATE);
 
         given(commentService.findCommentByClickViewMore(anyLong(),anyLong()))
                 .willReturn(Arrays.asList(dto1,dto2));
@@ -56,8 +56,8 @@ public class CommentControllerTest extends RestDocControllerTest{
 
     @Test
     void 게시물_댓글_답글_조회_페이징() throws Exception{
-        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, START);
-        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, START);
+        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, CREATED_DATE);
+        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, CREATED_DATE);
         given(commentService.findChildComment(any(),any()))
                 .willReturn(Arrays.asList(dto1,dto2));
 

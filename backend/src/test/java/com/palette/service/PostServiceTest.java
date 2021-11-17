@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +43,16 @@ public class PostServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post, group);
 
@@ -66,16 +67,16 @@ public class PostServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post, group);
         likeService.pushLike(member,post.getId());
@@ -93,16 +94,16 @@ public class PostServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post, group);
 
@@ -115,16 +116,16 @@ public class PostServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5)))
                 .build();
 
         List<MyFile> myFiles = new ArrayList<>();
@@ -136,8 +137,8 @@ public class PostServiceTest {
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         List<MyFile> myFiles2 = new ArrayList<>();
         myFiles2.add(new MyFile("abc.jpg","abc.jpg"));
@@ -155,16 +156,16 @@ public class PostServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         List<MyFile> myFiles = new ArrayList<>();
         myFiles.add(new MyFile("abc.jpg","abc.jpg"));
@@ -183,8 +184,8 @@ public class PostServiceTest {
         memberRepository.save(member);
         Member findMember = memberRepository.findAll().get(0);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         for(int i = 0 ; i < 10 ; i++){
@@ -193,8 +194,8 @@ public class PostServiceTest {
                     .member(findMember)
                     .content("내용")
                     .region(region)
-                    .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                            , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                    .period(new Period(LocalDate.of(2021, 11, 2)
+                            , LocalDate.of(2021, 11, 5)))
                     .build();
 
             postService.write(post,group);
@@ -208,11 +209,11 @@ public class PostServiceTest {
     void 그룹내_포스트_조회(){
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
 
-        PostGroup group2 = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group2 = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
 
         postGroupRepository.save(group);
         postGroupRepository.save(group2);
@@ -223,8 +224,8 @@ public class PostServiceTest {
                     .member(member)
                     .content("내용")
                     .region(region)
-                    .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                            , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                    .period(new Period(LocalDate.of(2021, 11, 2)
+                            , LocalDate.of(2021, 11, 5)))
                     .build();
 
             if(i > 7){
