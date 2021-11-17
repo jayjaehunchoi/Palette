@@ -41,6 +41,9 @@ public class LoginCheckerAspect {
         if(accessToken == null){
             throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.") {};
         }
-        jwtTokenProvider.isValidToken(accessToken);
+        boolean validToken = jwtTokenProvider.isValidToken(accessToken);
+        if(!validToken){
+            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.") {};
+        }
     }
 }
