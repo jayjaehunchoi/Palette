@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,12 +15,12 @@ import java.time.LocalDateTime;
 public class Period {
 
     // 여행 시작 일자
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     // 여행 종료 일자
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
-    public Period(LocalDateTime startDate, LocalDateTime endDate) {
+    public Period(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
