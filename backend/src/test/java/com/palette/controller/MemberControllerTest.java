@@ -91,7 +91,6 @@ public class MemberControllerTest extends RestDocControllerTest{
 
     @Test
     void 멤버정보_가져오기() throws Exception{
-        session.setAttribute(MEMBER, createMember());
         Member member = createMember();
         given(memberService.getMemberInfo(anyLong())).willReturn(member);
         restDocsMockMvc.perform(get("/member/1").header(AUTH, TOKEN)).andExpect(status().isOk())
@@ -104,7 +103,6 @@ public class MemberControllerTest extends RestDocControllerTest{
 
     @Test
     void 멤버정보_수정() throws Exception{
-        session.setAttribute(MEMBER, createMember());
         MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
         MemberUpdateDto dto = new MemberUpdateDto(PASSWORD);
         String memberJson = objectMapper.writeValueAsString(dto);
@@ -129,7 +127,6 @@ public class MemberControllerTest extends RestDocControllerTest{
 
     @Test
     void 멤버_삭제() throws Exception{
-        session.setAttribute(MEMBER, createMember());
         doNothing().when(memberService).deleteMember(any(),any());
         MemberUpdateDto dto = new MemberUpdateDto(PASSWORD);
         String json = objectMapper.writeValueAsString(dto);
@@ -159,10 +156,5 @@ public class MemberControllerTest extends RestDocControllerTest{
                 .andDo(print())
                 .andDo(document("member-sendMail"));
     }
-
-    private Member createMember(){
-        return new Member(NAME, PASSWORD,IMAGE,EMAIL);
-    }
-
 
 }

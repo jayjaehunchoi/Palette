@@ -90,10 +90,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
     void 포스트_그룹_생성() throws Exception{
         MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
         PostGroupDto data = new PostGroupDto(TITLE, new PeriodDto(START, END), REGION);
-        PostGroup postGroup = PostGroup.builder().title(data.getTitle())
-                .period(new Period(data.getPeriod()))
-                .region(data.getRegion())
-                .build();
+        PostGroup postGroup = createPostGroup();
         MyFile myFile = new MyFile("imagefile.jpeg", "imagefile.jpeg");
         postGroup.setThumbNail(myFile);
 
@@ -120,10 +117,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
     void 포스트_그룹_업데이트() throws Exception{
         MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
         PostGroupDto data = new PostGroupDto(TITLE, new PeriodDto(START, END), REGION);
-        PostGroup postGroup = PostGroup.builder().title(data.getTitle())
-                .period(new Period(data.getPeriod()))
-                .region(data.getRegion())
-                .build();
+        PostGroup postGroup = createPostGroup();
         MyFile myFile = new MyFile("imagefile.jpeg", "imagefile.jpeg");
         postGroup.setThumbNail(myFile);
 
@@ -151,10 +145,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
 
     @Test
     void 포스트_그룹_삭제() throws Exception{
-        PostGroup postGroup = PostGroup.builder().title(TITLE)
-                .period(new Period(START,END))
-                .region(REGION)
-                .build();
+        PostGroup postGroup = createPostGroup();
 
         given(postGroupService.checkMemberAuth(any(),anyLong())).willReturn(postGroup);
         given(postService.findPostIdsByPostGroupId(anyLong())).willReturn(Arrays.asList(1L));
@@ -165,12 +156,5 @@ public class PostGroupControllerTest extends RestDocControllerTest{
                 ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
 
     }
-
-    @AfterEach
-    void tearDown(){
-        session.clearAttributes();;
-        session = null;
-    }
-
 
 }

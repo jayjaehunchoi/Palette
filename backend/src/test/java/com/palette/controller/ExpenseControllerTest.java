@@ -34,10 +34,6 @@ public class ExpenseControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = RestDocUtil.successRestDocsMockMvc(provider, expenseController);
-
-        Member member = createMember();
-
-        session.setAttribute(MEMBER,member);
     }
 
     @Test
@@ -121,13 +117,5 @@ public class ExpenseControllerTest extends RestDocControllerTest{
 
     private Budget createBudget(Group group) {
         return new Budget(group, 10000L);
-    }
-
-    private Member createMember(){
-        return new Member(NAME, PASSWORD,IMAGE,EMAIL);
-    }
-
-    private Group createGroup() {
-        return Group.builder().groupName("groupName").groupsIntroduction("This is Group").build();
     }
 }

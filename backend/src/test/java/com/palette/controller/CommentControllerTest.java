@@ -33,9 +33,6 @@ public class CommentControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = successRestDocsMockMvc(provider, commentController);
-
-        Member member = new Member(NAME,PASSWORD,IMAGE,EMAIL);
-        session.setAttribute(SessionUtil.MEMBER,member);
     }
 
     @Test
@@ -129,13 +126,4 @@ public class CommentControllerTest extends RestDocControllerTest{
                 .build();
         return comment;
     }
-
-    @AfterEach
-    void tearDown(){
-        session.clearAttributes();;
-        session = null;
-    }
-
-
-
 }
