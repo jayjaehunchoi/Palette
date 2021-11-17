@@ -71,8 +71,6 @@ include::{snippets}/member-signup/request-part-member-data-body.adoc[]
 
 include::{snippets}/member-login/auto-section.adoc[]
 
-include::{snippets}/member-logout/auto-section.adoc[]
-
 include::{snippets}/member-getMember/auto-section.adoc[]
 
 include::{snippets}/member-update/auto-section.adoc[]

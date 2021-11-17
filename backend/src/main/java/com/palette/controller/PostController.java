@@ -15,16 +15,16 @@ import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.ConstantUtil;
 import com.palette.utils.constant.HttpResponseUtil;
 import com.palette.utils.S3Uploader;
-import com.palette.utils.annotation.Login;
+import com.palette.controller.auth.AuthenticationPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,15 +60,14 @@ public class PostController {
 
     @LoginChecker
     @PostMapping("/post/{id}/like")
-    public ResponseEntity<GeneralResponse> pushLikeButton(@Login Member member, @PathVariable Long id){
+    public ResponseEntity<GeneralResponse> pushLikeButton(@AuthenticationPrincipal Member member, @PathVariable Long id){
         int likeCount = likeService.pushLike(member, id);
         return ResponseEntity.ok(GeneralResponse.builder().data(likeCount).build());
     }
 
     @LoginChecker
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/postgroup/{postGroupId}/post")
-    public Long createPost(@Login Member member, @PathVariable Long postGroupId, @RequestPart("data")@Valid PostRequestDto postRequestDto, @RequestPart("files") List<MultipartFile> imageFiles) throws IOException {
+    public ResponseEntity<Void> createPost(@AuthenticationPrincipal Member member, @PathVariable Long postGroupId, @RequestPart("data")@Valid PostRequestDto postRequestDto, @RequestPart("files") List<MultipartFile> imageFiles) throws IOException {
         PostGroup findPostGroup = postGroupService.findById(postGroupId);
         postService.isAvailablePostOnPostGroup(findPostGroup, member.getId());
         List<MyFile> myFiles = s3Uploader.uploadFiles(imageFiles);
@@ -79,12 +78,12 @@ public class PostController {
                 .period(findPostGroup.getPeriod())
                 .build();
         Post savedPost = postService.write(post, findPostGroup, myFiles);
-        return savedPost.getId();
+        return ResponseEntity.created(URI.create("/post/"+savedPost.getId())).build();
     }
 
     @LoginChecker
     @PutMapping("/postgroup/{postGroupId}/post/{id}")
-    public ResponseEntity<Void> updatePost(@Login Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId, @RequestBody @Valid PostRequestDto postRequestDto){
+    public ResponseEntity<Void> updatePost(@AuthenticationPrincipal Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId, @RequestBody @Valid PostRequestDto postRequestDto){
         validateMemberCanUpdateOrDeletePost(member, postGroupId, postId);
         postService.update(postId,postRequestDto);
         return HttpResponseUtil.RESPONSE_OK;
@@ -92,7 +91,7 @@ public class PostController {
 
     @LoginChecker
     @DeleteMapping("/postgroup/{postGroupId}/post/{id}")
-    public ResponseEntity<Void> deletePost(@Login Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId){
+    public ResponseEntity<Void> deletePost(@AuthenticationPrincipal Member member, @PathVariable("postGroupId") Long postGroupId, @PathVariable("id") Long postId){
         validateMemberCanUpdateOrDeletePost(member, postGroupId, postId);
         postService.delete(postId);
         return HttpResponseUtil.RESPONSE_OK;

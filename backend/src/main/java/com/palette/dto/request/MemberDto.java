@@ -26,8 +26,6 @@ public class MemberDto {
     @Email(message = "이메일 형식에 맞지 않습니다.")
     private String email;
 
-    private String emailConfirm ="confirmNot";
-
     public Member toEntity() {
        Member build = Member.builder()
                .name(name)

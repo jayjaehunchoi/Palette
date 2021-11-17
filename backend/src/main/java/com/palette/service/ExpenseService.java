@@ -97,19 +97,7 @@ public class ExpenseService {
 
     //expense List-> dto List로 바꿔주기
     public List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
-
         return expenses.stream().map(ExpenseDto::new).collect(Collectors.toList());
-
-/*      테스트완료하면 지우기
-        List<ExpenseDto> expenseDtos = new ArrayList<>();
-        for(int i = 0; i < expenses.size(); i++){
-            String category = expenses.get(i).getCategory().name();
-            String detail = expenses.get(i).getDetail();
-            long price = expenses.get(i).getPrice();
-            expenseDtos.add(new ExpenseDto(category,detail,price));
-        }
-        return expenseDtos;
- */
     }
 
     //그룹이 존재하는지 확인

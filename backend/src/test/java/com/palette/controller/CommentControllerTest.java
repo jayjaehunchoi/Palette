@@ -77,7 +77,7 @@ public class CommentControllerTest extends RestDocControllerTest{
 
         restDocsMockMvc.perform(post("/post/1/comment")
                         .content(objectMapper.writeValueAsString(commentDto))
-                        .contentType(MediaType.APPLICATION_JSON).session(session))
+                        .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isCreated())
                 .andDo(document("comment-create-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
@@ -91,7 +91,7 @@ public class CommentControllerTest extends RestDocControllerTest{
 
         restDocsMockMvc.perform(post("/post/1/comment/1")
                 .content(objectMapper.writeValueAsString(commentDto))
-                .contentType(MediaType.APPLICATION_JSON).session(session))
+                .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isCreated())
                 .andDo(document("comment-create-child-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
@@ -105,7 +105,7 @@ public class CommentControllerTest extends RestDocControllerTest{
 
         restDocsMockMvc.perform(put("/post/1/comment/1")
                 .content(objectMapper.writeValueAsString(commentDto))
-                .contentType(MediaType.APPLICATION_JSON).session(session))
+                .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(document("comment-update-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
@@ -115,7 +115,7 @@ public class CommentControllerTest extends RestDocControllerTest{
     void 댓글_삭제() throws Exception{
         doNothing().when(commentService).deleteComment(1L,1L);
 
-        restDocsMockMvc.perform(delete("/post/1/comment/1").session(session))
+        restDocsMockMvc.perform(delete("/post/1/comment/1").header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(document("comment-delete-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
