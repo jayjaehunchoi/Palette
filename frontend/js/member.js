@@ -1,3 +1,22 @@
+$('.joinBt').click(function() { 
+  var userId = $('.userId').val(); 
+  var userPw = $('.userPw').val();
+  var userPw = $('.userPw').val(); 
+  var userPw = $('.userPw').val();  
+
+  $.ajax({ 
+    type : "POST", 
+    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/signup", 
+    data : {email:userId, password:userPw}, 
+    success : function(data) { 
+      if (data == "false") { 
+        alert('아이디 혹은 비밀번호를 확인하세요') 
+      } else { 
+        window.location.href = '/frontend/index.html'; 
+      } 
+    }
+  })
+});
 
 
 
