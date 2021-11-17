@@ -28,4 +28,12 @@ public class ExpenseDto {
         this.detail = expense.getDetail();
         this.price = expense.getPrice();
     }
+
+    public Expense toEntity(){
+       return Expense.builder()
+                .category(this.getCategory())
+                .detail(this.getDetail())
+                .price(this.getPrice())
+                .build();
+    }
 }

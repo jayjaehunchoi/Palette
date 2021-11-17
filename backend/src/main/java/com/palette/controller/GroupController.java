@@ -43,7 +43,7 @@ public class GroupController {
 
     //단건 그룹 조회 ( 해당 그룹 클릭 했을 때 )
     @LoginChecker
-    @GetMapping(value = "/{travelgroupid}")
+    @GetMapping("/{travelgroupid}")
     public ResponseEntity<GroupResponseDto> readGroup(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         groupService.isMemberHaveAuthToUpdate(member,group);

@@ -50,7 +50,7 @@ public class MemberController {
                 .profileFileName(myFile.getStoreFileName())
                 .build();
 
-        Member saveMember = memberService.signUp(member);
+        memberService.signUp(member);
         return member.getId();
     }
 
