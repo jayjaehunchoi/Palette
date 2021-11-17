@@ -1,8 +1,6 @@
 package com.palette.controller;
 
 import com.palette.controller.util.RestDocUtil;
-import com.palette.domain.Period;
-import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.PeriodDto;
@@ -10,8 +8,6 @@ import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.dto.response.PostGroupsResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.utils.constant.SessionUtil;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

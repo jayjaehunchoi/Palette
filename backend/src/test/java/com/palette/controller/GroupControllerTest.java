@@ -17,7 +17,6 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.palette.utils.constant.SessionUtil.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;

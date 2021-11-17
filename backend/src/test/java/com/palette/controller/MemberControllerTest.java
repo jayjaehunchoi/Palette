@@ -4,7 +4,7 @@ import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.dto.MailDto;
-import com.palette.dto.Token;
+import com.palette.controller.auth.Token;
 import com.palette.dto.request.EmailDto;
 import com.palette.dto.request.MemberDto;
 import com.palette.dto.request.MemberUpdateDto;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.palette.utils.constant.SessionUtil.MEMBER;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -92,8 +91,8 @@ public class MemberControllerTest extends RestDocControllerTest{
     @Test
     void 멤버정보_가져오기() throws Exception{
         Member member = createMember();
-        given(memberService.getMemberInfo(anyLong())).willReturn(member);
-        restDocsMockMvc.perform(get("/member/1").header(AUTH, TOKEN)).andExpect(status().isOk())
+        given(memberService.getMemberInfo(any())).willReturn(member);
+        restDocsMockMvc.perform(get("/member").header(AUTH, TOKEN)).andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().json(objectMapper.writeValueAsString(new MemberResponseDto(member))))
                 .andExpect(status().isOk())
@@ -109,7 +108,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         MockMultipartFile json = new MockMultipartFile("member-update-data", "json", "application/json",memberJson.getBytes(StandardCharsets.UTF_8));
         given(s3Uploader.uploadSingleFile(any())).willReturn(new MyFile(IMAGE,IMAGE));
         doNothing().when(memberService).updateMember(any(),any(),any());
-        MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart("/member/1");
+        MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart("/member");
         builder.with(request -> { request.setMethod("PUT"); return request; });
 
         restDocsMockMvc.perform(builder

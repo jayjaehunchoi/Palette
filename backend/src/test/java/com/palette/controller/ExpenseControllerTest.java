@@ -4,9 +4,7 @@ import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Expense;
 import com.palette.domain.group.Group;
-import com.palette.domain.member.Member;
 import com.palette.dto.request.ExpenseDto;
-import com.palette.dto.response.BudgetResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
-import static com.palette.utils.constant.SessionUtil.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,19 +28,6 @@ public class ExpenseControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = RestDocUtil.successRestDocsMockMvc(provider, expenseController);
-    }
-
-    @Test
-    void 지출_전체_조회() throws Exception{
-        ExpenseDto expenseDto = new ExpenseDto(new Expense(Expense.Category.TRANSPORTATION, "내용", 1000L));
-        BudgetResponseDto budgetResponseDto = new BudgetResponseDto(1L, 10000, 1000, 9000, Arrays.asList(expenseDto));
-        given(expenseService.readExpenses(any(),any())).willReturn(budgetResponseDto);
-        restDocsMockMvc.perform(get("/travelgroup/1/expenses").header(AUTH, TOKEN))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("expense_get_expenses",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
-                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
-
     }
 
     @Test

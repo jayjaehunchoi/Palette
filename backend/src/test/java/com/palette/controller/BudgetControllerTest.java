@@ -4,7 +4,6 @@ import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Expense;
 import com.palette.domain.group.Group;
-import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
@@ -19,7 +18,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import static com.palette.utils.constant.SessionUtil.*;
+
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;

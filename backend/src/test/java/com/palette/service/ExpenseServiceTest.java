@@ -82,18 +82,6 @@ public class ExpenseServiceTest {
     }
 
     @Test
-    void 지출_전체_조회(){
-        Member member = memberRepository.findAll().get(0);
-        Group findGroup = groupRepository.findAll().get(0);
-        BudgetResponseDto dto = expenseService.readExpenses(member,findGroup.getId());
-        List<ExpenseDto> expenses = dto.getExpenses();
-
-        assertThat(expenses.get(0).getDetail()).isEqualTo("마포에서 월곡 택시");
-        assertThat(expenses.get(1).getDetail()).isEqualTo("공릉에서 노원역 택시");
-
-    }
-
-    @Test
     void 지출_수정(){
         Group findGroup = groupRepository.findAll().get(0);
         Budget budget = findGroup.getBudget();
