@@ -67,15 +67,10 @@ public class BudgetService {
 
         //그룹에 해당되는 expense 들만 list에 담아서 보내주기
         List<Expense> findExpenses = expenseRepository.findByBudget(findBudget);
-
         List<ExpenseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
 
         BudgetResponseDto dto = new BudgetResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
         return dto;
-    }
-
-    public List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
-        return expenses.stream().map(ExpenseDto::new).collect(Collectors.toList());
     }
 
     //budget의 그룹 조회
@@ -136,6 +131,10 @@ public class BudgetService {
             log.error("Budget Is Already Exists");
             throw new BudgetException("예산이 이미 존재합니다.");
         }
+    }
+
+    private List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
+        return expenses.stream().map(ExpenseDto::new).collect(Collectors.toList());
     }
 
 }

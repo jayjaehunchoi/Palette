@@ -1,7 +1,7 @@
 package com.palette.dto.response;
 
 import com.palette.domain.member.Member;
-import com.palette.dto.Token;
+import com.palette.controller.auth.Token;
 import lombok.Getter;
 
 @Getter

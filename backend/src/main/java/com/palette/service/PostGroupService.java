@@ -70,9 +70,7 @@ public class PostGroupService {
     public PostGroup checkMemberAuth(Member member, Long id){
         PostGroup findPostGroup = postGroupRepository.findById(id).orElse(null);
         isPostGroupExist(findPostGroup);
-        if(!findPostGroup.getMember().getId().equals(member.getId())){
-            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "권한이 없습니다."){};
-        }
+        isMemberHasAuth(member, findPostGroup);
         return findPostGroup;
     }
 
@@ -100,6 +98,12 @@ public class PostGroupService {
         if (findPostGroup == null) {
             log.error("Post Group Not Exist Error");
             throw new PostGroupException("존재하지 않는 게시물 그룹입니다.");
+        }
+    }
+
+    private void isMemberHasAuth(Member member, PostGroup findPostGroup) {
+        if(!findPostGroup.getMember().getId().equals(member.getId())){
+            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "권한이 없습니다."){};
         }
     }
 

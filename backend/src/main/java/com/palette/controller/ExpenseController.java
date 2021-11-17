@@ -26,14 +26,6 @@ public class ExpenseController {
     private final BudgetService budgetService;
     private final ExpenseService expenseService;
 
-
-    //지출 전체 조회
-    @LoginChecker
-    @GetMapping("/{travelgroupid}/expenses") //테스트완료
-    public BudgetResponseDto readExpense(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
-        return expenseService.readExpenses(member,travelGroupId);
-    }
-
     //지출 추가
     @LoginChecker
     @PostMapping("/{travelgroupid}/expenses") //테스트완료, id 포함하지말기

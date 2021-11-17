@@ -1,4 +1,4 @@
-package com.palette.dto;
+package com.palette.controller.auth;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

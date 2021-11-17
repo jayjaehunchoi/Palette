@@ -49,34 +49,6 @@ public class ExpenseService {
         return expense;
     }
 
-    //전체 지출 조회
-    @Transactional
-    public BudgetResponseDto readExpenses(Member member, Long id){
-        Group group = groupRepository.findById(id).orElse(null);
-        isGroupExist(group);
-        isMemberHaveAuthToUpdate(member,group);
-        isBudgetExist(group);
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
-
-        long totalBudget = findBudget.getTotalBudget();
-        long totalExpense = 0l;
-        long remainingBudget = totalBudget;
-
-        for(int i = 0; i < findBudget.getExpenses().size(); i++){
-            totalExpense += findBudget.getExpenses().get(i).getPrice();
-        }
-
-        remainingBudget = totalBudget - totalExpense;
-
-        //그룹에 해당되는 expense 들만 list에 담아서 보내주기
-        List<Expense> findExpenses = expenseRepository.findByBudget(findBudget);
-
-        List<ExpenseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
-
-        BudgetResponseDto dto = new BudgetResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
-        return dto;
-    }
-
     //지출 수정
     @Transactional
     public void updateExpense(Long id, ExpenseDto expenseDto){
