@@ -1,6 +1,8 @@
 package com.palette.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.palette.controller.auth.JwtTokenProvider;
+import com.palette.service.MemberService;
 import com.palette.utils.HtmlCharacterEscapes;
 import com.palette.utils.argumentresolver.LoginArgumentResolver;
 import com.palette.utils.constant.ConstantUtil;
@@ -21,10 +23,12 @@ import static com.palette.utils.constant.ConstantUtil.*;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     private final ObjectMapper objectMapper;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final MemberService memberService;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new LoginArgumentResolver());
+        resolvers.add(new LoginArgumentResolver(jwtTokenProvider,memberService));
     }
 
     @Override

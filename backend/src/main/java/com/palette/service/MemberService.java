@@ -66,14 +66,4 @@ public class MemberService {
             throw new MemberException("비밀번호가 일치하지 않습니다.");
         }
     }
-
-    public boolean checkEmail(String email, String name) {
-        Member member = memberRepository.findByEmail(email).orElseThrow();
-        if(member!=null && member.getName().equals(name)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 }

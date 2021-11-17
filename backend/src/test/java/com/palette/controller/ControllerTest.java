@@ -1,6 +1,7 @@
 package com.palette.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.palette.controller.auth.JwtTokenProvider;
 import com.palette.service.*;
 import com.palette.utils.S3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected ExpenseService expenseService;
+
+    @MockBean
+    protected JwtTokenProvider jwtTokenProvider;
 }

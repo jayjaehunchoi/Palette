@@ -74,7 +74,6 @@ public class PostService {
     }
 
     // 단건 조회
-    @Transactional(readOnly = true)
     public PostResponseDto findSinglePost(Long postId, Long commentId){
         Post findPost = postRepository.findSinglePost(postId);
         isPostExist(findPost);
@@ -83,7 +82,6 @@ public class PostService {
         PostResponseDto postResponseDto = new PostResponseDto(findPost);
         postResponseDto.setComments(commentRepository.findCommentByPostIdWithCursor(postId, commentId)); // 최초 조회시 comment
         postResponseDto.setImages(images);
-
         return postResponseDto;
     }
 

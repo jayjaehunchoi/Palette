@@ -22,6 +22,8 @@ public abstract class RestDocControllerTest extends ControllerTest{
     protected static final String TITLE = "제목";
     protected static final String CONTENT = "내용";
     protected static final String CODE = "das1-123s-fvj1-pqaz";
+    protected static final String TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3MDgyNDgyLCJleHAiOjE2MzcwODYwODJ9.uIUqYuvBBTl34snJOJKTzsg4ULKdRg3A-sSJsCviQ0U";
+    protected static final String AUTH = "Authorization";
 
 
     protected MockMvc restDocsMockMvc;

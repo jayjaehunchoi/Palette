@@ -49,7 +49,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
         BudgetResponseDto budgetResponseDto = new BudgetResponseDto(1L, 10000, 1000, 9000, Arrays.asList(expenseDto));
         given(budgetService.readBudget(any(),any())).willReturn(budgetResponseDto);
 
-        restDocsMockMvc.perform(get("/travelgroup/1/budget").session(session))
+        restDocsMockMvc.perform(get("/travelgroup/1/budget").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("budget_get_budget",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
@@ -64,7 +64,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
         String json = objectMapper.writeValueAsString(budgetDto);
         given(budgetService.addBudget(any(),any(),any())).willReturn(1L);
 
-        restDocsMockMvc.perform(post("/travelgroup/1/budget").session(session)
+        restDocsMockMvc.perform(post("/travelgroup/1/budget").header(AUTH, TOKEN)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -84,7 +84,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
 
         budget.saveBudgetOnGroup(group);
 
-        restDocsMockMvc.perform(put("/travelgroup/1/budget").session(session)
+        restDocsMockMvc.perform(put("/travelgroup/1/budget").header(AUTH, TOKEN)
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding(StandardCharsets.UTF_8))
@@ -98,7 +98,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
         given(groupService.findById(any())).willReturn(group);
         doNothing().when(budgetService).deleteBudget(any());
 
-        restDocsMockMvc.perform(delete("/travelgroup/1/budget").session(session))
+        restDocsMockMvc.perform(delete("/travelgroup/1/budget").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("budget_delete_budget"));

@@ -49,7 +49,7 @@ public class GroupControllerTest extends RestDocControllerTest{
         MemberGroup memberGroup = new MemberGroup();
         memberGroup.addMemberGroup(group,member);
 
-        restDocsMockMvc.perform(get("/travelgroup").session(session))
+        restDocsMockMvc.perform(get("/travelgroup").header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("group_read_groups",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
@@ -65,7 +65,7 @@ public class GroupControllerTest extends RestDocControllerTest{
 
         given(groupService.findById(anyLong())).willReturn(group);
         doNothing().when(groupService).isMemberHaveAuthToUpdate(any(),any());
-        restDocsMockMvc.perform(get("/travelgroup/1").session(session))
+        restDocsMockMvc.perform(get("/travelgroup/1").header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("group_read_single_group",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
@@ -80,7 +80,7 @@ public class GroupControllerTest extends RestDocControllerTest{
 
         given(groupService.addGroup(any(),any())).willReturn(1L);
 
-        restDocsMockMvc.perform(post("/travelgroup").session(session)
+        restDocsMockMvc.perform(post("/travelgroup").header(AUTH, TOKEN)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -95,7 +95,7 @@ public class GroupControllerTest extends RestDocControllerTest{
         GroupJoinDto groupJoinDto = new GroupJoinDto(CODE);
         String json = objectMapper.writeValueAsString(groupJoinDto);
 
-        restDocsMockMvc.perform(post("/travelgroup/join").session(session)
+        restDocsMockMvc.perform(post("/travelgroup/join").header(AUTH, TOKEN)
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -107,7 +107,7 @@ public class GroupControllerTest extends RestDocControllerTest{
     @Test
     void 그룹_탈퇴() throws Exception{
         doNothing().when(groupService).deleteGroup(anyLong());
-        restDocsMockMvc.perform(delete("/travelgroup/1/member").session(session))
+        restDocsMockMvc.perform(delete("/travelgroup/1/member").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("group_delete_member"));
@@ -118,7 +118,7 @@ public class GroupControllerTest extends RestDocControllerTest{
         doNothing().when(groupService).updateGroup(anyLong(),any());
         GroupUpdateDto update = new GroupUpdateDto("groupName", "groupIntro");
         String json = objectMapper.writeValueAsString(update);
-        restDocsMockMvc.perform(put("/travelgroup/1").session(session)
+        restDocsMockMvc.perform(put("/travelgroup/1").header(AUTH, TOKEN)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -131,7 +131,7 @@ public class GroupControllerTest extends RestDocControllerTest{
     @Test
     void 그룹_삭제() throws Exception{
         doNothing().when(groupService).deleteGroup(anyLong());
-        restDocsMockMvc.perform(delete("/travelgroup/1").session(session))
+        restDocsMockMvc.perform(delete("/travelgroup/1").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("group_delete_group"));

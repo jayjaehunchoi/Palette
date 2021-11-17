@@ -4,6 +4,7 @@ import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.dto.MailDto;
+import com.palette.dto.Token;
 import com.palette.dto.request.EmailDto;
 import com.palette.dto.request.MemberDto;
 import com.palette.dto.request.MemberUpdateDto;
@@ -77,23 +78,15 @@ public class MemberControllerTest extends RestDocControllerTest{
                 .build();
         String memberJson = objectMapper.writeValueAsString(dto);
         given(memberService.logIn(any(), any())).willReturn(new Member(dto.getName(), dto.getPassword(),IMAGE,dto.getEmail()));
-
+        given(jwtTokenProvider.createAccessToken(any())).willReturn(new Token(TOKEN,3600000));
         restDocsMockMvc.perform(post("/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(memberJson)
                 .characterEncoding(StandardCharsets.UTF_8))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("member-login"));
-    }
-
-    @Test
-    void 로그아웃() throws Exception{
-        session.setAttribute(MEMBER, createMember());
-
-        restDocsMockMvc.perform(get("/signout").session(session))
-                .andExpect(status().isOk())
-                .andDo(document("member-logout"));
+                .andDo(document("member-login",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
     }
 
     @Test
@@ -101,7 +94,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         session.setAttribute(MEMBER, createMember());
         Member member = createMember();
         given(memberService.getMemberInfo(anyLong())).willReturn(member);
-        restDocsMockMvc.perform(get("/member/1").session(session)).andExpect(status().isOk())
+        restDocsMockMvc.perform(get("/member/1").header(AUTH, TOKEN)).andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().json(objectMapper.writeValueAsString(new MemberResponseDto(member))))
                 .andExpect(status().isOk())
@@ -126,7 +119,7 @@ public class MemberControllerTest extends RestDocControllerTest{
                 .file(file)
                         .content("multipart/mixed")
                         .accept(MediaType.APPLICATION_JSON)
-                        .characterEncoding("UTF-8").session(session)).andDo(print()).andExpect(status().isOk())
+                        .characterEncoding("UTF-8").header(AUTH, TOKEN)).andDo(print()).andExpect(status().isOk())
                 .andDo(document("member-update"
                         ,requestParts(partWithName("member-update-data").description("memberUpdateDto")
                                 , partWithName("file").description("multipart file"))
@@ -144,7 +137,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         restDocsMockMvc.perform(delete("/member")
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
-                .contentType(MediaType.APPLICATION_JSON).session(session))
+                .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("member-delete"));
