@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/travelgroup")
+@RequestMapping("/api/travelgroup")
 @RestController
 public class ExpenseController {
 

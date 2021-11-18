@@ -28,6 +28,7 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/api")
 @RestController
 public class MemberController {
     private final MemberService memberService;

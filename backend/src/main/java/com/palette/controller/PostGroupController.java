@@ -32,7 +32,7 @@ import static com.palette.utils.constant.HttpResponseUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/postgroup")
+@RequestMapping("/api/postgroup")
 @RestController
 public class PostGroupController {
 

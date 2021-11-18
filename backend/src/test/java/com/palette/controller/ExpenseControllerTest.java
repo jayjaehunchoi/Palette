@@ -43,7 +43,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         ExpenseDto expenseDto = new ExpenseDto(expense);
         String json = objectMapper.writeValueAsString(expenseDto);
 
-        restDocsMockMvc.perform(post("/travelgroup/1/expenses").header(AUTH, TOKEN)
+        restDocsMockMvc.perform(post("/api/travelgroup/1/expenses").header(AUTH, TOKEN)
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -57,7 +57,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         Group group = createGroup();
         given(groupService.findById(any())).willReturn(group);
         doNothing().when(expenseService).deleteExpense(any(),any());
-        restDocsMockMvc.perform(delete("/travelgroup/1/expenses").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(delete("/api/travelgroup/1/expenses").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("expense-delete-all"));
@@ -71,7 +71,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
 
         ExpenseDto expenseDto = new ExpenseDto(expense);
         String json = objectMapper.writeValueAsString(expenseDto);
-        restDocsMockMvc.perform(put("/travelgroup/1/expenses/1").header(AUTH, TOKEN)
+        restDocsMockMvc.perform(put("/api/travelgroup/1/expenses/1").header(AUTH, TOKEN)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -86,7 +86,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
         given(expenseService.findById(any())).willReturn(expense);
         doNothing().when(expenseService).deleteExpense(any(),any());
 
-        restDocsMockMvc.perform(delete("/travelgroup/1/expenses/1").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(delete("/api/travelgroup/1/expenses/1").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("expense-delete-expense"));

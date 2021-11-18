@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RequestMapping("/page")
+@RequestMapping("/api/page")
 @RequiredArgsConstructor
 @RestController
 public class PageController {
