@@ -14,7 +14,7 @@ TBD
 
 ## 🛠 기술 스택
 ### ⚙️ Backend
-![image](https://user-images.githubusercontent.com/87312401/142390368-74bf1980-335e-4e1c-bfe9-c8377a8695b7.png)
+![image](https://user-images.githubusercontent.com/87312401/142391564-ae6a0f99-47c0-464c-ba86-891b5f9fdddd.png)
 
 ### ⚙️ Frontend
 ![image](https://user-images.githubusercontent.com/87312401/141253173-db6d0c28-0108-4600-9610-b7e3b03480cb.png)
