@@ -47,7 +47,7 @@ public class PostControllerTest extends RestDocControllerTest{
         StoryListResponseDto dto = new StoryListResponseDto(1L, NAME, 1L, TITLE, 100);
 
         given(postService.findStoryList(any(),anyInt())).willReturn(Arrays.asList(dto));
-        restDocsMockMvc.perform(get("/post?name=jaehunChoi&region=서울&title=제목"))
+        restDocsMockMvc.perform(get("/api/post?name=jaehunChoi&region=서울&title=제목"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(new StoryListResponsesDto(Arrays.asList(dto)))))
@@ -64,7 +64,7 @@ public class PostControllerTest extends RestDocControllerTest{
         CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, CREATED_DATE);
         postResponseDto.setComments(Arrays.asList(dto1, dto2));
         given(postService.findSinglePost(any(),any())).willReturn(postResponseDto);
-        restDocsMockMvc.perform(get("/post/1"))
+        restDocsMockMvc.perform(get("/api/post/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(postResponseDto)))
                 .andDo(print())
@@ -78,7 +78,7 @@ public class PostControllerTest extends RestDocControllerTest{
                 .willReturn(Arrays.asList(new Member(NAME,PASSWORD,IMAGE,EMAIL)));
 
         LikeResponseDto likeResponseDto = new LikeResponseDto(new Member(NAME, PASSWORD, IMAGE, EMAIL));
-        restDocsMockMvc.perform(get("/post/1/like?likeId=0"))
+        restDocsMockMvc.perform(get("/api/post/1/like?likeId=0"))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .json(objectMapper.writeValueAsString(new LikeResponsesDto(Arrays.asList(likeResponseDto)))))
@@ -91,7 +91,7 @@ public class PostControllerTest extends RestDocControllerTest{
     void 좋아요_클릭() throws Exception{
         given(likeService.pushLike(any(),any())).willReturn(1);
         GeneralResponse.builder().data(1).build();
-        restDocsMockMvc.perform(post("/post/1/like").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(post("/api/post/1/like").header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("post-push-like",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
@@ -118,7 +118,7 @@ public class PostControllerTest extends RestDocControllerTest{
         Post post = createPost();
         given(postService.write(any(),any(),any())).willReturn(post);
 
-        restDocsMockMvc.perform(multipart("/postgroup/1/post")
+        restDocsMockMvc.perform(multipart("/api/postgroup/1/post")
                 .file(files)
                 .file(files2)
                 .file(json)
@@ -139,7 +139,7 @@ public class PostControllerTest extends RestDocControllerTest{
         doNothing().when(postService).update(1L,postRequestDto);
 
         String content = objectMapper.writeValueAsString(postRequestDto);
-        restDocsMockMvc.perform(put("/postgroup/1/post/1")
+        restDocsMockMvc.perform(put("/api/postgroup/1/post/1")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andDo(print()).andExpect(status().isOk())
@@ -153,7 +153,7 @@ public class PostControllerTest extends RestDocControllerTest{
         validate();
         doNothing().when(postService).delete(1L);
 
-        restDocsMockMvc.perform(delete("/postgroup/1/post/1").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(delete("/api/postgroup/1/post/1").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("post-delete-post",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()

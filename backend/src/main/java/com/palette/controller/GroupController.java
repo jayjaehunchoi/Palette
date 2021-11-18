@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/travelgroup")
+@RequestMapping("/api/travelgroup")
 @RequiredArgsConstructor
 @RestController
 public class GroupController {

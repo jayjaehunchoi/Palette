@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/travelgroup")
+@RequestMapping("/api/travelgroup")
 @RestController
 public class BudgetController {
 

@@ -27,7 +27,7 @@ public class PageControllerTest extends RestDocControllerTest{
     @Test
     void 게시물_그룹_총_페이지() throws Exception {
         given(postGroupService.getTotalPage(any())).willReturn(10L);
-        restDocsMockMvc.perform(get("/page/postgroup?name=jaehunChoi"))
+        restDocsMockMvc.perform(get("/api/page/postgroup?name=jaehunChoi"))
                 .andExpect(status().isOk())
                 .andDo(document("page-postgroup-page",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
@@ -36,7 +36,7 @@ public class PageControllerTest extends RestDocControllerTest{
     @Test
     void 게시물_총_페이지() throws Exception{
         given(postService.getTotalPage(any())).willReturn(10L);
-        restDocsMockMvc.perform(get("/page/post?region=서울"))
+        restDocsMockMvc.perform(get("/api/page/post?region=서울"))
                 .andExpect(status().isOk())
                 .andDo(document("page-post-page",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));

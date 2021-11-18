@@ -56,7 +56,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         given(s3Uploader.uploadSingleFile(any())).willReturn(new MyFile("imagefile.jpeg",IMAGE));
         given(memberService.signUp(any())).willReturn(new Member(dto.getName(), dto.getPassword(),IMAGE,dto.getEmail()));
 
-        restDocsMockMvc.perform(multipart("/signup")
+        restDocsMockMvc.perform(multipart("/api/signup")
                 .file(json)
                 .file(file)
                 .content("multipart/mixed")
@@ -78,7 +78,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         String memberJson = objectMapper.writeValueAsString(dto);
         given(memberService.logIn(any(), any())).willReturn(new Member(dto.getName(), dto.getPassword(),IMAGE,dto.getEmail()));
         given(jwtTokenProvider.createAccessToken(any())).willReturn(new Token(TOKEN,3600000));
-        restDocsMockMvc.perform(post("/signin")
+        restDocsMockMvc.perform(post("/api/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(memberJson)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -92,7 +92,7 @@ public class MemberControllerTest extends RestDocControllerTest{
     void 멤버정보_가져오기() throws Exception{
         Member member = createMember();
         given(memberService.getMemberInfo(any())).willReturn(member);
-        restDocsMockMvc.perform(get("/member").header(AUTH, TOKEN)).andExpect(status().isOk())
+        restDocsMockMvc.perform(get("/api/member").header(AUTH, TOKEN)).andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().json(objectMapper.writeValueAsString(new MemberResponseDto(member))))
                 .andExpect(status().isOk())
@@ -108,7 +108,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         MockMultipartFile json = new MockMultipartFile("member-update-data", "json", "application/json",memberJson.getBytes(StandardCharsets.UTF_8));
         given(s3Uploader.uploadSingleFile(any())).willReturn(new MyFile(IMAGE,IMAGE));
         doNothing().when(memberService).updateMember(any(),any(),any());
-        MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart("/member");
+        MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart("/api/member");
         builder.with(request -> { request.setMethod("PUT"); return request; });
 
         restDocsMockMvc.perform(builder
@@ -130,7 +130,7 @@ public class MemberControllerTest extends RestDocControllerTest{
         MemberUpdateDto dto = new MemberUpdateDto(PASSWORD);
         String json = objectMapper.writeValueAsString(dto);
 
-        restDocsMockMvc.perform(delete("/member")
+        restDocsMockMvc.perform(delete("/api/member")
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
@@ -147,7 +147,7 @@ public class MemberControllerTest extends RestDocControllerTest{
 
         EmailDto emailDto = EmailDto.builder().email(EMAIL).name(NAME).build();
         String json = objectMapper.writeValueAsString(emailDto);
-        restDocsMockMvc.perform(post("/sendEmail")
+        restDocsMockMvc.perform(post("/api/sendEmail")
                 .content(json)
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON))
