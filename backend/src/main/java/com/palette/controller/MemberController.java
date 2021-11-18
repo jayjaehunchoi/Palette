@@ -1,11 +1,10 @@
 package com.palette.controller;
 
-import com.palette.controller.auth.AuthorizationExtractor;
 import com.palette.controller.auth.JwtTokenProvider;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.dto.MailDto;
-import com.palette.dto.Token;
+import com.palette.controller.auth.Token;
 import com.palette.dto.request.EmailDto;
 import com.palette.dto.request.MemberDto;
 import com.palette.dto.request.MemberUpdateDto;
@@ -22,9 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.io.IOException;
@@ -50,7 +47,7 @@ public class MemberController {
                 .profileFileName(myFile.getStoreFileName())
                 .build();
 
-        Member saveMember = memberService.signUp(member);
+        memberService.signUp(member);
         return member.getId();
     }
 
@@ -65,17 +62,17 @@ public class MemberController {
     }
 
     @LoginChecker
-    @GetMapping("/member/{memberId}")
-    public MemberResponseDto getMember(@PathVariable Long memberId){
-        Member findMember = memberService.getMemberInfo(memberId);
+    @GetMapping("/member")
+    public MemberResponseDto getMember(@AuthenticationPrincipal Member member){
+        Member findMember = memberService.getMemberInfo(member.getId());
         return new MemberResponseDto(findMember);
     }
 
     @LoginChecker
-    @PutMapping("/member/{memberId}")
-    public void updateMember(@PathVariable Long memberId,@RequestPart("member-update-data") @Valid MemberUpdateDto dto, @RequestPart("file") MultipartFile multipartFile) throws IOException {
+    @PutMapping("/member")
+    public void updateMember(@AuthenticationPrincipal Member member, @RequestPart("member-update-data") @Valid MemberUpdateDto dto, @RequestPart("file") MultipartFile multipartFile) throws IOException {
         MyFile myFile = s3Uploader.uploadSingleFile(multipartFile);
-        memberService.updateMember(memberId, dto, myFile.getStoreFileName());
+        memberService.updateMember(member.getId(), dto, myFile.getStoreFileName());
     }
 
     @LoginChecker

@@ -1,6 +1,5 @@
 package com.palette.controller;
 
-import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
@@ -9,8 +8,6 @@ import com.palette.domain.post.PostGroup;
 import com.palette.dto.GeneralResponse;
 import com.palette.dto.request.PostRequestDto;
 import com.palette.dto.response.*;
-import com.palette.utils.constant.SessionUtil;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +40,6 @@ public class PostControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = successRestDocsMockMvc(provider, postController);
-
-        Member member = createMember();
-        session.setAttribute(SessionUtil.MEMBER,member);
     }
 
     @Test
@@ -107,7 +101,7 @@ public class PostControllerTest extends RestDocControllerTest{
     @Test
     void 게시물_업로드() throws Exception{
         Member member = createMember();
-        PostGroup postGroup = createPostGroup(member);
+        PostGroup postGroup = createPostGroup();
         PostRequestDto postRequestDto = new PostRequestDto(TITLE, CONTENT);
 
         MockMultipartFile files = new MockMultipartFile("files", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
@@ -121,7 +115,7 @@ public class PostControllerTest extends RestDocControllerTest{
         MyFile myFile = new MyFile("image", "image");
         given(s3Uploader.uploadFiles(any())).willReturn(Arrays.asList(myFile));
 
-        Post post = createPost(postRequestDto,member,postGroup);
+        Post post = createPost();
         given(postService.write(any(),any(),any())).willReturn(post);
 
         restDocsMockMvc.perform(multipart("/postgroup/1/post")
@@ -139,10 +133,8 @@ public class PostControllerTest extends RestDocControllerTest{
 
     @Test
     void 게시물_업데이트() throws Exception{
-        Member member = createMember();
         PostRequestDto postRequestDto = new PostRequestDto(TITLE, CONTENT);
-        validate(postRequestDto);
-
+        validate();
 
         doNothing().when(postService).update(1L,postRequestDto);
 
@@ -158,9 +150,7 @@ public class PostControllerTest extends RestDocControllerTest{
 
     @Test
     void 게시물_삭제() throws Exception {
-        PostRequestDto postRequestDto = new PostRequestDto(TITLE, CONTENT);
-        validate(postRequestDto);
-
+        validate();
         doNothing().when(postService).delete(1L);
 
         restDocsMockMvc.perform(delete("/postgroup/1/post/1").header(AUTH, TOKEN))
@@ -170,38 +160,14 @@ public class PostControllerTest extends RestDocControllerTest{
                 ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
     }
 
-    private void validate(PostRequestDto postRequestDto){
+    private void validate(){
         Member member = createMember();
-        PostGroup postGroup = createPostGroup(member);
-        Post post = createPost(postRequestDto,member, postGroup);
+        PostGroup postGroup = createPostGroup();
+        Post post = createPost();
         given(postService.findById(any())).willReturn(post);
         given(postGroupService.findById(any())).willReturn(postGroup);
         doNothing().when(postService).isAvailablePostOnPostGroup(postGroup,1L);
         doNothing().when(postService).isAvailableUpdatePost(post,member);
     }
-
-    private Member createMember(){
-        return new Member(NAME,PASSWORD,IMAGE,EMAIL);
-    }
-
-    private PostGroup createPostGroup(Member member){
-        return new PostGroup(member, TITLE, new Period(START,END),REGION);
-    }
-
-    private Post createPost(PostRequestDto postRequestDto, Member member, PostGroup postGroup){
-        return Post.builder().title(postRequestDto.getTitle())
-                .content(postRequestDto.getContent())
-                .member(member)
-                .region(postGroup.getRegion())
-                .period(postGroup.getPeriod())
-                .build();
-    }
-
-    @AfterEach
-    void tearDown(){
-        session.clearAttributes();;
-        session = null;
-    }
-
 
 }

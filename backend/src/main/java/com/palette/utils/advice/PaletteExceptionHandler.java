@@ -27,7 +27,4 @@ public class PaletteExceptionHandler {
     public GeneralResponse httpStatusCodeError(HttpStatusCodeException e){
         return GeneralResponse.builder().error(e.getMessage()).build();
     }
-
-
-
 }

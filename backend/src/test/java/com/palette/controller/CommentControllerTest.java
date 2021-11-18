@@ -1,19 +1,15 @@
 package com.palette.controller;
 
-import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Comment;
 import com.palette.dto.request.CommentDto;
 import com.palette.dto.response.CommentResponseDto;
-import com.palette.utils.constant.SessionUtil;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 
 import java.util.Arrays;
 
@@ -33,9 +29,6 @@ public class CommentControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = successRestDocsMockMvc(provider, commentController);
-
-        Member member = new Member(NAME,PASSWORD,IMAGE,EMAIL);
-        session.setAttribute(SessionUtil.MEMBER,member);
     }
 
     @Test
@@ -129,13 +122,4 @@ public class CommentControllerTest extends RestDocControllerTest{
                 .build();
         return comment;
     }
-
-    @AfterEach
-    void tearDown(){
-        session.clearAttributes();;
-        session = null;
-    }
-
-
-
 }

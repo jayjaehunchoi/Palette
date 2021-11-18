@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.palette.controller.auth.JwtTokenProvider;
 import com.palette.service.*;
 import com.palette.utils.S3Uploader;
+import com.palette.utils.aop.LoginCheckerAspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,4 +49,5 @@ public abstract class ControllerTest {
 
     @MockBean
     protected JwtTokenProvider jwtTokenProvider;
+
 }

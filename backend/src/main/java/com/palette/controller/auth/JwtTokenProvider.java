@@ -1,14 +1,11 @@
 package com.palette.controller.auth;
 
-import com.palette.dto.Token;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import javax.naming.AuthenticationException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Random;

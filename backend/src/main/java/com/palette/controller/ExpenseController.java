@@ -14,8 +14,8 @@ import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RequestMapping("/travelgroup")
@@ -26,26 +26,14 @@ public class ExpenseController {
     private final BudgetService budgetService;
     private final ExpenseService expenseService;
 
-
-    //지출 전체 조회
-    @LoginChecker
-    @GetMapping("/{travelgroupid}/expenses") //테스트완료
-    public BudgetResponseDto readExpense(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
-        return expenseService.readExpenses(member,travelGroupId);
-    }
-
     //지출 추가
     @LoginChecker
     @PostMapping("/{travelgroupid}/expenses") //테스트완료, id 포함하지말기
-    public Long addExpense(@AuthenticationPrincipal Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId){
+    public Long addExpense(@AuthenticationPrincipal Member member, @RequestBody @Valid ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = budgetService.findByGroup(group);
 
-        Expense expense = Expense.builder()
-                .category(expenseDto.getCategory())
-                .detail(expenseDto.getDetail())
-                .price(expenseDto.getPrice())
-                .build();
+        Expense expense = expenseDto.toEntity();
         Expense savedExpense = expenseService.addExpense(member,group,expense,budget);
         return savedExpense.getId();
     }
@@ -53,7 +41,7 @@ public class ExpenseController {
     //지출 전체 삭제
     @LoginChecker
     @DeleteMapping("/{travelgroupid}/expenses") //테스트완료
-    public ResponseEntity<Void> deleteExpenses(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
+    public ResponseEntity<Void> deleteExpenses(@PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         expenseService.deleteAll(group.getBudget());
         return HttpResponseUtil.RESPONSE_OK;
@@ -62,7 +50,7 @@ public class ExpenseController {
     //지출 단건 수정
     @LoginChecker
     @PutMapping("/{travelgroupid}/expenses/{expenseid}") //테스트완료, id 포함해서 줘야함!!
-    public ResponseEntity<Void> updateExpense(@AuthenticationPrincipal Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId, @PathVariable("expenseid") Long expenseId){
+    public ResponseEntity<Void> updateExpense(@RequestBody @Valid ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId, @PathVariable("expenseid") Long expenseId){
         expenseService.updateExpense(expenseId,expenseDto);
         return HttpResponseUtil.RESPONSE_OK;
     }
@@ -70,7 +58,7 @@ public class ExpenseController {
     //지출 단건 삭제
     @LoginChecker
     @DeleteMapping("/{travelgroupid}/expenses/{expenseid}") //테스트완료 , id 포함해서 줘야함!!
-    public ResponseEntity<Void> deleteExpense(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId, @PathVariable("expenseid") Long expenseId){
+    public ResponseEntity<Void> deleteExpense(@PathVariable("travelgroupid") Long travelGroupId, @PathVariable("expenseid") Long expenseId){
         Expense expense = expenseService.findById(expenseId);
         Budget budget = expense.getBudget();
         expenseService.deleteExpense(budget,expense);
