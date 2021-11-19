@@ -40,7 +40,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                         titleContain(condition.getTitle()),
                         postGroupIdEq(condition.getPostGroupId()))
                 .orderBy(post.id.desc())
-                .offset(pageNo-1)
+                .offset((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .fetch();
 
