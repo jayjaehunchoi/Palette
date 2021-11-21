@@ -178,24 +178,10 @@ a {
 	font-weight: 700;
 }
 
-.container .inner .userInfo .userId {
-	width: 380px;
-}
-
-
-.container .inner .userInfo .idDuplication {
-	margin-left: 7px;
-	height: 45px;
-	width: 98px;
-	border: 2px solid #333;
-	background-color: #fff;
-	font-weight: 700;
-	cursor: pointer;
-}
-
 .container .inner .userInfo .userPwChk {
 	margin-top: 6px;
 }
+
 
 .container .inner .userInfo .selectBt {
 	height: 45px;
@@ -293,6 +279,11 @@ a {
 	position: relative;
 }
 
+.myInner .col2 .userProfile img{
+	width: 225px;
+	height: 225px;
+}
+
 .myInner .col2 .selectBt {
 	margin: auto;
 	position: absolute;
@@ -331,3 +322,65 @@ a {
 	position: absolute;
 	right: 0;
 }
+
+/* MODAL */
+
+.modal {
+	display: none;
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+
+.modal .modalContent {
+  width:500px;
+  margin: -700px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:3px solid #333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal .modalContent h2 {
+  margin:0 auto; 
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.modal .withdrawalPwChk input {
+	margin-top: 40px;
+	width: 300px;
+	height: 30px;
+}
+
+.modal .modalBts {
+	margin-top: 30px;
+	margin-left: 200px;
+	display: flex;
+}
+
+.modal .modalBts button {
+  display:inline-block;
+  width:100px;
+	height: 40px;
+	background-color: #fff;
+	border: 2px solid #333;
+	color: #333;
+	font-size: 14px;
+	font-weight: 700;
+	margin-left: 6px;
+}
+
+.modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}   

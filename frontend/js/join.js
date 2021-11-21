@@ -1,49 +1,9 @@
-$('.joinBt').click(function() { 
-  var userId = $('.userId').val(); 
-  var userPw = $('.userPw').val();
-  var userPw = $('.userPw').val(); 
-  var userPw = $('.userPw').val();  
-
-  $.ajax({ 
-    type : "POST", 
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/signup", 
-    data : {email:userId, password:userPw}, 
-    success : function(data) { 
-      if (data == "false") { 
-        alert('아이디 혹은 비밀번호를 확인하세요') 
-      } else { 
-        window.location.href = '/frontend/index.html'; 
-      } 
-    }
-  })
-});
-
-
-
 const selectBt = document.querySelector('.selectBt');
 const profileFile = document.querySelector('.profileFile');
 
 selectBt.addEventListener('click',()=>{
 	profileFile.click();
 });
-
-/*
-// 이미지 업로드
-$('.profileFile').on('change', function() {
-  
-  ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-  
-  if($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
-      window.alert('이미지 파일이 아닙니다!');
-  } else {
-      file = $('.profileFile').prop("files")[0];
-      blobURL = window.URL.createObjectURL(file);
-      $('.preview img').attr('src', blobURL);
-      $('.preview').slideDown(); //업로드한 이미지 미리보기 
-  }
-  });
-*/
-
 
 profileFile.onchange = function () { 
     var profile = profileFile.files[0];
@@ -85,3 +45,49 @@ profileFile.onchange = function () {
       }
     }
   };
+ 
+
+  $('.joinBt').click(function() { 
+    var userId = $('.userId').val(); 
+    var userPw = $('.userPw').val();
+    var userPwChk = $('.userPwChk').val(); 
+    var userName = $('.userName').val();
+    var profileFile = $('.profileFile')    
+    
+    var memberData = {"name":userName, "password":userPw, "email":userId};
+    if (userId == '' || userPw == '' || userPwChk =='' || userName == '') {
+      alert('기본 정보를 모두 입력하세요');
+    } else if (userPw != userPwChk) {
+      alert('비밀번호가 일치하지 않습니다');
+    } else if (profileFile[0].files[0] == undefined) {
+      alert("프로필 사진을 선택해주세요");
+    } else {    
+      var formData = new FormData();
+      formData.append('member-data', new Blob([JSON.stringify(memberData)], {type: "application/json"}));
+      formData.append('file', profileFile[0].files[0]);
+
+      $.ajax({ 
+        type : "POST", 
+        url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/signup", 
+        data: formData,
+        Accept: 'application/json',
+        contentType: false,
+        processData: false,
+        error: function (jqXHR, textStatus, errorThrown) {
+          let errorMsg = jqXHR.responseText;
+          console.log(errorMsg);
+        },
+        success : function(data) { 
+          alert("회원 가입에 성공했습니다!");
+          window.location.href="login.html";
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          let errorMsg = jqXHR.responseText.split("\"")[3];
+          alert(errorMsg);
+        }
+     })
+    }
+  });
+  
+  
+  

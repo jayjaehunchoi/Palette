@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/frontend/css/member.css">
   <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script defer src="/frontend/js/member.js"> </script>
+  <script defer src="/frontend/js/mypage.js"> </script>
 </head>
 <body>
 <section>
@@ -60,7 +60,7 @@
   <tr>
     <td class="col1">이름</td>
     <td class="col2">
-      <input class="userName" type="text">
+      <input class="userName" type="text" disabled>
     </td>
   </tr>
   <tr>
@@ -78,7 +78,7 @@
 </table>
 <div class="bts">
   <div class="bts-left">
-    <button class="cancelBt">취소</button>
+    <button class="cancelBt" onclick="location.href='/frontend/index.html'">취소</button>
     <button class="withdrawalBt">탈퇴</button>
   </div>
   <div class="bts-right">
@@ -94,3 +94,23 @@
 </section>
 </body>
 </html>
+
+
+ <!-- MODAL -->
+    <div class="modal" id="pwChkModal">
+   
+      <div class="modalContent">
+        <h2>비밀번호를 입력해주세요</h2>
+        
+        <div class="withdrawalPwChk">
+          <input type="password"/>
+        </div>
+        
+        <div class="modalBts">
+          <button type="button" class="modalBt">확인</button>
+          <button type="button" class="modalCloseBt" onclick="closePwChkModal()">닫기</button>
+         </div>
+      </div>
+     
+      <div class="modal_layer"></div>
+  </div>
