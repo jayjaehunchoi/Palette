@@ -4,7 +4,7 @@
 // new Swiper(요소, 옵션);
 new Swiper('.swiper-container', {
   direction: 'horizontal', // 수평 슬라이드
-  scrollbarHide: true,
+  // scrollbarHide: true,
   slidesPerView: 3,
   spaceBetween: 300, // 슬라이드 사이 여백
   loop: true, // 반복 재생 여부
@@ -15,7 +15,7 @@ new Swiper('.swiper-container', {
   delay: 5000 // 5초마다 슬라이드 바뀜
   } 
 });
-new Swiper('.palette-story .swiper-container', {
+const swiper2 = new Swiper('.palette-story .swiper-container', {
   direction: 'horizontal', // 수평 슬라이드
   autoplay: true, // 자동 재생 여부
   loop: true, // 반복 재생 여부
@@ -27,6 +27,7 @@ new Swiper('.palette-story .swiper-container', {
     nextEl: '.palette-story .swiper-next' // 다음 버튼 선택자
   }
 });
+
 
 // 범위 랜덤 함수(소수점 2자리까지)
 function random(min, max) {
