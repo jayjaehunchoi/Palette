@@ -68,7 +68,7 @@ profileFile.onchange = function () {
 
       $.ajax({ 
         type : "POST", 
-        url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/signup", 
+        url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/signup", 
         data: formData,
         Accept: 'application/json',
         contentType: false,
