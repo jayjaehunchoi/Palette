@@ -63,29 +63,6 @@ $(document).ready(function() {
   });
 });
 
-$('#setModal .modalOkBt').click(function(){
-  let travelgroupid = sessionStorage.getItem("groupId");
-  var token = sessionStorage.getItem("token");
-  
-  let totalBudget = $('.totalBudget__input').val();
-  $.ajax({
-    type : "POST",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
-    contentType: "application/json",
-    data: JSON.stringify({"totalBudget":totalBudget}),
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      readBudget();
-      closeSetModal();
-    }
-  });
-});
 
 
 $('#changeModal .modalOkBt').click(function(){
@@ -151,25 +128,30 @@ $('.addBt').click(function() {
     "detail":detail,
     "price":price
   }
-  $.ajax({
-    type : "POST",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses",
-    contentType: "application/json",
-    data: JSON.stringify(expenseData),
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      readBudget();
-      $('#category-select').val('');
-      $('.detail__input').val('');
-      $('.price__input').val('');
-    }
-  });
+
+  if (category == "" || detail == "" || price == "") {
+    alert("지출계획을 모두 입력하세요!");
+  } else {
+    $.ajax({
+      type : "POST",
+      url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses",
+      contentType: "application/json",
+      data: JSON.stringify(expenseData),
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        let errorMsg = jqXHR.responseText.split("\"")[3];
+        alert(errorMsg);
+      },
+      success: function(data){
+        readBudget();
+        $('#category-select').val('');
+        $('.detail__input').val('');
+        $('.price__input').val('');
+      }
+    });
+  }
 });
 
 $('#changeExpenseModal .modalOkBt').click(function() {
@@ -253,9 +235,6 @@ $('.clearAllBt').click(function() {
 
 
 //모달 열기
-function openSetModal() {
-  document.getElementById("setModal").style.display="block";
-}
 
 function openChangeModal() {
   document.getElementById("changeModal").style.display="block";
@@ -299,9 +278,6 @@ function openChangeExpenseModal(expenseid) {
 }
 
 //모달 닫기
-function closeSetModal() {
-  document.getElementById("setModal").style.display="none";
-}   
 
 function closeChangeModal() {
   document.getElementById("changeModal").style.display="none";

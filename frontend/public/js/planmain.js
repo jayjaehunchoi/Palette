@@ -19,7 +19,11 @@ function closeJoinGroupModal() {
 
 //플랜 페이지 이동 시 그룹 리스트 출력
 $(document).ready(function(){
-  var token = sessionStorage.getItem("token");
+  getGroupList();
+});
+
+function getGroupList() {
+ var token = sessionStorage.getItem("token");
   $.ajax({
     type : "GET",
     url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup",
@@ -30,14 +34,15 @@ $(document).ready(function(){
     error: function (jqXHR, textStatus, errorThrown) {
       let errorMsg = jqXHR.responseText.split("\"")[3];
       alert(errorMsg);
+      window.location.href="/index.html";
     },
     success: function(data){
-      getGroupList(data);
+      loadGroupList(data);
     }
   });
-});
+}
 
-function getGroupList(data) {
+function loadGroupList(data) {
   let groupList = data.responseDtoGroups;
   let groupListLen = groupList.length;
   let str = "";
@@ -83,6 +88,7 @@ $('#makeGroupModal .modalBt').click(function(){
     success: function(data){
       console.log("그룹생성 완료");
       closeMakeGroupModal();
+      getGroupList(data);
     }
   });
 });
@@ -108,6 +114,7 @@ $('#joinGroupModal .modalOkBt').click(function(){
     success: function(data){
       console.log("그룹가입 완료");
       closeJoinGroupModal();
+      getGroupList(data);
     }
   });
 });

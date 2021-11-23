@@ -11,13 +11,12 @@ $(document).ready(function(){
     error: function (jqXHR, textStatus, errorThrown) {
       let errorMsg = jqXHR.responseText.split("\"")[3];
       alert(errorMsg);
+      window.location.href="/index.html";
     },
     success: function(data){
       $('.userId').val(data.email);
       $('.userName').val(data.name);
       $('.preview img').attr("src", data.profile);
-      console.log(data);
-      console.log(data.profile);
     }
   });
 });

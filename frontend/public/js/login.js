@@ -39,7 +39,7 @@ $('.userPw').keydown(function(key) {
 
 $('.logout').click(function () {
   sessionStorage.removeItem("token");
-  window.location.href = '/frontend/index.html'; 
+  window.location.href = '/index.html'; 
 }); 
 
 
