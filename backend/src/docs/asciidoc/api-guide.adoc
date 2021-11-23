@@ -89,6 +89,8 @@ include::{snippets}/postgroup-create-group/request-part-data-body.adoc[]
 
 include::{snippets}/postgroup-get-postgroup/auto-section.adoc[]
 
+include::{snippets}/postgroup-get-my-postgroup/auto-section.adoc[]
+
 include::{snippets}/postgroup-get-post/auto-section.adoc[]
 
 include::{snippets}/postgroup-update-group/auto-section.adoc[]
@@ -159,7 +161,6 @@ include::{snippets}/budget_delete_budget/auto-section.adoc[]
 
 include::{snippets}/expense-create-expense/auto-section.adoc[]
 
-include::{snippets}/expense_get_expenses/auto-section.adoc[]
 
 include::{snippets}/expense-update-expense/auto-section.adoc[]
 

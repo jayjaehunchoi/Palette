@@ -59,6 +59,16 @@ public class PostGroupController {
     }
 
     @LoginChecker
+    @GetMapping("/my")
+    public ResponseEntity<PostGroupsResponseDto> getMyPostGroup(@AuthenticationPrincipal Member member, @RequestParam(defaultValue = "1", required = false) int page){
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setMemberId(member.getId());
+        List<PostGroupResponseDto> postGroup = postGroupService.findPostGroup(searchCondition, page);
+        PostGroupsResponseDto res = PostGroupsResponseDto.builder().postGroupResponses(postGroup).build();
+        return ResponseEntity.ok(res);
+    }
+
+    @LoginChecker
     @PostMapping
     public ResponseEntity<Void> uploadPostGroup(@AuthenticationPrincipal Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
         log.info("member {}",member);

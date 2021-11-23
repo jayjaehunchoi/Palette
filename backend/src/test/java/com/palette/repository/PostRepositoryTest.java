@@ -7,6 +7,7 @@ import com.palette.domain.post.Photo;
 import com.palette.domain.post.Post;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.StoryListResponseDto;
+import com.palette.utils.constant.ConstantUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.palette.utils.constant.ConstantUtil.*;
 import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -115,6 +117,13 @@ class PostRepositoryTest {
 
         assertThat(stories.size()).isEqualTo(1);
         assertThat(stories.get(0).getTitle()).isEqualTo("제목입니다22");
+    }
+
+    @Test
+    void post_페이징(){
+        List<StoryListResponseDto> storyListWithPage = postRepository.findStoryListWithPage(new SearchCondition(), 4, PAGE_SIZE);
+
+        assertThat(storyListWithPage.size()).isEqualTo(3);
     }
 
     @Test
