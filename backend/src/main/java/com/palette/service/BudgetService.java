@@ -54,7 +54,7 @@ public class BudgetService {
         isGroupExist(group);
         isBudgetExist(group);
         isMemberHaveAuthToUpdate(member,group);
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(id);
 
         long totalBudget = findBudget.getTotalBudget();
         long totalExpense = 0l;
@@ -67,7 +67,7 @@ public class BudgetService {
         remainingBudget = totalBudget - totalExpense;
 
         //그룹에 해당되는 expense 들만 list에 담아서 보내주기
-        List<Expense> findExpenses = expenseRepository.findByBudget(findBudget);
+        List<Expense> findExpenses = expenseRepository.findByBudgetId(findBudget.getId());
         List<ExpenseResponseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
 
         BudgetResponseDto dto = new BudgetResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
