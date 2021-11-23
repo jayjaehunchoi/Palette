@@ -7,7 +7,7 @@
   <title>Palette.</title>
   <link rel="icon" href="/frontend/favicon.png" />
 
-  <!-- header jquery -->
+  <!-- header/footer jquery -->
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript">   
     $(document).ready( function() {
@@ -24,7 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="/frontend/css/member.css">
   <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script defer src="/frontend/js/member.js"> </script>
+  <script defer src="/frontend/js/join.js"> </script>
 </head>
 <body>
   <section>
@@ -40,14 +40,13 @@
         </div>
 
         <div class="userInfo">
-          <span class="instruction">아이디</span><br>
-          <input class="userId" type="text" placeholder="영문 소문자, 숫자 6~20자"> 
-          <button class="idDuplication">중복확인</button><br>
+          <span class="instruction">이메일</span><br>
+          <input class="userId" type="text" placeholder="이메일 입력"> 
         </div>
 
         <div class="userInfo">
           <span class="instruction">비밀번호</span><br>
-          <input class="userPw" type="password" placeholder="비밀번호"><br>
+          <input class="userPw" type="password" placeholder="비밀번호(영문자+숫자+특수문자 조합으로 8자 ~ 20자)"><br>
           <input class="userPwChk" type="password" placeholder="비멀번호 확인"><br>
         </div> 
 
@@ -57,15 +56,10 @@
         </div>
 
         <div class="userInfo">
-          <span class="instruction">이메일</span><br>
-          <input class="userEmail" type="text" placeholder="이메일 입력"><br>
-        </div>
-
-        <div class="userInfo">
           <span class="instruction">프로필</span><br>
           <div class="userProfile">
             <div class="preview">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtB6rXnf0CcbxpTidJShuQWRvubJ-tDJS41O9C8IdKGeKxAk7Bnl2A2Vf-iB3Ef-oskVM&usqp=CAU" alt="기본프로필">
+              <img src="/frontend/images/profile_default.png" alt="기본프로필">
             </div>
             <input class="profileFile" type="file" accept="img/*" style="display: none;"> 
             <button class="selectBt">사진 선택</button>
