@@ -9,7 +9,7 @@
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript">   
     $(document).ready( function() {
-    $("#headers").load("/public/header.html");  
+    $("#headers").load("/public/static/header.html");  
     });
   </script>
   <!-- footer jquery -->
@@ -64,7 +64,30 @@
       </div> 
     </section>
 
-    <inputbox class="inputbox" v-on:add_item="add_item"></inputbox>
+    <div class="inputbox">
+      <div class="line1">
+      <select class="category__input" id="category-select">
+        <option value="" selected>분류</option>
+        <option value="TRANSPORTATION">교통</option>
+        <option value="FOOD">식비</option>
+        <option value="LODGING">숙박</option>
+        <option value="ETC">기타</option>
+      </select>
+      <input class="detail__input" type="text" v-model="detail" placeholder="항목" v-on:keyup.enter="add_item"/> <br>
+      </div>
+      <div class="line2">
+      <input class="price__input" type="number" v-model="price" placeholder="금액" v-on:keyup.enter="add_item">
+        <div class="addContainer" v-on:click="add_item">
+          <button class="addBt"> + </button>
+        </div>
+      </div>
+    </div>
+    <div class="budgetlist">
+      <ul class="list">
+        <li></li>
+      </ul>
+    </div>
+    <!-- <inputbox class="inputbox" v-on:add_item="add_item"></inputbox>
     <budgetlist class="budgetlist" v-bind:propsdata="budgetItems" @remove_item="remove_item" @open_edit="open_edit"></budgetlist>
     <clear class="clear" v-on:remove_all="clearAll"></clear>
 
@@ -96,7 +119,7 @@
     <div class="backBt" onclick="location.href='./group.html'">
       완료
     </div>
-  </div>
+  </div> -->
  
   </section>
   
@@ -136,7 +159,7 @@
           </div>
           
           <div class="modalBts">
-            <button type="button" class="modalOkBt"  onclick="changeTotalBudget()"> 확인</button>
+            <button type="button" class="modalOkBt"> 확인</button>
             <button type="button" class="modalCloseBt" onclick="closeChangeModal()">닫기</button>
           </div>
       </div>
