@@ -1,6 +1,7 @@
 package com.palette.domain.group;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.palette.dto.request.ExpenseDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -67,12 +68,14 @@ public class Expense {
             this.categoryName = categoryName;
         }
 
+
+        @JsonValue
         public String getCategoryName() {
             return categoryName;
         }
 
-        @JsonCreator
-        public static Category getRoleFromRoleName(String categoryName){
+        //@JsonCreator
+        public static Category getCategoryFromCategoryName(String categoryName){
             for (Category category : Category.values()) {
                 if(category.categoryName.equals(categoryName) || category.name().equals(categoryName)){
                     return category;
