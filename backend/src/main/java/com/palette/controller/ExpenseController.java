@@ -35,8 +35,8 @@ public class ExpenseController {
     public Long addExpense(@AuthenticationPrincipal Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = budgetService.findByGroup(group);
-        log.info("expense Category= {}", expenseDto.getCategory());
         Expense expense = expenseDto.toEntity();
+        log.info("expense Category= {}", expense.getCategory());
         Expense savedExpense = expenseService.addExpense(member,group,expense,budget);
         return savedExpense.getId();
     }
