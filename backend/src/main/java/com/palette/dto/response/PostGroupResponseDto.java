@@ -3,9 +3,12 @@ package com.palette.dto.response;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.PeriodDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Getter
 public class PostGroupResponseDto {
 
@@ -27,7 +30,7 @@ public class PostGroupResponseDto {
         this.region = postGroup.getRegion();
     }
 
-    public PostGroupResponseDto(Long postGroupId, Long memberId, String memberName, String title, String thumbNailUrl, LocalDateTime startDate, LocalDateTime endDate, String region) {
+    public PostGroupResponseDto(Long postGroupId, Long memberId, String memberName, String title, String thumbNailUrl, LocalDate startDate, LocalDate endDate, String region) {
         this.postGroupId = postGroupId;
         this.memberId = memberId;
         this.memberName = memberName;

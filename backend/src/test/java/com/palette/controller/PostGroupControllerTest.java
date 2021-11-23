@@ -1,8 +1,6 @@
 package com.palette.controller;
 
 import com.palette.controller.util.RestDocUtil;
-import com.palette.domain.Period;
-import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.PeriodDto;
@@ -10,8 +8,6 @@ import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.dto.response.PostGroupsResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
-import com.palette.utils.constant.SessionUtil;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +55,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
 
         given(postGroupService.findPostGroup(any(),anyInt())).willReturn(responses);
 
-        ResultActions result = this.restDocsMockMvc.perform(get("/postgroup?memberId=1&region=Seoul")
+        ResultActions result = this.restDocsMockMvc.perform(get("/api/postgroup?memberId=1&region=Seoul")
                 .contentType(MediaType.APPLICATION_JSON));
 
         result
@@ -79,7 +75,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
 
         given(postService.findStoryList(any(), anyInt())).willReturn(dtos);
 
-        restDocsMockMvc.perform(get("/postgroup/1"))
+        restDocsMockMvc.perform(get("/api/postgroup/1"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("postgroup-get-post",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
@@ -90,10 +86,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
     void 포스트_그룹_생성() throws Exception{
         MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
         PostGroupDto data = new PostGroupDto(TITLE, new PeriodDto(START, END), REGION);
-        PostGroup postGroup = PostGroup.builder().title(data.getTitle())
-                .period(new Period(data.getPeriod()))
-                .region(data.getRegion())
-                .build();
+        PostGroup postGroup = createPostGroup();
         MyFile myFile = new MyFile("imagefile.jpeg", "imagefile.jpeg");
         postGroup.setThumbNail(myFile);
 
@@ -102,7 +95,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         given(postGroupService.createPostGroup(any())).willReturn(postGroup);
         given(s3Uploader.uploadFiles(any())).willReturn(Arrays.asList(myFile));
 
-        restDocsMockMvc.perform(multipart("/postgroup")
+        restDocsMockMvc.perform(multipart("/api/postgroup")
                 .file(json)
                 .file(file)
                 .content("multipart/mixed")
@@ -120,10 +113,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
     void 포스트_그룹_업데이트() throws Exception{
         MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
         PostGroupDto data = new PostGroupDto(TITLE, new PeriodDto(START, END), REGION);
-        PostGroup postGroup = PostGroup.builder().title(data.getTitle())
-                .period(new Period(data.getPeriod()))
-                .region(data.getRegion())
-                .build();
+        PostGroup postGroup = createPostGroup();
         MyFile myFile = new MyFile("imagefile.jpeg", "imagefile.jpeg");
         postGroup.setThumbNail(myFile);
 
@@ -134,7 +124,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         given(s3Uploader.uploadFiles(any())).willReturn(Arrays.asList(myFile));
         doNothing().when(s3Uploader).deleteS3(any());
 
-        MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart("/postgroup/1");
+        MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart("/api/postgroup/1");
         builder.with(request -> { request.setMethod("PUT"); return request; });
 
         restDocsMockMvc.perform(builder
@@ -151,26 +141,16 @@ public class PostGroupControllerTest extends RestDocControllerTest{
 
     @Test
     void 포스트_그룹_삭제() throws Exception{
-        PostGroup postGroup = PostGroup.builder().title(TITLE)
-                .period(new Period(START,END))
-                .region(REGION)
-                .build();
+        PostGroup postGroup = createPostGroup();
 
         given(postGroupService.checkMemberAuth(any(),anyLong())).willReturn(postGroup);
         given(postService.findPostIdsByPostGroupId(anyLong())).willReturn(Arrays.asList(1L));
         doNothing().when(postGroupService).deletePostGroup(postGroup);
 
-        restDocsMockMvc.perform(delete("/postgroup/1").header(AUTH, TOKEN)).andExpect(status().isOk())
+        restDocsMockMvc.perform(delete("/api/postgroup/1").header(AUTH, TOKEN)).andExpect(status().isOk())
                 .andDo(document("postgroup-delete-group",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
 
     }
-
-    @AfterEach
-    void tearDown(){
-        session.clearAttributes();;
-        session = null;
-    }
-
 
 }

@@ -4,7 +4,6 @@ import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.group.Budget;
 import com.palette.domain.group.Expense;
 import com.palette.domain.group.Group;
-import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
@@ -19,7 +18,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import static com.palette.utils.constant.SessionUtil.*;
+
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -37,10 +36,6 @@ public class BudgetControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = RestDocUtil.successRestDocsMockMvc(provider, budgetController);
-
-        Member member = createMember();
-
-        session.setAttribute(MEMBER,member);
     }
 
     @Test
@@ -49,7 +44,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
         BudgetResponseDto budgetResponseDto = new BudgetResponseDto(1L, 10000, 1000, 9000, Arrays.asList(expenseDto));
         given(budgetService.readBudget(any(),any())).willReturn(budgetResponseDto);
 
-        restDocsMockMvc.perform(get("/travelgroup/1/budget").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(get("/api/travelgroup/1/budget").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("budget_get_budget",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
@@ -64,7 +59,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
         String json = objectMapper.writeValueAsString(budgetDto);
         given(budgetService.addBudget(any(),any(),any())).willReturn(1L);
 
-        restDocsMockMvc.perform(post("/travelgroup/1/budget").header(AUTH, TOKEN)
+        restDocsMockMvc.perform(post("/api/travelgroup/1/budget").header(AUTH, TOKEN)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8))
@@ -84,7 +79,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
 
         budget.saveBudgetOnGroup(group);
 
-        restDocsMockMvc.perform(put("/travelgroup/1/budget").header(AUTH, TOKEN)
+        restDocsMockMvc.perform(put("/api/travelgroup/1/budget").header(AUTH, TOKEN)
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding(StandardCharsets.UTF_8))
@@ -98,18 +93,11 @@ public class BudgetControllerTest extends RestDocControllerTest{
         given(groupService.findById(any())).willReturn(group);
         doNothing().when(budgetService).deleteBudget(any());
 
-        restDocsMockMvc.perform(delete("/travelgroup/1/budget").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(delete("/api/travelgroup/1/budget").header(AUTH, TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("budget_delete_budget"));
 
-    }
-
-    private Group createGroup() {
-        return Group.builder().groupName("groupName").groupsIntroduction("This is Group").build();
-    }
-    private Member createMember(){
-        return new Member(NAME, PASSWORD,IMAGE,EMAIL);
     }
 
 }

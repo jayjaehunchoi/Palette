@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,8 +39,8 @@ public class CommentRepositoryTest {
                 .member(member)
                 .content("내용")
                 .region("지역")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postRepository.save(post);
 

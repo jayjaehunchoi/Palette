@@ -51,8 +51,4 @@ public class Member extends BaseTimeEntity {
     public void encodePassword(String encodedPassword) {
         this.password = encodedPassword;
     }
-
-    public void changeProfileFile(String profileFileName) {
-        this.profileFileName = profileFileName;
-    }
 }

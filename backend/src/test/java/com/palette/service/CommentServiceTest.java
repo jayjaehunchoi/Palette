@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
@@ -37,16 +38,16 @@ public class CommentServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post,group);
 
@@ -72,16 +73,16 @@ public class CommentServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
@@ -96,16 +97,16 @@ public class CommentServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post,group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
@@ -119,16 +120,16 @@ public class CommentServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");
@@ -143,16 +144,16 @@ public class CommentServiceTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
 
-        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                , LocalDateTime.of(2021, 11, 5, 20, 20))).build();
+        PostGroup group = PostGroup.builder().member(member).title("하이").region("서울").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).build();
         postGroupRepository.save(group);
 
         Post post = Post.builder().title("제목입니다")
                 .member(member)
                 .content("내용")
                 .region("서울")
-                .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                        , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                .period(new Period(LocalDate.of(2021, 11, 2)
+                        , LocalDate.of(2021, 11, 5)))
                 .build();
         postService.write(post, group);
         Comment comment = new Comment(member, "반가워요 우리 친하게 지내요");

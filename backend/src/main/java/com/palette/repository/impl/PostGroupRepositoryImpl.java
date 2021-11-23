@@ -64,7 +64,7 @@ public class PostGroupRepositoryImpl implements PostGroupRepositoryCustom {
                         regionEq(condition.getRegion()),
                         titleContain(condition.getTitle()))
                 .orderBy(postGroup.id.desc())
-                .offset(pageNo - 1)
+                .offset((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .fetch();
 

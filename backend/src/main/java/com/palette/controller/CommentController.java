@@ -21,6 +21,7 @@ import static com.palette.utils.constant.HttpResponseUtil.*;
 
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/api")
 @RestController
 public class CommentController {
 

@@ -1,19 +1,15 @@
 package com.palette.controller;
 
-import com.palette.controller.util.RestDocUtil;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.Comment;
 import com.palette.dto.request.CommentDto;
 import com.palette.dto.response.CommentResponseDto;
-import com.palette.utils.constant.SessionUtil;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 
 import java.util.Arrays;
 
@@ -33,20 +29,17 @@ public class CommentControllerTest extends RestDocControllerTest{
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider){
         this.restDocsMockMvc = successRestDocsMockMvc(provider, commentController);
-
-        Member member = new Member(NAME,PASSWORD,IMAGE,EMAIL);
-        session.setAttribute(SessionUtil.MEMBER,member);
     }
 
     @Test
     void 게시물_댓글_조회_페이징() throws Exception {
-        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, START);
-        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, START);
+        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, CREATED_DATE);
+        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, CREATED_DATE);
 
         given(commentService.findCommentByClickViewMore(anyLong(),anyLong()))
                 .willReturn(Arrays.asList(dto1,dto2));
 
-        restDocsMockMvc.perform(get("/post/1/comment?id=0"))
+        restDocsMockMvc.perform(get("/api/post/1/comment?id=0"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("comment-get-paging",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
@@ -56,12 +49,12 @@ public class CommentControllerTest extends RestDocControllerTest{
 
     @Test
     void 게시물_댓글_답글_조회_페이징() throws Exception{
-        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, START);
-        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, START);
+        CommentResponseDto dto1 = new CommentResponseDto(1L, NAME, 1L, CONTENT, CREATED_DATE);
+        CommentResponseDto dto2 = new CommentResponseDto(1L, NAME, 2L, CONTENT, CREATED_DATE);
         given(commentService.findChildComment(any(),any()))
                 .willReturn(Arrays.asList(dto1,dto2));
 
-        restDocsMockMvc.perform(get("/post/1/comment/1"))
+        restDocsMockMvc.perform(get("/api/post/1/comment/1"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("comment-get-child-paging",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
@@ -75,7 +68,7 @@ public class CommentControllerTest extends RestDocControllerTest{
         Comment comment = createComment(commentDto);
         given(commentService.writeComment(any(),any(),any())).willReturn(comment);
 
-        restDocsMockMvc.perform(post("/post/1/comment")
+        restDocsMockMvc.perform(post("/api/post/1/comment")
                         .content(objectMapper.writeValueAsString(commentDto))
                         .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isCreated())
@@ -89,7 +82,7 @@ public class CommentControllerTest extends RestDocControllerTest{
         Comment comment = createComment(commentDto);
         given(commentService.writeComment(any(),any(),any())).willReturn(comment);
 
-        restDocsMockMvc.perform(post("/post/1/comment/1")
+        restDocsMockMvc.perform(post("/api/post/1/comment/1")
                 .content(objectMapper.writeValueAsString(commentDto))
                 .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isCreated())
@@ -103,7 +96,7 @@ public class CommentControllerTest extends RestDocControllerTest{
         Comment comment = createComment(commentDto);
         given(commentService.updateComment(any(),any(),any())).willReturn(comment);
 
-        restDocsMockMvc.perform(put("/post/1/comment/1")
+        restDocsMockMvc.perform(put("/api/post/1/comment/1")
                 .content(objectMapper.writeValueAsString(commentDto))
                 .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN))
                 .andExpect(status().isOk())
@@ -115,7 +108,7 @@ public class CommentControllerTest extends RestDocControllerTest{
     void 댓글_삭제() throws Exception{
         doNothing().when(commentService).deleteComment(1L,1L);
 
-        restDocsMockMvc.perform(delete("/post/1/comment/1").header(AUTH, TOKEN))
+        restDocsMockMvc.perform(delete("/api/post/1/comment/1").header(AUTH, TOKEN))
                 .andExpect(status().isOk())
                 .andDo(document("comment-delete-comment",preprocessRequest(MockMvcConfig.prettyPrintPreProcessor()
                 ),preprocessResponse(MockMvcConfig.prettyPrintPreProcessor())));
@@ -129,13 +122,4 @@ public class CommentControllerTest extends RestDocControllerTest{
                 .build();
         return comment;
     }
-
-    @AfterEach
-    void tearDown(){
-        session.clearAttributes();;
-        session = null;
-    }
-
-
-
 }

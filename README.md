@@ -14,10 +14,13 @@ TBD
 
 ## 🛠 기술 스택
 ### ⚙️ Backend
-![image](https://user-images.githubusercontent.com/87312401/141252508-af934ed5-99ae-4e13-b25f-38bd338c81de.png)
+![image](https://user-images.githubusercontent.com/87312401/142391564-ae6a0f99-47c0-464c-ba86-891b5f9fdddd.png)
 
 ### ⚙️ Frontend
 ![image](https://user-images.githubusercontent.com/87312401/141253173-db6d0c28-0108-4600-9610-b7e3b03480cb.png)
+
+### ⚙️ 프로젝트 CI/CD
+![image](https://user-images.githubusercontent.com/87312401/142388826-4ff5f724-97e7-4e33-9bde-356e0d16e56c.png)
 
 ## 🔑 프로젝트 문제 해결 기록
 * **[Palette 백엔드를 개발하며 경험하고 해결한 내용](https://github.com/jayjaehunchoi/JavaStudy/tree/main/SpringBootProject)**

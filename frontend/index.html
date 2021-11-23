@@ -206,35 +206,9 @@
           <p class="sentence">plan your own relax time</p>
         </div>
         <div class="thumbnail">
-          <div class="swiper-container">
+          <div class="swiper-container swiper2">
             <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
-              <div class="swiper-slide">
-                <a href="javascript:void(0)"></a>
-              </div>
+              <div class="swiper-slide"></div>
             </div>
           </div>
         </div>
@@ -246,6 +220,36 @@
         </div>
       </div>
     </section>
+
+    <script>
+      $(document).ready(function() {
+        swiper2.removeAllSlides();
+        // ajax 통신
+        $.ajax({ // 요청에 대한 정보
+          type: "GET", // 전송방식. HTTP method type(GET, POST) 형식
+          url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup", // 전송주소. 컨트롤러에서 대기중인 url 주소
+          dataType : "json",
+          ContentType: "application/json; charset=UTF-8",
+
+          success: function(res){ //비동기통신의 성공일경우 success콜백으로 들어옴. 'res'는 응답받은 데이터.
+            var htmlArr = [];
+            var result =  res.postGroupResponses;
+            if(result.length >= 8) {
+              for (var i = 0; i < result.length; i++) {
+                console.log(result[i].thumbNailUrl);
+                htmlArr.push("<div class=\"swiper-slide\"><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
+              }
+            }
+            swiper2.appendSlide(htmlArr); 
+            swiper2.update(); //슬라이드를 새로 추가할 경우 꼭 update 함수를 호출.
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) { //비동기 통신이 실패할경우 error 콜백으로 들어옴.
+            console.log("통신 실패")
+          }
+          
+        });
+      });
+    </script>
 
 
     <!-- footer 연결 -->

@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,8 +45,8 @@ class PostRepositoryTest {
                     .member(findMember)
                     .content("내용")
                     .region(region)
-                    .period(new Period(LocalDateTime.of(2021, 11, 2, 20, 20)
-                            , LocalDateTime.of(2021, 11, 5, 20, 20)))
+                    .period(new Period(LocalDate.of(2021, 11, 2)
+                            , LocalDate.of(2021, 11, 5)))
                     .build();
             for(int j = 0 ; j < 3; j++){
                 Photo photo = new Photo(new MyFile("abc"+i, "abc"+i));
@@ -127,11 +128,11 @@ class PostRepositoryTest {
     void 일정확인(){
         Post post = postRepository.findAll().get(0);
         Post singlePost = postRepository.findSinglePost(post.getId());
-        LocalDateTime startDate = singlePost.getPeriod().getStartDate();
-        LocalDateTime endDate = singlePost.getPeriod().getEndDate();
+        LocalDate startDate = singlePost.getPeriod().getStartDate();
+        LocalDate endDate = singlePost.getPeriod().getEndDate();
 
-        assertThat(startDate).isEqualTo(LocalDateTime.of(2021, 11, 2, 20, 20));
-        assertThat(endDate).isEqualTo(LocalDateTime.of(2021, 11, 5, 20, 20));
+        assertThat(startDate).isEqualTo(LocalDate.of(2021, 11, 2));
+        assertThat(endDate).isEqualTo(LocalDate.of(2021, 11, 5));
     }
 
     @Test

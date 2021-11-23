@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,11 +40,11 @@ public class PostGroupRepositoryTest {
         Member findMember = all.get(0);
         Member findMember2 = all.get(1);
 
-        PostGroup postGroup = PostGroup.builder().member(findMember).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+        PostGroup postGroup = PostGroup.builder().member(findMember).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).region("지역").build();
 
-        PostGroup postGroup2 = PostGroup.builder().member(findMember2).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+        PostGroup postGroup2 = PostGroup.builder().member(findMember2).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).region("지역").build();
         postGroupRepository.save(postGroup);
         postGroupRepository.save(postGroup2);
 
@@ -68,11 +69,11 @@ public class PostGroupRepositoryTest {
         Member findMember = all.get(0);
         Member findMember2 = all.get(1);
 
-        PostGroup postGroup = PostGroup.builder().member(findMember).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+        PostGroup postGroup = PostGroup.builder().member(findMember).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).region("지역").build();
 
-        PostGroup postGroup2 = PostGroup.builder().member(findMember2).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+        PostGroup postGroup2 = PostGroup.builder().member(findMember2).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                , LocalDate.of(2021, 11, 5))).region("지역").build();
         postGroupRepository.save(postGroup);
         postGroupRepository.save(postGroup2);
 
@@ -94,8 +95,8 @@ public class PostGroupRepositoryTest {
         memberRepository.save(member);
 
         for(int i = 0 ; i < 10000; i++){
-            PostGroup postGroup = PostGroup.builder().member(member).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                    LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+            PostGroup postGroup = PostGroup.builder().member(member).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                    , LocalDate.of(2021, 11, 5))).region("지역").build();
             postGroupRepository.save(postGroup);
         }
         SearchCondition searchCondition = new SearchCondition();
@@ -111,8 +112,8 @@ public class PostGroupRepositoryTest {
         Member member = new Member("wogns", "1234", "wogns","123");
         memberRepository.save(member);
         for(int i = 0 ; i < 100; i++){
-            PostGroup postGroup = PostGroup.builder().member(member).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                    LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+            PostGroup postGroup = PostGroup.builder().member(member).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                    , LocalDate.of(2021, 11, 5))).region("지역").build();
             postGroupRepository.save(postGroup);
         }
         long count = postGroupRepository.getStoryListTotalCount(new SearchCondition());
@@ -130,8 +131,8 @@ public class PostGroupRepositoryTest {
             if(i > 5){
                 input = member2;
             }
-            PostGroup postGroup = PostGroup.builder().member(input).title("여행을 떠나요").period(new Period(LocalDateTime.of(2021, 11, 01, 10, 10),
-                    LocalDateTime.of(2021, 11, 03, 10, 10))).region("지역").build();
+            PostGroup postGroup = PostGroup.builder().member(input).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                    , LocalDate.of(2021, 11, 5))).region("지역").build();
             postGroupRepository.save(postGroup);
         }
         SearchCondition condition = new SearchCondition();

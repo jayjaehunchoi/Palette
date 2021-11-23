@@ -15,12 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/travelgroup")
+@RequestMapping("/api/travelgroup")
 @RestController
 public class BudgetController {
 
@@ -38,7 +39,7 @@ public class BudgetController {
     @ResponseStatus(HttpStatus.CREATED)
     @LoginChecker
     @PostMapping("/{travelgroupid}/budget") //테스트완료 (중복추가안되게도 완료)
-    public Long saveBudget(@AuthenticationPrincipal Member member, @RequestBody @Validated BudgetDto budgetDto, @PathVariable("travelgroupid") Long travelGroupId){
+    public Long saveBudget(@AuthenticationPrincipal Member member, @RequestBody @Valid BudgetDto budgetDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = Budget.builder()
                         .group(group)
@@ -50,7 +51,7 @@ public class BudgetController {
     //예산 수정
     @LoginChecker
     @PutMapping("/{travelgroupid}/budget") //테스트완료
-    public ResponseEntity<Void> updateBudget(@AuthenticationPrincipal Member member, @RequestBody @Validated BudgetUpdateDto budgetUpdateDto, @PathVariable("travelgroupid") Long travelGroupId){
+    public ResponseEntity<Void> updateBudget(@RequestBody @Valid BudgetUpdateDto budgetUpdateDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         log.info("dto budget = {}",budgetUpdateDto.getTotalBudget());
         budgetService.updateBudget(group.getBudget().getId(),budgetUpdateDto);
@@ -60,7 +61,7 @@ public class BudgetController {
     //예산 삭제
     @LoginChecker
     @DeleteMapping("/{travelgroupid}/budget") //테스트완료
-    public ResponseEntity<Void> deleteBudget(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long travelGroupId){
+    public ResponseEntity<Void> deleteBudget(@PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         budgetService.deleteBudget(group);
         return HttpResponseUtil.RESPONSE_OK;

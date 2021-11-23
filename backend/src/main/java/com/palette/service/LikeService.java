@@ -26,9 +26,7 @@ public class LikeService {
         Like findLike = likeRepository.findByMemberAndPostId(member, postId).orElse(null);
         Like likes = new Like(member);
         Post findPost = postRepository.findById(postId).orElse(null);
-        if(findPost == null){
-            throw new PostException("게시물이 존재하지 않습니다.");
-        }
+        isPostExist(findPost);
         if(findLike == null){
             likes.pushLike(findPost, false);
             return findPost.getLikeCount();
@@ -36,6 +34,12 @@ public class LikeService {
         likeRepository.delete(findLike);
         likes.pushLike(findPost, true);
         return findPost.getLikeCount();
+    }
+
+    private void isPostExist(Post findPost) {
+        if(findPost == null){
+            throw new PostException("게시물이 존재하지 않습니다.");
+        }
     }
 
     // 커서페이징
