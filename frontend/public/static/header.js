@@ -53,3 +53,20 @@ $(document).ready(function() {
   // clickToScroll();
 	otherPage();
 });
+
+$(document).ready(function() {
+  var token = sessionStorage.getItem("token");
+  if ( token ) {
+    document.querySelector('div.menu__login').style.display = "inline";
+    document.querySelector('div.menu__logout').style.display = "none";
+  } else {
+    console.log("안로그인");
+    document.querySelector('div.menu__login').style.display = "none";
+    document.querySelector('div.menu__logout').style.display = "inline";
+  }
+});
+
+$('.logout').click(function () {
+  sessionStorage.removeItem("token");
+  window.location.href = '/index.html'; 
+}); 

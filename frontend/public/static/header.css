@@ -82,6 +82,62 @@ header .sub-menu ul.menu li a {
 header .sub-menu ul.menu li a:hover {
   color: #000;
 }
+
+/*login시의 서브 메뉴*/
+header .sub-menu .menu__login {
+  display: none;
+}
+
+header .sub-menu ul.menu__login {
+  font-family: Montserrat;
+  display: flex;
+}
+header .sub-menu ul.menu__login li {
+  position: relative;
+}
+header .sub-menu ul.menu__login li::before {
+  content: "";
+  width: 1px;
+  height: 12px;
+  background-color: #e5e5e5;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+header .sub-menu ul.menu__login li:first-child::before{
+  display: none;
+}
+header .sub-menu ul.menu__login li .welcome {
+  color: #bfbfbf;
+  font-size: 12px;
+  padding: 11px 16px;
+  display: block;
+}
+header .sub-menu ul.menu__login li a {
+  font-size: 12px;
+  padding: 11px 16px;
+  display: block;
+  color: #656565;
+}
+header .sub-menu ul.menu__login li a:hover {
+  color: #000;
+}
+
+header .sub-menu ul.menu__login li button {
+  font-size: 12px;
+  padding: 11px 16px;
+  display: block;
+  color: #656565;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+header .sub-menu ul.menu__login li button:hover{
+  color: #000;
+}
+
 header .sub-menu .search input {
   width: 36px;
   height: 34px;
