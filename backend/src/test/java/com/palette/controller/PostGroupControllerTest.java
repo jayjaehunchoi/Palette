@@ -55,7 +55,7 @@ public class PostGroupControllerTest extends RestDocControllerTest{
 
         given(postGroupService.findPostGroup(any(),anyInt())).willReturn(responses);
 
-        ResultActions result = this.restDocsMockMvc.perform(get("/api/postgroup?memberId=1&region=Seoul")
+        ResultActions result = this.restDocsMockMvc.perform(get("/api/postgroup?region=Seoul")
                 .contentType(MediaType.APPLICATION_JSON));
 
         result
@@ -65,6 +65,28 @@ public class PostGroupControllerTest extends RestDocControllerTest{
                 ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
 
     }
+
+    @Test
+    void 내_포스트_그룹_가져오기() throws Exception {
+        PostGroupResponseDto dto1 = new PostGroupResponseDto(1L, 1L, NAME, "title", IMAGE, START, END, REGION);
+        PostGroupResponseDto dto2 = new PostGroupResponseDto(1L, 1L, NAME, "title", IMAGE, START, END, REGION);
+
+        List<PostGroupResponseDto> responses = Arrays.asList(dto1, dto2);
+        PostGroupsResponseDto dtos = PostGroupsResponseDto.builder().postGroupResponses(responses).build();
+
+        given(postGroupService.findPostGroup(any(),anyInt())).willReturn(responses);
+
+        ResultActions result = this.restDocsMockMvc.perform(get("/api/postgroup/my")
+                .contentType(MediaType.APPLICATION_JSON).header(AUTH, TOKEN));
+
+        result
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(document("postgroup-get-my-postgroup",preprocessRequest(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor()
+                ),preprocessResponse(RestDocUtil.MockMvcConfig.prettyPrintPreProcessor())));
+
+    }
+
 
     @Test
     void 포스트_그룹내_포스트_보기() throws Exception {

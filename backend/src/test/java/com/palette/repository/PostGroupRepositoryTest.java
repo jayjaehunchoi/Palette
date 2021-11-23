@@ -5,6 +5,7 @@ import com.palette.domain.member.Member;
 import com.palette.domain.post.PostGroup;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.response.PostGroupResponseDto;
+import com.palette.utils.constant.ConstantUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.palette.utils.constant.ConstantUtil.*;
 import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -105,6 +107,22 @@ public class PostGroupRepositoryTest {
         long end = System.currentTimeMillis();
 
         System.out.println(" 1만건 기준 마지막 페이지 조회 성능 : " + (end-start) + "ms");
+    }
+
+    @Test
+    void 페이징(){
+        Member member = new Member("wogns", "1234", "wogns","123");
+        memberRepository.save(member);
+        for(int i = 0 ; i < 10; i++){
+            PostGroup postGroup = PostGroup.builder().member(member).title("여행을 떠나요").period(new Period(LocalDate.of(2021, 11, 2)
+                    , LocalDate.of(2021, 11, 5))).region("지역").build();
+            postGroupRepository.save(postGroup);
+        }
+        List<PostGroupResponseDto> storyListWithPage = postGroupRepository.findStoryListWithPage(new SearchCondition(), 1, PAGE_SIZE);
+        List<PostGroupResponseDto> storyListWithPage1 = postGroupRepository.findStoryListWithPage(new SearchCondition(), 2, PAGE_SIZE);
+
+        assertThat(storyListWithPage.size()).isEqualTo(9);
+        assertThat(storyListWithPage1.size()).isEqualTo(1);
     }
 
     @Test
