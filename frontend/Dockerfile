@@ -2,11 +2,11 @@ FROM node:latest
 
 WORKDIR /frontend
 
-COPY ./package*.json /frontend
+COPY ./package*.json /frontend/
 
 RUN npm install
 
-COPY / /frontend
+COPY / /frontend/
 
 CMD ["npm", "run", "start"]
 
