@@ -3,6 +3,8 @@
   <img src="https://user-images.githubusercontent.com/87312401/141436476-df3daced-f39b-4b1a-83bb-819e053f03b0.png"/>
 </p>
 
+ **<center>서비스 운영 주소 : www.palette-travel.com</center>** 
+
 ## 💻 서비스 소개
 * **여행을 하며 가장 소중했던 순간의 기록을 남길 수 있습니다.**
 * **다른 회원들의 지역별 여행 게시물을 보며 랜선 여행을 떠날 수 있습니다.**
