@@ -104,7 +104,7 @@ $('.modifyBt').click(function() {
       },
       success: function(data){
         alert("회원정보가 수정되었습니다!");
-
+        window.location.href="/index.html";
       }
     });
   }
