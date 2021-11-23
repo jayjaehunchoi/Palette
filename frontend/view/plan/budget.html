@@ -9,7 +9,7 @@
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript">   
     $(document).ready( function() {
-    $("#headers").load("/public/header.html");  
+    $("#headers").load("/public/static/header.html");  
     });
   </script>
   <!-- footer jquery -->
@@ -26,7 +26,6 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
   <link rel="stylesheet" href="/public/css/budget.css">
   <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
   <script defer src="/public/js/budget.js"></script>
   <title>Palette.</title>
 
@@ -43,7 +42,6 @@
     <div class="inner"> 
     <section class="budgetbox">
       <div class="budgetBts"> 
-        <button class="setBt" onclick="openSetModal()">예산 설정</button>
         <button class="changeBt" onclick="openChangeModal()">예산 수정</button>
       </div>
       <div>
@@ -64,39 +62,34 @@
       </div> 
     </section>
 
-    <inputbox class="inputbox" v-on:add_item="add_item"></inputbox>
-    <budgetlist class="budgetlist" v-bind:propsdata="budgetItems" @remove_item="remove_item" @open_edit="open_edit"></budgetlist>
-    <clear class="clear" v-on:remove_all="clearAll"></clear>
-
-    <modal v-if="showModal" @close="showModal = false">
-      <h3 slot="header"> 수정 </h3>
-      <div slot="body">
-        <div class="line1">
-          <select class="category__input" >
-            <option value="" selected>분류</option>
-            <option value="교통">교통</option>
-            <option value="식비">식비</option>
-            <option value="숙박">숙박</option>
-            <option value="기타">기타</option>
-          </select>
-          <input class="detail__input" type="text" placeholder="항목" /> <br>
-          </div>
-          <div class="line2">
-          <input class="price__input" type="number" placeholder="금액" >
-            <div class="addContainer">
-              <button class="addBt"> + </button>
-            </div>
-          </div>
+    <div class="inputbox">
+      <div class="line1">
+      <select class="category__input" id="category-select">
+        <option value="" selected>분류</option>
+        <option value="교통">교통</option>
+        <option value="식비">식비</option>
+        <option value="숙박">숙박</option>
+        <option value="기타">기타</option>
+      </select>
+      <input class="detail__input" type="text" v-model="detail" placeholder="항목" v-on:keyup.enter="add_item"/> <br>
       </div>
-      <span slot="footer" @click="showModal = false">
-        <i class="closeModalBtn fas fa-times" aria-hidden="true"></i> 
-      </span>
-    </modal>
+      <div class="line2">
+      <input class="price__input" type="number" v-model="price" placeholder="금액" v-on:keyup.enter="add_item">
+        <div class="addContainer" v-on:click="add_item">
+          <button class="addBt"> + </button>
+        </div>
+      </div>
     </div>
-    <div class="backBt" onclick="location.href='./group.html'">
-      완료
+
+    <div class="budgetlist">
+      <ul class="list">
+        <li></li>
+      </ul>
     </div>
-  </div>
+
+    <div class="clear">
+      <button class="clearAllBt">모두 지우기</button>
+    </div>
  
   </section>
   
@@ -136,8 +129,37 @@
           </div>
           
           <div class="modalBts">
-            <button type="button" class="modalOkBt"  onclick="changeTotalBudget()"> 확인</button>
+            <button type="button" class="modalOkBt"> 확인</button>
             <button type="button" class="modalCloseBt" onclick="closeChangeModal()">닫기</button>
+          </div>
+      </div>
+     
+      <div class="modal_layer"></div>
+
+    </div>
+
+    <!-- Expense 수정 -->
+    <div class="modal" id="changeExpenseModal">
+   
+      <div class="modalContent">
+         
+        <div class="line1">
+          <select class="category__input" >
+            <option value="" selected>분류</option>
+            <option value="교통">교통</option>
+            <option value="식비">식비</option>
+            <option value="숙박">숙박</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="detail__input" type="text" placeholder="항목" /> <br>
+          </div>
+          <div class="line2">
+          <input class="price__input" type="number" placeholder="금액" />
+          </div>
+          
+          <div class="modalBts">
+            <button type="button" class="modalOkBt"> 변경</button>
+            <button type="button" class="modalCloseBt" onclick="closeChangeExpenseModal()">닫기</button>
           </div>
       </div>
      

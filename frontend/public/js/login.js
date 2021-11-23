@@ -19,7 +19,7 @@ $('.loginBt').click(function () {
         if (window.sessionStorage) { 
           sessionStorage.setItem('token', token);
           alert(userName + "님 환영합니다.");
-          // window.location.href = '/frontend/index.html';
+          window.location.href = '/index.html';
         }
       },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -36,11 +36,6 @@ $('.userPw').keydown(function(key) {
   }
 });
 
-
-$('.logout').click(function () {
-  sessionStorage.removeItem("token");
-  window.location.href = '/frontend/index.html'; 
-}); 
 
 
 /* FIND PW */

@@ -53,3 +53,38 @@ $(document).ready(function() {
   // clickToScroll();
 	otherPage();
 });
+
+$(document).ready(function() {
+  var token = sessionStorage.getItem("token");
+  if ( token ) {
+    document.querySelector('div.menu__login').style.display = "inline";
+    document.querySelector('div.menu__logout').style.display = "none";
+  } else {
+    console.log("안로그인");
+    document.querySelector('div.menu__login').style.display = "none";
+    document.querySelector('div.menu__logout').style.display = "inline";
+  }
+});
+
+$('.logout').click(function () {
+  sessionStorage.removeItem("token");
+  window.location.href = '/index.html'; 
+}); 
+
+$('.toPlan').click(function(e) {
+  var token = sessionStorage.getItem("token");
+  if ( !token ) {
+  alert("로그인이 필요합니다");
+  e.preventDefault();
+  window.location.href = "/view/member/login.html";
+  }
+});
+
+$('.toMyblog').click(function(e) {
+  var token = sessionStorage.getItem("token");
+  if ( !token ) {
+  alert("로그인이 필요합니다");
+  e.preventDefault();
+  window.location.href = "/view/member/login.html";
+  }
+})
