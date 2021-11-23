@@ -45,7 +45,6 @@ public class BudgetServiceTest {
                 groupsIntroduction("테스트 그룹 1입니다.")
                 .build();
         groupRepository.save(group);
-
         MemberGroup memberGroup = new MemberGroup();
         memberGroupRepository.save(memberGroup);
         memberGroup.addMemberGroup(group,member);
