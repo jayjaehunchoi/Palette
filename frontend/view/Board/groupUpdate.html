@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<title>group modify</title>
+
+<link rel = "stylesheet" href="/public/css/groupUpdate.css">
+
+<!-- favicon -->
+<link rel="icon" href="/favicon.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"> 
+<!-- font -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+   <!-- header jquery -->
+   <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#headers").load("/public/static/header.html");  
+    });
+  </script>
+  <!-- footer jquery -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/public/static/footer.html");  
+    });
+  </script>
+
+<script type="text/javascript">   
+  $(document).ready( function() {
+
+  });
+</script>
+
+<!-- ajax 요청 (글수정) -->
+<script type="text/javascript">   
+  
+  //debugger;     
+  function modify() {
+    var frm = $('#frmmodifymyblog')[0];
+    var startDate = $('#startDate',frm).val();
+    var endDate = $('#endDate ',frm).val();
+    var title = $('#title ',frm).val();
+    var region = $('#region ',frm).val();
+    var Thumbnail = $('#Thumbnail ',frm);
+
+    let token = sessionStorage.getItem("token");
+    let postGroupId = sessionStorage.getItem("postGroupId");
+
+    var params = {period:{startDate : startDate ,endDate : endDate}, title : title , region : region };  // 개발시 변경 부분
+
+     var formData = new FormData(frm);
+     console.log(Thumbnail[0].files[0]);
+     formData.append('file',Thumbnail[0].files[0]);
+     formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))
+
+   var msg = '';
+
+    $.ajax({
+      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분
+      contentType: false,
+      Accept: 'application/json',
+      processData:false,
+      type: 'PUT',  // get, post
+      cache: false, // 응답 결과 임시 저장 취소
+      async: true,  // true: 비동기 통신
+      dataType: 'json', // 응답 형식: json, html, xml...
+      data: formData,      // 데이터
+
+      success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
+          
+        if (testData != null) { 
+
+          //alert('내용  ㅇㅇ' +  testData.postGroupResponses[0].memberName);
+           console.log(Data);
+          // $('#startDate').val(data.startDate);
+          // $('#endDate').val(data.endDate);
+          // $('#title').val(data.title);
+          // $('#region').val(data.region);
+          // $('#Thumbnail').val(data.Thumbnail);
+
+        } else {  
+          //testData.postGroupResponses[0].postGroupId.value();
+
+         // alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
+        }
+        // window.location.href = "./myblog.html";
+      },
+      beforeSend: function (xhr) {
+      xhr.setRequestHeader("Authorization","Bearer " + token);
+    },
+
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        console.log('ajax야 힘내자'+ request +status + error);
+        console.log(formData);
+      }
+    });
+  }
+</script>
+
+</head>
+<body>
+    <div id="headers"></div>
+    <section>
+        <div class="container">
+            <div class="inner">
+                <h1 class="title"> 여행 일정 </h1>
+                <form name = "frmmodifymyblog" id = "frmmodifymyblog" enctype = "multipart/form-data"> 
+                    <label for="date">DATE</label> 
+                    <!-- required="required" 필수 입력 필드를 지정하는 속성 -->
+                    <input type="date" id = "startDate" name="date" placeholder="여행 시작 날짜" required="required"> 
+                    <input type="date" id = "endDate" name="date" placeholder="여행 종료 날짜" required="required"> 
+                    <label>제목</label> 
+                    <input type="text" id = "title" name="title" placeholder="제목을 입력하세요" required="required">
+                    <label>지역</label> 
+                    <!-- <form> -->
+                      <select name="region" id = "region" name = "region" required="required" >
+                          <option value="none">=== 선택 ===</option>
+                          <option value="서울">서울</option>
+                          <option value="경기">경기</option>
+                          <option value="인천">인천</option>
+                          <option value="부산">부산</option>
+                          <option value="대전">대전</option>
+                          <option value="대구">대구</option>
+                          <option value="울산">울산</option>
+                          <option value="광주">광주</option>
+                          <option value="제주">제주</option>
+                        </select>
+                    <!-- </form> -->
+                    <!-- <label>썸네일은 수정이 불가합니다</label>  -->
+                    <input type = "file" id = "Thumbnail" name = "Thumbnail" accept="image/*" required="required" >
+                    
+                    <input type="button" id="cancel" value="취소"> 
+                    <input type="button" id="submit_btn" value="저장" onclick="modify()">
+                                  
+                  </form> 
+            </div>
+        </div>
+    </section>
+
+
+    <div id="footers"></div>
+    
+</body>
+</html>
