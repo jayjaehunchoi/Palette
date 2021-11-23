@@ -41,10 +41,9 @@ public class BudgetService {
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
         isBudgetAlreadyExist(group);
-        Budget saveBudget = new Budget(group,budget.getTotalBudget());
-        budgetRepository.save(saveBudget);
-        saveBudget.saveBudgetOnGroup(group);
-        return saveBudget.getId();
+        budgetRepository.save(budget);
+        budget.saveBudgetOnGroup(group);
+        return budget.getId();
     }
 
     //그룹의 예산,경비,남은금액 조회

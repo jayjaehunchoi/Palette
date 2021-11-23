@@ -1,5 +1,6 @@
 package com.palette.controller;
 
+import com.palette.domain.group.Budget;
 import com.palette.domain.group.Group;
 import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
@@ -8,6 +9,7 @@ import com.palette.dto.request.GroupJoinDto;
 import com.palette.dto.request.GroupUpdateDto;
 import com.palette.dto.response.GroupResponseDto;
 import com.palette.dto.response.GroupsResponseDto;
+import com.palette.service.BudgetService;
 import com.palette.service.GroupService;
 import com.palette.controller.auth.AuthenticationPrincipal;
 import com.palette.utils.annotation.LoginChecker;
@@ -28,6 +30,7 @@ import java.util.List;
 public class GroupController {
 
     private final GroupService groupService;
+    private final BudgetService budgetService;
 
     //전체 그룹 조회( plan 버튼 클릭 했을 때)
     @LoginChecker
@@ -57,6 +60,8 @@ public class GroupController {
     @PostMapping
     public Long addGroup(@AuthenticationPrincipal Member member, @RequestBody @Validated GroupDto groupDto){
         Group group = new Group(groupDto.getGroupName(),groupDto.getGroupIntroduction());
+        groupService.addGroup(group,member);
+        budgetService.addBudget(member,group,new Budget(group,0L));
         return groupService.addGroup(group,member);
     }
 

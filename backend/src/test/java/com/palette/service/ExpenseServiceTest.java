@@ -60,7 +60,7 @@ public class ExpenseServiceTest {
     void 지출_추가(){
         Member findMember = memberRepository.findAll().get(0);
         Group group = groupRepository.findAll().get(0);
-        Budget budget = budgetRepository.findBudgetJoinWithGroup();
+        Budget budget = budgetRepository.findBudgetByGroupId(group.getId());
 
         Expense.Category category = Expense.Category.valueOf("TRANSPORTATION");
         Expense expense1 = Expense.builder()
@@ -121,7 +121,7 @@ public class ExpenseServiceTest {
     void 예산_존재확인(){
         Member member = memberRepository.findAll().get(0);
         Group group = groupRepository.findAll().get(0);
-        Budget budget = budgetRepository.findBudgetJoinWithExpenses();
+        Budget budget = budgetRepository.findBudgetByGroupId(group.getId());
 
         Expense.Category category = Expense.Category.valueOf("TRANSPORTATION");
         Expense expense = Expense.builder()
@@ -132,7 +132,7 @@ public class ExpenseServiceTest {
 
         budgetRepository.deleteById(budget.getId());
 
-        Budget deletedBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget deletedBudget = budgetRepository.findBudgetByGroupId(group.getId());
         assertThatThrownBy(()->{
             expenseService.addExpense(member,group,expense,deletedBudget);
         }).isInstanceOf(BudgetException.class);
