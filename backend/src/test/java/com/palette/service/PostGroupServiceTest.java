@@ -103,7 +103,7 @@ class PostGroupServiceTest {
         PostGroup findGroup = postGroupService.findAll().get(0);
 
 
-        postGroupService.updatePostGroup(findGroup.getId(), new PostGroupDto("여행이 좋아요", new PeriodDto(LocalDate.of(2021, 11, 01),
+        postGroupService.updatePostGroup(findGroup.getId(), new PostGroupDto("여행이 좋아요", new PeriodDto(LocalDate.of(2021, 11, 02),
                 LocalDate.of(2021, 11, 03)), "부산"), null);
 
 
@@ -111,6 +111,7 @@ class PostGroupServiceTest {
 
         assertThat(findGroup2.getTitle()).isEqualTo("여행이 좋아요");
         assertThat(findGroup2.getRegion()).isEqualTo("부산");
+        assertThat(findGroup2.getPeriod().getStartDate()).isEqualTo((LocalDate.of(2021, 11, 02)));
     }
 
     @Test

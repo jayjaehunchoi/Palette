@@ -8,6 +8,7 @@ import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.BudgetException;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
@@ -67,7 +68,7 @@ public class BudgetService {
 
         //그룹에 해당되는 expense 들만 list에 담아서 보내주기
         List<Expense> findExpenses = expenseRepository.findByBudget(findBudget);
-        List<ExpenseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
+        List<ExpenseResponseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
 
         BudgetResponseDto dto = new BudgetResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
         return dto;
@@ -133,8 +134,8 @@ public class BudgetService {
         }
     }
 
-    private List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
-        return expenses.stream().map(ExpenseDto::new).collect(Collectors.toList());
+    private List<ExpenseResponseDto> makeExpenseDtoList(List<Expense> expenses){
+        return expenses.stream().map(ExpenseResponseDto::new).collect(Collectors.toList());
     }
 
 }
