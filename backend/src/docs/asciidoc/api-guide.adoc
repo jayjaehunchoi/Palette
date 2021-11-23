@@ -1,0 +1,174 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:docinfo: shared-head
+
+
+[[common]]
+== Common
+
+=== Domain
+
+|===
+| 환경 | Domain
+| 운영서버
+| `http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080`
+|===
+
+=== Exception
+
+|===
+| 상태 코드 | 설명
+
+| 400
+| `대부분의 에러 bad request 예정`
+
+| 401
+| `권한 없음`
+|===
+
+=== SearchCondition query parameter
+|===
+|Parameter|Type|Optional|Description
+
+|memberId
+|Long
+|true
+|my blog 조회시 "/postgroup?memberId=1" 과 같이 입력하면 됨
+
+|postgroupId
+|Long
+|true
+|query parameter로 사용하지말고 따로 path이용해서 사용할 것
+
+|name
+|String
+|true
+|이름으로 검색시 /postgroup?name=jaehunChoi or /post?name=jaehunChoi 입력, 페이징도 동일하게 파라미터 줄 것.
+
+|region
+|String
+|true
+|지역으로 검색시 /postgroup?region=서울 or /post?region=서울 입력, 페이징도 동일하게 파라미터 줄 것.
+
+|title
+|String
+|true
+|제목으로 검색시 /postgroup?title=제목 or /post?title=제목 입력, 페이징도 동일하게 파라미터 줄 것.
+
+|===
+
+= Member API
+include::{snippets}/member-signup/auto-section.adoc[]
+include::{snippets}/member-signup/request-parts.adoc[]
+include::{snippets}/member-signup/request-part-member-data-body.adoc[]
+
+include::{snippets}/member-login/auto-section.adoc[]
+
+include::{snippets}/member-getMember/auto-section.adoc[]
+
+include::{snippets}/member-update/auto-section.adoc[]
+include::{snippets}/member-update/request-parts.adoc[]
+include::{snippets}/member-update/request-part-member-update-data-body.adoc[]
+
+include::{snippets}/member-delete/auto-section.adoc[]
+
+include::{snippets}/member-sendMail/auto-section.adoc[]
+
+= PostGroup API
+
+include::{snippets}/postgroup-create-group/auto-section.adoc[]
+include::{snippets}/postgroup-create-group/request-parts.adoc[]
+include::{snippets}/postgroup-create-group/request-part-data-body.adoc[]
+
+include::{snippets}/postgroup-get-postgroup/auto-section.adoc[]
+
+include::{snippets}/postgroup-get-post/auto-section.adoc[]
+
+include::{snippets}/postgroup-update-group/auto-section.adoc[]
+include::{snippets}/postgroup-update-group/request-parts.adoc[]
+include::{snippets}/postgroup-update-group/request-part-data-body.adoc[]
+
+include::{snippets}/postgroup-delete-group/auto-section.adoc[]
+
+= Post API
+
+include::{snippets}/post-create-post/auto-section.adoc[]
+include::{snippets}/post-create-post/request-parts.adoc[]
+include::{snippets}/post-create-post/request-part-data-body.adoc[]
+
+include::{snippets}/post-get-with-filter/auto-section.adoc[]
+
+include::{snippets}/post-get-single-post/auto-section.adoc[]
+
+include::{snippets}/post-update-post/auto-section.adoc[]
+
+include::{snippets}/post-delete-post/auto-section.adoc[]
+
+include::{snippets}/post-push-like/auto-section.adoc[]
+
+include::{snippets}/post-get-like-paging/auto-section.adoc[]
+
+= Comment API
+
+include::{snippets}/comment-create-comment/auto-section.adoc[]
+
+include::{snippets}/comment-create-child-comment/auto-section.adoc[]
+
+include::{snippets}/comment-get-paging/auto-section.adoc[]
+
+include::{snippets}/comment-get-child-paging/auto-section.adoc[]
+
+include::{snippets}/comment-update-comment/auto-section.adoc[]
+
+include::{snippets}/comment-delete-comment/auto-section.adoc[]
+
+= Group API
+
+include::{snippets}/group_create_group/auto-section.adoc[]
+
+include::{snippets}/group_read_groups/auto-section.adoc[]
+
+include::{snippets}/group_read_single_group/auto-section.adoc[]
+
+include::{snippets}/group_join_group/auto-section.adoc[]
+
+include::{snippets}/group_update_member/auto-section.adoc[]
+
+include::{snippets}/group_delete_member/auto-section.adoc[]
+
+include::{snippets}/group_delete_group/auto-section.adoc[]
+
+= Budget API
+
+include::{snippets}/budget_create_budget/auto-section.adoc[]
+
+include::{snippets}/budget_get_budget/auto-section.adoc[]
+
+include::{snippets}/budget_update_budget/auto-section.adoc[]
+
+include::{snippets}/budget_delete_budget/auto-section.adoc[]
+
+= Expense API
+
+include::{snippets}/expense-create-expense/auto-section.adoc[]
+
+include::{snippets}/expense_get_expenses/auto-section.adoc[]
+
+include::{snippets}/expense-update-expense/auto-section.adoc[]
+
+include::{snippets}/expense-delete-all/auto-section.adoc[]
+
+include::{snippets}/expense-delete-expense/auto-section.adoc[]
+
+= Page API
+
+include::{snippets}/page-postgroup-page/auto-section.adoc[]
+
+include::{snippets}/page-post-page/auto-section.adoc[]

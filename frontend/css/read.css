@@ -1,0 +1,196 @@
+/* common */
+#footers{
+    margin-bottom: 0;
+}
+
+body {
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center; 
+    justify-content: center;
+    display: block; 
+  }
+
+/* read */
+.day{
+    margin-top: 140px;
+    /* display: flex; */
+    margin-right: 600px;
+}
+.title{
+    font-size: 30px;
+}
+
+.author{
+    margin-left: 600px;
+}
+
+/* .photo{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.image img {
+    width : 600px;
+} */
+
+.content{
+    margin-top: 50px;
+}
+
+
+
+#modify,
+#delete {
+    margin-top: 50px;
+    justify-content: left;
+    background: #333;
+    color: white;
+    width :50px;
+    height:30px;
+}
+
+/* 좋아요 버튼 */
+ .like-content{
+    display: inline-block;
+    width:300px;
+    margin: 2px auto;
+    font-size: 13px;
+    text-align: center;
+}
+
+.like-content .btn-secondary{
+    /* display: block;
+    margin: 30px ;
+    margin-top: 70px;
+    text-align: center;
+    background-color: #ed2553;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(240,75,113);
+    padding :10px 17px;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    outline : none;
+    color:#fff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease; */
+    display: block;
+    background-color: white;
+    border-color: transparent;
+}
+
+.like-content .btn-secondary img{
+    display: block;
+    width: 30px;
+    height:30px;
+}
+
+.like-content .btn-secondary:hover{
+    transform:translateY(-3px);
+}
+
+.like-content .btn-secondary .fa{
+    margin-left: 5px;
+} 
+
+/* 댓글 */
+
+.comments{
+margin: 50px;
+border: 2px solid rgba(232,230,230,0.99);
+position: relative;
+}
+
+.comments label{
+    /* position: relative; */
+}
+
+.comments label .like-content .btn-secondary {
+    display: block;
+    position: absolute;
+    right: 3%;
+    top: -5%;
+}
+.comments  #new_comment{
+    border: 2px solid rgba(232,230,230,0.99);
+    width: 760px;
+}
+
+ textarea {
+    width: 800px;
+    height: 100px;
+    padding: 10px;
+    resize: none;
+  }
+  
+
+  div + div {
+    margin-top: 20px;
+  }
+  
+ .comments label {
+    display: block;
+    margin: 30px;
+    font-weight: bold;
+    color: #666;
+    font-size: 20px;
+    text-align: left;
+    border-bottom: 2px solid rgba(232,230,230,0.99);
+  }
+
+button{
+    margin: 30px auto;
+}
+
+  .comment-row{
+    /* border: 2px solid rgba(232,230,230,0.99); */
+  }
+
+  hr{
+    width:1200px;
+    border-top : 2px solid rgba(232,230,230,0.99);
+}
+
+  .comment-row .comment-date{
+
+  }
+
+  .comment-row .comment-content{
+
+  }
+  
+/* swiper */
+ .mySwiper {
+    width:640px;
+    height:420px;
+    border:5px solid silver;
+    border-radius:7px;
+    box-shadow:0 0 20px #ccc inset;
+}
+
+.swiper-slide {
+    text-align:center;
+    display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+    align-items:center; /* 위아래 기준 중앙정렬*/
+    justify-content:center; /* 좌우 기준 중앙정렬*/
+} 
+
+.swiper-slide img {
+	box-shadow:0 0 5px #555;
+    width: 640px;
+    height: 420px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    color: black;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 4px;
+    background-color: black;
+}

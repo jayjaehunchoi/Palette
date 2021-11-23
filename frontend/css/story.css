@@ -1,0 +1,225 @@
+/* common */
+body{ 
+    text-align: center; 
+    display: block; 
+    margin: 0 auto; 
+    font-size: 16px; 
+    color: #999; 
+} 
+
+
+ /* 정렬 */
+/* .sort_list{
+    height: 30px;
+    text-align: right;
+    margin : 30px;
+    font-size: 20px;
+}
+
+.sort_list a{
+    text-decoration: none;
+    color: black;
+} */
+
+/* profile */
+
+.user_id{
+    display: flex;
+    justify-content: flex-start;
+    margin: 50px;
+    /* text-align: left; */
+    margin-top: 140px;
+    margin-left: 60px;
+}
+
+/* modal */
+.modal-content h1{ 
+    font-family: 'Oswald', sans-serif; 
+    font-size: 30px; 
+    color: #216182; 
+  
+}  
+
+.modal-content label { 
+    display: block; 
+    margin-top: 20px; 
+    letter-spacing: 2px; 
+} 
+form { 
+    margin: 0 auto; 
+    width: 459px; 
+} 
+input { 
+    width: 439px; 
+    height: 27px; 
+    background-color: #efefef; 
+    border-radius: 6px; 
+    border: 1px solid #dedede; 
+    padding: 10px; 
+    margin-top: 3px; 
+    font-size: 0.9em; 
+    color: #3a3a3a; 
+} 
+input:focus{ 
+        border: 1px solid #97d6eb; 
+    } 
+
+#submit{ 
+    width: 127px; 
+    height: 48px; 
+    text-align: center; 
+    border: none; 
+    margin-top: 20px; 
+    cursor: pointer; 
+} 
+#submit:hover{ 
+    color: #fff; 
+    background-color: #216282; 
+    opacity: 0.9; 
+} 
+#cancel { 
+    width: 127px; height: 48px; 
+    text-align: center; 
+    border: none; 
+    margin-top: 20px; 
+    cursor: pointer; 
+} 
+#cancel:hover{ 
+    color: #fff; 
+    background-color: #216282; 
+    opacity: 0.9; 
+}
+
+#reset{ 
+    width: 127px; 
+    height: 48px; 
+    text-align: center; 
+    border: none; 
+    margin-top: 20px; 
+    cursor: pointer; 
+} 
+#reset:hover{ 
+    color: #fff; 
+    background-color: #216282; 
+    opacity: 0.9; 
+} 
+
+.modal { 
+    position: fixed; 
+    left: 0; 
+    top: 70px; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    opacity: 0; 
+    visibility: hidden; 
+    transform: scale(1.1); 
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s; 
+} 
+.modal-content { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background-color: white; 
+    padding: 1rem 1.5rem; 
+    width: 500px; 
+    height: 500px; 
+    border-radius: 0.5rem; 
+} 
+.close-button { 
+    float: right; 
+    width: 1.5rem; 
+    line-height: 1.5rem; 
+    text-align: center; 
+    cursor: pointer; 
+    border-radius: 0.25rem; 
+    background-color: lightgray; 
+} 
+.close-button:hover { 
+    background-color: darkgray; 
+} 
+.show-modal { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: scale(1.0); 
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; 
+} 
+
+
+/* 추가하기 button */
+.btn{
+    width:100px;
+    height:42px;
+    background-color: black;
+    color:#fff;
+    border : 2px solid #fff;
+    border-radius: 10px;
+    cursor:pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom:30px;
+    right:30px;
+    z-index: 9;
+}
+
+/* post */
+.image img{
+    display: block;
+    height:200px;
+    width:100%;
+    /* border-radius: 10px; */
+}
+/* img {
+    max-width: 100%;
+    display : block;
+} */
+.posting{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* flex-wrap -> 한줄에 들어가는 만큼 보여주고, 나머지는 다음줄로 넘겨준다 */
+    margin-top: 120px;
+    column-count: 3;
+}
+ 
+.posting .inner{
+    /* height : 343px;  */
+    width:25%;
+    background-color : white ;
+    border: 2px solid rgba(232,230,230,0.99);
+    margin: 10px;
+    text-align: center;
+    align-items: center;
+    float:left;
+    /* border-radius: 10px; */
+}
+
+.posting .inner .card-content{
+margin-top: 20px;
+}
+
+.posting .inner a{
+    text-decoration: none;
+    color: black;
+}
+
+.btn{
+    width:100px;
+    height:42px;
+    background-color: black;
+    color:#fff;
+    border : 2px solid #fff;
+    border-radius: 10px;
+    cursor:pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom:30px;
+    right:30px;
+    z-index: 9;
+}

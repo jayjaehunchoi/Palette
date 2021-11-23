@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palette.</title>
+  <link rel="icon" href="/frontend/favicon.png" />
+
+  <!-- header jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("section div#headers").load("/frontend/static/header.html");  
+    });
+  </script>
+  <!-- footer -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/frontend/static/footer.html");  
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/frontend/css/member.css">
+  <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script defer src="/frontend/js/member.js"> </script>
+</head>
+<body>
+<section>
+    <div id="headers"></div>
+</section>
+
+<section>
+<div class="container">
+  <div class="myInner">
+  <div class="title">
+    <h2>My Page</h2>
+  </div>
+  <table>
+  <tr>
+  <td class="col1">아이디</td>
+  <td class="col2">
+  <input class ="userId" type="text" disabled>  
+  </td>
+  </tr>
+  <tr>
+  <td class="col1">비밀번호</td>
+  <td class="col2">
+    <input class ="userPw" type="password">
+  </td>
+  </tr>
+  <tr>
+    <td class="col1">비밀번호확인</td>
+    <td class="col2">
+      <input class ="userPwChk"  type="password">
+    </td>
+  </tr>
+  <tr>
+    <td class="col1">이름</td>
+    <td class="col2">
+      <input class="userName" type="text">
+    </td>
+  </tr>
+  <tr>
+    <td class="col1">이메일</td>
+    <td class="col2"> 
+      <input class="userEmail" type="text">
+  </td>
+  </tr>
+  <tr>
+    <td class="col1">프로필</td>
+    <td class="col2">
+      <div class="userProfile">
+        <div class="preview">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtB6rXnf0CcbxpTidJShuQWRvubJ-tDJS41O9C8IdKGeKxAk7Bnl2A2Vf-iB3Ef-oskVM&usqp=CAU" alt="기본프로필">
+        </div>
+        <input class="profileFile" type="file" accept="img/*" style="display: none;"> 
+        <button class="selectBt">사진 선택</button>
+      </div>
+    </td>
+  </tr>
+</table>
+<div class="bts">
+  <div class="bts-left">
+    <button class="cancelBt">취소</button>
+    <button class="withdrawalBt">탈퇴</button>
+  </div>
+  <div class="bts-right">
+    <button class="modifyBt">수정</button>
+  </div> 
+</div>
+</div>
+</div>
+</section>
+
+<section>
+  <div id="footers"></div>
+</section>
+</body>
+</html>
