@@ -67,6 +67,10 @@ public class Expense {
             this.categoryName = categoryName;
         }
 
+        public String getCategoryName() {
+            return categoryName;
+        }
+
         @JsonCreator
         public static Category getRoleFromRoleName(String categoryName){
             for (Category category : Category.values()) {

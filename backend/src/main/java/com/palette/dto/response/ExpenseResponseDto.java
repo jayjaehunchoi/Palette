@@ -14,13 +14,13 @@ import javax.validation.constraints.NotNull;
 public class ExpenseResponseDto {
 
     private Long expenseId;
-    private Expense.Category category;
+    private String category;
     private String detail;
     private long price;
 
     public ExpenseResponseDto(final Expense expense){
         this.expenseId = expense.getId();
-        this.category = expense.getCategory();
+        this.category = expense.getCategory().getCategoryName();
         this.detail = expense.getDetail();
         this.price = expense.getPrice();
     }
