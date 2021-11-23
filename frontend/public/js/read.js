@@ -1,14 +1,30 @@
-    // 좋아요 버튼
+    // 좋아요 버튼 
+    $(".like-content .btn-secondary").click(function() {
+        //$(this).toggleClass("done");
+     let postId = sessionStorage.getItem("postId");
+     let token = sessionStorage.getItem("token"); 
+        if(token != null){
+            $(this).toggleClass("done");
+        }else{
+            alert("로그인이 필요합니다");
+        }
 
-    $(document).ready(function(){
-        $('.like-content').one('click','.like-review',function(e){
-            $(this).html('<i class = "far fa-heart" aria-hidden = "true"></i>  <span class="material-icons" style="color:red">favorite</span>');
-            $(this).children('fa-heart').addClass('animate-like');
+        $.ajax({
+            url:"http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/"+postId+"/like",
+            method:"POST",
+            data: "",
+            success:function(data){
+                console.log(data);
+                $('#result').text(data.data);
+            },
+
+beforeSend: function (xhr) {
+  xhr.setRequestHeader("Authorization","Bearer " + token);
+}
         });
     });
 
     //swiper
-
     var swiper= new Swiper('.swiper-container', {
         //기본 셋팅 //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평 
         irection: 'horizontal', 
@@ -51,41 +67,32 @@
     } 
 
 });
-        
 
-// 답글
-    $("#answerFrm").hide();
- 
-    $(document).ready(function() {
-     
-        $("#answer").click(function() {
-            
-            $("#answerFrm").show();
-                
+    // 댓글작성
+    function submitComment(){
+
+        var content = $('#new-comment').val();
+        let token = sessionStorage.getItem("token");
+        let postId = sessionStorage.getItem("postId");
+
+        $.ajax({
+            url:"http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/"+postId+"/comment",
+            method:"POST",
+            data:JSON.stringify({content:content}),
+            dataType:'json',
+            contentType: "application/json", 
+            success:function(data){
+                console.log(data);
+            },
+            error:function(e){
+                 console.log("error : ", e);
+                 },
+
+                 beforeSend: function (xhr) {
+                   xhr.setRequestHeader("Authorization","Bearer " + token);
+                 }
         });
-        
-         
-        // $("#answerBtn").click(function() {
-        //     alert("answer버튼 클릭");
-        // });
-         
-    });
 
-    // $('#btnLike').click(function ()  {
-        
-    //     $.ajax({
-    //     url:"CommuBbsController",
-    //     data: {command: 'like', seq: ${comdto.seq }, userid: ${current_user.seq }},
-    //     type:"post",
-    //     success : function (data) {
-    
-    //       var result = JSON.parse(data);
-    
-    //       if(result.status == 404){
-    //       $('img#like_img').attr('src', './img/empty_heart.png');
-    //       } else {
-    //       $('img#like_img').attr('src', './img/heart.png');
-    //       }
-    //       $('span#like_count').html(result.like_count);
-    //     })
-    // });
+    }
+
+

@@ -2,78 +2,156 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>글쓰기</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel = "stylesheet" href="/frontend/css/write.css">
+<title>Post Write</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script defer src = "/frontend/js/write.js"></script>
-  
-     <!-- header jquery -->
-     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-     <script type="text/javascript">   
-       $(document).ready( function() {
-       $("#headers").load("/frontend/static/header.html");  
-       });
-     </script>
+<script defer src = "/public/js/write.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
-       <!-- footer jquery -->
-  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript">   
+<!-- favicon -->
+<link rel="icon" href="/favicon.png" />
+<!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- css -->  
+<link rel = "stylesheet" href="/public/css/write.css">
+
+   <!-- header jquery -->
+   <script type="text/javascript">   
     $(document).ready( function() {
-    $("#footers").load("/frontend/static/footer.html");  
+    $("#headers").load("/public/static/header.html");  
     });
   </script>
+  <!-- footer jquery -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/public/static/footer.html");  
+    });
+  </script>
+
+<!-- ajax 요청 (글작성) -->
+<script type="text/javascript">   
+  function add() {
+    var frm = $('#myblogDetail')[0];
+    var title = $('#title',frm).val();
+    var content = $('#content ',frm).val();
+    var thumbNailFullPath = $('#thumbNailFullPath ',frm);
    
-   <link rel="preconnect" href="https://fonts.gstatic.com" >
-   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   <link rel="stylesheet" href="/frontend/css/main.css" />
+    let token = sessionStorage.getItem("token"); 
+    let postGroupId = sessionStorage.getItem("postGroupId");
+
+    var params = { title : title , content : content };  // 개발시 변경 부분
    
-   </head>
-   <body>
-     <div id="headers"></div>
+    var formData = new FormData(frm);
+      console.log(params);
+      console.log(thumbNailFullPath[0].files[0]);
+      formData.append('files',thumbNailFullPath[0].files[0]);
+      formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
+   
+      $.ajax({
+         url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+postGroupId+'/post', // 개발시 변경 부분
+         contentType: false,
+         Accept: 'application/json',
+         processData:false,
+         type: 'post',  // get, post
+         cache: false, // 응답 결과 임시 저장 취소
+         async: true,  // true: 비동기 통신
+         dataType: 'json', // 응답 형식: json, html, xml...
+         data: formData,      // 데이터
+   
+         success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
+             
+           if (testData != null) { 
+   
+             console.log(testData);
+   
+           } else {  
+            // alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
+           }
+        
+          //  let postGroupId = JSON.parse(testData).postGroupId;
+
+          //  if (window.sessionStorage) { 
+          //    sessionStorage.setItem('postGroupId', postGroupId);
+          //  }
+        },
+   
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          //alert('ajax야 힘내자'+ request +status + error);
+          console.log('ajax야 힘내자'+ request +status + error);
+         },
+
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("Authorization","Bearer " + token);
+       }
+      });
+  }
+</script>
+
+</head>
+
+<body>
+  <!-- header 연결 -->
+  <div id="headers"></div>
 
 <div class="container">
+
+  <div class="inner">
   <h2>My Story</h2>
   <hr>
-  <form action="/frontend/Board/read.html" method="post" enctype = "multipart/form-data">
+  <form name="myblogDetail" enctype = "multipart/form-data">
+   
     <div class="form-group">
+      
       <!-- <label for="title">제목</label> -->
-<!-- placeholder 속성 입력한 데이터가 없는 경우 배경으로 나타난다.실제적으로 입력을 100자까지로 지정 -->
-<!-- required 속성을 설정하면 필수입력 사항이된다. -->
-<!-- pattern 속성을 이용한 정규표현식으로 데이터의 유효성 검사를 할 수 있다. -->
+      <!-- placeholder 속성 입력한 데이터가 없는 경우 배경으로 나타난다.실제적으로 입력을 100자까지로 지정 -->
+      <!-- required 속성을 설정하면 필수입력 사항이된다. -->
+      <!-- pattern 속성을 이용한 정규표현식으로 데이터의 유효성 검사를 할 수 있다. -->
       <input type="text" class="form-control" id="title"
-       placeholder="제목을 입력하세요" name="title"
-       maxlength="100" required="required">
-       <!-- pattern=".{4,100}" -->
+            placeholder="제목을 입력하세요" name="title"
+            maxlength="100" required="required">
+            <!-- pattern=".{4,100}" -->
     </div>
+
     <hr>
+
     <div class="input-file-button">
+    
       <label for="input_imgs">
-        <img src = "/frontend/images/upload.png">
+        <img src = "/public/images/upload.png">
       </label>
+    
     </div>
-      <input type = "file" id="input_imgs" multiple='multiple'>
+    
+      <!-- <input type = "file" id="input_imgs" multiple='multiple'> -->
+      <input type = "file" id="thumbNailFullPath" >
       <div class="imgs_wrap">
   
-      </div>
+    </div>
 
     <hr>
+    
     <div class="form-group">
-   <!-- <label for="content">내용</label> -->
-<!--  여러줄의 데이터를 입력하고 하고자 할때 textarea 태그를 사용한다. -->
-<!--  textarea 안에 있는 모든 글자는 그대로 나타난다. 공백문자, tag, enter -->
-   <textarea class="form-control" rows="5" id="content"
-    name="content" placeholder="내용을 입력하세요"></textarea>
- </div>
+      <!-- <label for="content">내용</label> -->
+      <!--  여러줄의 데이터를 입력하고 하고자 할때 textarea 태그를 사용한다. -->
+      <!--  textarea 안에 있는 모든 글자는 그대로 나타난다. 공백문자, tag, enter -->
+    <textarea class="form-control" rows="5" id="content"
+       name="content" placeholder="내용을 입력하세요"></textarea>
+    </div>
 
-    <button type="submit" class="btn">등록</button>
+    <input type="button" class = "btn" id="submit_btn" value="저장" onclick="add()">
+    <!-- <button type="submit" class="btn">등록</button> -->
   </form>
 </div>
+</div>
 
-    <!-- footer 연결 -->
-    <div id="footers"></div>
+  <!-- footer 연결 -->
+  <div id="footers"></div>
+
 </body>
 </html>
 

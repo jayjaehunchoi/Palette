@@ -15,9 +15,11 @@ $('.loginBt').click(function () {
       dataType: 'text',
       success: function (response ,status, jqXHR) {
         let token = JSON.parse(response).accessToken.value;
+        let memberId = JSON.parse(response).memberId;
         let userName = JSON.parse(response).name;
         if (window.sessionStorage) { 
           sessionStorage.setItem('token', token);
+          sessionStorage.setItem('memberId', memberId);
           alert(userName + "님 환영합니다.");
           window.location.href = '/index.html';
         }
