@@ -14,4 +14,6 @@ public interface BudgetRepository extends JpaRepository<Budget,Long> {
 
     @Query("select b from Budget b join Expense e on b.id = e.budget.id")
     Budget findBudgetJoinWithExpenses();
+
+    void deleteBudgetByGroup(Group group);
 }
