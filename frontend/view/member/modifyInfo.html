@@ -11,21 +11,21 @@
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript">   
     $(document).ready( function() {
-    $("section div#headers").load("/frontend/static/header.html");  
+    $("section div#headers").load("/public/static/header.html");  
     });
   </script>
   <!-- footer -->
   <script type="text/javascript">   
     $(document).ready( function() {
-    $("#footers").load("/frontend/static/footer.html");  
+    $("#footers").load("/public/static/footer.html");  
     });
   </script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/frontend/css/member.css">
+  <link rel="stylesheet" href="/public/css/member.css">
   <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script defer src="/frontend/js/mypage.js"> </script>
+  <script defer src="/public/js/mypage.js"> </script>
 </head>
 <body>
 <section>
@@ -68,7 +68,7 @@
     <td class="col2">
       <div class="userProfile">
         <div class="preview">
-          <img src="/frontend/images/profile_default.png" alt="기본프로필">
+          <img src="/public/images/profile_default.png" alt="기본프로필">
         </div>
         <input class="profileFile" type="file" accept="img/*" style="display: none;"> 
         <button class="selectBt">사진 선택</button>
@@ -78,7 +78,7 @@
 </table>
 <div class="bts">
   <div class="bts-left">
-    <button class="cancelBt" onclick="location.href='/frontend/index.html'">취소</button>
+    <button class="cancelBt" onclick="location.href='/index.html'">취소</button>
     <button class="withdrawalBt">탈퇴</button>
   </div>
   <div class="bts-right">
