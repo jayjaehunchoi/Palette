@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- header jquery -->
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#headers").load("/public/static/header.html");  
+    });
+  </script>
+  <!-- footer jquery -->
+  <script type="text/javascript">   
+    $(document).ready( function() {
+    $("#footers").load("/public/static/footer.html");  
+    });
+  </script>
+
+<link rel="icon" href="/frontend/favicon.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"> 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="/public/css/gorupInfo.css">
+<script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script defer src="/public/js/groupInfo.js"> </script>
+<title>Palette.</title>
+</head>
+<body>
+  <section>
+    <div id="headers"></div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="myInner">
+      <div class="title">
+        <h2>My Group</h2>
+      </div>
+      <table>
+      <tr>
+      <td class="col1">그룹 이름</td>
+      <td class="col2">
+      <input class ="groupName" type="text">  
+      </td>
+      </tr>
+      <tr>
+      <td class="col1">그룹 코드</td>
+      <td class="col2">
+        <input class ="groupCode" type="text" disabled>
+      </td>
+      </tr>
+      <tr>
+        <td class="col1">그룹 소개</td>
+        <td class="col2">
+          <textarea class="groupIntroduction"></textarea>
+        </td>
+      </tr>
+    </table>
+    <div class="bts">
+      <div class="bts-left">
+        <button class="cancelBt" onclick="location.href='./group.html'">취소</button>
+        <button class="withdrawalBt" >그룹 삭제</button>
+      </div>
+      <div class="bts-right">
+        <button class="modifyBt">수정</button>
+      </div> 
+    </div>
+    </div>
+    </div>
+  </section>
+
+  <section>
+    <div id="footers"></div>
+  </section>
+</body>
+</html>
