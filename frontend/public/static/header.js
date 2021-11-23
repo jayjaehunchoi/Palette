@@ -70,3 +70,21 @@ $('.logout').click(function () {
   sessionStorage.removeItem("token");
   window.location.href = '/index.html'; 
 }); 
+
+$('.toPlan').click(function(e) {
+  var token = sessionStorage.getItem("token");
+  if ( !token ) {
+  alert("로그인이 필요합니다");
+  e.preventDefault();
+  window.location.href = "/view/member/login.html";
+  }
+});
+
+$('.toMyblog').click(function(e) {
+  var token = sessionStorage.getItem("token");
+  if ( !token ) {
+  alert("로그인이 필요합니다");
+  e.preventDefault();
+  window.location.href = "/view/member/login.html";
+  }
+})
