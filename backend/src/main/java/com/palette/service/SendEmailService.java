@@ -26,8 +26,8 @@ public class SendEmailService{
     private MailDto createMail(String email, String name, String tempPassword){
         MailDto dto = new MailDto();
         dto.setAddress(email);
-        dto.setTitle(name+"님의 HOTTHINK 임시비밀번호 안내 이메일 입니다.");
-        dto.setMessage("안녕하세요. HOTTHINK 임시비밀번호 안내 관련 이메일 입니다." + "[" + name + "]" +"님의 임시 비밀번호는 "
+        dto.setTitle(name+"님의 Palette 임시비밀번호 안내 이메일 입니다.");
+        dto.setMessage("안녕하세요. Palette 임시비밀번호 안내 관련 이메일 입니다." + "[" + name + "]" +"님의 임시 비밀번호는 "
                 + tempPassword + " 입니다.");
         return dto;
     }
