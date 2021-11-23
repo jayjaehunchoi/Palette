@@ -94,6 +94,8 @@ public class GroupController {
     @LoginChecker
     @DeleteMapping("/{travelgroupid}")
     public ResponseEntity<Void> deleteGroup(@AuthenticationPrincipal Member member, @PathVariable("travelgroupid") Long id){
+        Group group = groupService.findById(id);
+        budgetService.deleteBudget(group);
         groupService.deleteGroup(id);
         return HttpResponseUtil.RESPONSE_OK;
     }
