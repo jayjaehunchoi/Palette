@@ -32,7 +32,7 @@ button {
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 50px;
-		font-family: 'Noto Sans KR', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .container .inner .title {
@@ -74,7 +74,26 @@ button {
 	font-weight: 700;
 }
 
+.myGroup li {
+	display: flex;
+	margin-top: 10px;
+}
 
+.myGroup li .toGroup { 
+	width: 400px;
+	font-size: 18px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.myGroup li .toGroupBt {
+	width: 50px;
+	height: 25px;
+	background-color: #fff;
+	border: 2px solid #333;
+	color: #333;
+	font-size: 12px;
+	font-weight: 700;
+}
 /* MODAL */
 
 .modal {

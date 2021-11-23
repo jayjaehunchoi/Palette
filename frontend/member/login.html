@@ -10,7 +10,7 @@
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript">   
     $(document).ready( function() {
-    $("section div#headers").load("/frontend/static/header.html");  
+    $("#headers").load("/frontend/static/header.html");  
     });
   </script>
   <script type="text/javascript">   
@@ -21,9 +21,8 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <link rel="stylesheet" href="/frontend/css/member.css">
-  <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
   <script defer src="/frontend/js/login.js"> </script>
   <title>Palette.</title>
 </head>
@@ -58,13 +57,11 @@
     <a href="/frontend/member/join.html"> 계정이 없으신가요? 회원가입하기 </a>
   </div>
 
-  <div class="findInfo">
-    <a href="javascript:void(0)"> 아이디 찾기 </a>
-    <span>|</span>
-    <a href="javascript:void(0)"> 비밀번호 찾기 </a>
+  <div class="tofindInfo">
+    <a href="/frontend/member/findPw.html"> 비밀번호 찾기 </a>
   </div>
 
-
+  <button class="logout">로그아웃</button>
   </div>
   </div>
 </section>
