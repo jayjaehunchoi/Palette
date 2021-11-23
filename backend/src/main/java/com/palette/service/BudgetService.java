@@ -76,7 +76,7 @@ public class BudgetService {
 
     //budget의 그룹 조회
     public Budget findByGroup(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         return findBudget;
     }
 
@@ -118,7 +118,7 @@ public class BudgetService {
 
     //그룹에 Budget이 존재하는지 확인
     private void isBudgetExist(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         if(findBudget == null){
             log.error("Budget Not Exist Error");
             throw new BudgetException("예산이 존재하지 않습니다.");
@@ -127,7 +127,7 @@ public class BudgetService {
 
     //이미 예산이 존재하는지 확인
     private void isBudgetAlreadyExist(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         if(findBudget != null){
             log.error("Budget Is Already Exists");
             throw new BudgetException("예산이 이미 존재합니다.");
