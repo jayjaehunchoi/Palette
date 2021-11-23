@@ -1,5 +1,4 @@
 function loadExpenseList(data) {
-
   let expenseList = data.expenses;
   let expenseListLen = expenseList.length;
   let str = "";
@@ -53,11 +52,6 @@ $(document).ready(function() {
       $('.expense').html(data.totalExpense);
       $('.budgetLeft').html(data.remainingBudget);
 
-      if (data.totalBudget != 0) {
-        document.querySelector(".setBt").style.display = "none";
-        document.querySelector(".changeBt").style.display = "inline-block";
-      }
-      
       loadExpenseList(data);
     }
   });
