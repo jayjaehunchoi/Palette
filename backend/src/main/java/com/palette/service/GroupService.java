@@ -5,6 +5,7 @@ import com.palette.domain.group.MemberGroup;
 import com.palette.domain.member.Member;
 import com.palette.dto.request.GroupUpdateDto;
 import com.palette.exception.GroupException;
+import com.palette.repository.BudgetRepository;
 import com.palette.repository.GroupRepository;
 import com.palette.repository.MemberGroupRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.List;
 public class GroupService {
     private final GroupRepository groupRepository;
     private final MemberGroupRepository memberGroupRepository;
+    private final BudgetRepository budgetRepository;
 
     //그룹 조회
     @Transactional
@@ -81,6 +83,7 @@ public class GroupService {
     public void deleteGroup(Long id){
         Group findGroup = groupRepository.findById(id).orElse(null);
         isGroupExist(findGroup);
+        budgetRepository.deleteBudgetByGroup(findGroup);
         groupRepository.deleteById(id);
     }
 
