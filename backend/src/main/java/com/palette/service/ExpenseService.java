@@ -82,7 +82,7 @@ public class ExpenseService {
 
     //그룹에 Budget이 존재하는지 확인
     private void isBudgetExist(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         if(findBudget == null){
             log.error("Budget Not Exist Error");
             throw new BudgetException("예산이 존재하지 않습니다.");

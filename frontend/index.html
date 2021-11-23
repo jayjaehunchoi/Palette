@@ -6,6 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palette.</title>
 
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Palette." />
+  <meta property="og:title" content="Palette Travel Korea" />
+  <meta property="og:description" content="팔레트는 단 한 번의 클릭으로 여행 작가가 될 수 있습니다." />
+  <meta property="og:image" content="/public/images/palette.png" />
+  <meta property="og:url" content="http://www.palette-travel.com/" />
+
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:site" content="Palette." />
+  <meta property="twitter:title" content="Palette Travel Korea" />
+  <meta property="twitter:description" content="팔레트는 단 한 번의 클릭으로 여행 작가가 될 수 있습니다." />
+  <meta property="twitter:image" content="/public/images/palette.png" />
+  <meta property="twitter:url" content="http://www.palette-travel.com/" />
+
   <!-- favicon -->
   <link rel="icon" href="/favicon.png" />
 
@@ -111,7 +125,7 @@
             <div class="intro_title">PLAN</div>
           </div>
           <div class="intro_box">
-            <a href="/frontend/Board/myblog.html" class="intro_icon">
+            <a href="/view/Board/myblog.html" class="intro_icon">
               <lord-icon
                 src="https://cdn.lordicon.com/vixtkkbk.json"
                 trigger="hover"
@@ -121,7 +135,7 @@
             </a>
             <div class="intro_title">MY BLOG</div>
           </div><div class="intro_box">
-            <a href="/frontend/Board/story.html" class="intro_icon">
+            <a href="/view/Board/story.html" class="intro_icon">
               <lord-icon
                 src="https://cdn.lordicon.com/fgkmrslx.json"
                 trigger="hover"
@@ -164,10 +178,10 @@
           </div>
           <div class="about_figure">
             <div class="figure_triangle">
-              <img src="/frontend/images/triangle.png" alt="triangle" />
+              <img src="/public/images/triangle.png" alt="triangle" />
             </div>
             <div class="figure_square">
-              <img src="/frontend/images/square.png" alt="square" />
+              <img src="/public/images/square.png" alt="square" />
             </div>
           </div>
         </div>
@@ -179,7 +193,7 @@
     <section class="from-palette scroll-spy">
       <div class="inner">
         <div class="greeting">
-          <img src="/frontend/images/from_palette_image.png" alt="from-palette" />
+          <img src="/public/images/from_palette_image.png" alt="from-palette" />
           <div class="text_group">
             <h4 class="subtitle back-to-position to-left delay-0">Sketch your memories</br>with the Palette.</h4>
             <p class="paragraph back-to-position to-left delay-1">여행작가가 되어보는 시간.</p>
@@ -227,7 +241,7 @@
         // ajax 통신
         $.ajax({ // 요청에 대한 정보
           type: "GET", // 전송방식. HTTP method type(GET, POST) 형식
-          url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup", // 전송주소. 컨트롤러에서 대기중인 url 주소
+          url: "http://www.palette-travel.com/api/postgroup", // 전송주소. 컨트롤러에서 대기중인 url 주소
           dataType : "json",
           ContentType: "application/json; charset=UTF-8",
 

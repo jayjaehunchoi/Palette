@@ -13,9 +13,9 @@ public class BudgetResponseDto {
     private long totalBudget;
     private long totalExpense;
     private long remainingBudget;
-    private List<ExpenseDto> expenses;
+    private List<ExpenseResponseDto> expenses;
 
-    public BudgetResponseDto(Long groupId, long totalBudget, long totalExpense, long remainingBudget, List<ExpenseDto> expenses) {
+    public BudgetResponseDto(Long groupId, long totalBudget, long totalExpense, long remainingBudget, List<ExpenseResponseDto> expenses) {
         this.groupId = groupId;
         this.totalBudget = totalBudget;
         this.totalExpense = totalExpense;

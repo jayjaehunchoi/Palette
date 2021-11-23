@@ -42,6 +42,7 @@ public class ExpenseControllerTest extends RestDocControllerTest{
 
         ExpenseDto expenseDto = new ExpenseDto(expense);
         String json = objectMapper.writeValueAsString(expenseDto);
+        //String json2 = "{\"category\":\"교통\",\"detail\":\"교통\",\"price\":\"1000\"}";
 
         restDocsMockMvc.perform(post("/api/travelgroup/1/expenses").header(AUTH, TOKEN)
                 .content(json)

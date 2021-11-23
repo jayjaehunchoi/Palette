@@ -45,7 +45,6 @@ public class BudgetServiceTest {
                 groupsIntroduction("테스트 그룹 1입니다.")
                 .build();
         groupRepository.save(group);
-
         MemberGroup memberGroup = new MemberGroup();
         memberGroupRepository.save(memberGroup);
         memberGroup.addMemberGroup(group,member);
@@ -60,7 +59,7 @@ public class BudgetServiceTest {
     @Test
     void 그룹의_예산정보_조회(){
         Group findGroup = groupRepository.findAll().get(0);
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(findGroup.getId());
 
         BudgetResponseDto budgetResponseDto = budgetService.readBudget(memberRepository.findAll().get(0),findGroup.getId());
 
@@ -87,9 +86,9 @@ public class BudgetServiceTest {
     @Test
     void 예산_삭제(){
         Group group = groupRepository.findAll().get(0);
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         budgetService.deleteBudget(group);
-        assertThat(budgetRepository.findBudgetJoinWithGroup()).isEqualTo(null);
+        assertThat(budgetRepository.findBudgetByGroupId(group.getId())).isEqualTo(null);
     }
     @Test
     void 접근권환_확인(){

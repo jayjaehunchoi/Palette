@@ -8,6 +8,7 @@ import com.palette.domain.member.Member;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.dto.response.ExpenseResponseDto;
 import com.palette.exception.BudgetException;
 import com.palette.exception.GroupException;
 import com.palette.repository.BudgetRepository;
@@ -40,10 +41,9 @@ public class BudgetService {
         isGroupExist(group);
         isMemberHaveAuthToUpdate(member,group);
         isBudgetAlreadyExist(group);
-        Budget saveBudget = new Budget(group,budget.getTotalBudget());
-        budgetRepository.save(saveBudget);
-        saveBudget.saveBudgetOnGroup(group);
-        return saveBudget.getId();
+        budgetRepository.save(budget);
+        budget.saveBudgetOnGroup(group);
+        return budget.getId();
     }
 
     //그룹의 예산,경비,남은금액 조회
@@ -53,7 +53,7 @@ public class BudgetService {
         isGroupExist(group);
         isBudgetExist(group);
         isMemberHaveAuthToUpdate(member,group);
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(id);
 
         long totalBudget = findBudget.getTotalBudget();
         long totalExpense = 0l;
@@ -66,8 +66,8 @@ public class BudgetService {
         remainingBudget = totalBudget - totalExpense;
 
         //그룹에 해당되는 expense 들만 list에 담아서 보내주기
-        List<Expense> findExpenses = expenseRepository.findByBudget(findBudget);
-        List<ExpenseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
+        List<Expense> findExpenses = expenseRepository.findByBudgetId(findBudget.getId());
+        List<ExpenseResponseDto> expenseDtoList = makeExpenseDtoList(findExpenses);
 
         BudgetResponseDto dto = new BudgetResponseDto(id,totalBudget,totalExpense,remainingBudget,expenseDtoList);
         return dto;
@@ -75,7 +75,7 @@ public class BudgetService {
 
     //budget의 그룹 조회
     public Budget findByGroup(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         return findBudget;
     }
 
@@ -117,7 +117,7 @@ public class BudgetService {
 
     //그룹에 Budget이 존재하는지 확인
     private void isBudgetExist(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         if(findBudget == null){
             log.error("Budget Not Exist Error");
             throw new BudgetException("예산이 존재하지 않습니다.");
@@ -126,15 +126,15 @@ public class BudgetService {
 
     //이미 예산이 존재하는지 확인
     private void isBudgetAlreadyExist(Group group){
-        Budget findBudget = budgetRepository.findBudgetJoinWithGroup();
+        Budget findBudget = budgetRepository.findBudgetByGroupId(group.getId());
         if(findBudget != null){
             log.error("Budget Is Already Exists");
             throw new BudgetException("예산이 이미 존재합니다.");
         }
     }
 
-    private List<ExpenseDto> makeExpenseDtoList(List<Expense> expenses){
-        return expenses.stream().map(ExpenseDto::new).collect(Collectors.toList());
+    private List<ExpenseResponseDto> makeExpenseDtoList(List<Expense> expenses){
+        return expenses.stream().map(ExpenseResponseDto::new).collect(Collectors.toList());
     }
 
 }

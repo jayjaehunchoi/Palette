@@ -8,6 +8,7 @@ import com.palette.dto.request.BudgetDto;
 import com.palette.dto.request.BudgetUpdateDto;
 import com.palette.dto.request.ExpenseDto;
 import com.palette.dto.response.BudgetResponseDto;
+import com.palette.dto.response.ExpenseResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class BudgetControllerTest extends RestDocControllerTest{
 
     @Test
     void 예산_조회() throws Exception{
-        ExpenseDto expenseDto = new ExpenseDto(new Expense(Expense.Category.TRANSPORTATION, "내용", 1000L));
+        ExpenseResponseDto expenseDto = new ExpenseResponseDto(new Expense(Expense.Category.TRANSPORTATION, "내용", 1000L));
         BudgetResponseDto budgetResponseDto = new BudgetResponseDto(1L, 10000, 1000, 9000, Arrays.asList(expenseDto));
         given(budgetService.readBudget(any(),any())).willReturn(budgetResponseDto);
 

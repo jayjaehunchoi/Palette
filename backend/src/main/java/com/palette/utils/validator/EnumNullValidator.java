@@ -15,7 +15,7 @@ public class EnumNullValidator implements ConstraintValidator<EnumNull, Enum<?>>
 
     @Override
     public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
-        if(value == null){
+        if(value != null){
             return true;
         }
         return false;

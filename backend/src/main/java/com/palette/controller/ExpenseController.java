@@ -13,10 +13,13 @@ import com.palette.controller.auth.AuthenticationPrincipal;
 import com.palette.utils.annotation.LoginChecker;
 import com.palette.utils.constant.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/travelgroup")
 @RestController
@@ -29,11 +32,11 @@ public class ExpenseController {
     //지출 추가
     @LoginChecker
     @PostMapping("/{travelgroupid}/expenses") //테스트완료, id 포함하지말기
-    public Long addExpense(@AuthenticationPrincipal Member member, @RequestBody @Valid ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId){
+    public Long addExpense(@AuthenticationPrincipal Member member, @RequestBody @Validated ExpenseDto expenseDto, @PathVariable("travelgroupid") Long travelGroupId){
         Group group = groupService.findById(travelGroupId);
         Budget budget = budgetService.findByGroup(group);
-
         Expense expense = expenseDto.toEntity();
+        log.info("expense Category= {}", expense.getCategory());
         Expense savedExpense = expenseService.addExpense(member,group,expense,budget);
         return savedExpense.getId();
     }
