@@ -62,7 +62,7 @@ public class GroupController {
         Group group = new Group(groupDto.getGroupName(),groupDto.getGroupIntroduction());
         groupService.addGroup(group,member);
         budgetService.addBudget(member,group,new Budget(group,0L));
-        return groupService.addGroup(group,member);
+        return group.getId();
     }
 
     //그룹 가입( 그룹 들어가기-> 가입 버튼 눌렀을 때)
