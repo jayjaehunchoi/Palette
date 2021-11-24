@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +21,8 @@ public class ExpenseDto {
     private String detail;
 
     @NotNull(message = "금액을 입력해주세요.")
-    @Max(value = 2000000000, message = "입력할 수 있는 최대 지출값을 초과하였습니다.")
+    @Max(value = 200000000, message = "입력할 수 있는 최대 지출값을 초과하였습니다.")
+    @Min(value = 0, message = "0원 이상 금액을 입력해주세요.")
     private long price;
 
     public ExpenseDto(final Expense expense){

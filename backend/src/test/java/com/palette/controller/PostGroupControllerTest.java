@@ -118,14 +118,41 @@ public class PostGroupControllerTest extends RestDocControllerTest{
         given(s3Uploader.uploadFiles(any())).willReturn(Arrays.asList(myFile));
 
         restDocsMockMvc.perform(multipart("/api/postgroup")
-                .file(json)
-                .file(file)
-                .content("multipart/mixed")
-                .accept(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8").header(AUTH, TOKEN)).andDo(print()).andExpect(status().isCreated())
+                        .file(json)
+                        .file(file)
+                        .content("multipart/mixed")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8").header(AUTH, TOKEN)).andDo(print()).andExpect(status().isCreated())
                 .andDo(document("postgroup-create-group"
                         ,requestParts(partWithName("data").description("postGroupDto")
-                        , partWithName("file").description("multiple files"))
+                                , partWithName("file").description("multiple files"))
+                        ,requestPartBody("data")));
+
+
+    }
+
+    @Test
+    void 포스트_그룹_생성_날짜_에러() throws Exception{
+        MockMultipartFile file = new MockMultipartFile("file", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
+        PostGroupDto data = new PostGroupDto(TITLE, new PeriodDto(END, START), REGION);
+        PostGroup postGroup = createPostGroup();
+        MyFile myFile = new MyFile("imagefile.jpeg", "imagefile.jpeg");
+        postGroup.setThumbNail(myFile);
+
+        String pg = objectMapper.writeValueAsString(data);
+        MockMultipartFile json = new MockMultipartFile("data", "json", "application/json", pg.getBytes(StandardCharsets.UTF_8));
+        given(postGroupService.createPostGroup(any())).willReturn(postGroup);
+        given(s3Uploader.uploadFiles(any())).willReturn(Arrays.asList(myFile));
+
+        restDocsMockMvc.perform(multipart("/api/postgroup")
+                        .file(json)
+                        .file(file)
+                        .content("multipart/mixed")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8").header(AUTH, TOKEN)).andExpect(status().isBadRequest()).andDo(print())
+                .andDo(document("postgroup-create-group"
+                        ,requestParts(partWithName("data").description("postGroupDto")
+                                , partWithName("file").description("multiple files"))
                         ,requestPartBody("data")));
 
 

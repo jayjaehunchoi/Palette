@@ -4,12 +4,14 @@ import com.palette.domain.Period;
 import com.palette.domain.member.Member;
 import com.palette.domain.post.MyFile;
 import com.palette.domain.post.PostGroup;
+import com.palette.dto.PeriodDto;
 import com.palette.dto.SearchCondition;
 import com.palette.dto.request.PostGroupDto;
 import com.palette.dto.response.PostGroupResponseDto;
 import com.palette.dto.response.PostGroupsResponseDto;
 import com.palette.dto.response.StoryListResponseDto;
 import com.palette.dto.response.StoryListResponsesDto;
+import com.palette.exception.PostGroupException;
 import com.palette.service.PostGroupService;
 import com.palette.service.PostService;
 import com.palette.utils.annotation.LoginChecker;
@@ -71,6 +73,7 @@ public class PostGroupController {
     @LoginChecker
     @PostMapping
     public ResponseEntity<Void> uploadPostGroup(@AuthenticationPrincipal Member member, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file")MultipartFile file) throws IOException {
+        isValidPeriod(dto.getPeriod());
         log.info("member {}",member);
         PostGroup postGroup = createPostGroupEntity(member, dto, file);
         PostGroup savePostGroup = postGroupService.createPostGroup(postGroup);
@@ -80,6 +83,7 @@ public class PostGroupController {
     @LoginChecker
     @PutMapping("/{id}")
     public ResponseEntity<Void> updatePostGroup(@AuthenticationPrincipal Member member, @PathVariable Long id, @RequestPart("data")@Valid PostGroupDto dto, @RequestPart("file") MultipartFile file) throws IOException{
+        isValidPeriod(dto.getPeriod());
         postGroupService.checkMemberAuth(member,id);
         String storeFileName = postGroupService.getStoreFileNameIfChanged(id, file);
         MyFile myFile = updateDirectoryFile(file, storeFileName);
@@ -115,6 +119,12 @@ public class PostGroupController {
                 .build();
         postGroup.setThumbNail(myFile);
         return postGroup;
+    }
+
+    private void isValidPeriod(PeriodDto dto){
+        if(dto.getEndDate().isBefore(dto.getStartDate())){
+            throw new PostGroupException("시작일자와 종료일자를 다시 확인해주세요.");
+        }
     }
 
 }
