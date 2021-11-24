@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class CommentDto {
 
     @NotBlank(message = "내용을 입력해주세요.")
-    @Length(max = 120)
+    @Length(min = 0, max = 120, message = "0 ~ 20자 사이로 입력해주세요.")
     private String content;
 
     @Builder
