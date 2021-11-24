@@ -22,6 +22,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="/public/css/member.css">
   <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script defer src="/public/js/join.js"> </script>
@@ -42,12 +43,14 @@
         <div class="userInfo">
           <span class="instruction">이메일</span><br>
           <input class="userId" type="text" placeholder="이메일 입력"> 
+          <div class="errorMsg" id="idChk" style="display: none;">이메일 형식으로 입력하세요</div>
         </div>
 
         <div class="userInfo">
           <span class="instruction">비밀번호</span><br>
           <input class="userPw" type="password" placeholder="비밀번호(영문자+숫자+특수문자 조합으로 8자 ~ 20자)"><br>
           <input class="userPwChk" type="password" placeholder="비멀번호 확인"><br>
+          <div class="errorMsg" id="pwChk" style="display: none;">비밀번호 규칙에 맞게 입력하세요</div>
         </div> 
 
         <div class="userInfo">
@@ -66,6 +69,7 @@
           </div>
         </div>
 
+        <div class="errorMsg" id="overallChk"><span> </span></div>
         <div class="joinBt">
         <button>회원가입</button> <br>
         </div>

@@ -63,15 +63,6 @@ a {
 	display: block;
 	text-align: left;
 }
-/*
-.login.chkMsg {
-	font-size: 12px;
-	padding: 0;
-	border: none;
-	color: red;
-	top: 280px;
-}
-*/
 
 .container .inner .loginBt button{
 	display: block;
@@ -167,6 +158,12 @@ a {
 .container .inner :nth-child(2){
 	margin-top: 70px;
  }
+
+.container .inner .errorMsg {
+	color: red;
+	font-size: 12px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
 .container .inner .userInfo input{
 	width: 100%;
 	height: 42px;
@@ -212,6 +209,14 @@ a {
 	object-fit: cover;
 }
 
+.container .inner .errorMsg#overallChk{
+	margin-top: 50px;
+	color: red;
+	font-size: 16px;
+	font-weight: 700;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 .container .inner .joinBt button{
 	display: block;
 	background: #333;
@@ -222,7 +227,7 @@ a {
 	font-size: 15px;
 	font-weight: 700;
 	transition: .4s;
-	margin-top: 50px;
+	margin-top: 7px;
 	margin-bottom: 100px;
 }
 
