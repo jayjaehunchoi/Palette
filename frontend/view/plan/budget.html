@@ -71,11 +71,11 @@
         <option value="숙박">숙박</option>
         <option value="기타">기타</option>
       </select>
-      <input class="detail__input" type="text" v-model="detail" placeholder="항목" v-on:keyup.enter="add_item"/> <br>
+      <input class="detail__input" type="text" placeholder="항목"/> <br>
       </div>
       <div class="line2">
-      <input class="price__input" type="number" v-model="price" placeholder="금액" v-on:keyup.enter="add_item">
-        <div class="addContainer" v-on:click="add_item">
+      <input class="price__input" type="number" placeholder="금액" min="0">
+        <div class="addContainer">
           <button class="addBt"> + </button>
         </div>
       </div>
@@ -93,32 +93,6 @@
 
     <div class="backBt" onclick="location.href='./group.html'">
       이전으로
-    </div>
-  </section>
-  
-  <section>
-    <div id="footers"></div>
-  </section>
-
-  <!-- MODAL -->
-    <!-- 예산 설정 -->
-    <div class="modal" id="setModal">
-   
-      <div class="modalContent">
-          <h2>예산을 입력하세요</h2>
-         
-          <div class="itemContainer">
-            <input type="number" class="totalBudget__input"> 
-          </div>
-          
-          <div class="modalBts">
-            <button type="button" class="modalOkBt" onclick="setTotalBudget()">확인</button>
-            <button type="button" class="modalCloseBt" onclick="closeSetModal()">닫기</button>
-          </div>
-      </div>
-     
-      <div class="modal_layer"></div> 
-
     </div>
 
     <!-- 예산 수정 -->
@@ -169,6 +143,10 @@
       <div class="modal_layer"></div>
 
     </div>
-
+  </section>
+  
+  <section>
+    <div id="footers"></div>
+  </section>
 </body>
 </html>
