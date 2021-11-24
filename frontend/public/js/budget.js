@@ -29,7 +29,9 @@ function loadExpenseList(data) {
       str += '</li>'
     }
   
-  $('.budgetlist .list').html(str);
+    $('.budgetlist .list').html(str);
+  } else {
+    $('.budgetlist .list').empty();
   }
 }
 $(document).ready(function() {
