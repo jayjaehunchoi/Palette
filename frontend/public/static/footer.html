@@ -15,8 +15,86 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
 
   <!-- footer.css -->
-  <link rel="stylesheet" href="/public/static/footer.css" />
+  <style>
+    /* COMMON */
+    html {
+      height: 100%; 
+    }
 
+    body {
+      height: 100%; 
+      font-size: 16px;
+      font-weight: 400;
+      font-family: 'Noto Sans KR','Malgun Gothic',sans-serif;
+    }
+
+    img {
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    .inner {
+      width: 1100px;
+      min-height: 100%; 
+      margin: 0 auto;
+      position: relative;
+    }
+
+
+    /* FOOTER */
+    footer {
+      background-color: #212121;
+      border-top: 1px solid #333;
+    }
+
+    footer .inner {
+      padding: 60px 0;
+      display: flex;
+    }
+
+    footer .inner .info {
+      margin-right: 120px;
+    }
+
+    footer .inner .info li {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px;
+    }
+
+    footer .inner .info li:first-child {
+      font-family: 'DM Serif Text', serif;
+      font-size: 17px;
+      padding: 3px;
+    }
+
+    footer .inner .menu {
+      margin-right: 120px;
+    }
+
+    footer .inner .menu li {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px;
+    }
+
+    footer .inner .menu li a {
+      color: #fff;
+    }
+
+    footer .inner .social {
+      display: flex;
+    }
+
+    footer .inner .social a {
+      margin-right: 20px;
+    }
+  </style>
   <!-- footer.js -->
   <script defer src="/public/static/footer.js"></script>
 </head>

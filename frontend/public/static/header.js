@@ -60,7 +60,6 @@ $(document).ready(function() {
     document.querySelector('div.menu__login').style.display = "inline";
     document.querySelector('div.menu__logout').style.display = "none";
   } else {
-    console.log("안로그인");
     document.querySelector('div.menu__login').style.display = "none";
     document.querySelector('div.menu__logout').style.display = "inline";
   }

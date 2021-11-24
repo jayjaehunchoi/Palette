@@ -29,7 +29,9 @@ function loadExpenseList(data) {
       str += '</li>'
     }
   
-  $('.budgetlist .list').html(str);
+    $('.budgetlist .list').html(str);
+  } else {
+    $('.budgetlist .list').empty();
   }
 }
 $(document).ready(function() {
@@ -125,6 +127,10 @@ $('.addBt').click(function() {
 
   if (category == "" || detail == "" || price == "") {
     alert("지출계획을 모두 입력하세요!");
+  } else if ( price < 0 ) {
+    alert("금액에 음수는 입력할 수 없습니다");
+  } else if ( price > 200000000 ) {
+    alert("금액에 2억 이상은 입력할 수 없습니다");
   } else {
     $.ajax({
       type : "POST",
@@ -274,6 +280,7 @@ function openChangeExpenseModal(expenseid) {
 //모달 닫기
 
 function closeChangeModal() {
+  $('.totalBudget__input').val('');
   document.getElementById("changeModal").style.display="none";
 }   
 

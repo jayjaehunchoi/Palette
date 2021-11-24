@@ -46,22 +46,48 @@ profileFile.onchange = function () {
     }
   };
  
+  $(".userId").on("change keydown paste input", function() {
+    var currentVal = $(this).val();
+
+    if( currentVal.indexOf("@") <= 0 || currentVal.indexOf(".") <= 0) {
+      document.querySelector('#idChk').style.display="inline";
+    } else {
+      document.querySelector('#idChk').style.display="none";
+    }
+  });
+
+  $(".userPw").on("change keydown paste input", function() {
+    var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)(?=\S+$).{8,20}$/;
+    var currentVal = $(this).val();
+
+    if( !reg.test(currentVal)) {
+      document.querySelector('#pwChk').style.display="inline";
+    } else {
+      document.querySelector('#pwChk').style.display="none";
+    }
+  });
+   
 
   $('.joinBt').click(function() { 
     var userId = $('.userId').val(); 
     var userPw = $('.userPw').val();
     var userPwChk = $('.userPwChk').val(); 
     var userName = $('.userName').val();
-    var profileFile = $('.profileFile')    
-    
+    var profileFile = $('.profileFile');
     var memberData = {"name":userName, "password":userPw, "email":userId};
+    let errorMsg = $('#overallChk');
+
     if (userId == '' || userPw == '' || userPwChk =='' || userName == '') {
-      alert('기본 정보를 모두 입력하세요');
-    } else if (userPw != userPwChk) {
-      alert('비밀번호가 일치하지 않습니다');
+      errorMsg.html('기본 정보를 모두 입력하세요');
     } else if (profileFile[0].files[0] == undefined) {
-      alert("프로필 사진을 선택해주세요");
-    } else {    
+      errorMsg.html('프로필 사진을 선택하세요')
+    } else if (document.querySelector('#idChk').style.display != "none"){
+      errorMsg.html('이메일을 확인해주세요')
+    } else if (document.querySelector('#pwChk').style.display != "none"){
+      errorMsg.html('비밀번호를 확인해주세요')
+    } else if (userPw != userPwChk) {
+      errorMsg.html('비밀번호가 일치하지 않습니다');
+    } else {
       var formData = new FormData();
       formData.append('member-data', new Blob([JSON.stringify(memberData)], {type: "application/json"}));
       formData.append('file', profileFile[0].files[0]);
