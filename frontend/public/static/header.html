@@ -18,8 +18,193 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   
   <!-- header.css -->
-  <link rel="stylesheet" href="/public/static/header.css" />
+  <!-- <link rel="stylesheet" href="/public/static/header.css" /> -->
+  <style>
+  /* COMMON */
+  body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    font-family: 'Noto Sans KR','Malgun Gothic',sans-serif;
+  }
+  img {
+    display: block;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+  .inner {
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
 
+
+  /* HEADER */
+  header {
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #c8c8c8;
+    position: fixed;
+    top: 0;
+    z-index: 9;
+  }
+  header > .inner {
+    height: 120px;
+  }
+  header .logo {
+    font-family: 'DM Serif Text', serif;
+    font-size: 40px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+  header .sub-menu {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    display: flex;
+  }
+  header .sub-menu ul.menu {
+    font-family: Montserrat;
+    display: flex;
+  }
+  header .sub-menu ul.menu li {
+    position: relative;
+  }
+  header .sub-menu ul.menu li::before {
+    content: "";
+    width: 1px;
+    height: 12px;
+    background-color: #e5e5e5;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  header .sub-menu ul.menu li:first-child::before{
+    display: none;
+  }
+  header .sub-menu ul.menu li .welcome {
+    color: #bfbfbf;
+    font-size: 12px;
+    padding: 11px 16px;
+    display: block;
+  }
+  header .sub-menu ul.menu li a {
+    font-size: 12px;
+    padding: 11px 16px;
+    display: block;
+    color: #656565;
+  }
+  header .sub-menu ul.menu li a:hover {
+    color: #000;
+  }
+
+  /*login시의 서브 메뉴*/
+  header .sub-menu .menu__login {
+    display: none;
+  }
+
+  header .sub-menu ul.menu__login {
+    font-family: Montserrat;
+    display: flex;
+  }
+  header .sub-menu ul.menu__login li {
+    position: relative;
+  }
+  header .sub-menu ul.menu__login li::before {
+    content: "";
+    width: 1px;
+    height: 12px;
+    background-color: #e5e5e5;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  header .sub-menu ul.menu__login li:first-child::before{
+    display: none;
+  }
+  header .sub-menu ul.menu__login li .welcome {
+    color: #bfbfbf;
+    font-size: 12px;
+    padding: 11px 16px;
+    display: block;
+  }
+  header .sub-menu ul.menu__login li a {
+    font-size: 12px;
+    padding: 11px 16px;
+    display: block;
+    color: #656565;
+  }
+  header .sub-menu ul.menu__login li a:hover {
+    color: #000;
+  }
+
+  header .sub-menu ul.menu__login li .logout {
+    font-size: 12px;
+    padding: 11px 16px;
+    display: block;
+    color: #656565;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  header .sub-menu ul.menu__login li .logout:hover{
+    color: #000;
+  }
+
+  header .sub-menu .search input {
+    width: 36px;
+    height: 34px;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline: none;
+    background-color: #fff;
+    color: #777;
+    font-size: 12px;
+    transition: width .4s;
+  }
+  header .sub-menu .search input:focus {
+    width: 190px;
+    border-color: #777;
+  }
+  header .sub-menu .search .material-icons {
+    height: 24px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 5px;
+    margin: auto;
+    transition: .4s;
+  }
+  header .sub-menu .search.focused .material-icons {
+    opacity: 0;
+  }
+  header .main-menu {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+  }
+  header .main-menu ul.menu {
+    font-family: Montserrat;
+    display: flex;
+  }
+  header .main-menu ul.menu li {
+    position: relative;
+    padding: 10px 20px 30px 40px;
+    font-size: 16px;
+  }
+  </style>
   <!-- header.js -->
   <script defer src="/public/static/header.js"></script>
 </head>
@@ -53,7 +238,7 @@
           <a href="/view/member/modifyInfo.html">MYPAGE</a>
         </li>
         <li>
-          <button class="logout">LOGOUT</button>
+          <span class="logout">LOGOUT</span>
         </li>
       </div>
       </ul>
