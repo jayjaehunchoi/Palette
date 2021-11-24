@@ -3,6 +3,8 @@ package com.palette.controller.util;
 import capital.scalable.restdocs.AutoDocumentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.palette.utils.advice.PaletteExceptionHandler;
+import com.palette.utils.advice.ValidExceptionHandler;
 import org.springframework.boot.test.autoconfigure.restdocs.RestDocsMockMvcConfigurationCustomizer;
 import org.springframework.boot.test.autoconfigure.restdocs.RestDocsWebTestClientConfigurationCustomizer;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -53,6 +55,7 @@ public class RestDocUtil {
         return MockMvcBuilders.standaloneSetup(controllers)
                 .addFilters(MockMvcConfig.utf8Filter())
                 .alwaysDo(prepareJackson(OBJECT_MAPPER))
+                .setControllerAdvice(PaletteExceptionHandler.class, ValidExceptionHandler.class)
                 .apply(documentationConfiguration(provider)
                         .uris()
                         .withScheme("http")

@@ -1,9 +1,12 @@
 package com.palette.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.palette.exception.PaletteException;
+import com.palette.exception.PostGroupException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
