@@ -71,11 +71,11 @@
         <option value="숙박">숙박</option>
         <option value="기타">기타</option>
       </select>
-      <input class="detail__input" type="text" v-model="detail" placeholder="항목" v-on:keyup.enter="add_item"/> <br>
+      <input class="detail__input" type="text" placeholder="항목"/> <br>
       </div>
       <div class="line2">
-      <input class="price__input" type="number" v-model="price" placeholder="금액" v-on:keyup.enter="add_item">
-        <div class="addContainer" v-on:click="add_item">
+      <input class="price__input" type="number" placeholder="금액" min="0">
+        <div class="addContainer">
           <button class="addBt"> + </button>
         </div>
       </div>
