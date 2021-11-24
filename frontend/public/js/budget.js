@@ -80,6 +80,7 @@ $('#changeModal .modalOkBt').click(function(){
     },
     success: function(data){
       readBudget();
+      $('.totalBudget__input').val('');
       closeChangeModal();
     }
   });
