@@ -248,11 +248,9 @@
           success: function(res){ //비동기통신의 성공일경우 success콜백으로 들어옴. 'res'는 응답받은 데이터.
             var htmlArr = [];
             var result =  res.postGroupResponses;
-            if(result.length >= 8) {
-              for (var i = 0; i < result.length; i++) {
-                console.log(result[i].thumbNailUrl);
-                htmlArr.push("<div class=\"swiper-slide\"><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
-              }
+            for (var i = 0; i < result.length; i++) {
+              console.log(result[i].thumbNailUrl);
+              htmlArr.push("<div class=\"swiper-slide\"><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
             }
             swiper2.appendSlide(htmlArr); 
             swiper2.update(); //슬라이드를 새로 추가할 경우 꼭 update 함수를 호출.
