@@ -19,21 +19,6 @@ searchInputEl.addEventListener('blur', function () {
   searchInputEl.setAttribute('placeholder', '');
 });
 
-
-/**
- *스크롤 이동
- */
-// 원하는 위치로 스크롤 이동
-// function clickToScroll() {
-// 	jQuery("a[href^='/frontend/index.html#about_move']").on('click',function (e) {
-// 		e.preventDefault();
-// 		var targets = this.hash;
-// 		jQuery('html, body').animate({
-// 			scrollTop: $(targets).offset().top + 70
-// 		}, 1000);
-// 	});
-// }
-
 // 페이지 이동 후 원하는 위치로 스크롤 이동
 function otherPage(){
 	$("html, body").scrollTop(0);
