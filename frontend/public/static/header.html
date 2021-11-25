@@ -242,8 +242,8 @@
       </div>
       </ul>
       <div class="search">
-        <input type="text" />
-        <div class="material-icons">search</div>
+        <input class="header-keyword" type="text" name="search" maxlength="50" value="" autocomplete="off" />
+        <div class="material-icons" id="search-button" type="submit" name="click" value="">search</div>
       </div>
     </div>
     <div class="main-menu">
@@ -267,7 +267,15 @@
     </div>
   </div>       
 </header>
-  
+<script>
+$('.header-keyword').keydown(function(key) {
+  var keyword = $(".header-keyword").val();
+  if(key.keyCode == 13) {
+        sessionStorage.setItem("keyword", keyword);
+        window.location.href = "/public/static/search.html";
+  }
+});
+</script>  
    
 </body>
 </html>
