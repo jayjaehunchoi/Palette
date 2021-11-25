@@ -250,7 +250,7 @@
             var result =  res.postGroupResponses;
             for (var i = 0; i < result.length; i++) {
               console.log(result[i].thumbNailUrl);
-              htmlArr.push("<div class=\"swiper-slide\"><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
+              htmlArr.push("<div onclick='moveToPostGroup(this.id)' class=\"swiper-slide\" id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
             }
             swiper2.appendSlide(htmlArr); 
             swiper2.update(); //슬라이드를 새로 추가할 경우 꼭 update 함수를 호출.
@@ -261,6 +261,11 @@
           
         });
       });
+
+      function moveToPostGroup(postGroupId) {
+        sessionStorage.setItem("postGroupId", postGroupId);
+        window.location.href = "/view/Board/storyDetail.html";
+      }
     </script>
 
 
