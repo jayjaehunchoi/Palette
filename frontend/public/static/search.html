@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palette.</title>
+
+   <!-- favicon -->
+   <link rel="icon" href="/favicon.png" />
+
+   <!-- header jquery -->
+   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script type="text/javascript">   
+     $(document).ready( function() {
+     $("#headers").load("/public/static/header.html");  
+     });
+   </script>
+ 
+   <!-- footer jquery -->
+   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script type="text/javascript">   
+     $(document).ready( function() {
+     $("#footers").load("/public/static/footer.html");  
+     });
+   </script>
+ 
+   <!-- css reset cdn -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"/>
+ 
+   <!-- font -->
+   <link rel="preconnect" href="https://fonts.gstatic.com" >
+   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+   
+   <!-- Material-icons -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ 
+   <!-- search.css -->
+   <link rel="stylesheet" href="/public/css/search.css" />
+ 
+   <!-- SWIPER -->
+   <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css" />
+   <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+ 
+   <!-- search.js -->
+   <script defer src="/public/js/search.js"></script>
+</head>
+
+<body>
+   <!-- header 연결 -->
+  <div id="headers"></div>
+  
+
+  <!-- SEARCH RESULTS-->   
+  <section class="search-results">
+  <div class="inner">
+    <div class="title">
+      <h2>Search Results</h2>
+    </div>
+    <div class="search-box">
+      <button class="material-icons">search</button>
+      <input id="keyword" class="keyword" type="text" maxlength="50" placeholder="Search..." autocomplete="off"/> 
+    </div>
+
+
+    <div class="section-tabs">
+      <!-- Swiper Tab -->
+      <div class="swiper-container swiper-tabs-nav">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">All</div>
+          <div class="swiper-slide">Blog Posts</div>
+          <div class="swiper-slide">Username</div>
+        </div>
+      </div>
+
+      <!-- Swiper Content -->
+      <div class="swiper-container swiper-tabs-content">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+
+            <div class="group-posts">
+              <h4>Blog Posts</h4>
+              <div class="search-posts" id="all-blog-posts-results"> </div>
+            </div>
+            
+            <div class="group-posts">
+              <h4>Username</h4>
+              <div class="search-posts" id="all-username-results"></div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <h4>Blog Posts</h4>
+            <div class="search-posts" id="blog-posts-results"></div>               
+          </div>
+
+          <div class="swiper-slide">
+            <h4>Username</h4>
+            <div class="search-posts" id="username-results"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+$(document).ready(function() {
+  var keyword =  sessionStorage.getItem("keyword");
+  $(".keyword").val(keyword);
+  search(keyword);
+  sessionStorage.removeItem("keyword");
+});
+
+$('.keyword').keydown(function(key) {
+  var keyword = $(".keyword").val();
+  if(key.keyCode == 13) {
+    $("#all-blog-posts-results").html("")
+    $("#all-username-results").html("")
+    $("#blog-posts-results").html("")
+    $("#username-results").html("")
+    sessionStorage.setItem("keyword", keyword);
+    search(keyword);
+    sessionStorage.removeItem("keyword");
+  }
+});
+function search(keyword) {
+  // ajax 통신
+  // title
+  $.ajax({ // 요청에 대한 정보
+    type: "GET", // 전송방식. HTTP method type(GET, POST) 형식
+    url: "http://www.palette-travel.com/api/postgroup?title=" + keyword, // 전송주소. 컨트롤러에서 대기중인 url 주소
+    dataType : "json",
+    ContentType: "application/json; charset=UTF-8",
+    success: function(res){ //비동기통신의 성공일경우 success콜백으로 들어옴. 'res'는 응답받은 데이터.
+      console.log(keyword);
+      var result =  res.postGroupResponses;
+
+      if(result != null) {
+        for (var i = 0; i < result.length; i++) {
+        console.log(res.postGroupResponses[i].thumbNailUrl);
+        $("#all-blog-posts-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
+        $("#blog-posts-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
+        }
+      }
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) { //비동기 통신이 실패할경우 error 콜백으로 들어옴.
+      console.log("통신 실패")
+    }
+  });
+
+  // memberName
+  $.ajax({ // 요청에 대한 정보
+    type: "GET", // 전송방식. HTTP method type(GET, POST) 형식
+    url: "http://www.palette-travel.com/api/postgroup?name=" + keyword, // 전송주소. 컨트롤러에서 대기중인 url 주소
+    dataType : "json",
+    ContentType: "application/json; charset=UTF-8",
+    success: function(res){ //비동기통신의 성공일경우 success콜백으로 들어옴. 'res'는 응답받은 데이터.
+      console.log(keyword);
+      var result =  res.postGroupResponses;
+      
+      if(result != null) {
+        for (var i = 0; i < result.length; i++) {
+        console.log(res.postGroupResponses[i].thumbNailUrl);
+        $("#all-username-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
+        $("#username-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
+        }
+      }
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) { //비동기 통신이 실패할경우 error 콜백으로 들어옴.
+      console.log("통신 실패")
+    }
+  });
+}
+
+  $(".material-icons").click(function() {
+      $("#all-blog-posts-results").html("")
+      $("#all-username-results").html("")
+      $("#blog-posts-results").html("")
+      $("#username-results").html("")
+      var keyword = $("#keyword").val();
+      
+    
+    // 알림창
+    if (keyword == "") {
+        alert('검색어를 입력하세요.');
+      } else {
+        search(keyword);
+        }
+  });
+
+
+  function moveToPostGroup(postGroupId) {
+    sessionStorage.setItem("postGroupId", postGroupId);
+    window.location.href = "/view/Board/storyDetail.html";
+  }
+
+</script>
+
+
+<!-- footer 연결 -->
+<div id="footers"></div>
+ 
+</body>
+</html>
