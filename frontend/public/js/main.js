@@ -17,11 +17,14 @@ new Swiper('.swiper-container', {
 });
 const swiper2 = new Swiper('.palette-story .swiper-container', {
   direction: 'horizontal', // 수평 슬라이드
-  autoplay: true, // 자동 재생 여부
   loop: true, // 반복 재생 여부
   spaceBetween: 30, // 슬라이드 사이 여백
   slidesPerView: 3, // 한 번에 보여줄 슬라이드 개수
   // slidesPerGroup: 3, // 한 번에 슬라이드 할 개수(전체 개수로 나뉘어야 함)
+  // resistanceRatio: 0, // 슬라이드 터치에 대한 저항 여부 설정
+  autoplay: { // 자동 재생 여부
+    delay: 5000 // 5초마다 슬라이드 바뀜
+  },
   navigation: { // 슬라이드 이전/다음 버튼 사용 여부
     prevEl: '.palette-story .swiper-prev', // 이전 버튼 선택자
     nextEl: '.palette-story .swiper-next' // 다음 버튼 선택자
