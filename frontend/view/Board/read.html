@@ -22,7 +22,7 @@
 
 <link rel = "stylesheet" href="/public/css/read.css">
 
-<title>Post</title>
+<title>Palette.</title>
 
    <!-- header jquery -->
    <script type="text/javascript">   
@@ -43,152 +43,6 @@
     view();
     like_btn();
   });
-</script>
-
-<!-- 수정페이지 -->
-<script type="text/javascript">
-  function modifyPost(){
-    let token = sessionStorage.getItem("token"); 
-    let postId = sessionStorage.getItem("postId");
-    let memberId = sessionStorage.getItem("memberId");
-
-    $.ajax({
-        url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
-        contentType: 'application/json; charset=UTF-8',
-        type: 'get',  // get, post
-        cache: false, // 응답 결과 임시 저장 취소
-        async: true,  // true: 비동기 통신
-        dataType: 'json', // 응답 형식: json, html, xml...
-        //data: '',      // 데이터
-  
-        success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-
-          console.log(testData);
-          if(testData.memberId == memberId){
-            window.location.href = "./update.html";
-          } else{
-            alert("수정 권한이 없습니다");
-          }
-          },
-  
-        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-        error: function(request, status, error) { // callback 함수
-          alert('ajax야 힘내자'+ request +status + error);
-        },
-
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authorization","Bearer " + token);
-       }
-      });
-    
-
-        //window.location.href = "./update.html";
-      }  
-</script>
-
-<!-- ajax 요청 -->
-<script type="text/javascript">   
-    
-  function view() {
-    var frm = $('#frmpost');
-    let postId = sessionStorage.getItem("postId");
-    let memberId = sessionStorage.getItem("memberId");
-    var params = '';  // 개발시 변경 부분
-    var msg = '';
-
-    $.ajax({
-      //url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/{id}', // 개발시 변경 부분
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
-      contentType: 'application/json; charset=UTF-8',
-      type: 'get',  // get, post
-      cache: false, // 응답 결과 임시 저장 취소
-      async: true,  // true: 비동기 통신
-      dataType: 'json', // 응답 형식: json, html, xml...
-      data: params,      // 데이터
-
-      success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-          
-        if (testData.postId > 0) { 
-
-          console.log(testData)
-          //alert('내용  ㅇㅇ' +  testData.postGroupResponses[0].memberName);
-
-          $('#day').empty();
-          $('#title').empty();       
-          $('#author').empty();
-          $('#photo').empty();       
-          $('#content').empty();
-          $('#result').empty();
-          $('.comment-date').empty();
-          $('.comment-content').empty();
-
-          $("#title").append("<div>"+testData.postTitle+"</div>");
-          $("#author").append("<div>"+testData.memberName+"</div>");
-          $("#photo").append("<div><figure class='image'><img src=' " + testData.images[0] + " '/></figure></div>");
-          $("#content").append("<div>"+testData.postContent+"</div>");
-          $("#result").append("<div>"+testData.likes+"</div>");
-
-          for(i=0; i<testData.comments.length; i++){
-           $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-date'>"+testData.comments[i].createDate+"\
-                                      </div><div class = 'comment-memberName'>"+testData.comments[i].memberName+"</div><div class = 'comment-content'>\
-                                      "+testData.comments[i].commentContent+"\
-                                       <input type = 'button' class='modifycomment'  value='수정' onclick='OpenmodifyComment(this.id)' id="+testData.comments[i].commentId +">\
-                                       <input type = 'button' class='deletecomment'  value='삭제' onclick='deleteComment(this.id)' id="+testData.comments[i].commentId +"></div>"); 
-          }
-
-        
-
-        } else {  
-          testData.postGroupResponses[0].postGroupId.value();
-
-          alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
-        }
-      },
-
-      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-      error: function(request, status, error) { // callback 함수
-        alert('ajax야 힘내자'+ request +status + error);
-      }
-    });
-  }
-
-</script>
-
-<!-- ajax 요청 (글삭제) -->
-<script type="text/javascript">   
-  
-  
-  //debugger;     
-  function deletePost() {
-    let token = sessionStorage.getItem("token"); 
-    let postGroupId = sessionStorage.getItem("postGroupId");
-    let postId = sessionStorage.getItem("postId");
-
-    $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId+'/post/'+postId, // 개발시 변경 부분  
-      type: 'DELETE',  // get, post
-  
-      success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-        if (confirm("삭제하시겠습니까?")) {
-          alert("게시글이 삭제되었습니다.");
-          window.location.href = "/view/Board/myblogDetail.html"
-      } 
-        
-      },
-
-      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-      error: function(request, status, error) { // callback 함수
-        //alert('ajax야 힘내자'+ request +status + error);
-        console.log('ajax야 힘내자'+ request +status + error);
-        alert("삭제 권한이 없습니다");
-      },
-
-beforeSend: function (xhr) {
-  xhr.setRequestHeader("Authorization","Bearer " + token);
-}
-    });
-  }
-
 </script>
 
 </head>
@@ -216,42 +70,22 @@ beforeSend: function (xhr) {
           <input type="hidden" id="comments_createDate" name="comments_createDate" value=""/>
 
         <div class="day" id = "day" name = "day">
-          DAY
+         
         </div>
  
         <div class="title" id = "title" name = "title">
-          title  
+            
         </div>
 
         <div class="author" id = "author" name = "author">
-          author
+          
         </div>
 
         <div class="photo" id = "photo" name = "photo">
-          <figure class="image"><img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" alt=""></figure>
+          <figure class="image">
+            <!-- <img src="" alt=""> -->
+          </figure>
         </div>
-<!-- 
-          <div class="swiper-container mySwiper" id = "photo" name="photo">
-
-          <div class="swiper-wrapper" >
-            <div class="swiper-slide">
-              <img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" />
-            </div>
-            <div class="swiper-slide">
-              <img src="https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153530528_ttiel" />
-            </div>
-            <div class="swiper-slide">
-              <img src="https://post-phinf.pstatic.net/MjAyMDA5MTFfMjM3/MDAxNTk5ODEyNDE1NjAy.p-GWwJKctfgX7d4Mz9eMTtCjt9lsqnO6NWG31y1UEL4g.igYEArRi6sq_eGZ-ZVvYLDy8ZenKfZrFhxNnzgRKr_4g.JPEG/47%EC%81%98%EB%9D%A0%ED%94%84%EB%9E%91%EC%8A%A4%28%EC%97%BD%EC%84%9C%29.jpg?type=w1200" />
-            </div>
-          </div>  -->
-
-          <!-- 네비게이션 버튼 -->
-          <!-- <div class="swiper-button-next"></div> 다음 버튼 (오른쪽에 있는 버튼)
-           <div class="swiper-button-prev"></div> 이전 버튼 -->
-        
-          <!-- 페이징 -->
-          <!-- <div class="swiper-pagination"></div>
-        </div>   -->
 
         <div class="content" id = "content" name = "content">
           content

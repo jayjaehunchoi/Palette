@@ -7,6 +7,7 @@
             $(this).toggleClass("done");
         }else{
             alert("로그인이 필요합니다");
+            window.location.href = '/view/member/login.html';
         }
 
         $.ajax({
@@ -79,8 +80,10 @@ beforeSend: function (xhr) {
                 alert('등록되었습니다');
             },
             error:function(e){
-                window.location.href = '/view/Board/read.html';
+              alert("로그인이 필요합니다");
+                window.location.href = '/view/member/login.html';
                  console.log("error : ", e);
+
                  },
 
                  beforeSend: function (xhr) {
@@ -178,22 +181,23 @@ function closemodifyComment() {
   }   
 
 // ajax 요청 (댓글 삭제)
+
 function deleteComment(commentId) {
     let token = sessionStorage.getItem("token"); 
     let postGroupId = sessionStorage.getItem("postGroupId");
     let postId = sessionStorage.getItem("postId");
     sessionStorage.setItem("commentId", commentId);
 
+    var confirm_val = confirm("삭제하시겠습니까?");
+    if (confirm_val == true) {
     $.ajax({
         url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment/'+commentId, // 개발시 변경 부분  
         type: 'DELETE',  // get, post
     
         success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-        
-        if (confirm("삭제하시겠습니까?")) {
-            alert("게시글이 삭제되었습니다.");
+         
+            alert("댓글이 삭제되었습니다.");
             window.location.href = '/view/Board/read.html';
-        }
         }, 
         // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
         error: function(request, status, error) { // callback 함수
@@ -207,11 +211,149 @@ function deleteComment(commentId) {
   }
       });
     }
+      else{
+        alert("취소하셨습니다.");
+          window.location.href = '/view/Board/read.html';
+        }
+}
 
+// 수정 페이지
+function modifyPost(){
+  let token = sessionStorage.getItem("token"); 
+  let postId = sessionStorage.getItem("postId");
+  let memberId = sessionStorage.getItem("memberId");
+
+  $.ajax({
+      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
+      contentType: 'application/json; charset=UTF-8',
+      type: 'get',  // get, post
+      cache: false, // 응답 결과 임시 저장 취소
+      async: true,  // true: 비동기 통신
+      dataType: 'json', // 응답 형식: json, html, xml...
+      //data: '',      // 데이터
+
+      success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
+
+        console.log(testData);
+        if(testData.memberId == memberId){
+          window.location.href = "./update.html";
+        } else{
+          alert("수정 권한이 없습니다");
+        }
+        },
+
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        alert('ajax야 힘내자'+ request +status + error);
+      },
+
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization","Bearer " + token);
+     }
+    });
+  
+
+      //window.location.href = "./update.html";
+    }  
+
+    //ajax 요청(글목록)
+    function view() {
+      var frm = $('#frmpost');
+      let postId = sessionStorage.getItem("postId");
+      let memberId = sessionStorage.getItem("memberId");
+      var params = '';  // 개발시 변경 부분
+      var msg = '';
+  
+      $.ajax({
+        url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
+        contentType: 'application/json; charset=UTF-8',
+        type: 'get',  // get, post
+        cache: false, // 응답 결과 임시 저장 취소
+        async: true,  // true: 비동기 통신
+        dataType: 'json', // 응답 형식: json, html, xml...
+        data: params,      // 데이터
+  
+        success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
+            
+          if (testData.postId > 0) { 
+  
+            console.log(testData)
+            //alert('내용  ㅇㅇ' +  testData.postGroupResponses[0].memberName);
+  
+            $('#day').empty();
+            $('#title').empty();       
+            $('#author').empty();
+            $('#photo').empty();       
+            $('#content').empty();
+            $('#result').empty();
+            $('.comment-date').empty();
+            $('.comment-content').empty();
+  
+            $("#title").append("<div>"+testData.postTitle+"</div>");
+            $("#author").append("<div>"+testData.memberName+"</div>");
+            $("#photo").append("<div><figure class='image'><img src=' " + testData.images[0] + " '/></figure></div>");
+            $("#content").append("<div style='white-space:pre;'>"+testData.postContent+"</div>");
+            $("#result").append("<div>"+testData.likes+"</div>");
+  
+            for(i=0; i<testData.comments.length; i++){
+             $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-date'>"+testData.comments[i].createDate.substring(0,10)+"\
+                                        </div><div class = 'comment-memberName'>"+testData.comments[i].memberName+"</div><div class = 'comment-content'>\
+                                        "+testData.comments[i].commentContent+"\
+                                         <input type = 'button' class='modifycomment'  value='수정' onclick='OpenmodifyComment(this.id)' id="+testData.comments[i].commentId +">\
+                                         <input type = 'button' class='deletecomment'  value='삭제' onclick='deleteComment(this.id)' id="+testData.comments[i].commentId +"></div>"); 
+            }
+  
+          
+  
+          } else {  
+            testData.postGroupResponses[0].postGroupId.value();
+  
+            alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
+          }
+        },
+  
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          alert('ajax야 힘내자'+ request +status + error);
+        }
+      });
+    }
+
+    //ajax 요청 (글삭제)
+
+    //debugger;     
+  function deletePost() {
+    let token = sessionStorage.getItem("token"); 
+    let postGroupId = sessionStorage.getItem("postGroupId");
+    let postId = sessionStorage.getItem("postId");
+
+    var confirm_val = confirm("삭제하시겠습니까?");
+    if (confirm_val == true) {
+    $.ajax({
+      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId+'/post/'+postId, // 개발시 변경 부분  
+      type: 'DELETE',  // get, post
+  
+      success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
+        
+          alert("게시글이 삭제되었습니다.");
+          window.location.href = "/view/Board/myblogDetail.html"
     
-// if(memberId=Id){
-//     document.getElementById("modify").style.display="block";
-// }else{
-//     document.getElementById("modify").style.display="none";
-// }
+        
+      },
 
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        //alert('ajax야 힘내자'+ request +status + error);
+        console.log('ajax야 힘내자'+ request +status + error);
+        alert("삭제 권한이 없습니다");
+      },
+
+beforeSend: function (xhr) {
+  xhr.setRequestHeader("Authorization","Bearer " + token);
+}
+    });
+  }else{
+    alert("취소하셨습니다.");
+    window.location.href = "/view/Board/read.html"
+  }
+  }

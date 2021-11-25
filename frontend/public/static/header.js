@@ -70,8 +70,17 @@ $('.logout').click(function () {
   window.location.href = '/index.html'; 
 }); 
 
+$('.toMain').click(function(e) {
+  sessionStorage.removeItem("page");
+})
+
+$('.toAbout').click(function(e) {
+  sessionStorage.removeItem("page");
+})
+
 $('.toPlan').click(function(e) {
   var token = sessionStorage.getItem("token");
+  sessionStorage.removeItem("page");   
   if ( !token ) {
   alert("로그인이 필요합니다");
   e.preventDefault();
@@ -81,9 +90,14 @@ $('.toPlan').click(function(e) {
 
 $('.toMyblog').click(function(e) {
   var token = sessionStorage.getItem("token");
+  sessionStorage.removeItem("page");   
   if ( !token ) {
   alert("로그인이 필요합니다");
   e.preventDefault();
   window.location.href = "/view/member/login.html";
   }
+})
+
+$('.toStory').click(function(e) {
+  sessionStorage.removeItem("page");
 })

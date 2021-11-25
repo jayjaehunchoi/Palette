@@ -54,7 +54,8 @@
 // 페이징 ajax
   function view01(j) {    
    var frm = $('#frmMyStoryGroup');
-  
+   sessionStorage.setItem("page", j);
+
       $.ajax({
         url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?page='+j, // 개발시 변경 부분
         contentType: 'application/json; charset=UTF-8',
