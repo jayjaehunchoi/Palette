@@ -59,11 +59,11 @@
          type: 'post',  // get, post
          cache: false, // 응답 결과 임시 저장 취소
          async: true,  // true: 비동기 통신
-         dataType: 'json', // 응답 형식: json, html, xml...
+         //dataType: 'json', // 응답 형식: json, html, xml...
          data: formData,      // 데이터
    
          success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-             
+          window.location.href = "/view/Board/myblogDetail.html"
            if (testData != null) { 
    
              console.log(testData);

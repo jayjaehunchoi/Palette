@@ -11,6 +11,7 @@ body{
         display: block; 
         margin: 0 auto; 
         color: #999; 
+        /* margin-bottom: 450px; */
 }
 
 /* profile */
@@ -186,10 +187,11 @@ input {
     column-count: 3;
     margin-left: 80px;
 }
- 
+
 .posting .inner{
     /* height : 343px;  */
-    width:28%;
+    /* width:28%; */
+    width:400px;
     background-color : white ;
     border: 2px solid rgba(232,230,230,0.99);
     margin: 20px;
@@ -204,6 +206,40 @@ margin-top: 20px;
 }
 
 .posting .inner a{
+    text-decoration: none;
+    color: black;
+}
+
+/* post_myblog */
+.posting_blog{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* flex-wrap -> 한줄에 들어가는 만큼 보여주고, 나머지는 다음줄로 넘겨준다 */
+    margin-top: -30px;
+    column-count: 3;
+   margin-left: -10px;
+} 
+
+.posting_blog .inner{
+    /* height : 343px;  */
+    /* width:28%; */
+    width:400px;
+    background-color : white ;
+    border: 2px solid rgba(232,230,230,0.99);
+    margin: 20px;
+    text-align: center;
+    align-items: center;
+    float:left;
+    /* border-radius: 10px; */
+}
+
+.posting_blog .inner .card-content{
+margin-top: 20px;
+}
+
+.posting_blog .inner a{
     text-decoration: none;
     color: black;
 }

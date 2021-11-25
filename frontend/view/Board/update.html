@@ -84,7 +84,7 @@
     }
 </script>
 
-<!-- ajax 요청 (글작성) -->
+<!-- ajax 요청 (글수정) -->
 <script type="text/javascript">   
   function modify() {
     var frm = $('#myblogDetailUpdate')[0];
@@ -135,6 +135,7 @@
         error: function(request, status, error) { // callback 함수
           //alert('ajax야 힘내자'+ request +status + error);
           console.log('ajax야 힘내자'+ request +status + error);
+          alert("수정 권한이 없습니다");
          },
 
         beforeSend: function (xhr) {

@@ -26,19 +26,19 @@ function view(){
 
         for(i=0; i < testData.storyLists.length; i++ ){
          // $("#card-image").append("<div><figure class='image'><img src=' " + testData.storyLists[i].thumbNailFullPath + " '/></figure></div>");
-          msg += '<div onclick="fnMyblogDetail(this.id);" id="' + testData.storyLists[i].postId + '">'
+         msg += '<div class="inner">'
+         msg += '<div onclick="fnMyblogDetail(this.id);" id="' + testData.storyLists[i].postId + '">'
           msg += '<figure class="image">'
           msg += '<img src='  
           msg +=  testData.storyLists[i].thumbNailFullPath 
-          msg += ' /></figure></div>';
+          msg += ' /></figure></div></div>';
           console.log(testData.storyLists[i].postId);
         }
         $('.card-image').html(msg);
 
-            } else {  
-              testData.storyLists[0].postGroupId.value();
-  
-              alert('내용 xx' + testData.storyLists[0].postGroupId.val());
+            } else {   
+              $('.card-image').empty();         
+              $('.card-image').append("<div class = 'notPost'>게시물이 존재하지 않습니다</div>");
             }
           },
   
@@ -52,9 +52,9 @@ function view(){
 //페이징 ajax
   function view01(j) {    
     var frm = $('#frmMyStoryGroup');
-  
+    let postGroupId = sessionStorage.getItem("postGroupId");
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/11?page='+j, // 개발시 변경 부분
+      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId+'?page='+j, // 개발시 변경 부분
       contentType: 'application/json; charset=UTF-8',
       type: 'get',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
@@ -64,12 +64,12 @@ function view(){
   
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
             
-        if (testData.postGroupResponses.length > 0) { 
+        if (testData.storyLists.length > 0) { 
   
           //div 초기화 
           $('#card-image').empty();       
   
-          for(i=0; i < testData.postGroupResponses.length; i++ ){
+          for(i=0; i < testData.storyLists.length; i++ ){
   
   
           }   
@@ -91,9 +91,9 @@ function view(){
   function page(){
   
     var pageCount;	
-
+    let postGroupId = sessionStorage.getItem("postGroupId");
       $.ajax({
-        url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/page/post',   
+        url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/page/post?postGroupId='+postGroupId,   
         type: 'GET',
         dataType: 'json',
         success: function(data){
