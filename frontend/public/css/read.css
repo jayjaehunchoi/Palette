@@ -73,6 +73,7 @@ body {
     display: block;
     background-color: white;
     border-color: transparent;
+    margin: 30px auto;
 }
 
 .like-content .btn-secondary.done {
@@ -94,11 +95,16 @@ body {
     margin-left: 5px;
 } 
 
- #result{
+#result{
   /* display: flex; */
     position: absolute;
     margin-left: 110px;
 }
+
+
+#result div {
+    margin-top: 20px;
+  }
 
 /* 댓글 */
 
@@ -139,10 +145,10 @@ position: relative;
     resize: none;
   }
   
-
+/* 
   div + div {
     margin-top: 20px;
-  }
+  } */
   
  .comments label {
     display: block;
@@ -153,10 +159,6 @@ position: relative;
     text-align: left;
     border-bottom: 2px solid rgba(232,230,230,0.99);
   }
-
-button{
-    margin: 30px auto;
-}
 
   .comment-row{
     border-bottom: 2px solid rgba(232,230,230,0.99);
@@ -201,3 +203,50 @@ button{
     background-color: black;
 }
  */
+
+ .modal {
+  display: none;
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+
+.modal .modalComment {
+  width:500px;
+  margin: -700px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:3px solid #333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal .modalBtn {
+	margin-top: 30px;
+	margin-left: 200px;
+	display: flex;
+}
+
+.modal .modalBtn button {
+  display:inline-block;
+  width:100px;
+	height: 40px;
+    background: #333;
+    color: white;
+	font-size: 14px;
+	font-weight: 700;
+	margin-left: 6px;
+}
+
+.modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+} 

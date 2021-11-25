@@ -86,9 +86,9 @@
                 }   
                //location.href='http://127.0.0.1:5500/ex/mystorypage%20copy%204.html?page='+j;
           } else {  
-            testData.postGroupResponses[0].postGroupId.value();
-  
-            alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
+            $('#card-content').empty(); 
+            $('#card-image').empty();
+            $('#card-image').append("<div>게시물이 존재하지 않습니다</div>");
           }
         },
   

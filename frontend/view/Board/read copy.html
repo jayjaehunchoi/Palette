@@ -8,7 +8,6 @@
 <script defer src = "/public/js/read.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script defer type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <!-- favicon -->
 <link rel="icon" href="/favicon.png" />
@@ -41,48 +40,14 @@
 <script type="text/javascript">   
   $(document).ready( function() {
     view();
-    like_btn();
   });
 </script>
 
 <!-- 수정페이지 -->
 <script type="text/javascript">
-  function modifyPost(){
-    let token = sessionStorage.getItem("token"); 
-    let postId = sessionStorage.getItem("postId");
-    let memberId = sessionStorage.getItem("memberId");
-
-    $.ajax({
-        url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
-        contentType: 'application/json; charset=UTF-8',
-        type: 'get',  // get, post
-        cache: false, // 응답 결과 임시 저장 취소
-        async: true,  // true: 비동기 통신
-        dataType: 'json', // 응답 형식: json, html, xml...
-        //data: '',      // 데이터
-  
-        success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-
-          console.log(testData);
-          if(testData.memberId == memberId){
-            window.location.href = "./update.html";
-          } else{
-            alert("수정 권한이 없습니다");
-          }
-          },
-  
-        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-        error: function(request, status, error) { // callback 함수
-          alert('ajax야 힘내자'+ request +status + error);
-        },
-
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authorization","Bearer " + token);
-       }
-      });
-    
-
-        //window.location.href = "./update.html";
+  function modifyPost(postId){
+        //sessionStorage.setItem("postId", postId);
+        window.location.href = "./update.html";
       }  
 </script>
 
@@ -92,7 +57,7 @@
   function view() {
     var frm = $('#frmpost');
     let postId = sessionStorage.getItem("postId");
-    let memberId = sessionStorage.getItem("memberId");
+
     var params = '';  // 개발시 변경 부분
     var msg = '';
 
@@ -122,6 +87,7 @@
           $('.comment-date').empty();
           $('.comment-content').empty();
 
+
           $("#title").append("<div>"+testData.postTitle+"</div>");
           $("#author").append("<div>"+testData.memberName+"</div>");
           $("#photo").append("<div><figure class='image'><img src=' " + testData.images[0] + " '/></figure></div>");
@@ -132,12 +98,9 @@
            $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-date'>"+testData.comments[i].createDate+"\
                                       </div><div class = 'comment-memberName'>"+testData.comments[i].memberName+"</div><div class = 'comment-content'>\
                                       "+testData.comments[i].commentContent+"\
-                                       <input type = 'button' class='modifycomment'  value='수정' onclick='OpenmodifyComment(this.id)' id="+testData.comments[i].commentId +">\
+                                       <input type = 'button' class='modifycomment'  value='수정' onclick='modifyComment(this.id)' id="+testData.comments[i].commentId +">\
                                        <input type = 'button' class='deletecomment'  value='삭제' onclick='deleteComment(this.id)' id="+testData.comments[i].commentId +"></div>"); 
           }
-
-        
-
         } else {  
           testData.postGroupResponses[0].postGroupId.value();
 
@@ -169,10 +132,7 @@
       type: 'DELETE',  // get, post
   
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-        if (confirm("삭제하시겠습니까?")) {
-          alert("게시글이 삭제되었습니다.");
-          window.location.href = "/view/Board/myblogDetail.html"
-      } 
+          
         
       },
 
@@ -263,9 +223,8 @@ beforeSend: function (xhr) {
         <input type="button" id="delete" value="삭제"  onclick="deletePost()">
 
         <!-- 좋아요 버튼-->  
- 
         <div class = "like-content">
-          <button class = "btn-secondary like-review" >
+          <button class = "btn-secondary like-review">
             <i class = "far fa-heart" aria-hidden = "true"></i> 
         <!-- aria-hidden 특정 상황에만 보여진다?? -->
           <span class="material-icons">
@@ -310,25 +269,6 @@ beforeSend: function (xhr) {
           </div>
   </div>
   </div>
-
-  <!-- modal -->
-
-  <div class="modal" id="commentModify">
-   
-    <div class="modalComment">
-      
-        <div class = "comment-row">
-          <textarea id = "new-comment2" name = "new_comment" row=5 placeholder="New Comment"></textarea>
-      </div> 
-
-        <div class="modalBtn">
-          <button type="button" class="modalModifyBtn" onclick = "modifyComment()">수정</button>
-          <button type="button" class="modalCloseBtn" onclick="closemodifyComment()">닫기</button>
-         </div>
-    </div>
-   
-    <div class="modal_layer"></div>
-</div>
 
     <!-- footer 연결 -->
     <div id="footers"></div>

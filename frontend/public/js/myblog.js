@@ -2,7 +2,7 @@
   var modal = document.querySelector("#t_space .modal"); 
   var btn = document.querySelector(".btn"); 
   var closeButton = document.querySelector("#t_space .close-button"); 
-  // var cancelButton = document.querySelector("#cancel");
+  var submit_btn = document.querySelector("#submit_btn");
     
   function toggleModal() { 
     modal.classList.toggle("show-modal"); 
@@ -20,8 +20,8 @@
   window.addEventListener("click", windowOnClick); 
     
   // var submitButton = document.querySelector("#submit");
-  //submit.addEventListener("click",toggleModal);
-    
+  submit_btn.addEventListener("click",reset);
+  
   function add_textbox(){
     document.getElementById("t_space").innerHTML += 
     "<div style = 'float:left'><div style = 'margin-left:30px'><div id='boxWrap'><p class='original'>등장</p></div>"
@@ -42,11 +42,11 @@
         cache: false, // 응답 결과 임시 저장 취소
         async: true,  // true: 비동기 통신
         dataType: 'json', // 응답 형식: json, html, xml...
-        data: '',      // 데이터
+        //data: '',      // 데이터
         
         success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-                  
-          if (testData.postGroupResponses.length > 0) { 
+                 console.log(testData.postGroupResponses);
+          if (testData.postGroupResponses != null) { 
         
             //div 초기화
             $('#card-image').empty();
@@ -71,15 +71,16 @@
     
         
             } else {  
-                testData.postGroupResponses[0].postGroupId.value();
-        
-                alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
-                }
+              $('#card-content').empty(); 
+              $('#card-image').empty();
+              $('#card-image').append("<div>게시물이 존재하지 않습니다</div>");
+                }  
               },
         
           // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
           error: function(request, status, error) { // callback 함수
-            alert('ajax야 힘내자'+ request +status + error);
+            //alert('ajax야 힘내자'+ request +status + error);
+            alert('로그인이 필요합니다.');
           },
 
           beforeSend: function (xhr) {
@@ -108,7 +109,7 @@
       console.log(Thumbnail[0].files[0]);
       formData.append('file',Thumbnail[0].files[0]);
       formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
-   
+
       $.ajax({
          url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup', // 개발시 변경 부분
          contentType: false,
@@ -117,36 +118,35 @@
          type: 'post',  // get, post
          cache: false, // 응답 결과 임시 저장 취소
          async: true,  // true: 비동기 통신
-         dataType: 'json', // 응답 형식: json, html, xml...
+        // dataType: 'json', // 응답 형식: json, html, xml...
          data: formData,      // 데이터
    
          success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-             
+         window.location.href = '/view/Board/myblog.html'; 
+          //view();
+         // toggleModal();
+          
            if (testData != null) { 
    
              console.log(testData);
    
-           } else {  
-            // alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
-           }
-        
-          //  let postGroupId = JSON.parse(testData).postGroupId;
-
-          //  if (window.sessionStorage) { 
-          //    sessionStorage.setItem('postGroupId', postGroupId);
-          //  }
+           } 
+          //window.location.href = '/myblog.html'; 
+          //toggleModal();
         },
    
         // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
         error: function(request, status, error) { // callback 함수
           //alert('ajax야 힘내자'+ request +status + error);
           console.log('ajax야 힘내자'+ request +status + error);
+          alert('입력 정보를 확인하세요');
          },
 
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization","Bearer " + token);
        }
       });
+    // }
   }
    
 // 페이징 ajax 

@@ -11,7 +11,7 @@
 
 <!-- favicon -->
 <link rel="icon" href="/favicon.png" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -44,10 +44,6 @@
 <!-- 페이지 이동 -->
 <script type="text/javascript">
 function fnMyblogDetail(postGroupId){
-      // window.open('myblogDetail.html','fnMyblogDetail');
-      // document.frmMyBlogGroup.target="";
-      // document.frmMyBlogGroup.action = "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/postgroup/2";
-      // document.frmMyBlogGroup.submit();
       sessionStorage.setItem("postGroupId", postGroupId);
       window.location.href = "./myblogDetail.html";
     }
@@ -76,10 +72,13 @@ function fnMyblogDetail(postGroupId){
       type: 'DELETE',  // get, post
   
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-          
+        if (confirm("삭제하시겠습니까?")) {
+          alert("게시글이 삭제되었습니다.");
+          view();
+      } 
+ 
         if (testData != null) { 
 
-          //alert('내용  ㅇㅇ' +  testData.postGroupResponses[0].memberName);
           console.log(testData);
 
         } else {  
@@ -111,12 +110,13 @@ beforeSend: function (xhr) {
 <div id="headers"></div>
 
 <div class="container">
+
   <div class="user_id" name = "member_id" id="member_id">
-    @아이디
+    
   </div>
 
-<div class="container">
-  <section class = "posting">
+
+  <section class = "posting_blog">
 
     <div class="card">
       <form id="frmMyStoryGroup" name="frmMyStoryGroup">
@@ -139,19 +139,20 @@ beforeSend: function (xhr) {
 
         <div class = 'fnMyblogDetail'>
           <div id="card-image" name="card-image" class="card-image">
-            <figure class="image"><img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" alt=""></figure>
+            <figure class="image">
+              <!-- <img src="" alt=""> -->
+            </figure>
           </div>
   
           <div class="card-content" id="card-content" name="card-content">
             <div class="content">
-              <h5 name="title">롯데월드</h5>
-              <h5 name="period">21.11.04~21.11.04</h5>
-              <h5 name="location">서울</h5>   
-              <p class="page_meta"><span class="author">By 작성자</span></p>  
+              <h5 name="title"></h5>
+              <h5 name="period"></h5>
+              <h5 name="location"></h5>   
+              <p class="page_meta"><span class="author"></span></p>  
             </div>
           </div>
         </div>
-
         <input type="button" class="modify" id="modify" style="display: none;" value="수정" onclick="modifyPost(postGroupId)" >
         <input type="button" class="delete" id="delete" style="display: none;" value="삭제" onclick="deletePost(postGroupId)">
 
@@ -183,11 +184,11 @@ beforeSend: function (xhr) {
             <input type="date" id = "startDate" name="startDate" placeholder="여행 시작 날짜" required="required"> 
             <input type="date" id = "endDate" name="endDate" placeholder="여행 종료 날짜" required="required"> 
             <label>제목</label> 
-            <input type="text" id = "title" name="title" placeholder="제목을 입력하세요" required="required">
+            <input type="text" id = "title" name="title" maxlength="20" placeholder="제목을 입력하세요(최대 20자)" required="required">
             <label>지역</label> 
             <!-- <form> -->
                 <select name="region" id = "region" name = "region" required="required" >
-                  <option value="none">=== 선택 ===</option>
+                  <option value="">=== 선택 ===</option>
                   <option value="서울">서울</option>
                   <option value="경기">경기</option>
                   <option value="인천">인천</option>
