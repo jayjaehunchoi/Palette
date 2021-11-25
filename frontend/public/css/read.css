@@ -66,7 +66,7 @@ body {
     /* margin-right: 0px; */
     position: absolute;
     margin-left: 70px;
-    margin-top: -15px;
+    margin-top: -35px;
 }
 
 .like-content .btn-secondary{
@@ -102,14 +102,15 @@ body {
 }
 
 
-#result div {
+/* #result div  {
     margin-top: 20px;
-  }
+} */
 
 /* 댓글 */
 
 #comments{
-margin: 50px;
+margin: 40px;
+margin-left: 50px;
 border: 2px solid rgba(232,230,230,0.99);
 position: relative;
 }
@@ -145,8 +146,8 @@ position: relative;
     resize: none;
   }
   
-/* 
-  div + div {
+
+  /* div + div {
     margin-top: 20px;
   } */
   

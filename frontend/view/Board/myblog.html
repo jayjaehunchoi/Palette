@@ -18,7 +18,7 @@
 <!-- 공통 css -->
 <link rel = "stylesheet" href="/public/css/story.css">
 
-<title>MYBLOG</title>
+<title>Palette.</title>
 
   <!-- header jquery -->
   <script type="text/javascript">   
@@ -57,52 +57,6 @@ function fnMyblogDetail(postGroupId){
       }
   </script>
 
-
-
-<!-- ajax 요청 (글삭제) -->
-<script type="text/javascript">   
-  
-  //debugger;     
-  function deletePost(postGroupId) {
-    let token = sessionStorage.getItem("token"); 
-    sessionStorage.setItem("postGroupId", postGroupId);
-
-    $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분  
-      type: 'DELETE',  // get, post
-  
-      success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-        if (confirm("삭제하시겠습니까?")) {
-          alert("게시글이 삭제되었습니다.");
-          view();
-      } 
- 
-        if (testData != null) { 
-
-          console.log(testData);
-
-        } else {  
-          //testData.postGroupResponses[0].postGroupId.value();
-
-         // alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
-        }
-      },
-
-      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-      error: function(request, status, error) { // callback 함수
-        //alert('ajax야 힘내자'+ request +status + error);
-        console.log('ajax야 힘내자'+ request +status + error);
-      },
-
-beforeSend: function (xhr) {
-  xhr.setRequestHeader("Authorization","Bearer " + token);
-}
-    });
-  }
-
-</script>
-
-
 </head>
 
 <body>
@@ -116,7 +70,7 @@ beforeSend: function (xhr) {
   </div>
 
 
-  <section class = "posting_blog">
+  <section class = "posting">
 
     <div class="card">
       <form id="frmMyStoryGroup" name="frmMyStoryGroup">

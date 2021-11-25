@@ -20,6 +20,7 @@ $('.loginBt').click(function () {
         if (window.sessionStorage) { 
           sessionStorage.setItem('token', token);
           sessionStorage.setItem('memberId', memberId);
+          sessionStorage.setItem('userName', userName);
           alert(userName + "님 환영합니다.");
           window.location.href = '/index.html';
         }

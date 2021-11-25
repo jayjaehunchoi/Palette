@@ -27,13 +27,15 @@
     "<div style = 'float:left'><div style = 'margin-left:30px'><div id='boxWrap'><p class='original'>등장</p></div>"
    }
 
-//ajax 요청 (목록 출력)
+//ajax 요청 (글 목록)
 
   function view() {
 
     var frm = $('#frmMyStoryGroup');
         
     var token = sessionStorage.getItem("token");
+    let userName = sessionStorage.getItem("userName");
+
         
        $.ajax({
         url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/my', // 개발시 변경 부분
@@ -53,7 +55,7 @@
             $('#card-content').empty();       
             $('#member_id').empty();
         
-            $("#member_id").append("<div>"+testData.postGroupResponses[0].memberName+"`s STORY </div>");
+            $("#member_id").append("<div>"+userName+"`s STORY </div>");
         
               for(i=0; i < testData.postGroupResponses.length; i++ ){
         
@@ -73,6 +75,7 @@
             } else {  
               $('#card-content').empty(); 
               $('#card-image').empty();
+              $("#member_id").append("<div>"+userName+"`s STORY </div>");
               $('#card-image').append("<div>게시물이 존재하지 않습니다</div>");
                 }  
               },
@@ -154,6 +157,7 @@
 function view01(j) {    
   var frm = $('#frmMyStoryGroup');
   let memberId = sessionStorage.getItem("memberId");
+  sessionStorage.setItem("page", j);
 
   $.ajax({
     url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/?memberId='+memberId+'&page='+j, // 개발시 변경 부분
@@ -224,3 +228,50 @@ function page(){
 
            return pageCount;
       }
+
+      //ajax 요청 (글삭제)
+      //debugger;     
+  function deletePost(postGroupId) {
+    let token = sessionStorage.getItem("token"); 
+    sessionStorage.setItem("postGroupId", postGroupId);
+
+    var confirm_val = confirm("삭제하시겠습니까?");
+    if (confirm_val == true) {
+    $.ajax({
+      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분  
+      type: 'DELETE',  // get, post
+  
+      success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
+        
+          alert("게시글이 삭제되었습니다.");
+          view();
+      
+ 
+        if (testData != null) { 
+
+          console.log(testData);
+
+        } else {  
+          //testData.postGroupResponses[0].postGroupId.value();
+
+         // alert('내용 xx' + testData.postGroupResponses[0].postGroupId.val());
+        }
+      },
+
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        //alert('ajax야 힘내자'+ request +status + error);
+        console.log('ajax야 힘내자'+ request +status + error);
+      },
+
+beforeSend: function (xhr) {
+  xhr.setRequestHeader("Authorization","Bearer " + token);
+}
+    });
+  }else{
+    alert("취소하셨습니다.");
+    view();
+  }
+  }
+
+ 

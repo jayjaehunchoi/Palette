@@ -11,6 +11,16 @@ body{
         display: block; 
         margin: 0 auto; 
         color: #999; 
+        min-height:500px;
+}
+
+.title{
+    display: flex;
+    justify-content: flex-start;
+    margin: 50px;
+    /* text-align: left; */
+    margin-top: 160px;
+    margin-left: 100px;
 }
 
 /* 추가하기 button */
@@ -49,7 +59,7 @@ body{
     justify-content: center;
     flex-wrap: wrap;
     /* flex-wrap -> 한줄에 들어가는 만큼 보여주고, 나머지는 다음줄로 넘겨준다 */
-    margin-top: 120px;
+    /* margin-top: 120px; */
     column-count: 3;
     margin-left: 200px;
 }
