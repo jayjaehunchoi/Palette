@@ -20,7 +20,6 @@ body{
     display: flex;
     justify-content: flex-start;
     margin: 50px;
-    /* text-align: left; */
     margin-top: 160px;
     margin-left: 100px;
 }
@@ -29,7 +28,6 @@ body{
     display: flex;
     justify-content: flex-start;
     margin: 50px;
-    /* text-align: left; */
     margin-top: 160px;
     margin-left: 100px;
 }
@@ -39,14 +37,17 @@ body{
     font-family: 'Oswald', sans-serif; 
     font-size: 30px; 
     color: #216182; 
-  
+    text-align: center;
 }  
 
 .modal-content label { 
     display: block; 
     margin-top: 20px; 
     letter-spacing: 2px; 
+    text-align: center;
+    margin-bottom: 5px;
 } 
+
 .modal-content form { 
     margin: 0 auto; 
     width: 459px; 
@@ -62,9 +63,11 @@ input {
     font-size: 0.9em; 
     color: #3a3a3a; 
 } 
-/* input:focus{ 
-        border: 1px solid #97d6eb; 
-    }  */
+
+select {
+    margin-left: 175px;
+    margin-top:10px;
+}
 
 #submit_btn{ 
     width: 127px; 
@@ -73,6 +76,8 @@ input {
     border: none; 
     margin-top: 20px; 
     cursor: pointer; 
+    margin-left: 25px;
+    margin-right: -20px;
 } 
 #submit_btn:hover{ 
     color: #fff; 
@@ -85,6 +90,8 @@ input {
     border: none; 
     margin-top: 20px; 
     cursor: pointer; 
+    margin-left: 25px;
+    margin-right: -20px;
 } 
 #cancel:hover{ 
     color: #fff; 
@@ -99,6 +106,8 @@ input {
     border: none; 
     margin-top: 20px; 
     cursor: pointer; 
+    margin-left: 25px;
+    margin-right: -20px;
 } 
 #reset:hover{ 
     color: #fff; 
@@ -174,7 +183,6 @@ input {
     display: block;
     height:200px;
     width:100%;
-    /* border-radius: 10px; */
 }
 
 .posting{
@@ -189,8 +197,6 @@ input {
 }
 
 .posting .inner{
-    /* height : 343px;  */
-    /* width:28%; */
     width:400px;
     background-color : white ;
     border: 2px solid rgba(232,230,230,0.99);
@@ -198,7 +204,6 @@ input {
     text-align: center;
     align-items: center;
     float:left;
-    /* border-radius: 10px; */
 }
 
 .posting .inner .card-content{
@@ -210,46 +215,26 @@ margin-top: 20px;
     color: black;
 }
 
-/* post_myblog */
-/* .posting_blog{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: -30px;
-    column-count: 3;
-   margin-left: -10px;
-} 
-
-.posting_blog .inner{
-    width:400px;
-    background-color : white ;
-    border: 2px solid rgba(232,230,230,0.99);
-    margin: 20px;
-    text-align: center;
-    align-items: center;
-    float:left;
-}
-
-.posting_blog .inner .card-content{
-margin-top: 20px;
-}
-
-.posting_blog .inner a{
-    text-decoration: none;
-    color: black;
-} */
-
 .modify,
 .delete {
     margin-top: 30px;
     margin-bottom: 10px;
-    justify-content: left;
-    background: #333;
-    color: white;
-    width :50px;
-    height:30px;
+    width:70px;
+    height:42px;
+    background-color: black;
+    color:#fff;
+    border : 2px solid #fff;
+    border-radius: 10px; 
+    justify-content: center;
+    align-items: center;
 }
+
+.notPost{
+    font-size: 30px;
+    margin-top : 100px;
+    margin-bottom: 100px;
+}
+
 
 /* 페이징 */
 .paginate{
