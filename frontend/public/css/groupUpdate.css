@@ -19,9 +19,9 @@ body{
 .container .inner h1{ 
     font-family: 'Oswald', sans-serif; 
     font-size: 30px; 
-    color: #216182; 
+    color: #747474; 
     margin-bottom: 20px;
-    margin-left: 150px;
+    margin-left: 165px;
 }  
 
 .container .inner label { 
@@ -42,7 +42,7 @@ form {
     border-radius: 6px; 
     border: 1px solid #dedede; 
     padding: 10px; 
-    margin-top: 20px; 
+    margin-top: 10px; 
     font-size: 0.9em; 
     color: #3a3a3a; 
 } 
@@ -60,7 +60,7 @@ input:focus{
 } 
 #submit_btn:hover{ 
     color: #fff; 
-    background-color: #216282; 
+    background-color: black; 
     opacity: 0.9; 
 } 
 #cancel { 
@@ -72,7 +72,7 @@ input:focus{
 } 
 #cancel:hover{ 
     color: #fff; 
-    background-color: #216282; 
+    background-color: black; 
     opacity: 0.9; 
 }
 

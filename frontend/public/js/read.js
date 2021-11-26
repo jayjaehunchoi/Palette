@@ -6,7 +6,7 @@ $(".like-content .btn-secondary").click(function() {
   if(token != null){
     $(this).toggleClass("done");
   }else{
-    alert("로그인이 필요합니다");
+    alert("로그인이 필요합니다.");
     window.location.href = '/view/member/login.html';
   }
 
@@ -69,10 +69,10 @@ function submitComment(){
     success:function(data){
       console.log(data);
       window.location.href = '/view/Board/read.html';
-      alert('등록되었습니다');
+      alert('등록되었습니다.');
     },
     error:function(e){
-      alert("로그인이 필요합니다");
+      alert("로그인이 필요합니다.");
       window.location.href = '/view/member/login.html';
       console.log("error : ", e);
     },
@@ -98,7 +98,7 @@ function modifyComment() {
     success:function(data){
       console.log(data);
       window.location.href = '/view/Board/read.html';
-      alert('수정되었습니다');
+      alert('수정되었습니다.');
     },
     error:function(e){
       console.log("error : ", e);
@@ -120,7 +120,7 @@ function OpenmodifyComment(commentId){
   var comment = $('#new-comment2').val();
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment', // 개발시 변경 부분
+    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment?id='+(commentId-1), // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -143,13 +143,20 @@ function OpenmodifyComment(commentId){
       document.getElementById("commentModify").style.display="block";
         $('#new-comment2').val(data.commentContent);
     }else{
-      alert("수정 권한이 없습니다");
+      alert("수정 권한이 없습니다.");
     }
+
+    var div = $('#commentModify');
+    div.css("position", "absolute");
+    div.css("top", Math.max(0, (($(window).height() - div.outerHeight()) / 2) + $(window).scrollTop()) + "px");
+    div.css("left", Math.max(0, (($(window).width() - div.outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    
+
     },
   
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      alert('ajax야 힘내자'+ request +status + error);
+      // alert('ajax야 힘내자'+ request +status + error);
     },
 
     beforeSend: function (xhr) {
@@ -182,8 +189,8 @@ function deleteComment(commentId) {
       }, 
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        console.log('ajax야 힘내자'+ request +status + error);
-        alert("삭제 권한이 없습니다");
+        // console.log('ajax야 힘내자'+ request +status + error);
+        alert("삭제 권한이 없습니다.");
       },
       beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization","Bearer " + token);
@@ -217,13 +224,13 @@ function modifyPost(){
         if(testData.memberId == memberId){
           window.location.href = "./update.html";
         } else{
-          alert("수정 권한이 없습니다");
+          alert("수정 권한이 없습니다.");
         }
         },
 
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('ajax야 힘내자'+ request +status + error);
+        // alert('ajax야 힘내자'+ request +status + error);
       },
 
       beforeSend: function (xhr) {
@@ -283,7 +290,7 @@ function view() {
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('ajax야 힘내자'+ request +status + error);
+        // alert('ajax야 힘내자'+ request +status + error);
       }
   });
 }
@@ -308,7 +315,7 @@ function deletePost() {
       error: function(request, status, error) { // callback 함수
         //alert('ajax야 힘내자'+ request +status + error);
         console.log('ajax야 힘내자'+ request +status + error);
-        alert("삭제 권한이 없습니다");
+        alert("삭제 권한이 없습니다.");
       },
       beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization","Bearer " + token);
@@ -318,4 +325,80 @@ function deletePost() {
     alert("취소하셨습니다.");
     window.location.href = "/view/Board/read.html"
   }
+}
+
+// 댓글 더보기 ??
+function commentView() {
+  var frm = $('#frmpost');
+  let postId = sessionStorage.getItem("postId");
+  let memberId = sessionStorage.getItem("memberId");
+  var params = '';  // 개발시 변경 부분
+  var msg = '';
+  
+  var commentid = 0;
+ 
+  $.ajax({
+    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment?id='+commentid, // 개발시 변경 부분
+    contentType: 'application/json; charset=UTF-8',
+    type: 'get',  // get, post
+    cache: false, // 응답 결과 임시 저장 취소
+    async: true,  // true: 비동기 통신
+    dataType: 'json', // 응답 형식: json, html, xml...
+    data: params,      // 데이터
+    success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
+      console.log(Data) 
+
+      for(j=0; j<Data.commentResponses.length; j++){
+        var commentid = Data.commentResponses[j].commentId;
+        console.log(Data.commentResponses[j].commentId);
+      }
+      console.log(commentid);
+      sessionStorage.setItem("commentid", commentid);
+    },
+    // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        // alert('ajax야 힘내자'+ request +status + error);
+      }
+  });
+}
+
+function commentView01() {
+  var frm = $('#frmpost');
+  let postId = sessionStorage.getItem("postId");
+  let memberId = sessionStorage.getItem("memberId");
+  let commentid = sessionStorage.getItem("commentid");
+  var params = '';  // 개발시 변경 부분
+  var msg = '';
+  
+ 
+  $.ajax({
+    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment?id='+commentid, // 개발시 변경 부분
+    contentType: 'application/json; charset=UTF-8',
+    type: 'get',  // get, post
+    cache: false, // 응답 결과 임시 저장 취소
+    async: true,  // true: 비동기 통신
+    dataType: 'json', // 응답 형식: json, html, xml...
+    data: params,      // 데이터
+    success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
+      console.log(Data) 
+
+      for(j=0; j<Data.commentResponses.length; j++){
+        var commentid = Data.commentResponses[j].commentId;
+        console.log(Data.commentResponses[j].commentId);
+      }
+      console.log(commentid);
+      sessionStorage.setItem("commentid", commentid);
+      for(i=0; i<Data.commentResponses.length; i++){
+      $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-memberName'>"+Data.commentResponses[i].memberName+"\
+                                        </div><div class = 'comment-date'>"+Data.commentResponses[i].createDate.substring(0,10)+"</div><div class = 'comment-content'>\
+                                        "+Data.commentResponses[i].commentContent+"</div>\
+                                         <input type = 'button' class='modifycomment'  value='수정' onclick='OpenmodifyComment(this.id)' id="+Data.commentResponses[i].commentId +">\
+                                         <input type = 'button' class='deletecomment'  value='삭제' onclick='deleteComment(this.id)' id="+Data.commentResponses[i].commentId +"></div>"); 
+      }
+    },
+    // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        alert('마지막 댓글입니다.');
+      }
+  });
 }

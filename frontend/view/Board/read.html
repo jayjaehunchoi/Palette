@@ -43,6 +43,7 @@
   $(document).ready( function() {
     view();
     like_btn();
+    commentView();
   });
 </script>
 
@@ -114,18 +115,19 @@
       </div>              
            
       <div class = "comment-row0"></div>
-
+      <input type="button" id="more_btn" class = "more_btn" value="MORE" onclick="commentView01()"/>
+    </div>              
     </div>
   </div>
 </div>
 
 <!-- modal -->
 <div class="modal" id="commentModify">
-  <div class="modalComment">
+  <div class="modalComment" id = "modalComment">
       
     <div class = "modalComment-row">
       <div class = "commentModifytitle">댓글 수정</div>
-      <textarea id = "new-comment2" name = "new_comment" row=5 placeholder="New Comment"></textarea>
+      <textarea id = "new-comment2" name = "new_comment" maxlength="120" row=5 placeholder="New Comment"></textarea>
     </div> 
 
     <div class="modalBtn">

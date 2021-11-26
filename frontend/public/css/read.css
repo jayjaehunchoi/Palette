@@ -178,6 +178,14 @@ position: relative;
     height:30px;
 }
 
+.more_btn {
+    background-color:transparent;
+    border:0px transparent solid;
+    font-size: 15px;
+    width:1000px;
+    height: 30px;
+}
+
 .comment-row0 {
     margin-top: 10px;
 }
@@ -189,6 +197,7 @@ position: relative;
     text-align: left;
     margin-left: 50px;
     margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .comment-row0  .comment-date{
@@ -196,16 +205,17 @@ position: relative;
     text-align: left;
     margin-left: 100px;
     margin-top: 20px;
+    color: #747474;
 }
 
 .comment-row0 .comment-content{
     display: flex;
-    /* justify-content: flex-start; */
     white-space: pre-line;
     margin-bottom: 30px;
     margin-left: 50px;
     margin-top: 20px;
     text-align: left;
+    width: 800px;
 }
 
 .deletecomment{
@@ -246,13 +256,15 @@ position: relative;
 
 .modal .modalComment {
   width:500px;
-  margin: -300px auto;
+  /* margin: -300px auto; */
   padding:20px 10px;
   background:#fff;
   border:3px solid #333;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 33%;
+
 }
 
 .modal .modalComment .commentModifytitle{
@@ -261,8 +273,13 @@ position: relative;
     font-weight: 700;
 }
 
+#new-comment2{
+    width: 390px;
+    margin-top:15px;
+}
+
 .modal .modalBtn {
-	margin-top: 30px;
+	margin-top: 25px;
 	margin-left: 200px;
 	display: flex;
 }
