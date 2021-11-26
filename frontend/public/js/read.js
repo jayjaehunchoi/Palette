@@ -267,10 +267,10 @@ function view() {
             $("#photo").append("<div><figure class='image'><img src=' " + testData.images[0] + " '/></figure></div>");
             $("#content").append("<div style='white-space:pre;'>"+testData.postContent+"</div>");
             $("#result").append("<div>"+testData.likes+"</div>");
-  
+            
             for(i=0; i<testData.comments.length; i++){
-             $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-date'> 작성일자 : "+testData.comments[i].createDate.substring(0,10)+"\
-                                        </div><div class = 'comment-memberName'> 작성자 : "+testData.comments[i].memberName+"</div><div class = 'comment-content'>\
+             $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-memberName'>"+testData.comments[i].memberName+"\
+                                        </div><div class = 'comment-date'>"+testData.comments[i].createDate.substring(0,10)+"</div><div class = 'comment-content'>\
                                         "+testData.comments[i].commentContent+"</div>\
                                          <input type = 'button' class='modifycomment'  value='수정' onclick='OpenmodifyComment(this.id)' id="+testData.comments[i].commentId +">\
                                          <input type = 'button' class='deletecomment'  value='삭제' onclick='deleteComment(this.id)' id="+testData.comments[i].commentId +"></div>"); 
