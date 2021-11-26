@@ -7,17 +7,20 @@ body{
 }
 
 .container{
-        text-align: center; 
-        display: block; 
-        margin: 0 auto; 
-        color: #999; 
-        min-height:500px;
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 700px;
 }
+.card{
+    width: 1100px;
+}
+
 .List{
     display: flex;
     justify-content: flex-start;
     margin-top: 160px;
-    margin-left: 100px;   
+    margin-left: 20px;   
     width:100px;
     height:42px;
     background-color: black;
@@ -31,8 +34,9 @@ body{
 .title{
     display: flex;
     justify-content: flex-start;
-    margin-top: 20px;
-    margin-left: 100px;
+    margin: 20px;
+    font-size: 18px;
+    color:#999;
 }
 
 /* 추가하기 button */
@@ -60,54 +64,44 @@ body{
     width:100%;
 }
 
-.card{
-    margin-left: -200px;
-}
-
 .posting{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     /* flex-wrap -> 한줄에 들어가는 만큼 보여주고, 나머지는 다음줄로 넘겨준다 */
-    column-count: 3;
-    margin-left: 200px;
+    /* margin-top: -30px; */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
 }
  
 .posting .inner{
-    width:400px;
+    width:30%;
     background-color : white ;
     border: 2px solid rgba(232,230,230,0.99);
-    margin: 10px;
+    margin: 15px;
     text-align: center;
     align-items: center;
     float:left;
+    box-sizing: border-box;
 }
 
 .posting .inner .card-content{
 margin-top: 20px;
 }
 
-.posting .inner a{
-    text-decoration: none;
-    color: black;
-}
-
-
-#modify,
-#delete {
-    margin-top: 50px;
-    justify-content: left;
-    background: #333;
-    color: white;
-    width :50px;
-    height:30px;
+.card-image .material-icons{
+    margin: 518px;
+    margin-top : 100px;
+    margin-bottom: 10px;
+    font-size: 65px;
 }
 
 .notPost{
-    font-size: 30px;
-    margin-top : 100px;
-    margin-bottom: 100px;
+    font-size: 20px;
+    margin-top : 10px;
+    text-align: center;
 }
 
 /* 페이징 */
@@ -143,12 +137,16 @@ margin-top: 20px;
 }
 
 .paginate_num{
+    display: flex;
+    justify-content: center;
     background-color: white;
     border-color: transparent;
     width:10px;
     font-size: 15px ;
     text-align :center;
     color:#5D5D5D;
+    margin: 0;
+    padding:8px
 }
 
 .paginate_num:hover{

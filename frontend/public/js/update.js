@@ -27,7 +27,7 @@ function view() {
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      alert('ajax야 힘내자'+ request +status + error);
+      // alert('ajax야 힘내자'+ request +status + error);
     },
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);
@@ -60,7 +60,7 @@ function modify() {
       data: JSON.stringify(params),      // 데이터
    
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-        alert("수정이 완료되었습니다");  
+        alert("수정이 완료되었습니다.");  
         window.location.href = '/view/Board/myblogDetail.html'; 
         if (testData != null) {    
           console.log(testData);   
@@ -70,7 +70,7 @@ function modify() {
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('입력 정보를 확인하세요(제목 20자, 글 150자 이내)');
+        alert('입력 정보를 확인하세요.(제목 20자, 글 150자 이내)');
         console.log('ajax야 힘내자'+ request +status + error);
       },
       beforeSend: function (xhr) {

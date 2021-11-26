@@ -52,7 +52,7 @@ $.ajax({
       $('#card-content').empty();       
       $('#member_id').empty();
       
-      $("#member_id").append("<div>"+userName+"`s STORY </div>");
+      $("#member_id").append("<div>"+userName+"`s Story </div>");
       
       for(i=0; i < testData.postGroupResponses.length; i++ ){
       
@@ -72,7 +72,7 @@ $.ajax({
         $('#card-content').empty(); 
         $('#card-image').empty();
         $("#member_id").append("<div>"+userName+"`s STORY </div>");
-        $('#card-image').append("<div class = 'notPost'>게시물이 존재하지 않습니다</div>");
+        $('#card-image').append("<div class='material-icons'>error_outline</div><div class = 'notPost'>게시물이 존재하지 않습니다.</div>");
     }  
   },
       
@@ -131,7 +131,7 @@ $.ajax({
   // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
   error: function(request, status, error) { // callback 함수
     console.log('ajax야 힘내자'+ request +status + error);
-    alert('입력 정보를 확인하세요');
+    alert('입력 정보를 확인하세요.');
   },
 
   beforeSend: function (xhr) {

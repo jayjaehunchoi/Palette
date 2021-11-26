@@ -36,13 +36,13 @@ function view(){
       } else {  
              
         $('.card-image').empty();         
-        $('.card-image').append("<div class = 'notPost'>게시물이 존재하지 않습니다</div>");
-             
+        $('.card-image').append("<div class='material-icons'>error_outline</div><div class = 'notPost'>게시물이 존재하지 않습니다.</div>");
+        
       }
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('ajax야 힘내자'+ request +status + error);
+        // alert('ajax야 힘내자'+ request +status + error);
       }
   });
 }
@@ -153,7 +153,7 @@ function view02(){
   
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('ajax야 힘내자'+ request +status + error);
+        // alert('ajax야 힘내자'+ request +status + error);
       }
     });
   }else{
@@ -179,7 +179,7 @@ function view02(){
       },  
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('ajax야 힘내자'+ request +status + error);
+        // alert('ajax야 힘내자'+ request +status + error);
       }
     });
   }

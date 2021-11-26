@@ -48,7 +48,7 @@
             <div class="inner">
                 <h1 class="title"> 여행 일정 </h1>
                 <form name = "frmmodifymyblog" id = "frmmodifymyblog" enctype = "multipart/form-data"> 
-                    <label for="date">DATE</label> 
+                    <label for="date">날짜</label> 
                     <!-- required="required" 필수 입력 필드를 지정하는 속성 -->
                     <input type="date" id = "startDate" name="date" placeholder="여행 시작 날짜" required="required"> 
                     <input type="date" id = "endDate" name="date" placeholder="여행 종료 날짜" required="required"> 
@@ -69,6 +69,7 @@
                           <option value="제주">제주</option>
                         </select>
 
+                    <label>섬네일</label> 
                     <input type = "file" id = "Thumbnail" name = "Thumbnail" accept="image/*" required="required" >
                     
                     <input type="button" id="cancel" value="취소" onclick="window.location.href = '/view/Board/myblog.html';"> 

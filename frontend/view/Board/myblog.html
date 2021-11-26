@@ -14,7 +14,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- Material-icons -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 <!-- 공통 css -->
 <link rel = "stylesheet" href="/public/css/story.css">
 
@@ -133,7 +137,7 @@ function fnMyblogDetail(postGroupId){
            <input type="hidden" id="memberName" name="memberName" value=""/>
            <input type="hidden" id="memberId" name="memberId" value="" />
            
-            <label for="date">DATE</label> 
+            <label for="date">날짜</label> 
             <!-- required="required" 필수 입력 필드를 지정하는 속성 -->
             <input type="date" id = "startDate" name="startDate" placeholder="여행 시작 날짜" required="required"> 
             <input type="date" id = "endDate" name="endDate" placeholder="여행 종료 날짜" required="required"> 
@@ -154,7 +158,7 @@ function fnMyblogDetail(postGroupId){
                   <option value="제주">제주</option>
                 </select>
             <!-- </form> -->
-            <label>썸네일</label> 
+            <label>섬네일</label> 
             <input type = "file" id = "Thumbnail" name = "Thumbnail" accept="image/*" required="required">
             
             <input type="button" id="cancel" value="취소"> 
@@ -167,7 +171,7 @@ function fnMyblogDetail(postGroupId){
 </div>
 </div>
 
-<div class="paginate sub_last" ></div> 
+<div class="paginate" ></div> 
      <!-- footer 연결 -->
      <div id="footers"></div>
      

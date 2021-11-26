@@ -87,7 +87,7 @@ function modify() {
     data: formData,      // 데이터
 
     success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-      alert("수정이 완료되었습니다");  
+      alert("수정이 완료되었습니다.");  
       window.location.href = '/view/Board/myblog.html'; 
           
       if (testData != null) { 
@@ -105,6 +105,7 @@ function modify() {
     error: function(request, status, error) { // callback 함수
       console.log('ajax야 힘내자'+ request +status + error);
       console.log(formData);
+      alert("입력 정보를 확인하세요.")
     }
   });
 }
