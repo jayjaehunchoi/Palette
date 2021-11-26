@@ -21,18 +21,19 @@
 
 <title>Palette.</title>
 
-   <!-- header jquery -->
-   <script type="text/javascript">   
-    $(document).ready( function() {
+<!-- header jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#headers").load("/public/static/header.html");  
-    });
-  </script>
-  <!-- footer jquery -->
-  <script type="text/javascript">   
-    $(document).ready( function() {
+  });
+</script>
+
+<!-- footer jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#footers").load("/public/static/footer.html");  
-    });
-  </script>
+  });
+</script>
 
 <!-- 리스트 출력  -->
 <script type="text/javascript">   
@@ -49,64 +50,59 @@
     window.location.href = "./storyDetail.html";
   }
 </script>
+
 </head>
-
 <body>
-
 <!-- header 연결 -->
 <div id="headers"></div>
 
-  <div class="container">
+<div class="container">
 
-    <div class="story" name = "story" id="story">
-      STORY
-    </div>
+  <div class="story" name = "story" id="story">
+    STORY
+  </div>
     
-    <section class = "posting">
+  <section class = "posting">
 
-      <div class="card">
-        <form id="frmMyStoryGroup" name="frmMyStoryGroup">
-          <!-- hidden 값으로 미리 설정하고 계속 개발 (하드코딩) -->
-          <input type="hidden" id="filter" name="filter" value="member"/>
-          <input type="hidden" id="condition" name="condition" value=""/>
-          <!-- <input type="hidden" id="postGroupId" name="postGroupId" value="1"/> -->
+    <div class="card">
+      <form id="frmMyStoryGroup" name="frmMyStoryGroup">
+        <!-- hidden 값으로 미리 설정하고 계속 개발 (하드코딩) -->
+        <input type="hidden" id="filter" name="filter" value="member"/>
+        <input type="hidden" id="condition" name="condition" value=""/>
+        <!-- <input type="hidden" id="postGroupId" name="postGroupId" value="1"/> -->
+        <input type="hidden" id="memberName" name="memberName" value=""/>
+        <input type="hidden" id="title" name="title" value=""/>
+        <input type="hidden" id="thumbNailUrl" name="thumbNailUrl" value=""/>
+        <input type="hidden" id="period" name="period" value=""/>
+        <input type="hidden" id="period.startDate" name="period.startDate" value=""/>
+        <input type="hidden" id="period.endDate" name="period.endDate" value=""/>
+        <input type="hidden" id="region" name="region" value=""/>
 
-          <!-- 1. parameter로 주고받기 2.jstl로 주고받기 3. session으로 주고받기★-->
-          <!-- <input type="hidden" id="memberId" name="memberId" value="${param.memberID}"/> -->
-          <!-- <input type="hidden" id="memberId" name="memberId" value="<C:out vlaue='{list.memberID}'/>"/> -->
-
-          <input type="hidden" id="memberName" name="memberName" value=""/>
-          <input type="hidden" id="title" name="title" value=""/>
-          <input type="hidden" id="thumbNailUrl" name="thumbNailUrl" value=""/>
-          <input type="hidden" id="period" name="period" value=""/>
-          <input type="hidden" id="period.startDate" name="period.startDate" value=""/>
-          <input type="hidden" id="period.endDate" name="period.endDate" value=""/>
-          <input type="hidden" id="region" name="region" value=""/>
-
-          <div class = 'fnMyblogDetail'>
-            <div id="card-image" name="card-image" class="card-image">
-              <figure class="image">
-                <!-- <img src="" alt="">-->
-                </figure> 
-            </div>
+        <div class = 'fnMyblogDetail'>
+          <div id="card-image" name="card-image" class="card-image">
+            <figure class="image">
+              <!-- <img src="" alt="">-->
+            </figure> 
+          </div>
   
-            <div class="card-content" id="card-content" name="card-content">
-              <div class="content">
-                <h5 name="title"></h5>
-                <h5 name="period"></h5>
-                <h5 name="location"></h5>   
-                <p class="page_meta"><span class="author"></span></p>  
-              </div>
+          <div class="card-content" id="card-content" name="card-content">
+            <div class="content">
+              <h5 name="title"></h5>
+              <h5 name="period"></h5>
+              <h5 name="location"></h5>   
+              <p class="page_meta"><span class="author"></span></p>  
             </div>
           </div>
 
-        </form>
-      </div>
+        </div>
 
-    </section>
-  </div>
+      </form>
+    </div>
 
-  <div class="paginate sub_last" ></div> 
+  </section>
+</div>
+
+<div class="paginate sub_last" ></div> 
 
 <!-- footer 연결 -->
 <div id="footers"></div>

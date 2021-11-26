@@ -22,18 +22,20 @@
 
 <title>Palette.</title>
 
-   <!-- header jquery -->
-   <script type="text/javascript">   
-    $(document).ready( function() {
+<!-- header jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#headers").load("/public/static/header.html");  
-    });
-  </script>
-  <!-- footer jquery -->
-  <script type="text/javascript">   
-    $(document).ready( function() {
+  });
+</script>
+
+<!-- footer jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#footers").load("/public/static/footer.html");  
-    });
-  </script>
+  });
+</script>
+
 <!-- 리스트 출력  -->
 <script type="text/javascript">   
   $(document).ready( function() {
@@ -41,53 +43,56 @@
   });
 </script>
 
-
 </head>
-   <body>
-     <div id="headers"></div>
+<body>
+
+<!-- header 연결 -->
+<div id="headers"></div>
 
 <div class="container">
   <div class="inner">
-  <h2>My Story</h2>
-  <hr>
-  <form name="myblogDetailUpdate">
+    <h2>My Story</h2>
+    <hr>
+    <form name="myblogDetailUpdate">
     
-    <div class="form-group">
-      <!-- <label for="title">제목</label> -->
-      <!-- placeholder 속성 입력한 데이터가 없는 경우 배경으로 나타난다.실제적으로 입력을 100자까지로 지정 -->
-      <!-- required 속성을 설정하면 필수입력 사항이된다. -->
-      <!-- pattern 속성을 이용한 정규표현식으로 데이터의 유효성 검사를 할 수 있다. -->
+      <div class="form-group">
+       <!-- <label for="title">제목</label> -->
+        <!-- placeholder 속성 입력한 데이터가 없는 경우 배경으로 나타난다.실제적으로 입력을 100자까지로 지정 -->
+        <!-- required 속성을 설정하면 필수입력 사항이된다. -->
+        <!-- pattern 속성을 이용한 정규표현식으로 데이터의 유효성 검사를 할 수 있다. -->
       
-      <input type="text" class="form-control" id="title"
+        <input type="text" class="form-control" id="title"
              placeholder="제목을 입력하세요" name="title"
              maxlength="100" required="required">
              <!-- pattern=".{4,100}" -->
-    </div>
+      </div>
     
-    <hr>
+      <hr>
 
-         <div class="photo">
-          <figure class="image"><img src="https://w.namu.la/s/f4eeb4d000580ed54510801ede6bf71d9726acbca886db89a0c6bb43bab73391af5ff23873c660752e3604c47f5eac3f0593f2d3e5e263cc3e005ce2ee398fb7fe7214c9151bd30ce40f385fbe671b4ac2ee2be5c41c675d6b1621eac84ca63c" alt="로드맵 대표 이미지"></figure>
-        </div>
+      <div class="photo">
+        <figure class="image">
+           <img src="" alt="로드맵 이미지대표 "> 
+        </figure>
+      </div>
 
-    <hr>
+      <hr>
 
-    <div class="form-group">
-   <!-- <label for="content">내용</label> -->
-   <!--  여러줄의 데이터를 입력하고 하고자 할때 textarea 태그를 사용한다. -->
-   <!--  textarea 안에 있는 모든 글자는 그대로 나타난다. 공백문자, tag, enter -->
-     <textarea class="form-control" rows="5" id="content"
-               name="content" placeholder="내용을 입력하세요"></textarea>
-    </div>
-   
-    <!-- <button type="submit" class="btn">등록</button> -->
-    <input type="button" id="submit_btn" class = "btn" value="수정" onclick="modify()">
+      <div class="form-group">
+      <!-- <label for="content">내용</label> -->
+      <!--  여러줄의 데이터를 입력하고 하고자 할때 textarea 태그를 사용한다. -->
+      <!--  textarea 안에 있는 모든 글자는 그대로 나타난다. 공백문자, tag, enter -->
+        <textarea class="form-control" rows="5" id="content"
+          name="content" placeholder="내용을 입력하세요"></textarea>
+      </div>
   
-  </form>
+      <input type="button" id="submit_btn" class = "btn" value="수정" onclick="modify()">
+      <input type="button" id="cancel" class = "btn" value="취소" onclick="window.location.href = '/view/Board/myblogDetail.html';">
+    </form>
+  </div>
 </div>
-</div>
-    <!-- footer 연결 -->
-    <div id="footers"></div>
+
+<!-- footer 연결 -->
+  <div id="footers"></div>
     
 </body>
 </html>

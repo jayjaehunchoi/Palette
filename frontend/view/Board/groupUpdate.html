@@ -19,19 +19,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-   <!-- header jquery -->
-   <script type="text/javascript">   
-    $(document).ready( function() {
+<!-- header jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#headers").load("/public/static/header.html");  
-    });
-  </script>
-  <!-- footer jquery -->
-  <script type="text/javascript">   
-    $(document).ready( function() {
-    $("#footers").load("/public/static/footer.html");  
-    });
-  </script>
+  });
+</script>
 
+<!-- footer jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
+    $("#footers").load("/public/static/footer.html");  
+  });
+</script>
+
+<!-- 리스트 출력  -->
 <script type="text/javascript">   
   $(document).ready( function() {
     view();
@@ -53,7 +55,7 @@
                     <label>제목</label> 
                     <input type="text" id = "title" name="title" placeholder="제목을 입력하세요" required="required">
                     <label>지역</label> 
-                    <!-- <form> -->
+                   
                       <select name="region" id = "region" name = "region" required="required" >
                           <option value="none">=== 선택 ===</option>
                           <option value="서울">서울</option>
@@ -66,8 +68,7 @@
                           <option value="광주">광주</option>
                           <option value="제주">제주</option>
                         </select>
-                    <!-- </form> -->
-                    <!-- <label>썸네일은 수정이 불가합니다</label>  -->
+
                     <input type = "file" id = "Thumbnail" name = "Thumbnail" accept="image/*" required="required" >
                     
                     <input type="button" id="cancel" value="취소" onclick="window.location.href = '/view/Board/myblog.html';"> 

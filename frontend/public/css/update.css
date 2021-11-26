@@ -28,10 +28,6 @@ body{
     margin-bottom: 300px;
 }
 
-.container .inner form{
- 
-}
-
 .container .inner h2{
     font-size: 30px;
     margin: 30px;
@@ -69,7 +65,6 @@ body{
     margin-top: 30px;
     border:2px solid white;
     font-size: 15px;
-    /* position: absolute; */
     text-align: center;
 }
 .container .photo img{
@@ -89,9 +84,7 @@ hr{
     width: 100px;
     height:40px;
 }
-.input-file-button{
 
-}
 .input-file-button label img{
     display: block;
     margin: auto;

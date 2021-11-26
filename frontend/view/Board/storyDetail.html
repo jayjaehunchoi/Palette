@@ -23,18 +23,19 @@
 
 <title>Palette.</title>
 
-   <!-- header jquery -->
-   <script type="text/javascript">   
-    $(document).ready( function() {
+<!-- header jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#headers").load("/public/static/header.html");  
-    });
-  </script>
-  <!-- footer jquery -->
-  <script type="text/javascript">   
-    $(document).ready( function() {
+  });
+</script>
+
+<!-- footer jquery -->
+<script type="text/javascript">   
+  $(document).ready( function() {
     $("#footers").load("/public/static/footer.html");  
-    });
-  </script>
+  });
+</script>
 
 <!-- 리스트 출력  -->
 <script type="text/javascript">   
@@ -48,54 +49,47 @@
 <!-- 페이지 이동 -->
 <script type="text/javascript">
   function fnMyblogDetail(postId){
-        sessionStorage.setItem("postId", postId);
-        // sessionStorage.setItem("Id", memberId);
-        window.location.href = "./read.html";
-      }
-  </script>
+    sessionStorage.setItem("postId", postId);
+    window.location.href = "./read.html";
+  }
+</script>
 
 </head>
 <body>
-  <!-- header 연결 -->
-  <div id="headers"></div>
 
-    <div class="container">
+<!-- header 연결 -->
+<div id="headers"></div>
 
-      <div class="title" name = "title" id="title">
-    
-      </div>
+<div class="container">
+  <input type="button" value="목록으로" name="StoryList" class = "List" onclick="window.location.href = '/view/Board/story.html';">
+  <div class="title" name = "title" id="title"></div>
 
-      <section class = "posting">
+  <section class = "posting">
 
-        <div class="card">
-          <form id="frmStory" name="frmStory">
-            <input type="hidden" id="page" name="page" value=""/>
+    <div class="card">
+      <form id="frmStory" name="frmStory">
 
-            <input type="hidden" id="memberId" name="memberId" value=""/>
-            <input type="hidden" id="memberName" name="memberName" value=""/>
-            <input type="hidden" id="postId" name="postId" value=""/>
-            <input type="hidden" id="thumbNailFullPath" name="thumbNailFullPath" value=""/>
-            <input type="hidden" id="title" name="title" value=""/>
-            <input type="hidden" id="likesCount" name="likesCount" value=""/>
+        <input type="hidden" id="page" name="page" value=""/>
+        <input type="hidden" id="memberId" name="memberId" value=""/>
+        <input type="hidden" id="memberName" name="memberName" value=""/>
+        <input type="hidden" id="postId" name="postId" value=""/>
+        <input type="hidden" id="thumbNailFullPath" name="thumbNailFullPath" value=""/>
+        <input type="hidden" id="title" name="title" value=""/>
+        <input type="hidden" id="likesCount" name="likesCount" value=""/>
             
-            <!-- <a href = "/frontend/Board/read.html"> -->
-
-              <div id="card-image" name="card-image" class="card-image">
-                <figure class="image">
-                  <!-- <img src="" alt=""> -->
-                </figure>
-              </div>
-
-            <!-- </a> -->
-
-          </form>
-
+        <div id="card-image" name="card-image" class="card-image">
+          <figure class="image">
+             <!-- <img src="" alt=""> -->
+          </figure>
         </div>
-      
-      </section>
-    </div>
 
-    <div class="paginate sub_last" ></div> 
+      </form>
+    </div>
+      
+  </section>
+</div>
+
+<div class="paginate sub_last" ></div> 
     
 <!-- footer 연결 -->
   <div id="footers"></div>
