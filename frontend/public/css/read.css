@@ -182,29 +182,51 @@ position: relative;
     margin-top: 10px;
 }
 
-.comment-row0 .comment-date{
-    margin-bottom: 10px;
+.comment-row0  .comment-memberName{
+    display: flex;
+    justify-content: flex-start;
+    float: left;
     text-align: left;
     margin-left: 50px;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.comment-row0 .comment-memberName{
-    margin-top:-10px;
-    text-align: left;
-    margin-left: 50px;
+.comment-row0  .comment-date{
     margin-bottom: 10px;
+    text-align: left;
+    margin-left: 100px;
+    margin-top: 20px;
 }
 
 .comment-row0 .comment-content{
+    display: flex;
+    /* justify-content: flex-start; */
     white-space: pre-line;
-    margin-bottom: 10px;
-    margin-top: -30px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+    margin-top: 20px;
+    text-align: left;
 }
 
-.modifycomment,
 .deletecomment{
+    display: flex;
+    float: right;
+    margin-right: 20px;
     margin-bottom: 5px;
+    margin-top:-40px;
+    justify-content: center;
+    text-align: center;
+    background: #333;
+    color: white;
+    width :50px;
+    height:30px;
+}
+.modifycomment {
+    display: flex;
+    float: right;
+    margin-right: 80px;
+    margin-bottom: 5px;
+    margin-top:-40px;
     justify-content: center;
     text-align: center;
     background: #333;
