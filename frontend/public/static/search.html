@@ -79,25 +79,32 @@
         <div class="swiper-wrapper">
 
           <div class="swiper-slide">
-
+            <!-- all -->
             <div class="group-posts">
               <h4>Blog Posts</h4>
               <div class="search-posts" id="all-blog-posts-results"> </div>
-            </div>
-            
+            </div>           
             <div class="group-posts">
               <h4>Username</h4>
               <div class="search-posts" id="all-username-results"></div>
             </div>
           </div>
-
+          <!-- blog posts -->
           <div class="swiper-slide">
-            <h4>Blog Posts</h4>
-            <div class="search-posts" id="blog-posts-results"></div>               
+            <div class="search-top">
+              <h4>Blog Posts</h4>
+              <button class="paginate-btn-back material-icons">arrow_back_ios</button>
+              <button class="paginate-btn-forward material-icons">arrow_forward_ios</button>
+            </div>
+            <div class="search-posts" id="blog-posts-results"></div>              
           </div>
-
+          <!-- username -->
           <div class="swiper-slide">
-            <h4>Username</h4>
+            <div class="search-top">
+              <h4>Username</h4>
+              <button class="paginate-btn-back2 material-icons">arrow_back_ios</button>
+              <button class="paginate-btn-forward2 material-icons">arrow_forward_ios</button>
+            </div>
             <div class="search-posts" id="username-results"></div>
           </div>
         </div>
@@ -105,102 +112,13 @@
     </div>
   </div>
 </section>
-
-
 <script>
-$(document).ready(function() {
-  var keyword =  sessionStorage.getItem("keyword");
-  $(".keyword").val(keyword);
-  search(keyword);
-  sessionStorage.removeItem("keyword");
-});
-
-$('.keyword').keydown(function(key) {
-  var keyword = $(".keyword").val();
-  if(key.keyCode == 13) {
-    $("#all-blog-posts-results").html("")
-    $("#all-username-results").html("")
-    $("#blog-posts-results").html("")
-    $("#username-results").html("")
-    sessionStorage.setItem("keyword", keyword);
-    search(keyword);
-    sessionStorage.removeItem("keyword");
-  }
-});
-function search(keyword) {
-  // ajax 통신
-  // title
-  $.ajax({ // 요청에 대한 정보
-    type: "GET", // 전송방식. HTTP method type(GET, POST) 형식
-    url: "http://www.palette-travel.com/api/postgroup?title=" + keyword, // 전송주소. 컨트롤러에서 대기중인 url 주소
-    dataType : "json",
-    ContentType: "application/json; charset=UTF-8",
-    success: function(res){ //비동기통신의 성공일경우 success콜백으로 들어옴. 'res'는 응답받은 데이터.
-      console.log(keyword);
-      var result =  res.postGroupResponses;
-
-      if(result != null) {
-        for (var i = 0; i < result.length; i++) {
-        console.log(res.postGroupResponses[i].thumbNailUrl);
-        $("#all-blog-posts-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
-        $("#blog-posts-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
-        }
-      }
-    },
-    error: function(XMLHttpRequest, textStatus, errorThrown) { //비동기 통신이 실패할경우 error 콜백으로 들어옴.
-      console.log("통신 실패")
-    }
-  });
-
-  // memberName
-  $.ajax({ // 요청에 대한 정보
-    type: "GET", // 전송방식. HTTP method type(GET, POST) 형식
-    url: "http://www.palette-travel.com/api/postgroup?name=" + keyword, // 전송주소. 컨트롤러에서 대기중인 url 주소
-    dataType : "json",
-    ContentType: "application/json; charset=UTF-8",
-    success: function(res){ //비동기통신의 성공일경우 success콜백으로 들어옴. 'res'는 응답받은 데이터.
-      console.log(keyword);
-      var result =  res.postGroupResponses;
-      
-      if(result != null) {
-        for (var i = 0; i < result.length; i++) {
-        console.log(res.postGroupResponses[i].thumbNailUrl);
-        $("#all-username-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
-        $("#username-results").append("<div onclick='moveToPostGroup(this.id)' class='search-post' id='" +res.postGroupResponses[i].postGroupId + "'><img src='" +  res.postGroupResponses[i].thumbNailUrl + "'/></div>");
-        }
-      }
-    },
-    error: function(XMLHttpRequest, textStatus, errorThrown) { //비동기 통신이 실패할경우 error 콜백으로 들어옴.
-      console.log("통신 실패")
-    }
-  });
+// 클릭 시 해당 페이지로 이동
+function moveToPostGroup(postGroupId) {
+  sessionStorage.setItem("postGroupId", postGroupId);
+  window.location.href = "/view/Board/storyDetail.html";
 }
-
-  $(".material-icons").click(function() {
-      $("#all-blog-posts-results").html("")
-      $("#all-username-results").html("")
-      $("#blog-posts-results").html("")
-      $("#username-results").html("")
-      var keyword = $("#keyword").val();
-      
-    
-    // 알림창
-    if (keyword == "") {
-        alert('검색어를 입력하세요.');
-      } else {
-        search(keyword);
-        }
-  });
-
-
-  function moveToPostGroup(postGroupId) {
-    sessionStorage.setItem("postGroupId", postGroupId);
-    window.location.href = "/view/Board/storyDetail.html";
-  }
-
 </script>
-
-
 <!-- footer 연결 -->
 <div id="footers"></div>
  

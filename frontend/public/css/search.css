@@ -26,7 +26,7 @@ a {
 .search-results {
   margin-top: 200px;
   margin-bottom: auto;
-  min-height: 500px;
+  min-height: 550px;
 }
 
 .search-results .inner .title h2 {
@@ -88,7 +88,6 @@ a {
 
 
 .section-tabs .swiper-container-android .swiper-slide, .swiper-wrapper {
-  /* height: auto; */
   transform: translate3d(0px,0,0);
 }
 
@@ -137,7 +136,7 @@ a {
 }
 
 .section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide.swiper-slide-active {
-  height: auto;
+  min-height: 900px;
 }
 
 .section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .group-posts {
@@ -158,7 +157,6 @@ a {
 .section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .group-posts .search-posts {
   display: flex;
   justify-self: center;
-  align-items: center;
   flex-wrap: wrap;
   margin-top: 25px;
   width: 100%;
@@ -200,7 +198,6 @@ a {
 .section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .search-posts {
   display: flex;
   justify-self: center;
-  align-items: center;
   flex-wrap: wrap;
   margin-top: 25px;
   width: 100%;
@@ -226,4 +223,19 @@ a {
 .section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .search-posts .search-post img {
   max-width: 100%;
   max-height: auto;
+}
+
+.section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .search-top {
+  display: flex;
+
+}
+
+/* PAGING ARROW */
+.section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .search-top .material-icons {
+  font-size: 25px;
+  background-color: transparent;
+  border-color: transparent;
+}
+.section-tabs .swiper-tabs-content .swiper-wrapper .swiper-slide .search-top .material-icons:nth-child(2n) {
+  margin-left: 850px;
 }
