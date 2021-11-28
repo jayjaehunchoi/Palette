@@ -11,7 +11,7 @@ $(".like-content .btn-secondary").click(function() {
   }
 
   $.ajax({
-    url:"http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/"+postId+"/like",
+    url:"http://www.palette-travel.com/api/post/"+postId+"/like",
     method:"POST",
     data: "",
     success:function(data){
@@ -30,7 +30,7 @@ function like_btn(){
   let memberId = sessionStorage.getItem("memberId");
 
   $.ajax({
-    url:"http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/"+postId+"/like",
+    url:"http://www.palette-travel.com/api/post/"+postId+"/like",
     type:"GET",
     contentType: 'application/json; charset=UTF-8',
     cache: false, // 응답 결과 임시 저장 취소
@@ -61,7 +61,7 @@ function submitComment(){
   let postId = sessionStorage.getItem("postId");
 
   $.ajax({
-    url:"http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/"+postId+"/comment",
+    url:"http://www.palette-travel.com/api/post/"+postId+"/comment",
     method:"POST",
     data:JSON.stringify({content:content}),
     dataType:'json',
@@ -91,7 +91,7 @@ function modifyComment() {
   let commentId = sessionStorage.getItem("commentId");
 
   $.ajax({
-    url:"http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/"+postId+"/comment/"+commentId,
+    url:"http://www.palette-travel.com/api/post/"+postId+"/comment/"+commentId,
     method:"PUT",
     data:JSON.stringify({content:content}),
     contentType: "application/json", 
@@ -120,7 +120,7 @@ function OpenmodifyComment(commentId){
   var comment = $('#new-comment2').val();
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment?id='+(commentId-1), // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/post/'+postId+'/comment?id='+(commentId-1), // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -181,7 +181,7 @@ function deleteComment(commentId) {
   var confirm_val = confirm("삭제하시겠습니까?");
   if (confirm_val == true) {
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment/'+commentId, // 개발시 변경 부분  
+      url: 'http://www.palette-travel.com/api/post/'+postId+'/comment/'+commentId, // 개발시 변경 부분  
       type: 'DELETE',  // get, post
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우         
         alert("댓글이 삭제되었습니다.");
@@ -210,7 +210,7 @@ function modifyPost(){
   let memberId = sessionStorage.getItem("memberId");
 
   $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
+      url: 'http://www.palette-travel.com/api/post/'+postId, // 개발시 변경 부분
       contentType: 'application/json; charset=UTF-8',
       type: 'get',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
@@ -248,7 +248,7 @@ function view() {
   var msg = '';
   
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/post/'+postId, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -305,7 +305,7 @@ function deletePost() {
   var confirm_val = confirm("삭제하시겠습니까?");
   if (confirm_val == true) {
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId+'/post/'+postId, // 개발시 변경 부분  
+      url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId+'/post/'+postId, // 개발시 변경 부분  
       type: 'DELETE',  // get, post  
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우        
           alert("게시글이 삭제되었습니다.");
@@ -338,7 +338,7 @@ function commentView() {
   var commentid = 0;
  
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment?id='+commentid, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/post/'+postId+'/comment?id='+commentid, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -372,7 +372,7 @@ function commentView01() {
   
  
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId+'/comment?id='+commentid, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/post/'+postId+'/comment?id='+commentid, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소

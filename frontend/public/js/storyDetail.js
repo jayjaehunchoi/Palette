@@ -6,7 +6,7 @@ function view(){
   var params = '';
   var msg = '';
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -54,7 +54,7 @@ function view01(j) {
   var msg = '';
     
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId+'?page='+j, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId+'?page='+j, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -99,7 +99,7 @@ function page(){
   let postGroupId = sessionStorage.getItem("postGroupId");
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/page/post?postGroupId='+postGroupId,   
+    url: 'http://www.palette-travel.com/api/page/post?postGroupId='+postGroupId,   
     type: 'GET',
     dataType: 'json',
     success: function(data){
@@ -131,7 +131,7 @@ function view02(){
   if(page >1 ){
     console.log(page);
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?page='+page, // 개발시 변경 부분
+      url: 'http://www.palette-travel.com/api/postgroup?page='+page, // 개발시 변경 부분
       contentType: 'application/json; charset=UTF-8',
       type: 'get',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
@@ -158,7 +158,7 @@ function view02(){
     });
   }else{
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?page=1', // 개발시 변경 부분
+      url: 'http://www.palette-travel.com/api/postgroup?page=1', // 개발시 변경 부분
       contentType: 'application/json; charset=UTF-8',
       type: 'get',  // get, post
       cache: false, // 응답 결과 임시 저장 취소

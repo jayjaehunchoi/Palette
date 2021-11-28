@@ -8,7 +8,7 @@ function view() {
   var msg = '';
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup', // 개발시 변경 부분,
+    url: 'http://www.palette-travel.com/api/postgroup', // 개발시 변경 부분,
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -53,7 +53,7 @@ function view01(j) {
   sessionStorage.setItem("page", j);
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?page='+j, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup?page='+j, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -97,7 +97,7 @@ function page(){
   var currentPage = 1;
   
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/page/postgroup',   
+    url: 'http://www.palette-travel.com/api/page/postgroup',   
     type: 'GET',
     dataType: 'json',
     success: function(data){

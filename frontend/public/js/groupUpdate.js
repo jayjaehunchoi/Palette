@@ -12,7 +12,7 @@ function view(){
   let memberId = sessionStorage.getItem("memberId");
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?memberId='+memberId, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup?memberId='+memberId, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -76,7 +76,7 @@ function modify() {
     formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}));
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId, // 개발시 변경 부분
     contentType: false,
     Accept: 'application/json',
     processData:false,
