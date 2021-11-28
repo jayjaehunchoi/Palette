@@ -69,7 +69,11 @@ function modify() {
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('입력 정보를 확인하세요.(제목 20자, 글 150자 이내)');
+        if(token != null){
+          alert('입력 정보를 확인하세요.(제목 20자, 글 150자 이내)');
+        }else{
+          alert("로그인이 필요합니다.")
+        }
         
       },
       beforeSend: function (xhr) {
