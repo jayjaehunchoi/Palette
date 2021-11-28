@@ -24,7 +24,7 @@ function view() {
 
       for(i=0; i < testData.postGroupResponses.length; i++ ){
 
-        console.log(testData.postGroupResponses.length);
+        
          
         $("#card-image").append("<div class = 'inner'><div class = 'fnMyblogDetail' onclick='fnMyblogDetail(this.id)'; id=" +testData.postGroupResponses[i].postGroupId +">\
           <figure class='image'><img src=' " + testData.postGroupResponses[i].thumbNailUrl + " '/></figure>\
@@ -86,7 +86,7 @@ function view01(j) {
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      console.log('ajax야 힘내자'+ request +status + error);
+      
     }
   });
 }
@@ -101,13 +101,12 @@ function page(){
     type: 'GET',
     dataType: 'json',
     success: function(data){
-      console.log("data: "+data)
+
       pageCount = data.data;
-      console.log(pageCount);
   
       var html = "";
       for(var i=1; i<=pageCount; i++){			
-        console.log(i);
+   
         html += "<input type="+"'button" +"' class = paginate_num  value = " + i+" onclick="+ "view01("+i+");>";
       }
 

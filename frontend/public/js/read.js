@@ -15,7 +15,7 @@ $(".like-content .btn-secondary").click(function() {
     method:"POST",
     data: "",
     success:function(data){
-      console.log(data);
+      //console.log(data);
       $('#result').text(data.data);
     },
     beforeSend: function (xhr) {
@@ -38,13 +38,13 @@ function like_btn(){
     dataType: 'json', // 응답 형식: json, html, xml.
     data: "",
     success:function(data){
-      console.log(data);
+      
       for(i=0; i<data.likeResponses.length; i++){
 
         if(memberId == data.likeResponses[i].memberId){                  
           $('.like-content .btn-secondary').toggleClass('done');
         }
-        console.log(true);
+        
       }
     },
     beforeSend: function (xhr) {
@@ -67,14 +67,14 @@ function submitComment(){
     dataType:'json',
     contentType: "application/json", 
     success:function(data){
-      console.log(data);
+      
       window.location.href = '/view/Board/read.html';
       alert('등록되었습니다.');
     },
     error:function(e){
       alert("로그인이 필요합니다.");
       window.location.href = '/view/member/login.html';
-      console.log("error : ", e);
+      
     },
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);
@@ -96,12 +96,12 @@ function modifyComment() {
     data:JSON.stringify({content:content}),
     contentType: "application/json", 
     success:function(data){
-      console.log(data);
+     
       window.location.href = '/view/Board/read.html';
       alert('수정되었습니다.');
     },
     error:function(e){
-      console.log("error : ", e);
+     
     },
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);
@@ -133,7 +133,7 @@ function OpenmodifyComment(commentId){
     for(i=0; i<Data.commentResponses.length; i++){
 
       if(commentId == Data.commentResponses[i].commentId){
-        console.log(Data.commentResponses[i]);
+       
         var data = Data.commentResponses[i];
       }
     }
@@ -156,7 +156,7 @@ function OpenmodifyComment(commentId){
   
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      // alert('ajax야 힘내자'+ request +status + error);
+      
     },
 
     beforeSend: function (xhr) {
@@ -189,7 +189,7 @@ function deleteComment(commentId) {
       }, 
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // console.log('ajax야 힘내자'+ request +status + error);
+        
         alert("삭제 권한이 없습니다.");
       },
       beforeSend: function (xhr) {
@@ -220,7 +220,7 @@ function modifyPost(){
 
       success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
 
-        console.log(testData);
+        //console.log(testData);
         if(testData.memberId == memberId){
           window.location.href = "./update.html";
         } else{
@@ -230,7 +230,7 @@ function modifyPost(){
 
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+       
       },
 
       beforeSend: function (xhr) {
@@ -259,7 +259,6 @@ function view() {
             
       if (testData.postId > 0) { 
   
-        console.log(testData)
   
             $('#title').empty();       
             $('#author').empty();
@@ -290,7 +289,7 @@ function view() {
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+    
       }
   });
 }
@@ -313,8 +312,7 @@ function deletePost() {
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        //alert('ajax야 힘내자'+ request +status + error);
-        console.log('ajax야 힘내자'+ request +status + error);
+
         alert("삭제 권한이 없습니다.");
       },
       beforeSend: function (xhr) {
@@ -346,18 +344,18 @@ function commentView() {
     dataType: 'json', // 응답 형식: json, html, xml...
     data: params,      // 데이터
     success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
-      console.log(Data) 
+
 
       for(j=0; j<Data.commentResponses.length; j++){
         var commentid = Data.commentResponses[j].commentId;
-        console.log(Data.commentResponses[j].commentId);
+     
       }
-      console.log(commentid);
+      //console.log(commentid);
       sessionStorage.setItem("commentid", commentid);
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+       
       }
   });
 }
@@ -380,13 +378,13 @@ function commentView01() {
     dataType: 'json', // 응답 형식: json, html, xml...
     data: params,      // 데이터
     success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
-      console.log(Data) 
+    
 
       for(j=0; j<Data.commentResponses.length; j++){
         var commentid = Data.commentResponses[j].commentId;
-        console.log(Data.commentResponses[j].commentId);
+   
       }
-      console.log(commentid);
+    
       sessionStorage.setItem("commentid", commentid);
       for(i=0; i<Data.commentResponses.length; i++){
       $('.comment-row0').append("<div class = 'comment-row'><div class = 'comment-memberName'>"+Data.commentResponses[i].memberName+"\

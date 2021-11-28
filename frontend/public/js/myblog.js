@@ -43,8 +43,7 @@ $.ajax({
   //data: '',      // 데이터
       
   success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-    console.log(testData.postGroupResponses);
-
+    
     if (testData.postGroupResponses != null) { 
       
       //div 초기화
@@ -65,7 +64,7 @@ $.ajax({
           <input type='button'  class = 'delete' value='삭제' onclick='deletePost(this.id)'; id=" +testData.postGroupResponses[i].postGroupId +"></div>"
         );
 
-        console.log(testData.postGroupResponses[i].postGroupId);
+       
       }  
   
     } else {  
@@ -103,8 +102,7 @@ let token = sessionStorage.getItem("token");
 var params = {period:{startDate : startDate ,endDate : endDate}, title : title , region : region };  // 개발시 변경 부분
  
 var formData = new FormData(frm);
-console.log(params);
-console.log(Thumbnail[0].files[0]);
+
 formData.append('file',Thumbnail[0].files[0]);
 formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
 
@@ -122,16 +120,12 @@ $.ajax({
   success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
     window.location.href = '/view/Board/myblog.html'; 
         
-    if (testData != null) { 
-      console.log(testData);
-    } 
 
   },
  
   // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
   error: function(request, status, error) { // callback 함수
-    console.log('ajax야 힘내자'+ request +status + error);
-    //alert('입력 정보를 확인하세요.');
+   
   },
 
   beforeSend: function (xhr) {
@@ -184,7 +178,7 @@ $.ajax({
 
   // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
   error: function(request, status, error) { // callback 함수
-    console.log('ajax야 힘내자'+ request +status + error);
+    
   }
 });
 }
@@ -199,13 +193,12 @@ $.ajax({
   type: 'GET',
   dataType: 'json',
   success: function(data){
-    console.log("data: "+data)
+    
     pageCount = data.data;
-    console.log(pageCount);
-
+    
     var html = "";
       for(var i=1; i<=pageCount; i++){			
-        console.log(i);
+   
         html += "<input type="+"'button" +"' class = paginate_num  value = " + i+" onclick="+ "view01("+i+");>";
       }
 
@@ -234,17 +227,11 @@ if (confirm_val == true) {
       alert("게시글이 삭제되었습니다.");
       window.location.href = "./myblog.html";
 
-      if (testData != null) { 
-        console.log(testData);
-      } else {  
-
-      }
     },
 
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
       
-      console.log('ajax야 힘내자'+ request +status + error);
     },
 
     beforeSend: function (xhr) {

@@ -29,7 +29,7 @@ function view(){
           msg += '<img src='  
           msg +=  testData.storyLists[i].thumbNailFullPath 
           msg += ' /></figure></div></div>';
-          console.log(testData.storyLists[i].postId);
+          
         }
         $('.card-image').html(msg);
   
@@ -42,7 +42,7 @@ function view(){
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+        
       }
   });
 }
@@ -77,7 +77,7 @@ function view01(j) {
           msg += '<img src='  
           msg +=  testData.storyLists[i].thumbNailFullPath 
           msg += ' /></figure></div></div>';
-          console.log(testData.storyLists[i].postId);
+          
         }
         $('.card-image').html(msg);
                
@@ -103,13 +103,13 @@ function page(){
     type: 'GET',
     dataType: 'json',
     success: function(data){
-      console.log("data: "+data)
+     
       pageCount = data.data;
-      console.log(pageCount);
+    
   
       var html = "";
         for(var i=1; i<=pageCount; i++){			
-          console.log(i);
+          
           html += "<input type="+"'button" +"' class = paginate_num  value = " + i+" onclick="+ "view01("+i+");>";
         }
 
@@ -143,17 +143,17 @@ function view02(){
         for(i=0; i<Data.postGroupResponses.length; i++){
 
           if(postGroupId == Data.postGroupResponses[i].postGroupId){
-            console.log(Data.postGroupResponses[i]);
+          
             var data = Data.postGroupResponses[i];
           }
         }
-        console.log(data);
+      
         $("#title").append("<div> TITLE: "+ data.title +"</div>");
       },
   
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+       
       }
     });
   }else{
@@ -169,17 +169,17 @@ function view02(){
         for(i=0; i<Data.postGroupResponses.length; i++){
 
           if(postGroupId == Data.postGroupResponses[i].postGroupId){
-            console.log(Data.postGroupResponses[i]);
+          
             var data = Data.postGroupResponses[i];
           }
 
         }
-        console.log(data);
+      
         $("#title").append("<div> TITLE: "+ data.title +"</div>");
       },  
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+        
       }
     });
   }

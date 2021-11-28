@@ -21,16 +21,13 @@ function view(){
     data: '',      // 데이터
 
     success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
-      console.log(Data.postGroupResponses.length);
       for(i=0; i<Data.postGroupResponses.length; i++){
 
         if(postGroupId == Data.postGroupResponses[i].postGroupId){
-          console.log(Data.postGroupResponses[i]);
+          
           var data = Data.postGroupResponses[i];
         }
       }
-
-      console.log(data);
 
       $('#startDate').val(data.period.startDate);
       $('#endDate').val(data.period.endDate);
@@ -38,7 +35,6 @@ function view(){
       $('#region').val(data.region);
       $('#Thumbnail').attr("src",data.thumbNailUrl);
 
-      console.log(data.thumbNailUrl);
  
     },
 
@@ -48,8 +44,7 @@ function view(){
 
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      console.log('ajax야 힘내자'+ request +status + error);
-      console.log(formData);
+
     }
   });
 }
@@ -70,8 +65,7 @@ function modify() {
   var params = {period:{startDate : startDate ,endDate : endDate}, title : title , region : region };  // 개발시 변경 부분
 
   var formData = new FormData(frm);
-    console.log(params);
-    console.log(Thumbnail[0].files[0]);
+
     formData.append('file',Thumbnail[0].files[0]);
     formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}));
 
@@ -91,11 +85,11 @@ function modify() {
       window.location.href = '/view/Board/myblog.html'; 
           
       if (testData != null) { 
-        console.log(testData);
+       
       } else {  
 
       }
-      // window.location.href = "./myblog.html";
+ 
     },
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);
@@ -103,8 +97,7 @@ function modify() {
 
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      console.log('ajax야 힘내자'+ request +status + error);
-      console.log(formData);
+
       alert("입력 정보를 확인하세요.")
     }
   });
