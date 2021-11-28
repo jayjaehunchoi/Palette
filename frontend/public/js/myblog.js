@@ -34,7 +34,7 @@ var token = sessionStorage.getItem("token");
 let userName = sessionStorage.getItem("userName");
 
 $.ajax({
-  url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/my', // 개발시 변경 부분
+  url: 'http://www.palette-travel.com/api/postgroup/my', // 개발시 변경 부분
   contentType: 'application/json; charset=UTF-8',
   type: 'get',  // get, post
   cache: false, // 응답 결과 임시 저장 취소
@@ -43,8 +43,7 @@ $.ajax({
   //data: '',      // 데이터
       
   success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
-    console.log(testData.postGroupResponses);
-
+    
     if (testData.postGroupResponses != null) { 
       
       //div 초기화
@@ -65,7 +64,7 @@ $.ajax({
           <input type='button'  class = 'delete' value='삭제' onclick='deletePost(this.id)'; id=" +testData.postGroupResponses[i].postGroupId +"></div>"
         );
 
-        console.log(testData.postGroupResponses[i].postGroupId);
+       
       }  
   
     } else {  
@@ -103,13 +102,12 @@ let token = sessionStorage.getItem("token");
 var params = {period:{startDate : startDate ,endDate : endDate}, title : title , region : region };  // 개발시 변경 부분
  
 var formData = new FormData(frm);
-console.log(params);
-console.log(Thumbnail[0].files[0]);
+
 formData.append('file',Thumbnail[0].files[0]);
 formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
 
 $.ajax({
-  url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup', // 개발시 변경 부분
+  url: 'http://www.palette-travel.com/api/postgroup', // 개발시 변경 부분
   contentType: false,
   Accept: 'application/json',
   processData:false,
@@ -121,17 +119,17 @@ $.ajax({
  
   success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
     window.location.href = '/view/Board/myblog.html'; 
-        
-    if (testData != null) { 
-      console.log(testData);
-    } 
+    alert("게시글이 등록되었습니다.")
 
   },
  
   // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
   error: function(request, status, error) { // callback 함수
-    console.log('ajax야 힘내자'+ request +status + error);
-    alert('입력 정보를 확인하세요.');
+   if(token != null){
+     alert("입력정보를 확인하세요.")
+   }else{
+     alert("로그인이 필요합니다.")
+   }
   },
 
   beforeSend: function (xhr) {
@@ -148,7 +146,7 @@ let memberId = sessionStorage.getItem("memberId");
 sessionStorage.setItem("page", j);
 
 $.ajax({
-  url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/?memberId='+memberId+'&page='+j, // 개발시 변경 부분
+  url: 'http://www.palette-travel.com/api/postgroup/?memberId='+memberId+'&page='+j, // 개발시 변경 부분
   contentType: 'application/json; charset=UTF-8',
   type: 'get',  // get, post
   cache: false, // 응답 결과 임시 저장 취소
@@ -184,7 +182,7 @@ $.ajax({
 
   // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
   error: function(request, status, error) { // callback 함수
-    console.log('ajax야 힘내자'+ request +status + error);
+    
   }
 });
 }
@@ -195,17 +193,16 @@ var pageCount;
 let memberId = sessionStorage.getItem("memberId");
 
 $.ajax({
-  url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/page/postgroup?memberId='+ memberId,   // 수정해야됨
+  url: 'http://www.palette-travel.com/api/page/postgroup?memberId='+ memberId,   // 수정해야됨
   type: 'GET',
   dataType: 'json',
   success: function(data){
-    console.log("data: "+data)
+    
     pageCount = data.data;
-    console.log(pageCount);
-
+    
     var html = "";
       for(var i=1; i<=pageCount; i++){			
-        console.log(i);
+   
         html += "<input type="+"'button" +"' class = paginate_num  value = " + i+" onclick="+ "view01("+i+");>";
       }
 
@@ -227,24 +224,18 @@ sessionStorage.setItem("postGroupId", postGroupId);
 var confirm_val = confirm("삭제하시겠습니까?");
 if (confirm_val == true) {
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분  
+    url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId, // 개발시 변경 부분  
     type: 'DELETE',  // get, post  
     success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
       
       alert("게시글이 삭제되었습니다.");
       window.location.href = "./myblog.html";
 
-      if (testData != null) { 
-        console.log(testData);
-      } else {  
-
-      }
     },
 
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
       
-      console.log('ajax야 힘내자'+ request +status + error);
     },
 
     beforeSend: function (xhr) {
