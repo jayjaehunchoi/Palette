@@ -9,7 +9,7 @@ $('.loginBt').click(function () {
   };
   $.ajax({
       type: "POST",
-      url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/signin",
+      url: "http://www.palette-travel.com/api/signin",
       contentType: "application/json",
       data: JSON.stringify(loginData),
       dataType: 'text',
@@ -51,7 +51,7 @@ $('.findPwBt').click(function() {
   };
   $.ajax({
     type: "POST",
-    url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/sendEmail",
+    url: "http://www.palette-travel.com/api/sendEmail",
     contentType: "application/json",
     data: JSON.stringify(findInfo),
     success: function (response) {

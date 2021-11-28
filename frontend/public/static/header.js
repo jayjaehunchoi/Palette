@@ -51,9 +51,9 @@ $(document).ready(function() {
 });
 
 $('.logout').click(function () {
-  sessionStorage.removeItem("token");
+  sessionStorage.clear();
   window.location.href = '/index.html'; 
-}); 
+});
 
 $('.toMain').click(function(e) {
   sessionStorage.removeItem("page");

@@ -40,7 +40,7 @@ $(document).ready(function() {
   
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -68,7 +68,7 @@ $('#changeModal .modalOkBt').click(function(){
   let totalBudget = $('#changeModal .totalBudget__input').val();
   $.ajax({
     type : "PUT",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
     contentType: "application/json",
     data: JSON.stringify({"totalBudget":totalBudget}),
     beforeSend: function (xhr) {
@@ -91,7 +91,7 @@ function readBudget() {
   
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -134,7 +134,7 @@ $('.addBt').click(function() {
   } else {
     $.ajax({
       type : "POST",
-      url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses",
+      url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses",
       contentType: "application/json",
       data: JSON.stringify(expenseData),
       beforeSend: function (xhr) {
@@ -170,7 +170,7 @@ $('#changeExpenseModal .modalOkBt').click(function() {
 
   $.ajax({
     type : "PUT",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
     contentType: "application/json",
     data: JSON.stringify(expenseData),
     beforeSend: function (xhr) {
@@ -196,7 +196,7 @@ function deleteExpense(id) {
 
   $.ajax({
     type : "DELETE",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -217,7 +217,7 @@ $('.clearAllBt').click(function() {
 
   $.ajax({
     type : "DELETE",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -254,7 +254,7 @@ function openChangeExpenseModal(expenseid) {
 
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가

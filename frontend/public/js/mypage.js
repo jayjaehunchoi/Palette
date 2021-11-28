@@ -2,7 +2,7 @@ $(document).ready(function(){
   var token = sessionStorage.getItem("token");
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/member",
+    url : "http://www.palette-travel.com/api/member",
     dataType : "json",
     contentType: "application/json",
     beforeSend: function (xhr) {
@@ -62,8 +62,6 @@ profileFile.onchange = function () {
           
           //썸네일 이미지 보여주기
           document.querySelector('.preview img').src = dataURI;
-          console.log(window.URL.createObjectURL(profile))
-          console.log(profile)
         }
     }
   }
@@ -132,7 +130,7 @@ $('.modalBt').click(function() {
   if (confirm("정말 탈퇴하시겠습니까?")) {
     $.ajax({
       type: "DELETE",
-      url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/member/",
+      url: "http://www.palette-travel.com/api/member",
       data: JSON.stringify({"password":pw}),
       contentType: 'application/json',
       beforeSend: function (xhr) {
@@ -145,7 +143,8 @@ $('.modalBt').click(function() {
       },
       success: function(data){
         alert("탈퇴되셨습니다");
-        window.location.href="/frontend/index.html";
+        sessionStorage.clear();
+        window.location.href="/index.html";
       }
     });
   } else {

@@ -3,7 +3,7 @@ $(document).ready(function(){
   var token = sessionStorage.getItem("token");
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid,
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -37,7 +37,7 @@ $('.modifyBt').click(function() {
 
   $.ajax({
     type : "PUT",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid,
     contentType: "application/json",
     data: JSON.stringify(groupData),
     dataType: 'text',
@@ -60,7 +60,7 @@ $('.withdrawalBt').click(function() {
   var token = sessionStorage.getItem("token");
   $.ajax({
     type : "DELETE",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid,
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가

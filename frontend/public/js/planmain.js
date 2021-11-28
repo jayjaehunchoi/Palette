@@ -26,7 +26,7 @@ function getGroupList() {
  var token = sessionStorage.getItem("token");
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup",
+    url : "http://www.palette-travel.com/api/travelgroup",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -75,7 +75,7 @@ $('#makeGroupModal .modalBt').click(function(){
   }
   $.ajax({
     type: "POST",
-    url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup",
+    url: "http://www.palette-travel.com/api/travelgroup",
     data: JSON.stringify(groupInfo),
     contentType: 'application/json',
     beforeSend: function (xhr) {
@@ -101,7 +101,7 @@ $('#joinGroupModal .modalOkBt').click(function(){
   }
   $.ajax({
     type: "POST",
-    url: "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/join",
+    url: "http://www.palette-travel.com/api/travelgroup/join",
     data: JSON.stringify(groupData),
     contentType: 'application/json',
     beforeSend: function (xhr) {

@@ -39,8 +39,6 @@ profileFile.onchange = function () {
             
             //썸네일 이미지 보여주기
             document.querySelector('.preview img').src = dataURI;
-            console.log(window.URL.createObjectURL(profile))
-            console.log(profile)
           }
       }
     }
@@ -99,10 +97,6 @@ profileFile.onchange = function () {
         Accept: 'application/json',
         contentType: false,
         processData: false,
-        error: function (jqXHR, textStatus, errorThrown) {
-          let errorMsg = jqXHR.responseText;
-          console.log(errorMsg);
-        },
         success : function(data) { 
           alert("회원 가입에 성공했습니다!");
           window.location.href="login.html";
