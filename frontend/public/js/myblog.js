@@ -107,7 +107,7 @@ formData.append('file',Thumbnail[0].files[0]);
 formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
 
 $.ajax({
-  url: 'http://www.palette-travel.com/api/postgroup', // 개발시 변경 부분
+  url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup', // 개발시 변경 부분
   contentType: false,
   Accept: 'application/json',
   processData:false,
