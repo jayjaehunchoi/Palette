@@ -1,3 +1,4 @@
+// 지출내역 리스트 생성
 function loadExpenseList(data) {
   let expenseList = data.expenses;
   let expenseListLen = expenseList.length;
@@ -34,64 +35,15 @@ function loadExpenseList(data) {
     $('.budgetlist .list').empty();
   }
 }
-$(document).ready(function() {
-  let travelgroupid = sessionStorage.getItem("groupId");
-  var token = sessionStorage.getItem("token");
-  
-  $.ajax({
-    type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
-    contentType: "application/json",
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      $('.totalBudget').html(data.totalBudget);
-      $('.expense').html(data.totalExpense);
-      $('.budgetLeft').html(data.remainingBudget);
 
-      loadExpenseList(data);
-    }
-  });
-});
-
-
-
-$('#changeModal .modalOkBt').click(function(){
-  let travelgroupid = sessionStorage.getItem("groupId");
-  var token = sessionStorage.getItem("token");
-  
-  let totalBudget = $('#changeModal .totalBudget__input').val();
-  $.ajax({
-    type : "PUT",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
-    contentType: "application/json",
-    data: JSON.stringify({"totalBudget":totalBudget}),
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      readBudget();
-      closeChangeModal();
-    }
-  });
-});
-
+//예산 정보 및 지출 내역 리스트 받아오기
 function readBudget() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
   
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -108,10 +60,38 @@ function readBudget() {
       loadExpenseList(data);
     }
   });
-}
+
+}$(document).ready(function() {
+  readBudget();
+});
 
 
+//총예산 변경
+$('#changeModal .modalOkBt').click(function(){
+  let travelgroupid = sessionStorage.getItem("groupId");
+  var token = sessionStorage.getItem("token");
+  
+  let totalBudget = $('#changeModal .totalBudget__input').val();
+  $.ajax({
+    type : "PUT",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
+    contentType: "application/json",
+    data: JSON.stringify({"totalBudget":totalBudget}),
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      let errorMsg = jqXHR.responseText.split("\"")[3];
+      alert(errorMsg);
+    },
+    success: function(data){
+      readBudget();
+      closeChangeModal();
+    }
+  });
+});
 
+// 지출내역 추가
 $('.addBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
@@ -134,7 +114,7 @@ $('.addBt').click(function() {
   } else {
     $.ajax({
       type : "POST",
-      url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses",
+      url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses",
       contentType: "application/json",
       data: JSON.stringify(expenseData),
       beforeSend: function (xhr) {
@@ -154,6 +134,14 @@ $('.addBt').click(function() {
   }
 });
 
+$('.price__input').keydown(function(key) {
+  if(key.keyCode == 13) {
+      $('.addBt').click() ;
+  }
+});
+
+
+// 지출내역 수정
 $('#changeExpenseModal .modalOkBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   let expenseid = sessionStorage.getItem("expenseId");
@@ -170,7 +158,7 @@ $('#changeExpenseModal .modalOkBt').click(function() {
 
   $.ajax({
     type : "PUT",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
     contentType: "application/json",
     data: JSON.stringify(expenseData),
     beforeSend: function (xhr) {
@@ -187,6 +175,7 @@ $('#changeExpenseModal .modalOkBt').click(function() {
   });
 });
 
+// 지출내역 삭제
 function deleteExpense(id) {
   sessionStorage.setItem("expenseId", id);
 
@@ -196,7 +185,7 @@ function deleteExpense(id) {
 
   $.ajax({
     type : "DELETE",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses/" + expenseid,
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -211,13 +200,14 @@ function deleteExpense(id) {
   });
 }
 
+//모두 지우기
 $('.clearAllBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
 
   $.ajax({
     type : "DELETE",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/expenses",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/expenses",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -254,7 +244,7 @@ function openChangeExpenseModal(expenseid) {
 
   $.ajax({
     type : "GET",
-    url : "http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/travelgroup/" +travelgroupid + "/budget",
+    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
     contentType: "application/json",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
@@ -287,3 +277,6 @@ function closeChangeModal() {
 function closeChangeExpenseModal() {
   document.getElementById("changeExpenseModal").style.display="none";
 }
+
+// 2초마다 readBudget(); 실행
+setInterval(function() {readBudget();}, 2000);
