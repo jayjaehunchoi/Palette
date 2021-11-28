@@ -11,10 +11,13 @@ function openJoinGroupModal() {
 //모달 닫기
 function closeMakeGroupModal() {
   document.getElementById("makeGroupModal").style.display="none";
+  document.querySelector(".groupName").value = '';
+  document.querySelector(".groupIntroduction").value = '';
 }   
 
 function closeJoinGroupModal() {
   document.getElementById("joinGroupModal").style.display="none";
+  document.querySelector(".groupCode").value = '';
 }   
 
 //플랜 페이지 이동 시 그룹 리스트 출력
@@ -46,15 +49,19 @@ function loadGroupList(data) {
   let groupList = data.responseDtoGroups;
   let groupListLen = groupList.length;
   let str = "";
+  
+  if (groupListLen == 0) {
+    $('.list').html("<li>가입한 그룹이 없습니다</li>");
+  } else {
+    for(let i=0; i < groupListLen ; i++ ) { 
+      str += '<li>'
+      str += '<div class="toGroup">'
+      str += groupList[i].groupName
+      str += '</div> <button class="toGroupBt" onclick="moveGroupPage(this.id);" id="' + groupList[i].id + '">입장</button> </li>';
+    }
 
-  for(let i=0; i < groupListLen ; i++ ) { 
-    str += '<li>'
-    str += '<div class="toGroup">'
-    str += groupList[i].groupName
-    str += '</div> <button class="toGroupBt" onclick="moveGroupPage(this.id);" id="' + groupList[i].id + '">입장</button> </li>';
+    $('.list').html(str);
   }
-
-  $('.list').html(str);
 };
 
 // 해당 그룹 페이지로 이동

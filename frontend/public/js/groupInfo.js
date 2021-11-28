@@ -1,3 +1,4 @@
+//그룹 정보 수정페이지 이동 시 기존 정보 출력
 $(document).ready(function(){
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
@@ -13,7 +14,6 @@ $(document).ready(function(){
       alert(errorMsg);
     },
     success: function(data){
-      console.log(data);
       getGroupInfo(data); 
     }
   });
@@ -25,6 +25,7 @@ function getGroupInfo(data) {
   $('.groupIntroduction').val(data.groupsIntroduction);
 }
 
+//수정 버튼 클릭
 $('.modifyBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
@@ -55,7 +56,8 @@ $('.modifyBt').click(function() {
   });
 })
 
-$('.withdrawalBt').click(function() {
+// 그룹 삭제버튼
+$('.deleteBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
   $.ajax({

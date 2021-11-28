@@ -1,3 +1,4 @@
+// 지출내역 리스트 생성
 function loadExpenseList(data) {
   let expenseList = data.expenses;
   let expenseListLen = expenseList.length;
@@ -34,7 +35,9 @@ function loadExpenseList(data) {
     $('.budgetlist .list').empty();
   }
 }
-$(document).ready(function() {
+
+//예산 정보 및 지출 내역 리스트 받아오기
+function readBudget() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
   
@@ -53,14 +56,17 @@ $(document).ready(function() {
       $('.totalBudget').html(data.totalBudget);
       $('.expense').html(data.totalExpense);
       $('.budgetLeft').html(data.remainingBudget);
-
+      
       loadExpenseList(data);
     }
   });
+
+}$(document).ready(function() {
+  readBudget();
 });
 
 
-
+//총예산 변경
 $('#changeModal .modalOkBt').click(function(){
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
@@ -85,33 +91,7 @@ $('#changeModal .modalOkBt').click(function(){
   });
 });
 
-function readBudget() {
-  let travelgroupid = sessionStorage.getItem("groupId");
-  var token = sessionStorage.getItem("token");
-  
-  $.ajax({
-    type : "GET",
-    url : "http://www.palette-travel.com/api/travelgroup/" +travelgroupid + "/budget",
-    contentType: "application/json",
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      $('.totalBudget').html(data.totalBudget);
-      $('.expense').html(data.totalExpense);
-      $('.budgetLeft').html(data.remainingBudget);
-      
-      loadExpenseList(data);
-    }
-  });
-}
-
-
-
+// 지출내역 추가
 $('.addBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
@@ -154,6 +134,14 @@ $('.addBt').click(function() {
   }
 });
 
+$('.price__input').keydown(function(key) {
+  if(key.keyCode == 13) {
+      $('.addBt').click() ;
+  }
+});
+
+
+// 지출내역 수정
 $('#changeExpenseModal .modalOkBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   let expenseid = sessionStorage.getItem("expenseId");
@@ -187,6 +175,7 @@ $('#changeExpenseModal .modalOkBt').click(function() {
   });
 });
 
+// 지출내역 삭제
 function deleteExpense(id) {
   sessionStorage.setItem("expenseId", id);
 
@@ -211,6 +200,7 @@ function deleteExpense(id) {
   });
 }
 
+//모두 지우기
 $('.clearAllBt').click(function() {
   let travelgroupid = sessionStorage.getItem("groupId");
   var token = sessionStorage.getItem("token");
@@ -287,3 +277,6 @@ function closeChangeModal() {
 function closeChangeExpenseModal() {
   document.getElementById("changeExpenseModal").style.display="none";
 }
+
+// 2초마다 readBudget(); 실행
+setInterval(function() {readBudget();}, 2000);
