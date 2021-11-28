@@ -17,7 +17,7 @@ a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 120px;
+	margin-top: 150px;
 }
 
 .container .inner {
@@ -34,6 +34,7 @@ a {
 	font-size: 40px;
 	font-weight: 100;
 	color: #333;	
+	font-family: sans-serif;
 }
 
 /*Login*/
@@ -244,14 +245,15 @@ a {
 }
 
 .myInner .title {
-	margin-top: 40px;
+	margin-top: 50px;
 	font-size: 40px;
 	font-weight: 100;
 	color: #333;
+	font-family: sans-serif;
 }
 
 .myInner table {
-	margin-top: 40px;
+	margin-top: 80px;
 	margin-bottom: 20px;
 }
 .myInner .col1 {
@@ -282,6 +284,7 @@ a {
 	vertical-align:middle; 
 	height: 275px;	
 	position: relative;
+	padding: 10px 0;
 }
 
 .myInner .col2 .userProfile img{
@@ -290,7 +293,7 @@ a {
 }
 
 .myInner .col2 .selectBt {
-	margin: auto;
+	margin: 5px auto;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0);
