@@ -73,48 +73,56 @@ $('#makeGroupModal .modalBt').click(function(){
     "groupName":groupName,
     "groupIntroduction": groupIntroduction
   }
-  $.ajax({
-    type: "POST",
-    url: "http://www.palette-travel.com/api/travelgroup",
-    data: JSON.stringify(groupInfo),
-    contentType: 'application/json',
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      console.log("그룹생성 완료");
-      closeMakeGroupModal();
-      getGroupList(data);
-    }
+  if (groupName == '' || groupIntroduction == '') {
+    alert("그룹 정보를 모두 입력해주세요");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "http://www.palette-travel.com/api/travelgroup",
+      data: JSON.stringify(groupInfo),
+      contentType: 'application/json',
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        let errorMsg = jqXHR.responseText.split("\"")[3];
+        alert(errorMsg);
+      },
+      success: function(data){
+        closeMakeGroupModal();
+        getGroupList(data);
+      }
   });
+}
 });
 
+//그룹 가입하기
 $('#joinGroupModal .modalOkBt').click(function(){
   let token = sessionStorage.getItem("token"); 
   let groupCode = $('#joinGroupModal .groupCode').val();
   let groupData = {
     "code" : groupCode
   }
-  $.ajax({
-    type: "POST",
-    url: "http://www.palette-travel.com/api/travelgroup/join",
-    data: JSON.stringify(groupData),
-    contentType: 'application/json',
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      let errorMsg = jqXHR.responseText.split("\"")[3];
-      alert(errorMsg);
-    },
-    success: function(data){
-      console.log("그룹가입 완료");
-      closeJoinGroupModal();
-      getGroupList(data);
-    }
-  });
+
+  if (groupCode == '' ) {
+    alert("그룹 코드를 입력해주세요");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "http://www.palette-travel.com/api/travelgroup/join",
+      data: JSON.stringify(groupData),
+      contentType: 'application/json',
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization","Bearer " + token);//header추가
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        let errorMsg = jqXHR.responseText.split("\"")[3];
+        alert(errorMsg);
+      },
+      success: function(data){
+        closeJoinGroupModal();
+        getGroupList(data);
+      }
+    });
+  }
 });
