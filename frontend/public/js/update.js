@@ -6,7 +6,7 @@ function view() {
   var params = '';  // 개발시 변경 부분
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/post/'+postId, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/post/'+postId, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -18,12 +18,11 @@ function view() {
       //div 초기화
       $('#photo').empty();
 
-      console.log(testData);
+      
       $("#title").val(testData.postTitle);
       $('.image img').attr("src",testData.images[0]);
       $("#content").val(testData.postContent);
-      console.log(testData);
-      console.log(testData.images[0]);
+
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
@@ -48,11 +47,11 @@ function modify() {
   var params = { title : title , content : content };  // 개발시 변경 부분
    
   var formData = new FormData(frm);
-    console.log(params);
+   
     formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
    
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+postGroupId+'/post/'+postId, // 개발시 변경 부분
+      url: 'http://www.palette-travel.com/api/postgroup/'+postGroupId+'/post/'+postId, // 개발시 변경 부분
       contentType: 'application/json',
       type: 'PUT',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
@@ -63,15 +62,19 @@ function modify() {
         alert("수정이 완료되었습니다.");  
         window.location.href = '/view/Board/myblogDetail.html'; 
         if (testData != null) {    
-          console.log(testData);   
+           
         } else {  
 
         }
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        alert('입력 정보를 확인하세요.(제목 20자, 글 150자 이내)');
-        console.log('ajax야 힘내자'+ request +status + error);
+        if(token != null){
+          alert('입력 정보를 확인하세요.(제목 20자, 글 150자 이내)');
+        }else{
+          alert("로그인이 필요합니다.")
+        }
+        
       },
       beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization","Bearer " + token);

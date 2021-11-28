@@ -9,7 +9,7 @@ function view(){
   let postGroupId = sessionStorage.getItem("postGroupId");
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -32,7 +32,7 @@ function view(){
           msg += '<img src='  
           msg +=  testData.storyLists[i].thumbNailFullPath 
           msg += ' /></figure></div></div>';
-          console.log(testData.storyLists[i].postId);
+          
         }
         
       $('.card-image').html(msg);
@@ -45,7 +45,7 @@ function view(){
   
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
-        // alert('ajax야 힘내자'+ request +status + error);
+        
       }
   });
 }
@@ -57,7 +57,7 @@ function view01(j) {
   var msg = '';
 
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+ postGroupId+'?page='+j, // 개발시 변경 부분
+    url: 'http://www.palette-travel.com/api/postgroup/'+ postGroupId+'?page='+j, // 개발시 변경 부분
     contentType: 'application/json; charset=UTF-8',
     type: 'get',  // get, post
     cache: false, // 응답 결과 임시 저장 취소
@@ -80,7 +80,7 @@ function view01(j) {
         msg += '<img src='  
         msg +=  testData.storyLists[i].thumbNailFullPath 
         msg += ' /></figure></div></div>';
-        console.log(testData.storyLists[i].postId);
+       
       }
       $('.card-image').html(msg);
 
@@ -91,7 +91,7 @@ function view01(j) {
   
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
-      console.log('ajax야 힘내자'+ request +status + error);
+      //console.log('ajax야 힘내자'+ request +status + error);
     }
   });
 }
@@ -101,17 +101,17 @@ function page(){
   var pageCount;	
   let postGroupId = sessionStorage.getItem("postGroupId");
   $.ajax({
-    url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/page/post?postGroupId='+postGroupId,   
+    url: 'http://www.palette-travel.com/api/page/post?postGroupId='+postGroupId,   
     type: 'GET',
     dataType: 'json',
     success: function(data){
-      console.log("data: "+data)
+      //console.log("data: "+data)
       pageCount = data.data;
-      console.log(pageCount);
+      //console.log(pageCount);
   
       var html = "";
       for(var i=1; i<=pageCount; i++){			
-        console.log(i);
+        //console.log(i);
         html += "<input type="+"'button" +"' class = paginate_num  value = " + i+" onclick="+ "view01("+i+");>";
       }
 
@@ -133,9 +133,9 @@ function view02(){
   var page = sessionStorage.getItem("page");
 
   if(page >1 ){
-    console.log(page);
+    //console.log(page);
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?memberId='+ memberId+'&page='+page, // 개발시 변경 부분
+      url: 'http://www.palette-travel.com/api/postgroup?memberId='+ memberId+'&page='+page, // 개발시 변경 부분
       contentType: 'application/json; charset=UTF-8',
       type: 'get',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
@@ -144,11 +144,11 @@ function view02(){
       data: params,      // 데이터
 
       success: function(Data) { // 서버로부터 성공적으로 응답이 온경우
-        console.log(Data);
+        //console.log(Data);
         for(i=0; i<Data.postGroupResponses.length; i++){
 
           if(postGroupId == Data.postGroupResponses[i].postGroupId){
-            console.log(Data.postGroupResponses[i]);
+            //console.log(Data.postGroupResponses[i]);
             var data = Data.postGroupResponses[i];
           }
         }
@@ -163,7 +163,7 @@ function view02(){
     });
   }else{
     $.ajax({
-      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup?page=1&memberId='+ memberId, // 개발시 변경 부분
+      url: 'http://www.palette-travel.com/api/postgroup?page=1&memberId='+ memberId, // 개발시 변경 부분
       contentType: 'application/json; charset=UTF-8',
       type: 'get',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
@@ -175,12 +175,12 @@ function view02(){
         for(i=0; i<Data.postGroupResponses.length; i++){
 
           if(postGroupId == Data.postGroupResponses[i].postGroupId){
-            console.log(Data.postGroupResponses[i]);
+            //console.log(Data.postGroupResponses[i]);
             var data = Data.postGroupResponses[i];
         
           }
         }
-        console.log(data);
+        //console.log(data);
         $("#title").append("<div> TITLE: "+ data.title +"</div>");
       },
   
