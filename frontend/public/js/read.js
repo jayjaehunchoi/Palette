@@ -60,26 +60,32 @@ function submitComment(){
   let token = sessionStorage.getItem("token");
   let postId = sessionStorage.getItem("postId");
 
-  $.ajax({
-    url:"http://www.palette-travel.com/api/post/"+postId+"/comment",
-    method:"POST",
-    data:JSON.stringify({content:content}),
-    dataType:'json',
-    contentType: "application/json", 
-    success:function(data){
-      
-      window.location.href = '/view/Board/read.html';
-      alert('등록되었습니다.');
-    },
-    error:function(e){
-      alert("로그인이 필요합니다.");
-      window.location.href = '/view/member/login.html';
-      
-    },
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization","Bearer " + token);
-    }
-  });
+  if(content != ""){
+    $.ajax({
+      url:"http://www.palette-travel.com/api/post/"+postId+"/comment",
+      method:"POST",
+      data:JSON.stringify({content:content}),
+      dataType:'json',
+      contentType: "application/json", 
+      success:function(data){
+        
+        window.location.href = '/view/Board/read.html';
+ 
+        alert('등록되었습니다.');
+      },
+      error:function(e){
+        alert("로그인이 필요합니다.");
+        window.location.href = '/view/member/login.html';
+        
+      },
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization","Bearer " + token);
+      }
+    });
+  }else{
+    alert("입력정보를 확인하세요.");
+  }
+ 
 }
 
 // ajax 요청 (댓글 수정)
