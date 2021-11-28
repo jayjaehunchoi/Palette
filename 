@@ -1,0 +1,15 @@
+수정 : url 주소 수정
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch feat-aram
+# Changes to be committed:
+#	modified:   frontend/public/js/groupUpdate.js
+#	modified:   frontend/public/js/myblog.js
+#	modified:   frontend/public/js/myblogDetail.js
+#	modified:   frontend/public/js/read.js
+#	modified:   frontend/public/js/story.js
+#	modified:   frontend/public/js/storyDetail.js
+#	modified:   frontend/public/js/update.js
+#	modified:   frontend/public/js/write.js
+#
