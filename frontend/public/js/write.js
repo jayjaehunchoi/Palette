@@ -63,11 +63,7 @@ function add() {
    
     success: function(testData) { // 서버로부터 성공적으로 응답이 온경우
       window.location.href = "/view/Board/myblogDetail.html"
-      if (testData != null) {    
-        
-      } else {  
-           
-      }
+      alert("게시글이 등록되었습니다.")
 
     },   
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 

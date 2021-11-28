@@ -71,7 +71,7 @@ function submitComment(){
         
         window.location.href = '/view/Board/read.html';
  
-        alert('등록되었습니다.');
+        alert('댓글이 등록되었습니다.');
       },
       error:function(e){
         alert("로그인이 필요합니다.");
@@ -104,7 +104,7 @@ function modifyComment() {
     success:function(data){
      
       window.location.href = '/view/Board/read.html';
-      alert('수정되었습니다.');
+      alert('댓글이 수정되었습니다.');
     },
     error:function(e){
      
