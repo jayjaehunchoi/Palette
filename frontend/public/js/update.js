@@ -51,7 +51,7 @@ function modify() {
     formData.append('data',new Blob([JSON.stringify(params)] , {type: "application/json"}))   
    
     $.ajax({
-      url: 'http://www.palette-travel.com/api/postgroup/'+postGroupId+'/post/'+postId, // 개발시 변경 부분
+      url: 'http://ec2-3-35-87-7.ap-northeast-2.compute.amazonaws.com:8080/api/postgroup/'+postGroupId+'/post/'+postId, // 개발시 변경 부분
       contentType: 'application/json',
       type: 'PUT',  // get, post
       cache: false, // 응답 결과 임시 저장 취소
