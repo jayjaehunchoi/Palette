@@ -60,6 +60,11 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
+    @Transactional(readOnly = true)
+    public Member findByEmail(String email){
+        return memberRepository.findByEmail(email).orElse(null);
+    }
+
     private void checkPassword(String password, Member findMember) {
         boolean matches = passwordEncoder.matches(password, findMember.getPassword());
         if(!matches) {
